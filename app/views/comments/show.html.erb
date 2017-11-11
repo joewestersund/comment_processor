@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Source:</strong>
+  <%= @comment.source_id %>
+</p>
+
+<p>
+  <strong>First name:</strong>
+  <%= @comment.first_name %>
+</p>
+
+<p>
+  <strong>Last name:</strong>
+  <%= @comment.last_name %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @comment.email %>
+</p>
+
+<p>
+  <strong>Organization:</strong>
+  <%= @comment.organization %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @comment.state %>
+</p>
+
+<p>
+  <strong>Comment text:</strong>
+  <%= @comment.comment_text %>
+</p>
+
+<p>
+  <strong>Attachment url:</strong>
+  <%= @comment.attachment_url %>
+</p>
+
+<p>
+  <strong>Summary:</strong>
+  <%= @comment.summary %>
+</p>
+
+<p>
+  <strong>Status type:</strong>
+  <%= @comment.status_type_id %>
+</p>
+
+<p>
+  <strong>Action needed:</strong>
+  <%= @comment.action_needed %>
+</p>
+
+<%= link_to 'Edit', edit_comment_path(@comment) %> |
+<%= link_to 'Back', comments_path %>

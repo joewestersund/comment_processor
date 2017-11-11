@@ -1,0 +1,72 @@
+<%= form_with(model: comment, local: true) do |form| %>
+  <% if comment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+
+      <ul>
+      <% comment.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :source_id %>
+    <%= form.number_field :source_id, id: :comment_source_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :first_name %>
+    <%= form.text_field :first_name, id: :comment_first_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :last_name %>
+    <%= form.text_field :last_name, id: :comment_last_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.text_field :email, id: :comment_email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :organization %>
+    <%= form.text_field :organization, id: :comment_organization %>
+  </div>
+
+  <div class="field">
+    <%= form.label :state %>
+    <%= form.text_field :state, id: :comment_state %>
+  </div>
+
+  <div class="field">
+    <%= form.label :comment_text %>
+    <%= form.text_field :comment_text, id: :comment_comment_text %>
+  </div>
+
+  <div class="field">
+    <%= form.label :attachment_url %>
+    <%= form.text_field :attachment_url, id: :comment_attachment_url %>
+  </div>
+
+  <div class="field">
+    <%= form.label :summary %>
+    <%= form.text_field :summary, id: :comment_summary %>
+  </div>
+
+  <div class="field">
+    <%= form.label :status_type_id %>
+    <%= form.number_field :status_type_id, id: :comment_status_type_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :action_needed %>
+    <%= form.text_field :action_needed, id: :comment_action_needed %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
