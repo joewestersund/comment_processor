@@ -1,0 +1,27 @@
+<%= form_with(model: category_status_type, local: true) do |form| %>
+  <% if category_status_type.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(category_status_type.errors.count, "error") %> prohibited this category_status_type from being saved:</h2>
+
+      <ul>
+      <% category_status_type.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :status_text %>
+    <%= form.text_field :status_text, id: :category_status_type_status_text %>
+  </div>
+
+  <div class="field">
+    <%= form.label :order_in_list %>
+    <%= form.number_field :order_in_list, id: :category_status_type_order_in_list %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

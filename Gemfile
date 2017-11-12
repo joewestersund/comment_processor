@@ -21,7 +21,7 @@ gem 'bootstrap-sass', '~> 3.3.6'
 gem 'sass-rails', '~> 5.0'
 
 # Use jquery as the JavaScript library
-gem 'jquery-rails'
+gem 'jquery-rails', '~>4.3'
 
 gem 'jquery-ui-rails'
 

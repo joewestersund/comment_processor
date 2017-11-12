@@ -1,0 +1,12 @@
+<h1>Check for updated comments</h1>
+
+Import comments data from <%= @data_source %>
+
+<br>
+<br>
+
+<%= form_tag(comments_do_import_path, method: "put") do %>
+  <%= submit_tag('Import comments', class: 'btn btn-large btn-primary')%>
+<% end %>
+|
+<%= link_to 'Back', comments_path %>

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :category_status_types
+  resources :comment_status_types
   get 'sessions/new'
 
   get 'static_pages/about'
@@ -16,6 +18,9 @@ Rails.application.routes.draw do
   patch '/profile/update_password', to: 'users#update_password'
 
   resources :categories
+  get 'comments/import', to: 'comments#import'
+  put 'comments/import', to: 'comments#do_import', as: 'comments_do_import'
+
   resources :comments
 
   resources :sessions, only: [:new, :create, :destroy]

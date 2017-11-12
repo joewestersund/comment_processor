@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Status text:</strong>
+  <%= @comment_status_type.status_text %>
+</p>
+
+<p>
+  <strong>Order in list:</strong>
+  <%= @comment_status_type.order_in_list %>
+</p>
+
+<%= link_to 'Edit', edit_comment_status_type_path(@comment_status_type) %> |
+<%= link_to 'Back', comment_status_types_path %>

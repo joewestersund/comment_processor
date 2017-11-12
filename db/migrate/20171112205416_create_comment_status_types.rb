@@ -1,0 +1,10 @@
+class CreateCommentStatusTypes < ActiveRecord::Migration[5.1]
+  def change
+    create_table :comment_status_types do |t|
+      t.string :status_text
+      t.integer :order_in_list
+
+      t.timestamps
+    end
+  end
+end

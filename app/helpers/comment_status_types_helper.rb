@@ -1,0 +1,2 @@
+module CommentStatusTypesHelper
+end

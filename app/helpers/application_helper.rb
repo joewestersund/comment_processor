@@ -1,4 +1,10 @@
 module ApplicationHelper
+
+  def rulemaking_data_source
+    'https://data.oregon.gov/OData.svc/gvv7-qhw2'
+  end
+
+
   def full_title(page_title)
     base_title = "Public Comment Review"
     if(page_title.empty?)

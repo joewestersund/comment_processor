@@ -1,0 +1,2 @@
+module CategoryStatusTypesHelper
+end

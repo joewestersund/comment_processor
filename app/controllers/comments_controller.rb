@@ -1,5 +1,9 @@
 class CommentsController < ApplicationController
+
+  before_action :signed_in_user
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
+  before_action :set_select_options, only: [:new, :edit, :index]
+
 
   # GET /comments
   # GET /comments.json
@@ -12,9 +16,15 @@ class CommentsController < ApplicationController
   def show
   end
 
-  # GET /comments/new
-  def new
-    @comment = Comment.new
+  def import
+    #import comments from the outside data source
+    @data_source = rulemaking_data_source
+  end
+
+  def do_import
+    #actually do the import
+    get_data(rulemaking_data_source)
+
   end
 
   # GET /comments/1/edit
@@ -51,16 +61,6 @@ class CommentsController < ApplicationController
     end
   end
 
-  # DELETE /comments/1
-  # DELETE /comments/1.json
-  def destroy
-    @comment.destroy
-    respond_to do |format|
-      format.html { redirect_to comments_url, notice: 'Comment was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_comment
@@ -71,4 +71,54 @@ class CommentsController < ApplicationController
     def comment_params
       params.require(:comment).permit(:source_id, :first_name, :last_name, :email, :organization, :state, :comment_text, :attachment_url, :summary, :status_type_id, :action_needed)
     end
+
+    def set_select_options
+      @users = User.order(:name).all
+      @categories = Category.order(:category_name).all
+    end
+
+    def search_params
+      params.permit(:first_name, :last_name, :organization, :state, :email, :category_name, :comment_text, :summary, :status_type_id)
+    end
+
+    def get_conditions
+
+      search_terms = Transaction.new(search_params)
+
+      conditions = {}
+      conditions_string = []
+
+      conditions[:start_date] = params[:start_date] if params[:start_date].present?
+      conditions_string << "transaction_date >= :start_date" if params[:start_date].present?
+
+      conditions[:end_date] = params[:end_date] if params[:end_date].present?
+      conditions_string << "transaction_date <= :end_date" if params[:end_date].present?
+
+      conditions[:month] = search_terms.month if search_terms.month.present?
+      conditions_string << "month = :month" if search_terms.month.present?
+
+      conditions[:day] = search_terms.day if search_terms.day.present?
+      conditions_string << "day = :day" if search_terms.day.present?
+
+      conditions[:year] = search_terms.year if search_terms.year.present?
+      conditions_string << "year = :year" if search_terms.year.present?
+
+      conditions[:vendor_name] = "%#{search_terms.vendor_name}%" if search_terms.vendor_name.present?
+      conditions_string << "vendor_name ILIKE :vendor_name" if search_terms.vendor_name.present?
+
+      conditions[:account_id] = search_terms.account_id if search_terms.account_id.present?
+      conditions_string << "account_id = :account_id" if search_terms.account_id.present?
+
+      conditions[:transaction_category_id] = search_terms.transaction_category_id if search_terms.transaction_category_id.present?
+      conditions_string << "transaction_category_id = :transaction_category_id" if search_terms.transaction_category_id.present?
+
+      conditions[:amount] = search_terms.amount if search_terms.amount.present?
+      conditions_string << "amount = :amount" if search_terms.amount.present?
+
+      conditions[:description] = "%#{search_terms.description}%" if search_terms.description.present?
+      conditions_string << "description ILIKE :description" if search_terms.description.present?
+
+      return [conditions_string.join(" AND "), conditions]
+    end
+
 end
