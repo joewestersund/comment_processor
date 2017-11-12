@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:email].downcase)
     if user && user.authenticate(params[:password])
       sign_in user
-      redirect_to transactions_path #root_path
+      redirect_to comments_path #root_path
     else
       flash.now[:error] = "Invalid username / password"
       render 'new'
