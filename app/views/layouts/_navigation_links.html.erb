@@ -1,24 +1,12 @@
 <%# add navigation links to this file %>
 <% if signed_in? %>
-  <li class="nav navbar-nav"><%= link_to glyphicon_link("glyphicon-usd","Transactions").html_safe, transactions_path %></li>
-  <li class="nav navbar-nav"><%= link_to glyphicon_link("glyphicon-random","Transfers").html_safe, transfers_path %></li>
+  <li class="nav navbar-nav"><%= link_to glyphicon_link("glyphicon-usd","Comments").html_safe, comments_path %></li>
+  <li class="nav navbar-nav"><%= link_to glyphicon_link("glyphicon-random","Categories").html_safe, categories_path %></li>
   <li id="fat-menu" class="dropdown nav navbar-nav">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-      <%= glyphicon_link("glyphicon-stats","Summaries").html_safe%> <b class="caret"></b>
+      <%= glyphicon_link("glyphicon-wrench","Account").html_safe%> <b class="caret"></b>
     </a>
     <ul class="dropdown-menu">
-      <li class="nav navbar-nav"><%= link_to "Spending Summary", summaries_by_category_path %></li>
-      <li class="nav navbar-nav"><%= link_to "Account Balances", account_balances_path %></li>
-      <li class="nav navbar-nav"><%= link_to "Balance Check", check_balance_path %></li>
-    </ul>
-  </li>
-  <li id="fat-menu" class="dropdown nav navbar-nav">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-      <%= glyphicon_link("glyphicon-wrench","Setup").html_safe%> <b class="caret"></b>
-    </a>
-    <ul class="dropdown-menu">
-      <li class="nav navbar-nav"><%= link_to "Spending Categories", transaction_categories_path %></li>
-      <li class="nav navbar-nav"><%= link_to "Accounts", accounts_path %></li>
       <li class="nav navbar-nav"><%= link_to "Edit Profile", profile_edit_path %></li>
       <li class="nav navbar-nav"><%= link_to "Change Password", profile_edit_password_path %></li>
     </ul>

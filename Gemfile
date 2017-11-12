@@ -9,20 +9,22 @@ end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.4'
 
-# Use sqlite3 as the database for Active Record
-#gem 'sqlite3'
+gem 'sprockets-rails' #-> this will add the latest version
 
 gem 'pg' #'0.18.4' # upgraded from '0.17.1' #PostgreSQL
-
-
-# Use Puma as the app server
-#gem 'puma', '~> 3.7'
 
 # Use unicorn as the app server
 gem 'unicorn'
 
 # Use SCSS for stylesheets
+gem 'bootstrap-sass', '~> 3.3.6'
 gem 'sass-rails', '~> 5.0'
+
+# Use jquery as the JavaScript library
+gem 'jquery-rails'
+
+gem 'jquery-ui-rails'
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
