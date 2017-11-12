@@ -3,17 +3,12 @@
 <p>
   <strong>Name:</strong>
   <%= @user.name %>
-</p>
-
-<p>
   <strong>Email:</strong>
   <%= @user.email %>
-</p>
+  <strong>Time Zone:</strong>
+  <%= @user.time_zone %>
 
-<p>
-  <strong>Password digest:</strong>
-  <%= @user.password_digest %>
 </p>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<%= link_to 'Home', root_path %>
