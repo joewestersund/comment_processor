@@ -1,0 +1,54 @@
+
+th, td {
+  border-left: 1px black solid;
+  padding: 2px 5px;
+  text-align: center;
+}
+
+th {
+  border-bottom: 1px black solid;
+}
+
+th:first-of-type, td:first-of-type {
+  border-left: none;
+}
+
+.negative_number {
+  color: blue;
+}
+
+.link-block {
+  margin-bottom: 20px;
+  .link {
+    display: inline-block;
+    padding-right: 20px;
+  }
+}
+
+.filter-box {
+
+  border-bottom: 1px solid black;
+  margin-bottom: 10px;
+
+  .filter, .filter-button {
+    margin-bottom: 10px;
+  }
+
+  div.field, div.actions {
+    display: inline-block;
+  }
+
+  div.field.number input{
+    width: 70px;
+  }
+
+}
+
+.welcome p a, .about p a {
+  color: blue;
+
+  &:hover {
+    text-decoration: underline;
+    background-color: inherit;
+  }
+}

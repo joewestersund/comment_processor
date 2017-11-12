@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="Rails comment_processor: test" uuid="9950659c-08f2-45fc-ac4c-f12fb69e0843" />
+    <data-source name="Rails comment_processor: production" uuid="54e61efa-3e76-451c-91f7-65f10d46510f">
+      <user-name>comment_processor</user-name>
+      <user-password>df96df8fdf97df8adfefdfe4dffcdff1df8ddfe7dff3dfebdffadffadff5dfeedfebdffedfebdfe8dfebdff9dfefdff5dffadfebdff9dff9dffddfe5dff8dfeedf8ddff7df8adf8fdf94</user-password>
+    </data-source>
+    <data-source name="Rails comment_processor: development" uuid="0c5b5868-7363-4bf4-a212-16189679146b">
+      <schema-pattern>comment_processor_development.*</schema-pattern>
+      <default-schemas>comment_processor_development.*</default-schemas>
+    </data-source>
+  </component>
+</project>
