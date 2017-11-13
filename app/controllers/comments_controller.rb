@@ -9,7 +9,7 @@ class CommentsController < ApplicationController
   # GET /comments
   # GET /comments.json
   def index
-    @comments = Comment.all
+    @comments = Comment.order(:source_id)
   end
 
   # GET /comments/1
@@ -32,6 +32,10 @@ class CommentsController < ApplicationController
 
   # GET /comments/1/edit
   def edit
+    byebug
+    current_comment_id = params[:id]
+    @previous_comment = Comment.where("id < ?", current_comment_id).order(:id).last
+    @next_comment = Comment.where("id < ?", current_comment_id).order(id: :desc).first
   end
 
   # POST /comments

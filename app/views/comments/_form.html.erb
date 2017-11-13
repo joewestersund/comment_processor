@@ -11,49 +11,19 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :source_id %>
-    <%= form.number_field :source_id, id: :comment_source_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :first_name %>
-    <%= form.text_field :first_name, id: :comment_first_name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :last_name %>
-    <%= form.text_field :last_name, id: :comment_last_name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.text_field :email, id: :comment_email %>
-  </div>
-
-  <div class="field">
-    <%= form.label :organization %>
-    <%= form.text_field :organization, id: :comment_organization %>
-  </div>
-
-  <div class="field">
-    <%= form.label :state %>
-    <%= form.text_field :state, id: :comment_state %>
-  </div>
-
-  <div class="field">
-    <%= form.label :comment_text %>
-    <%= form.text_field :comment_text, id: :comment_comment_text %>
-  </div>
-
-  <div class="field">
-    <%= form.label :attachment_url %>
-    <%= form.text_field :attachment_url, id: :comment_attachment_url %>
-  </div>
+  <table class="read_only_parameters">
+    <tbody>
+      <tr><td>Source ID</td><td><%= comment.source_id %></td></tr>
+      <tr><td>Name & Email</td><td><%= "#{comment.first_name + ' ' if comment.first_name.present?}#{comment.last_name}#{' <' + comment.email + '>' if comment.email.present?}"%></td>
+      <tr><td>Organization and State</td><td><%= "#{comment.organization + ", " if comment.organization.present?}#{comment.state}" %></td>
+      <tr><td>Comment</td><td><%= comment.comment_text%></td>
+      <tr><td>Attachment</td><td><%= if comment.attachment_name.present? then link_to comment.attachment_name.to_s, comment.attachment_url end %></td>
+    </tbody>
+  </table>
 
   <div class="field">
     <%= form.label :summary %>
-    <%= form.text_field :summary, id: :comment_summary %>
+    <%= form.text_area :summary, id: :comment_summary, cols: 300, rows: 5, class: 'bigtextarea' %>
   </div>
 
   <div class="field">

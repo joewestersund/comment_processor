@@ -6,11 +6,8 @@
   <thead>
     <tr>
       <th>Source ID</th>
-      <th>First name</th>
-      <th>Last name</th>
-      <th>Email</th>
-      <th>Organization</th>
-      <th>State</th>
+      <th>Name & email</th>
+      <th>Organization & State</th>
       <th>Comment text</th>
       <th>Attachment</th>
       <th>Summary</th>
@@ -24,11 +21,8 @@
     <% @comments.each do |comment| %>
       <tr>
         <td><%= comment.source_id %></td>
-        <td><%= comment.first_name %></td>
-        <td><%= comment.last_name %></td>
-        <td><%= comment.email.truncate(15) if comment.email.present? %></td>
-        <td><%= comment.organization %></td>
-        <td><%= comment.state %></td>
+        <td><%= "#{comment.first_name + ' ' if comment.first_name.present?}#{comment.last_name}#{' <' + comment.email.truncate(15) + '>' if comment.email.present?}"%></td>
+        <td><%= "#{comment.organization + ", " if comment.organization.present?}#{comment.state}" %></td>
         <td><%= comment.comment_text.truncate(500) if comment.comment_text.present?%></td>
         <td><%= if comment.attachment_name.present? then link_to comment.attachment_name.to_s, comment.attachment_url end %></td>
         <td><%= comment.summary %></td>
