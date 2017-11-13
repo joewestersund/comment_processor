@@ -15,4 +15,5 @@
 
 class Category < ApplicationRecord
   has_and_belongs_to_many :comments
+  has_one :category_status_type
 end

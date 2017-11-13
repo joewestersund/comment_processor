@@ -1,10 +1,10 @@
 <%# add navigation links to this file %>
 <% if signed_in? %>
-  <li class="nav navbar-nav"><%= link_to glyphicon_link("glyphicon-usd","Comments").html_safe, comments_path %></li>
-  <li class="nav navbar-nav"><%= link_to glyphicon_link("glyphicon-random","Categories").html_safe, categories_path %></li>
+  <li class="nav navbar-nav"><%= link_to glyphicon_link("glyphicon-th-list","Comments").html_safe, comments_path %></li>
+  <li class="nav navbar-nav"><%= link_to glyphicon_link("glyphicon-tags","Categories").html_safe, categories_path %></li>
   <li id="fat-menu" class="dropdown nav navbar-nav">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-      <%= glyphicon_link("glyphicon-wrench","Account").html_safe%> <b class="caret"></b>
+      <%= glyphicon_link("glyphicon-user","Account").html_safe%> <b class="caret"></b>
     </a>
     <ul class="dropdown-menu">
       <li class="nav navbar-nav"><%= link_to "Edit Profile", profile_edit_path %></li>

@@ -43,6 +43,8 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'ruby_dep'
 
+gem 'ruby_odata'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

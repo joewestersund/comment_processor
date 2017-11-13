@@ -41,10 +41,16 @@ main {
   @extend .container;
   //background-color: #eee;
   padding-bottom: 80px;
-  //width: 100%;  //960px;
+  width: 100%;  //960px;
   margin-top: 51px; // accommodate the navbar
   //border: 1px black solid
   }
+
+.container {
+  margin-left: 10px;
+  width: 100%;
+}
+
 section {
   @extend .row;
   margin-top: 20px;

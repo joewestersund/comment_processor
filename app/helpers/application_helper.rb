@@ -1,9 +1,13 @@
-module ApplicationHelper
-
-  def rulemaking_data_source
-    'https://data.oregon.gov/OData.svc/gvv7-qhw2'
+class String
+  #add this method to the String object
+  def string_between_markers marker1, marker2
+    self[/#{Regexp.escape(marker1)}(.*?)#{Regexp.escape(marker2)}/m, 1]
   end
 
+end
+
+
+module ApplicationHelper
 
   def full_title(page_title)
     base_title = "Public Comment Review"
@@ -68,4 +72,5 @@ module ApplicationHelper
   def set_currency_styling(number)
     "<span #{'class=negative_number' if number < 0}>#{number_to_currency(number)}</span>".html_safe
   end
+
 end

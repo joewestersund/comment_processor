@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  include CommentsHelper
 
   before_action :signed_in_user
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
@@ -23,7 +24,9 @@ class CommentsController < ApplicationController
 
   def do_import
     #actually do the import
-    get_data(rulemaking_data_source)
+    comments_imported = import_comments_data(rulemaking_data_source)
+
+    redirect_to comments_import_path, notice: "#{comments_imported} comment(s) were successfully imported into the database."
 
   end
 
