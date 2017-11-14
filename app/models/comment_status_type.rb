@@ -10,4 +10,5 @@
 #
 
 class CommentStatusType < ApplicationRecord
+  has_many :comments
 end

@@ -10,6 +10,7 @@
       <th>Response by</th>
       <th>Status type</th>
       <th>Action needed</th>
+      <th>Order in list</th>
       <th colspan="2"></th>
     </tr>
   </thead>
@@ -21,8 +22,9 @@
         <td><%= category.summary %></td>
         <td><%= category.response_text %></td>
         <td><%= category.response_by %></td>
-        <td><%= category.category_status_type_id %></td>
+        <td><%= category.category_status_type.status_text if category.category_status_type.present? %></td>
         <td><%= category.action_needed %></td>
+        <td><%= category.order_in_list %></td>
         <td><%= link_to 'Edit', edit_category_path(category) %></td>
         <td><%= link_to 'Delete', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>

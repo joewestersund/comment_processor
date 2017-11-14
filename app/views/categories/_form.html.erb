@@ -33,12 +33,17 @@
 
   <div class="field">
     <%= form.label :category_status_type_id %>
-    <%= form.number_field :category_status_type_id, id: :category_status_type_id %>
+    <%= form.collection_select :category_status_type_id, CategoryStatusType.all, :id, :status_text, :selected => @category.category_status_type_id, prompt: true  %>
   </div>
 
   <div class="field">
     <%= form.label :action_needed %>
     <%= form.text_field :action_needed, id: :category_action_needed %>
+  </div>
+
+  <div class="field">
+    <%= form.label :order_in_list %>
+    <%= form.number_field :order_in_list, id: :category_order_in_list %>
   </div>
 
   <div class="actions">

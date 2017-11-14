@@ -2,7 +2,7 @@ class CommentsController < ApplicationController
   include CommentsHelper
 
   before_action :signed_in_user
-  before_action :set_comment, only: [:show, :edit, :update, :destroy]
+  before_action :set_comment, only: [:show, :edit, :update, :destroy, :add_to_category, :remove_from_category]
   before_action :set_select_options, only: [:new, :edit, :index]
 
 
@@ -25,24 +25,30 @@ class CommentsController < ApplicationController
   def do_import
     #actually do the import
     comments_imported = import_comments_data(rulemaking_data_source)
-
     redirect_to comments_import_path, notice: "#{comments_imported} comment(s) were successfully imported into the database."
+  end
+
+  # PATCH/PUT /comments/1/add_to_category/2
+  def add_to_category
+    existing_cat = @comment.categories.find(params[:category_id])
+  end
+
+  # PATCH/PUT /comments/1/remove_from_category/2
+  def remove_from_category
 
   end
 
   # GET /comments/1/edit
   def edit
-    byebug
-    current_comment_id = params[:id]
-    @previous_comment = Comment.where("id < ?", current_comment_id).order(:id).last
-    @next_comment = Comment.where("id < ?", current_comment_id).order(id: :desc).first
+    current_comment_source_id = @comment.source_id
+    @previous_comment = Comment.where("source_id < ?", current_comment_source_id).order(:source_id).last
+    @next_comment = Comment.where("source_id > ?", current_comment_source_id).order(:source_id).first
   end
 
   # POST /comments
   # POST /comments.json
   def create
     @comment = Comment.new(comment_params)
-
     respond_to do |format|
       if @comment.save
         format.html { redirect_to @comment, notice: 'Comment was successfully created.' }
@@ -57,9 +63,10 @@ class CommentsController < ApplicationController
   # PATCH/PUT /comments/1
   # PATCH/PUT /comments/1.json
   def update
+
     respond_to do |format|
-      if @comment.update(comment_params)
-        format.html { redirect_to @comment, notice: 'Comment was successfully updated.' }
+      if @comment.update(comment_params) && update_comment_categories
+        format.html { redirect_to edit_comment_path(@comment), notice: 'Comment was successfully updated.' }
         format.json { render :show, status: :ok, location: @comment }
       else
         format.html { render :edit }
@@ -69,6 +76,13 @@ class CommentsController < ApplicationController
   end
 
   private
+    def update_comment_categories
+      @categories = Category.where(:id => params[:comment_categories])
+      @comment.categories.destroy_all   #disassociate the already added organizers
+      @comment.categories << @categories
+      true
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_comment
       @comment = Comment.find(params[:id])
@@ -76,7 +90,7 @@ class CommentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
-      params.require(:comment).permit(:source_id, :first_name, :last_name, :email, :organization, :state, :comment_text, :attachment_url, :summary, :status_type_id, :action_needed)
+      params.require(:comment).permit(:source_id, :first_name, :last_name, :email, :organization, :state, :comment_text, :attachment_url, :summary, :comment_status_type_id, :action_needed)
     end
 
     def set_select_options
@@ -85,7 +99,7 @@ class CommentsController < ApplicationController
     end
 
     def search_params
-      params.permit(:first_name, :last_name, :organization, :state, :email, :category_name, :comment_text, :summary, :status_type_id)
+      params.permit(:first_name, :last_name, :organization, :state, :email, :category_name, :comment_text, :summary, :comment_status_type_id)
     end
 
     def get_conditions

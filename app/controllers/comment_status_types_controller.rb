@@ -28,7 +28,7 @@ class CommentStatusTypesController < ApplicationController
 
     respond_to do |format|
       if @comment_status_type.save
-        format.html { redirect_to @comment_status_type, notice: 'Comment status type was successfully created.' }
+        format.html { redirect_to comment_status_types_path, notice: 'Comment status type was successfully created.' }
         format.json { render :show, status: :created, location: @comment_status_type }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class CommentStatusTypesController < ApplicationController
   def update
     respond_to do |format|
       if @comment_status_type.update(comment_status_type_params)
-        format.html { redirect_to @comment_status_type, notice: 'Comment status type was successfully updated.' }
+        format.html { redirect_to comment_status_types_path, notice: 'Comment status type was successfully updated.' }
         format.json { render :show, status: :ok, location: @comment_status_type }
       else
         format.html { render :edit }
@@ -56,7 +56,7 @@ class CommentStatusTypesController < ApplicationController
   def destroy
     @comment_status_type.destroy
     respond_to do |format|
-      format.html { redirect_to comment_status_types_url, notice: 'Comment status type was successfully destroyed.' }
+      format.html { redirect_to comment_status_types_url, notice: 'Comment status type was successfully deleted.' }
       format.json { head :no_content }
     end
   end

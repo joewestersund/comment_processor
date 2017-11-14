@@ -28,7 +28,7 @@ class CategoryStatusTypesController < ApplicationController
 
     respond_to do |format|
       if @category_status_type.save
-        format.html { redirect_to @category_status_type, notice: 'Category status type was successfully created.' }
+        format.html { redirect_to category_status_types_path, notice: 'Category status type was successfully created.' }
         format.json { render :show, status: :created, location: @category_status_type }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class CategoryStatusTypesController < ApplicationController
   def update
     respond_to do |format|
       if @category_status_type.update(category_status_type_params)
-        format.html { redirect_to @category_status_type, notice: 'Category status type was successfully updated.' }
+        format.html { redirect_to category_status_types_path, notice: 'Category status type was successfully updated.' }
         format.json { render :show, status: :ok, location: @category_status_type }
       else
         format.html { render :edit }
@@ -56,7 +56,7 @@ class CategoryStatusTypesController < ApplicationController
   def destroy
     @category_status_type.destroy
     respond_to do |format|
-      format.html { redirect_to category_status_types_url, notice: 'Category status type was successfully destroyed.' }
+      format.html { redirect_to category_status_types_url, notice: 'Category status type was successfully deleted.' }
       format.json { head :no_content }
     end
   end

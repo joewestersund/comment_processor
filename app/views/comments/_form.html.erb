@@ -28,13 +28,17 @@
 
   <div class="field">
     <%= form.label :comment_status_type_id %>
-    <%= form.number_field :comment_status_type_id, id: :comment_status_type_id %>
+    <%= form.collection_select :comment_status_type_id, CommentStatusType.all, :id, :status_text, :selected => @comment.comment_status_type_id  %>
   </div>
 
   <div class="field">
     <%= form.label :action_needed %>
     <%= form.text_field :action_needed, id: :comment_action_needed %>
   </div>
+
+  <%= form.label :categories %>
+  <%= select_tag "comment_categories", options_from_collection_for_select(Category.all, 'id', 'category_name',@comment.categories.map{ |j| j.id }), :multiple => true %>
+
 
   <div class="actions">
     <%= form.submit %>

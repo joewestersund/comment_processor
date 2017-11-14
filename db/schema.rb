@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171113011015) do
+ActiveRecord::Schema.define(version: 20171114061658) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,12 @@ ActiveRecord::Schema.define(version: 20171113011015) do
     t.string "action_needed"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "order_in_list"
+  end
+
+  create_table "categories_comments", id: false, force: :cascade do |t|
+    t.bigint "comment_id", null: false
+    t.bigint "category_id", null: false
   end
 
   create_table "category_status_types", force: :cascade do |t|
@@ -64,6 +70,7 @@ ActiveRecord::Schema.define(version: 20171113011015) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "remember_token"
+    t.boolean "admin"
   end
 
 end

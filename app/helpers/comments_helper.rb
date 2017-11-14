@@ -30,6 +30,8 @@ module CommentsHelper
 
     entries = response_text.split("<entry>")
 
+    default_comment_status_type = CommentStatusType.order(:order_in_list).first #by default, assign new comments to the first status in the list
+
     entries.each do |entry|
       id = entry.string_between_markers('<d:__id m:type="Edm.Int64">','</d:__id>')
 
@@ -44,13 +46,13 @@ module CommentsHelper
         c.state = entry.string_between_markers('<d:state>','</d:state>')
         c.comment_text = entry.string_between_markers('<d:comment>','</d:comment>')
 
+        c.comment_status_type = default_comment_status_type
+
         attached_document_info = entry.string_between_markers('<d:additional_document m:type="data.oregon.gov.document">','</d:additional_document>')
         unless attached_document_info.to_s.strip.empty?
           c.attachment_name = attached_document_info.string_between_markers('<d:name>','</d:name>')
           c.attachment_url = attached_document_info.string_between_markers('<d:url>','</d:url>')
         end
-
-        byebug
 
         if c.save
           comments_added += 1

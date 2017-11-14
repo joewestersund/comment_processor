@@ -10,4 +10,5 @@
 #
 
 class CategoryStatusType < ApplicationRecord
+  has_many :categories
 end

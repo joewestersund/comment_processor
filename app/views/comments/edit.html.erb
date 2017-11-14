@@ -1,7 +1,9 @@
 <h1>Editing Comment</h1>
 
-<%= link_to("previous comment", edit_comments_path(@previous_comment)) if @previous_comment.present? %>
-<%= link_to("next comment", edit_comments_path(@next_comment)) if @next_comment.present? %>
+<div>
+  <%= link_to("previous comment", edit_comment_path(@previous_comment), class: "btn btn-large btn-primary") if @previous_comment.present? %>
+  <%= link_to("next comment", edit_comment_path(@next_comment), class: "btn btn-large btn-primary") if @next_comment.present? %>
+</div>
 
 <%= render 'form', comment: @comment %>
 
