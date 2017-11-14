@@ -1,17 +1,9 @@
 <div class="about center hero-unit">
   <p>
-    A free, open-source project by Joe Westersund to help in reviewing public comments in state rulemakings.
-  </p>
-  <p>
-    Or, <%= link_to "download the source code", "https://github.com/joewestersund/comment_processor" %> to create your own version.
-  </p>
-  <p>
-    Feel free to <%= mail_to 'westersund.joe@deq.state.or.us', 'contact me' %> if you have any questions or suggestions.
+    Please <%= mail_to 'westersund.joe@deq.state.or.us', 'contact me' %> if you have any questions have trouble logging in.
   </p>
 
   <% unless signed_in? %>
-    <%= link_to "Sign up", signup_path, class: "btn btn-large btn-primary" %>
-    &NonBreakingSpace;
     <%= link_to "Sign in", signin_path, class: "btn btn-large btn-primary" %>
   <% end %>
 
