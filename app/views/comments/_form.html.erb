@@ -37,7 +37,7 @@
   </div>
 
   <%= form.label :categories %>
-  <%= select_tag "comment_categories", options_from_collection_for_select(Category.all, 'id', 'category_name',@comment.categories.map{ |j| j.id }), :multiple => true %>
+  <%= select_tag "comment_categories", options_from_collection_for_select(Category.order(:order_in_list), 'id', 'category_name',@comment.categories.map{ |j| j.id }), :multiple => true %>
 
 
   <div class="actions">
