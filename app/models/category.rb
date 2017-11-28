@@ -17,4 +17,5 @@
 class Category < ApplicationRecord
   has_and_belongs_to_many :comments
   belongs_to :category_status_type
+  belongs_to :user, foreign_key: 'response_by', optional: true
 end

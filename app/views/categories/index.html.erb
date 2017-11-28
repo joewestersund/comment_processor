@@ -21,7 +21,7 @@
         <td><%= category.category_name %></td>
         <td><%= category.summary %></td>
         <td><%= category.response_text %></td>
-        <td><%= category.response_by %></td>
+        <td><%= User.find(category.response_by).name if category.response_by.present? %></td>
         <td><%= category.category_status_type.status_text if category.category_status_type.present? %></td>
         <td><%= category.action_needed %></td>
         <td><%= category.order_in_list %></td>
@@ -31,7 +31,7 @@
     <% end %>
   </tbody>
 </table>
-
+<%= will_paginate @categories %>
 <br>
 
 <%= link_to 'New Category', new_category_path %>

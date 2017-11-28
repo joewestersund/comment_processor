@@ -9,7 +9,7 @@ class CommentsController < ApplicationController
   # GET /comments
   # GET /comments.json
   def index
-    @comments = Comment.order(:source_id)
+    @comments = Comment.order(:source_id).paginate(:page => params[:page], :per_page => 10)
   end
 
   # GET /comments/1
@@ -99,27 +99,15 @@ class CommentsController < ApplicationController
     end
 
     def search_params
-      params.permit(:first_name, :last_name, :organization, :state, :email, :category_name, :comment_text, :summary, :comment_status_type_id)
+      params.permit(:first_name, :last_name, :email, :organization, :state, :category_name, :comment_text, :summary, :comment_status_type_id)
     end
 
     def get_conditions
 
-      search_terms = Transaction.new(search_params)
+      search_terms = Comment.new(search_params)
 
       conditions = {}
       conditions_string = []
-
-      conditions[:start_date] = params[:start_date] if params[:start_date].present?
-      conditions_string << "transaction_date >= :start_date" if params[:start_date].present?
-
-      conditions[:end_date] = params[:end_date] if params[:end_date].present?
-      conditions_string << "transaction_date <= :end_date" if params[:end_date].present?
-
-      conditions[:month] = search_terms.month if search_terms.month.present?
-      conditions_string << "month = :month" if search_terms.month.present?
-
-      conditions[:day] = search_terms.day if search_terms.day.present?
-      conditions_string << "day = :day" if search_terms.day.present?
 
       conditions[:year] = search_terms.year if search_terms.year.present?
       conditions_string << "year = :year" if search_terms.year.present?

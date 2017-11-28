@@ -28,11 +28,11 @@
 
   <div class="field">
     <%= form.label :response_by %>
-    <%= form.number_field :response_by, id: :category_response_by %>
+    <%= form.collection_select :response_by, @users, :id, :name, :selected => @category.response_by, include_blank: true  %>
   </div>
 
   <div class="field">
-    <%= form.label :category_status_type_id %>
+    <%= form.label :category_status_type %>
     <%= form.collection_select :category_status_type_id, CategoryStatusType.all, :id, :status_text, :selected => @category.category_status_type_id, prompt: true  %>
   </div>
 

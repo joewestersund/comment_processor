@@ -14,6 +14,7 @@
 
 class User < ApplicationRecord
   has_secure_password #adds authenticate method, etc.
+  has_many :categories
 
   before_save { |user| user.email.downcase! }
   before_create :create_remember_token
