@@ -21,7 +21,7 @@
   </div>
   <div class="field">
     <%= f.label :admin %>
-    <%= f.check_box :admin %>
+    <%= f.check_box :admin, disabled: locals[:edit_profile] %>
   </div>
 
   <% if locals[:new_user] %>
