@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
-  before_action :signed_in_user, only: [:new, :edit, :edit_password, :update, :update_password, :show, :destroy, :index]
-  before_action :set_user, only: [:show, :edit, :edit_password, :update, :update_password, :destroy]
+  before_action :signed_in_user, only: [:new, :edit, :edit_profile, :edit_password, :update, :update_password, :show, :destroy, :index]
+  before_action :admin_user, only: [:new, :edit, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_self_as_user, only: [:edit_profile, :edit_password, :update_password]
 
 
   # GET /users
@@ -23,13 +25,16 @@ class UsersController < ApplicationController
   def edit
   end
 
+  def edit_profile
+  end
+
   # POST /users
   # POST /users.json
   def create
     @user = User.new(user_params_new)
     if @user.save
       sign_in @user
-      flash[:notice] = "Welcome to the comment processor."
+      flash[:notice] = "User has been added."
       redirect_to welcome_path
     else
       render 'new'
@@ -42,7 +47,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to profile_edit_path, notice: 'Your profile was successfully updated.' }
+        format.html { redirect_to profile_edit_path, notice: 'User successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
@@ -75,18 +80,22 @@ class UsersController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_user
+    def set_self_as_user
       @user = self.current_user
       #@user = User.find(params[:id])
     end
 
+    def set_user
+      @user = User.find(params[:id])
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :email)
+      params.require(:user).permit(:name, :email, :admin)
     end
 
     def user_params_new
-      params.require(:user).permit(:name, :email, :password, :password_confirmation)
+      params.require(:user).permit(:name, :email, :admin, :password, :password_confirmation)
     end
 
     def user_params_change_password()

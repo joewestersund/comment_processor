@@ -19,6 +19,10 @@ module SessionsHelper
     redirect_to signin_path, notice: "Please sign in." unless signed_in?
   end
 
+  def admin_user
+    redirect_to welcome_path, notice: "That feature only available to admins." unless current_user.admin?
+  end
+
   def current_user=(user)
     @current_user = user
   end

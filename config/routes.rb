@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
   resources :users
   get '/profile/edit_password', to: 'users#edit_password'
-  get '/profile/edit', to: 'users#edit'
+  get '/profile/edit', to: 'users#edit_profile'
   patch '/profile/update_password', to: 'users#update_password'
 
   resources :categories
