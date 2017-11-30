@@ -9,7 +9,33 @@ class CommentsController < ApplicationController
   # GET /comments
   # GET /comments.json
   def index
-    @comments = Comment.order(:source_id).paginate(:page => params[:page], :per_page => 10)
+    #@comments = Comment.order(:source_id).paginate(:page => params[:page], :per_page => 10)
+
+    conditions = get_conditions
+    if conditions[0].empty?
+      c = Comment.all
+    else
+      #do left outer join in case there are no conditions on categories
+      c = Comment.where("id IN (?)", Comment.left_outer_joins(:categories).where(conditions).select(:id))
+      #c = Comment.joins(:categories).where(conditions)
+    end
+    c = c.order(:source_id)
+
+    respond_to do |format|
+      format.html {
+        @filtered = !conditions[0].empty?
+        @comments = c.page(params[:page]).per_page(10)
+      }
+      format.xlsx {
+        @comments = c
+        response.headers['Content-Disposition'] = 'attachment; filename="comments.xlsx"'
+      }
+      format.csv {
+        stream_csv(c)
+      }
+    end
+
+
   end
 
   # GET /comments/1
@@ -95,11 +121,12 @@ class CommentsController < ApplicationController
 
     def set_select_options
       @users = User.order(:name).all
-      @categories = Category.order(:category_name).all
+      @categories = Category.order(:order_in_list).all
+      @comment_status_types = CommentStatusType.order(:order_in_list).all
     end
 
     def search_params
-      params.permit(:first_name, :last_name, :email, :organization, :state, :category_name, :comment_text, :summary, :comment_status_type_id)
+      params.permit(:first_name, :last_name, :email, :organization, :state, :comment_text, :summary, :comment_status_type_id, :action_needed)
     end
 
     def get_conditions
@@ -109,23 +136,39 @@ class CommentsController < ApplicationController
       conditions = {}
       conditions_string = []
 
-      conditions[:year] = search_terms.year if search_terms.year.present?
-      conditions_string << "year = :year" if search_terms.year.present?
+      conditions[:first_name] = "%#{search_terms.first_name}%" if search_terms.first_name.present?
+      conditions_string << "first_name ILIKE :first_name" if search_terms.first_name.present?
 
-      conditions[:vendor_name] = "%#{search_terms.vendor_name}%" if search_terms.vendor_name.present?
-      conditions_string << "vendor_name ILIKE :vendor_name" if search_terms.vendor_name.present?
+      conditions[:last_name] = "%#{search_terms.last_name}%" if search_terms.last_name.present?
+      conditions_string << "last_name ILIKE :last_name" if search_terms.last_name.present?
 
-      conditions[:account_id] = search_terms.account_id if search_terms.account_id.present?
-      conditions_string << "account_id = :account_id" if search_terms.account_id.present?
+      conditions[:email] = "%#{search_terms.email}%" if search_terms.email.present?
+      conditions_string << "email ILIKE :email" if search_terms.email.present?
 
-      conditions[:transaction_category_id] = search_terms.transaction_category_id if search_terms.transaction_category_id.present?
-      conditions_string << "transaction_category_id = :transaction_category_id" if search_terms.transaction_category_id.present?
+      conditions[:organization] = "%#{search_terms.organization}%" if search_terms.organization.present?
+      conditions_string << "organization ILIKE :organization" if search_terms.organization.present?
 
-      conditions[:amount] = search_terms.amount if search_terms.amount.present?
-      conditions_string << "amount = :amount" if search_terms.amount.present?
+      conditions[:state] = "%#{search_terms.state}%" if search_terms.state.present?
+      conditions_string << "state ILIKE :state" if search_terms.state.present?
 
-      conditions[:description] = "%#{search_terms.description}%" if search_terms.description.present?
-      conditions_string << "description ILIKE :description" if search_terms.description.present?
+      conditions[:comment_text] = "%#{search_terms.comment_text}%" if search_terms.comment_text.present?
+      conditions_string << "comment_text ILIKE :comment_text" if search_terms.comment_text.present?
+
+      # filter is for any attachment
+      conditions_string << "attachment_url IS NOT NULL" if (params[:has_attachment].present? && params[:has_attachment] == "on")
+
+      conditions[:summary] = "%#{search_terms.summary}%" if search_terms.summary.present?
+      conditions_string << "summary ILIKE :summary" if search_terms.summary.present?
+
+      #treating specially because of many to many relation
+      conditions[:category_id] = params[:category_id] if params[:category_id].present?
+      conditions_string << "categories_comments.category_id = :category_id" if params[:category_id].present?
+
+      conditions[:comment_status_type_id] = search_terms.comment_status_type_id if search_terms.comment_status_type_id.present?
+      conditions_string << "comment_status_type_id = :comment_status_type_id" if search_terms.comment_status_type_id.present?
+
+      conditions[:action_needed] = "%#{search_terms.action_needed}%" if search_terms.action_needed.present?
+      conditions_string << "comments.action_needed ILIKE :action_needed" if search_terms.action_needed.present?
 
       return [conditions_string.join(" AND "), conditions]
     end

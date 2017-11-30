@@ -32,13 +32,14 @@
   </div>
 
   <div class="field">
+    <%= form.label :categories %>
+    <%= select_tag "comment_categories", options_from_collection_for_select(Category.order(:order_in_list), 'id', 'category_name',@comment.categories.map{ |j| j.id }), :multiple => true %>
+  </div>
+
+  <div class="field">
     <%= form.label :action_needed %>
     <%= form.text_field :action_needed, id: :comment_action_needed %>
   </div>
-
-  <%= form.label :categories %>
-  <%= select_tag "comment_categories", options_from_collection_for_select(Category.order(:order_in_list), 'id', 'category_name',@comment.categories.map{ |j| j.id }), :multiple => true %>
-
 
   <div class="actions">
     <%= form.submit %>
