@@ -11,7 +11,8 @@
       <th>Comment text</th>
       <th>Attachment</th>
       <th>Summary</th>
-      <th>Status type</th>
+      <th>Categories</th>
+      <th>Status</th>
       <th>Action needed</th>
       <th></th>
     </tr>
@@ -26,6 +27,10 @@
         <td><%= comment.comment_text.truncate(1000) if comment.comment_text.present?%></td>
         <td><%= if comment.attachment_name.present? then link_to comment.attachment_name.to_s, comment.attachment_url end %></td>
         <td><%= comment.summary %></td>
+        <td><% comment.categories.each_with_index do |c,index|%>
+            <%= link_to(c.category_name, edit_category_path(c)) %>
+            <%= "," unless index == comment.categories.count - 1 %>
+        <% end %></td>
         <td><%= comment.comment_status_type.status_text if comment.comment_status_type.present? %></td>
         <td><%= comment.action_needed %></td>
         <td><%= link_to 'Edit', edit_comment_path(comment) %></td>
