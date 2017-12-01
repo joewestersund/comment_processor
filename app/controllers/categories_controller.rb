@@ -17,7 +17,7 @@ class CategoriesController < ApplicationController
   def new
     @category = Category.new
     #by default, assign to whoever created it
-    #DEBUG @category.assigned_to = current_user.id
+    @category.assigned_to = current_user.id
   end
 
   # GET /categories/1/edit
