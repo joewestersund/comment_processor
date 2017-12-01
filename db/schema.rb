@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171114061658) do
+ActiveRecord::Schema.define(version: 20171201014944) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20171114061658) do
     t.string "category_name"
     t.string "summary"
     t.string "response_text"
-    t.integer "response_by"
+    t.integer "assigned_to"
     t.integer "category_status_type_id"
     t.string "action_needed"
     t.datetime "created_at", null: false

@@ -6,7 +6,7 @@
 #  category_name           :string
 #  summary                 :string
 #  response_text           :string
-#  response_by             :integer
+#  assigned_to             :integer
 #  category_status_type_id :integer
 #  action_needed           :string
 #  created_at              :datetime         not null
@@ -17,5 +17,5 @@
 class Category < ApplicationRecord
   has_and_belongs_to_many :comments
   belongs_to :category_status_type
-  belongs_to :user, foreign_key: 'response_by', optional: true
+  belongs_to :user, foreign_key: 'assigned_to', optional: true
 end

@@ -27,8 +27,8 @@
   </div>
 
   <div class="field">
-    <%= form.label :response_by %>
-    <%= form.collection_select :response_by, @users, :id, :name, :selected => @category.response_by, include_blank: true  %>
+    <%= form.label :assigned_to %>
+    <%= form.collection_select :assigned_to, @users, :id, :name, :selected => @category.assigned_to, include_blank: true  %>
   </div>
 
   <div class="field">

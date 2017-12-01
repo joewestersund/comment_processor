@@ -16,6 +16,8 @@ class CategoriesController < ApplicationController
   # GET /categories/new
   def new
     @category = Category.new
+    #by default, assign to whoever created it
+    @category.assigned_to = current_user.id
   end
 
   # GET /categories/1/edit
@@ -73,6 +75,6 @@ class CategoriesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
     def category_params
-      params.require(:category).permit(:category_name, :summary, :response_text, :response_by, :category_status_type_id, :action_needed, :order_in_list)
+      params.require(:category).permit(:category_name, :summary, :response_text, :assigned_to, :category_status_type_id, :action_needed, :order_in_list)
     end
 end

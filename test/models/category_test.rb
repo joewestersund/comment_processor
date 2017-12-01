@@ -6,7 +6,7 @@
 #  category_name           :string
 #  summary                 :string
 #  response_text           :string
-#  response_by             :integer
+#  assigned_to             :integer
 #  category_status_type_id :integer
 #  action_needed           :string
 #  created_at              :datetime         not null

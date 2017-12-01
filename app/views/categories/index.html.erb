@@ -7,7 +7,7 @@
       <th>Category name</th>
       <th>Summary</th>
       <th>Response text</th>
-      <th>Response by</th>
+      <th>Assigned to</th>
       <th>Status type</th>
       <th>Action needed</th>
       <th colspan="2"></th>
@@ -20,7 +20,7 @@
         <td><%= category.category_name %></td>
         <td><%= category.summary %></td>
         <td><%= category.response_text %></td>
-        <td><%= User.find(category.response_by).name if category.response_by.present? %></td>
+        <td><%= User.find(category.assigned_to).name if category.assigned_to.present? %></td>
         <td><%= category.category_status_type.status_text if category.category_status_type.present? %></td>
         <td><%= category.action_needed %></td>
         <td><%= link_to 'Edit', edit_category_path(category) %></td>
