@@ -9,7 +9,6 @@ class CommentsController < ApplicationController
   # GET /comments
   # GET /comments.json
   def index
-    #@comments = Comment.order(:source_id).paginate(:page => params[:page], :per_page => 10)
 
     conditions = get_conditions
     if conditions[0].empty?
@@ -17,13 +16,13 @@ class CommentsController < ApplicationController
     else
       #do left outer join in case there are no conditions on categories
       c = Comment.where("id IN (?)", Comment.left_outer_joins(:categories).where(conditions).select(:id))
-      #c = Comment.joins(:categories).where(conditions)
     end
     c = c.order(:source_id)
 
     respond_to do |format|
       format.html {
         @filtered = !conditions[0].empty?
+        @filter_querystring = remove_empty_elements(filter_params_all)
         @comments = c.page(params[:page]).per_page(10)
       }
       format.xlsx {
@@ -54,21 +53,23 @@ class CommentsController < ApplicationController
     redirect_to comments_import_path, notice: "#{comments_imported} comment(s) were successfully imported into the database."
   end
 
-  # PATCH/PUT /comments/1/add_to_category/2
-  def add_to_category
-    existing_cat = @comment.categories.find(params[:category_id])
-  end
-
-  # PATCH/PUT /comments/1/remove_from_category/2
-  def remove_from_category
-
-  end
-
   # GET /comments/1/edit
   def edit
     current_comment_source_id = @comment.source_id
-    @previous_comment = Comment.where("source_id < ?", current_comment_source_id).order(:source_id).last
-    @next_comment = Comment.where("source_id > ?", current_comment_source_id).order(:source_id).first
+
+    conditions = get_conditions
+    if conditions[0].empty?
+      c = Comment.all
+    else
+      #do left outer join in case there are no conditions on categories
+      c = Comment.where("id IN (?)", Comment.left_outer_joins(:categories).where(conditions).select(:id))
+    end
+
+    @previous_comment = c.where("source_id < ?", current_comment_source_id).order(:source_id).last
+    @next_comment = c.where("source_id > ?", current_comment_source_id).order(:source_id).first
+
+    @filtered = !conditions[0].empty?
+    @filter_querystring = remove_empty_elements(filter_params_all)
   end
 
   # POST /comments
@@ -92,7 +93,8 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.update(comment_params) && update_comment_categories
-        format.html { redirect_to edit_comment_path(@comment), notice: 'Comment was successfully updated.' }
+        @filter_querystring = remove_empty_elements(filter_params_all)
+        format.html { redirect_to edit_comment_path(@comment,@filter_querystring), notice: 'Comment was successfully updated.' }
         format.json { render :show, status: :ok, location: @comment }
       else
         format.html { render :edit }
@@ -125,13 +127,17 @@ class CommentsController < ApplicationController
       @comment_status_types = CommentStatusType.order(:order_in_list).all
     end
 
-    def search_params
+    def filter_params_in_obj
       params.permit(:first_name, :last_name, :email, :organization, :state, :comment_text, :summary, :comment_status_type_id, :action_needed)
+    end
+
+    def filter_params_all
+      params.permit(:first_name, :last_name, :email, :organization, :state, :comment_text, :summary, :comment_status_type_id, :action_needed, :has_attachment, :category_id, )
     end
 
     def get_conditions
 
-      search_terms = Comment.new(search_params)
+      search_terms = Comment.new(filter_params_in_obj)
 
       conditions = {}
       conditions_string = []
@@ -158,7 +164,7 @@ class CommentsController < ApplicationController
       conditions_string << "attachment_url IS NOT NULL" if (params[:has_attachment].present? && params[:has_attachment] == "on")
 
       conditions[:summary] = "%#{search_terms.summary}%" if search_terms.summary.present?
-      conditions_string << "summary ILIKE :summary" if search_terms.summary.present?
+      conditions_string << "comments.summary ILIKE :summary" if search_terms.summary.present?
 
       #treating specially because of many to many relation
       conditions[:category_id] = params[:category_id] if params[:category_id].present?

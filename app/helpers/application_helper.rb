@@ -73,4 +73,8 @@ module ApplicationHelper
     "<span #{'class=negative_number' if number < 0}>#{number_to_currency(number)}</span>".html_safe
   end
 
+  def remove_empty_elements(hash)
+    hash.delete_if { |key, value| value.blank? }
+  end
+
 end

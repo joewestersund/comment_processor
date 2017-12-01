@@ -63,7 +63,6 @@
 <table>
   <thead>
     <tr>
-      <th>Source ID</th>
       <th>Name & email</th>
       <th>Organization & State</th>
       <th>Comment text</th>
@@ -79,7 +78,6 @@
   <tbody>
     <% @comments.each do |comment| %>
       <tr>
-        <td><%= comment.source_id %></td>
         <td><%= "#{comment.first_name + ' ' if comment.first_name.present?}#{comment.last_name}#{' <' + comment.email.truncate(25) + '>' if comment.email.present?}"%></td>
         <td><%= "#{comment.organization + ", " if comment.organization.present?}#{comment.state}" %></td>
         <td><%= comment.comment_text.truncate(1000) if comment.comment_text.present?%></td>
@@ -91,7 +89,7 @@
         <% end %></td>
         <td><%= comment.comment_status_type.status_text if comment.comment_status_type.present? %></td>
         <td><%= comment.action_needed %></td>
-        <td><%= link_to 'Edit', edit_comment_path(comment) %></td>
+        <td><%= link_to 'Edit', edit_comment_path(comment,@filter_querystring) %></td>
       </tr>
     <% end %>
   </tbody>
