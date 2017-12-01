@@ -1,11 +1,9 @@
 <h1>Editing Comment</h1>
 
-<% if @filtered %>
-  <div>
-    Filter: <%= @filter_querystring %>
-    <%= link_to 'Edit', comments_path(@filter_querystring) %>
-  </div>
-<% end %>
+<div>
+  Filter: <%= @filtered ? @filter_querystring : 'none' %>
+  <%= link_to 'Edit', comments_path(@filter_querystring) %>
+</div>
 
 <div>
   <%= link_to("previous comment", edit_comment_path(@previous_comment,@filter_querystring), class: "btn btn-large btn-primary") if @previous_comment.present? %>
