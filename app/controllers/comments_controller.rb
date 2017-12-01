@@ -4,6 +4,7 @@ class CommentsController < ApplicationController
   before_action :signed_in_user
   before_action :set_comment, only: [:show, :edit, :update, :destroy, :add_to_category, :remove_from_category]
   before_action :set_select_options, only: [:new, :edit, :index]
+  before_action :admin_user, only: [:import, :do_import]
 
 
   # GET /comments

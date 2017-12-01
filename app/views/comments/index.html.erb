@@ -1,8 +1,10 @@
 <h1>Comments</h1>
 
-<div>
-  <%= link_to 'Import comments', comments_import_path %>
-</div>
+<% if current_user.admin? %>
+  <div>
+    <%= link_to 'Import comments', comments_import_path %>
+  </div>
+<% end %>
 
 <div class="filter-box">
   <button id="show_filter" class="filter-button">Show/Hide Filter</button>
