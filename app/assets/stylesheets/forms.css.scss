@@ -21,6 +21,10 @@ form {
       margin-bottom: 1px;
     }
 
+    label.inline {
+      display: inline;
+    }
+
     textarea {
       width: 300px;
       &.bigtextarea {

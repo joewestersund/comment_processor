@@ -32,7 +32,11 @@
   </div>
 
   <div class="field">
-    <%= form.label :categories %>
+    <div class="field">
+      <%= form.label :categories, class: 'inline' %>
+      <%= link_to 'Add', new_category_path, target: :_blank %> |
+      <%= link_to 'Save and Refresh', "#", :onclick => "$(this).closest('form').submit()" %>
+    </div>
     <%= select_tag "comment_categories", options_from_collection_for_select(Category.order(:order_in_list), 'id', 'category_name',@comment.categories.map{ |j| j.id }), :multiple => true %>
   </div>
 
