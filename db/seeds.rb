@@ -10,8 +10,7 @@ Comment.destroy_all
 Category.destroy_all
 
 User.destroy_all
-user1 = User.create([{name: "Joe Westersund", email: "joe_westersund@hotmail.com", password: "bigtrout", password_confirmation: "bigtrout", admin:true}])
-user2 = User.create([{name: "demo", email: "testuser@deq.state.or.us", password: "testuser", password_confirmation: "testuser"}])
+user1 = User.create([{name: "Joe Westersund", email: "westersund.joe@deq.state.or.us", password: "JoeTest", password_confirmation: "JoeTest", admin:true}])
 
 CategoryStatusType.destroy_all
 category_status_types = CategoryStatusType.create([{ status_text: "needs review", order_in_list: 1},{ status_text: "under review", order_in_list: 2},{ status_text: "review complete", order_in_list: 3},{ status_text: "other, see action needed", order_in_list: 4}])

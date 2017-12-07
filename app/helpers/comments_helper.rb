@@ -45,7 +45,7 @@ module CommentsHelper
         c.organization = entry.string_between_markers('<d:organization>','</d:organization>')
         c.state = entry.string_between_markers('<d:state>','</d:state>')
         c.comment_text = entry.string_between_markers('<d:comment>','</d:comment>')
-
+        c.manually_entered = false #false because this is imported from DAS
         c.comment_status_type = default_comment_status_type
 
         attached_document_info = entry.string_between_markers('<d:additional_document m:type="data.oregon.gov.document">','</d:additional_document>')

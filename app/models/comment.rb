@@ -17,6 +17,7 @@
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  attachment_name        :string
+#  manually_entered       :boolean
 #
 
 class Comment < ApplicationRecord
