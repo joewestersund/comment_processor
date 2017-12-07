@@ -1,7 +1,13 @@
 Rails.application.routes.draw do
 
   resources :category_status_types
+  post '/category_status_types/:id/move_up', to: 'category_status_types#move_up'
+  post '/category_status_types/:id/move_down', to: 'category_status_types#move_down'
+
   resources :comment_status_types
+  post '/comment_status_types/:id/move_up', to: 'comment_status_types#move_up'
+  post '/comment_status_types/:id/move_down', to: 'comment_status_types#move_down'
+
   get 'sessions/new'
 
   get 'static_pages/about'

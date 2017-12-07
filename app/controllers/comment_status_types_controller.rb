@@ -5,7 +5,15 @@ class CommentStatusTypesController < ApplicationController
   # GET /comment_status_types
   # GET /comment_status_types.json
   def index
-    @comment_status_types = CommentStatusType.all
+    @comment_status_types = CommentStatusType.all.order(:order_in_list)
+  end
+
+  def move_up
+    move(true)
+  end
+
+  def move_down
+    move(false)
   end
 
   # GET /comment_status_types/1
@@ -26,6 +34,10 @@ class CommentStatusTypesController < ApplicationController
   # POST /comment_status_types.json
   def create
     @comment_status_type = CommentStatusType.new(comment_status_type_params)
+
+    #set the order_in_list
+    cst_max = CommentStatusType.maximum(:order_in_list)
+    @comment_status_type.order_in_list = cst_max.nil? ? 1 : cst_max + 1
 
     respond_to do |format|
       if @comment_status_type.save
@@ -71,5 +83,33 @@ class CommentStatusTypesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_status_type_params
       params.require(:comment_status_type).permit(:status_text, :order_in_list)
+    end
+
+    def move(up = true)
+      cst = CommentStatusType.find(params[:id])
+
+      if cst.present?
+        cst2 = get_adjacent(cst,up)
+        if cst2.present?
+          swap_and_save(cst, cst2)
+          respond_to do |format|
+            format.html { redirect_to comment_status_types_path }
+            format.json { head :no_content }
+          end
+          return
+        end
+      end
+      respond_to do |format|
+        format.html { redirect_to comment_status_types_path, notice: "could not move" }
+        format.json { render json: @comment_status_type.errors, status: :unprocessable_entity }
+      end
+    end
+
+    def get_adjacent(current, get_previous = false)
+      if get_previous
+        CommentStatusType.where("order_in_list < ?",current.order_in_list).order("order_in_list DESC").first
+      else
+        CommentStatusType.where("order_in_list > ?",current.order_in_list).order(:order_in_list).first
+      end
     end
 end
