@@ -12,6 +12,6 @@
   </div>
 </div>
 
-<%= render 'form', category: @category %>
+<%= render 'form', category: @category, form_url: category_path(@category,@filter_querystring) %>
 
 <%= link_to 'Index', categories_path %>
