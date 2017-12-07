@@ -1,5 +1,7 @@
 class CommentsController < ApplicationController
   include CommentsHelper
+  include ActionController::Live
+  require 'csv'
 
   before_action :signed_in_user
   before_action :admin_user, only: [:import, :do_import]
@@ -17,7 +19,7 @@ class CommentsController < ApplicationController
       #do left outer join in case there are no conditions on categories
       c = Comment.where("id IN (?)", Comment.left_outer_joins(:categories).where(conditions).select(:id))
     end
-    c = c.order(:source_id)
+    c = c.order(:id)
 
     respond_to do |format|
       format.html {
@@ -50,7 +52,7 @@ class CommentsController < ApplicationController
   def do_import
     #actually do the import
     comments_imported = import_comments_data(rulemaking_data_source)
-    redirect_to comments_import_path, notice: "#{comments_imported} comment(s) were successfully imported into the database."
+    redirect_to comments_path, notice: "#{comments_imported} comment(s) were successfully imported into the database."
   end
 
   # GET /comments/1/edit
@@ -177,6 +179,29 @@ class CommentsController < ApplicationController
       conditions_string << "comments.action_needed ILIKE :action_needed" if search_terms.action_needed.present?
 
       return [conditions_string.join(" AND "), conditions]
+    end
+
+    def stream_csv(comments)
+      set_csv_file_headers('comments.csv')
+      set_csv_streaming_headers
+
+      response.status = 200
+
+      write_csv_rows(comments)
+    end
+
+    def write_csv_rows(comments)
+      begin
+        #write out the header row
+        response.stream.write CSV.generate_line(Comment.csv_header)
+
+        #write out each row of data
+        comments.each_with_index do |c,index|
+          response.stream.write CSV.generate_line(c.to_csv(index))
+        end
+      ensure
+        response.stream.close
+      end
     end
 
 end

@@ -1,5 +1,11 @@
 <h1>Categories</h1>
 
+<% if current_user.admin? %>
+  <div>Download as <%= link_to "CSV", categories_path(@filter_querystring.merge({format: "csv"})) %>
+    | <%= link_to "XLSX", categories_path(@filter_querystring,format: "xlsx") %>
+  </div>
+<% end %>
+
 <div class="filter-box">
   <button id="show_filter" class="filter-button">Show/Hide Filter</button>
   <div class="filter <%="hidden" unless @filtered %>">

@@ -1,4 +1,7 @@
 class CategoriesController < ApplicationController
+  include ActionController::Live
+  require 'csv'
+
   before_action :signed_in_user
   before_action :set_category, only: [:show, :edit, :update, :destroy]
   before_action :set_select_options, only: [:new, :edit, :index]
@@ -186,6 +189,29 @@ class CategoriesController < ApplicationController
         Category.where("order_in_list < ?",current.order_in_list).order("order_in_list DESC").first
       else
         Category.where("order_in_list > ?",current.order_in_list).order(:order_in_list).first
+      end
+    end
+
+    def stream_csv(categories)
+      set_csv_file_headers('categories.csv')
+      set_csv_streaming_headers
+
+      response.status = 200
+
+      write_csv_rows(categories)
+    end
+
+    def write_csv_rows(categories)
+      begin
+        #write out the header row
+        response.stream.write CSV.generate_line(Category.csv_header)
+
+        #write out each row of data
+        categories.each do |cat|
+          response.stream.write CSV.generate_line(cat.to_csv)
+        end
+      ensure
+        response.stream.close
       end
     end
 end

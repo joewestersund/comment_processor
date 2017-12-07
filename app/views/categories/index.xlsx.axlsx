@@ -1,0 +1,14 @@
+wb = xlsx_package.workbook
+
+header_style = wb.styles.add_style alignment: {horizontal: :center, vertical: :center, wrap_text: true}, b: true, sz: 10, bg_color: "C0C0C0"
+data_style = wb.styles.add_style alignment: {horizontal: :center, vertical: :center, wrap_text: true}, sz: 10
+
+
+wb.add_worksheet(name: 'Categories') do |sheet|
+
+  sheet.add_row Category.csv_header, style: header_style
+
+  @categories.each do |cat|
+    sheet.add_row cat.to_csv, style: data_style
+  end
+end

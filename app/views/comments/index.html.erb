@@ -4,6 +4,9 @@
   <div>
     <%= link_to 'Import comments', comments_import_path %>
   </div>
+  <div>Download as <%= link_to "CSV", comments_path(@filter_querystring.merge({format: "csv"})) %>
+    | <%= link_to "XLSX", comments_path(@filter_querystring,format: "xlsx") %>
+  </div>
 <% end %>
 
 <div class="filter-box">
@@ -85,7 +88,7 @@
         <td><%= comment.comment_text.truncate(1000) if comment.comment_text.present?%></td>
         <td><%= if comment.attachment_name.present? then link_to comment.attachment_name.to_s, comment.attachment_url end %></td>
         <td><%= comment.summary %></td>
-        <td><% comment.categories.each_with_index do |c,index|%>
+        <td><% comment.categories.order(:order_in_list).each_with_index do |c,index|%>
             <%= link_to(c.category_name, edit_category_path(c)) %>
             <%= "," unless index == comment.categories.count - 1 %>
         <% end %></td>

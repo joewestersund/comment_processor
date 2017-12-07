@@ -22,5 +22,14 @@ class Category < ApplicationRecord
   validates :category_name, presence: true, uniqueness: { case_sensitive: false }
   validates :order_in_list, numericality: { only_integer: true, greater_than: 0}, uniqueness: true
 
+  def self.csv_header
+    ['Order In List', 'ID', 'Category Name', 'Summary', 'Response Text', 'Assigned To',
+     'Status', 'Action Needed', 'Comments by ID']
+  end
+
+  def to_csv
+    [self.order_in_list, self.id, self.category_name, self.summary, self.response_text, self.assigned_to.present? ? User.find(self.assigned_to).name : '',
+     self.category_status_type.status_text, self.action_needed, self.comments.order(:source_id).collect{|com| com.id}.join(", ")]
+  end
 
 end
