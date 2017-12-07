@@ -1,4 +1,16 @@
-<h1>Editing Category</h1>
+<h1>Edit Category</h1>
+
+<div class="next-previous">
+  <div>
+    Filter: <%= @filtered ? @filter_querystring : 'none' %>
+    <%= link_to 'Edit', categories_path(@filter_querystring) %>
+  </div>
+
+  <div>
+    <%= link_to("Previous Category", edit_category_path(@previous_category,@filter_querystring), class: "btn btn-large btn-primary") if @previous_category.present? %>
+    <%= link_to("Next Category", edit_category_path(@next_category,@filter_querystring), class: "btn btn-large btn-primary") if @next_category.present? %>
+  </div>
+</div>
 
 <%= render 'form', category: @category %>
 

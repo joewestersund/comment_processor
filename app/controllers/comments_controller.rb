@@ -2,10 +2,9 @@ class CommentsController < ApplicationController
   include CommentsHelper
 
   before_action :signed_in_user
-  before_action :set_comment, only: [:show, :edit, :update, :destroy, :add_to_category, :remove_from_category]
-  before_action :set_select_options, only: [:new, :edit, :index]
   before_action :admin_user, only: [:import, :do_import]
-
+  before_action :set_comment, only: [:show, :edit, :update, :destroy]
+  before_action :set_select_options, only: [:new, :edit, :index]
 
   # GET /comments
   # GET /comments.json
@@ -129,11 +128,11 @@ class CommentsController < ApplicationController
     end
 
     def filter_params_in_obj
-      params.permit(:first_name, :last_name, :email, :organization, :state, :comment_text, :summary, :comment_status_type_id, :action_needed)
+      params.permit(:first_name, :last_name, :email, :organization, :state, :comment_text, :summary, :comment_status_type_id, :action_needed, :manually_entered)
     end
 
     def filter_params_all
-      params.permit(:first_name, :last_name, :email, :organization, :state, :comment_text, :summary, :comment_status_type_id, :action_needed, :has_attachment, :category_id, )
+      params.permit(:first_name, :last_name, :email, :organization, :state, :comment_text, :summary, :comment_status_type_id, :action_needed, :manually_entered, :has_attachment, :category_id, )
     end
 
     def get_conditions

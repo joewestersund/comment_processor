@@ -18,9 +18,11 @@ Rails.application.routes.draw do
   patch '/profile/update_password', to: 'users#update_password'
 
   resources :categories
+  post '/categories/:id/move_up', to: 'categories#move_up'
+  post '/categories/:id/move_down', to: 'categories#move_down'
+
   get 'comments/import', to: 'comments#import'
   put 'comments/import', to: 'comments#do_import', as: 'comments_do_import'
-
   resources :comments
 
   resources :sessions, only: [:new, :create, :destroy]

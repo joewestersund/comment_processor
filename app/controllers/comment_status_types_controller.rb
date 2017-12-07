@@ -1,4 +1,5 @@
 class CommentStatusTypesController < ApplicationController
+  before_action :admin_user
   before_action :set_comment_status_type, only: [:show, :edit, :update, :destroy]
 
   # GET /comment_status_types

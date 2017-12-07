@@ -1,4 +1,5 @@
 class CategoryStatusTypesController < ApplicationController
+  before_action :admin_user
   before_action :set_category_status_type, only: [:show, :edit, :update, :destroy]
 
   # GET /category_status_types

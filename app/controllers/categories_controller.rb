@@ -1,11 +1,41 @@
 class CategoriesController < ApplicationController
+  before_action :signed_in_user
   before_action :set_category, only: [:show, :edit, :update, :destroy]
   before_action :set_select_options, only: [:new, :edit, :index]
 
   # GET /categories
   # GET /categories.json
   def index
-    @categories = Category.order(:order_in_list).paginate(:page => params[:page], :per_page => 10)
+    conditions = get_conditions
+    if conditions[0].empty?
+      c = Category.all
+    else
+      c = Category.where(conditions)
+    end
+    c = c.order(:order_in_list)
+
+    respond_to do |format|
+      format.html {
+        @filtered = !conditions[0].empty?
+        @filter_querystring = remove_empty_elements(filter_params)
+        @categories = c.page(params[:page]).per_page(10)
+      }
+      format.xlsx {
+        @categories = c
+        response.headers['Content-Disposition'] = 'attachment; filename="categories.xlsx"'
+      }
+      format.csv {
+        stream_csv(c)
+      }
+    end
+  end
+
+  def move_up
+    move(true)
+  end
+
+  def move_down
+    move(false)
   end
 
   # GET /categories/1
@@ -22,12 +52,30 @@ class CategoriesController < ApplicationController
 
   # GET /categories/1/edit
   def edit
+    current_category_order_in_list = @category.order_in_list
+
+    conditions = get_conditions
+    if conditions[0].empty?
+      c = Category.all
+    else
+      c = Category.where(conditions)
+    end
+
+    @previous_category = c.where("order_in_list < ?", current_category_order_in_list).order(:order_in_list).last
+    @next_category = c.where("order_in_list > ?", current_category_order_in_list).order(:order_in_list).first
+
+    @filtered = !conditions[0].empty?
+    @filter_querystring = remove_empty_elements(filter_params)
   end
 
   # POST /categories
   # POST /categories.json
   def create
     @category = Category.new(category_params)
+
+    #set the order_in_list
+    c_max = Category.maximum(:order_in_list)
+    @category.order_in_list = c_max.nil? ? 1 : c_max + 1
 
     respond_to do |format|
       if @category.save
@@ -43,9 +91,9 @@ class CategoriesController < ApplicationController
   # PATCH/PUT /categories/1.json
   def update
     respond_to do |format|
-      #byebug
       if @category.update(category_params)
-        format.html { redirect_to categories_path, notice: 'Category was successfully updated.' }
+        @filter_querystring = remove_empty_elements(filter_params)
+        format.html { redirect_to edit_category_path(@category,@filter_querystring), notice: 'Category was successfully updated.' }
       else
         set_select_options
         format.html { render :edit }
@@ -71,10 +119,73 @@ class CategoriesController < ApplicationController
 
     def set_select_options
       @users = User.order(:name).all
+      @category_status_types = CategoryStatusType.order(:order_in_list).all
     end
 
   # Never trust parameters from the scary internet, only allow the white list through.
     def category_params
       params.require(:category).permit(:category_name, :summary, :response_text, :assigned_to, :category_status_type_id, :action_needed, :order_in_list)
+    end
+
+    def filter_params
+      params.permit(:category_name, :summary, :response_text, :assigned_to, :category_status_type_id, :action_needed)
+    end
+
+    def get_conditions
+
+        search_terms = Category.new(filter_params)
+
+        conditions = {}
+        conditions_string = []
+
+        conditions[:category_name] = "%#{search_terms.category_name}%" if search_terms.category_name.present?
+        conditions_string << "category_name ILIKE :category_name" if search_terms.category_name.present?
+
+        conditions[:summary] = "%#{search_terms.summary}%" if search_terms.summary.present?
+        conditions_string << "summary ILIKE :summary" if search_terms.summary.present?
+
+        conditions[:response_text] = "%#{search_terms.response_text}%" if search_terms.response_text.present?
+        conditions_string << "response_text ILIKE :response_text" if search_terms.response_text.present?
+
+        conditions[:assigned_to] = search_terms.assigned_to if search_terms.assigned_to.present?
+        conditions_string << "assigned_to = :assigned_to" if search_terms.assigned_to.present?
+
+        conditions[:category_status_type_id] = search_terms.category_status_type_id if search_terms.category_status_type_id.present?
+        conditions_string << "category_status_type_id = :category_status_type_id" if search_terms.category_status_type_id.present?
+
+        conditions[:action_needed] = "%#{search_terms.action_needed}%" if search_terms.action_needed.present?
+        conditions_string << "comments.action_needed ILIKE :action_needed" if search_terms.action_needed.present?
+
+        #no filter on order_in_list.
+
+        return [conditions_string.join(" AND "), conditions]
+      end
+
+    def move(up = true)
+      c = Category.find(params[:id])
+
+      if c.present?
+        c2 = get_adjacent(c,up)
+        if c2.present?
+          swap_and_save(c, c2)
+          respond_to do |format|
+            format.html { redirect_to categories_path }
+            format.json { head :no_content }
+          end
+          return
+        end
+      end
+      respond_to do |format|
+        format.html { redirect_to categories_path, notice: "could not move" }
+        format.json { render json: @category.errors, status: :unprocessable_entity }
+      end
+    end
+
+    def get_adjacent(current, get_previous = false)
+      if get_previous
+        Category.where("order_in_list < ?",current.order_in_list).order("order_in_list DESC").first
+      else
+        Category.where("order_in_list > ?",current.order_in_list).order(:order_in_list).first
+      end
     end
 end

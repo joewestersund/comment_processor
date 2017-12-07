@@ -1,13 +1,15 @@
-<h1>Editing Comment</h1>
+<h1>Edit Comment</h1>
 
-<div>
-  Filter: <%= @filtered ? @filter_querystring : 'none' %>
-  <%= link_to 'Edit', comments_path(@filter_querystring) %>
-</div>
+<div class="next-previous">
+  <div>
+    Filter: <%= @filtered ? @filter_querystring : 'none' %>
+    <%= link_to 'Edit', comments_path(@filter_querystring) %>
+  </div>
 
-<div>
-  <%= link_to("previous comment", edit_comment_path(@previous_comment,@filter_querystring), class: "btn btn-large btn-primary") if @previous_comment.present? %>
-  <%= link_to("next comment", edit_comment_path(@next_comment,@filter_querystring), class: "btn btn-large btn-primary") if @next_comment.present? %>
+  <div>
+    <%= link_to("Previous Comment", edit_comment_path(@previous_comment,@filter_querystring), class: "btn btn-large btn-primary") if @previous_comment.present? %>
+    <%= link_to("Next Comment", edit_comment_path(@next_comment,@filter_querystring), class: "btn btn-large btn-primary") if @next_comment.present? %>
+  </div>
 </div>
 
 <%= render 'form', comment: @comment %>

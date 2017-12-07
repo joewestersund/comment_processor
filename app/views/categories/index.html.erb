@@ -1,5 +1,40 @@
-
 <h1>Categories</h1>
+
+<div class="filter-box">
+  <button id="show_filter" class="filter-button">Show/Hide Filter</button>
+  <div class="filter <%="hidden" unless @filtered %>">
+    <%= form_tag request.path, method: 'get' do %>
+      <div class="field">
+        <%= label_tag :category_name  %>
+        <%= text_field_tag :category_name, params[:category_name] %>
+      </div>
+      <div class="field">
+        <%= label_tag :summary  %>
+        <%= text_field_tag :summary, params[:summary] %>
+      </div>
+      <div class="field">
+        <%= label_tag :response_text  %>
+        <%= text_field_tag :response_text, params[:response_text] %>
+      </div>
+      <div class="field">
+        <%= label_tag :assigned_to %>
+        <%= select_tag :assigned_to, options_from_collection_for_select(@users,:id,:name,params[:assigned_to]), { :include_blank => true } %>
+      </div>
+      <div class="field">
+        <%= label_tag :status %>
+        <%= select_tag :category_status_type_id, options_from_collection_for_select(@category_status_types,:id,:status_text,params[:category_status_type_id]), { :include_blank => true } %>
+      </div>
+      <div class="field">
+        <%= label_tag :action_needed  %>
+        <%= text_field_tag :action_needed, params[:action_needed] %>
+      </div>
+      <div class="actions">
+        <%= submit_tag "Search" %>
+        <%= button_tag 'Clear Form', {:type => 'reset', id: "clear_filter"} %>
+      </div>
+    <% end %>
+  </div>
+</div>
 
 <table>
   <thead>
@@ -10,12 +45,12 @@
       <th>Assigned to</th>
       <th>Status type</th>
       <th>Action needed</th>
-      <th colspan="2"></th>
+      <th colspan="4"></th>
     </tr>
   </thead>
 
   <tbody>
-    <% @categories.each do |category| %>
+    <% @categories.each_with_index do |category,index| %>
       <tr>
         <td><%= category.category_name %></td>
         <td><%= category.summary %></td>
@@ -23,8 +58,10 @@
         <td><%= User.find(category.assigned_to).name if category.assigned_to.present? %></td>
         <td><%= category.category_status_type.status_text if category.category_status_type.present? %></td>
         <td><%= category.action_needed %></td>
-        <td><%= link_to 'Edit', edit_category_path(category) %></td>
+        <td><%= link_to 'Edit', edit_category_path(category,@filter_querystring) %></td>
         <td><%= link_to 'Delete', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= (link_to 'Move Up', "/categories/#{category.id}/move_up", method: :post) unless index == 0 %></td>
+        <td><%= (link_to 'Move Down', "/categories/#{category.id}/move_down", method: :post) unless index == @categories.count-1 %></td>
       </tr>
     <% end %>
   </tbody>

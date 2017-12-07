@@ -45,6 +45,12 @@ th:first-of-type, td:first-of-type {
 
 }
 
+.next-previous {
+  border-bottom: 1px solid black;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+
 .welcome p a, .about p a {
   color: blue;
 
