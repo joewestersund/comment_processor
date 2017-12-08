@@ -5,7 +5,7 @@
 <div class="links">
   <%= link_to 'New Category', new_category_path %>
   <% if current_user.admin? %>
-    Download as <%= link_to "CSV", categories_path(@filter_querystring.merge({format: "csv"})) %>
+    | Download as <%= link_to "CSV", categories_path(@filter_querystring.merge({format: "csv"})) %>
     | <%= link_to "XLSX", categories_path(@filter_querystring,format: "xlsx") %>
   <% end %>
 </div>
