@@ -14,9 +14,39 @@ th:first-of-type, td:first-of-type {
   border-left: none;
 }
 
-.negative_number {
-  color: blue;
+td {
+  &.not-assigned {
+    background: darkgray;
+  }
+  &.assigned-to-me {
+    background: yellowgreen;
+  }
+  &.assigned-to-others {
+    //background: cornflowerblue;
+  }
+
+  &.status-1 {
+    background: indianred;
+  }
+  &.status-2 {
+    background: yellow;
+  }
+  &.status-3 {
+    background: forestgreen;
+  }
+  &.status-4 {
+    background: dodgerblue;
+  }
+
+  &.empty {
+    background: darkgray;
+  }
+  &.has-content {
+    background: yellow;
+  }
 }
+
+td
 
 .link-block {
   margin-bottom: 20px;
