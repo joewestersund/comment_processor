@@ -19,6 +19,7 @@ class CategoriesController < ApplicationController
 
     respond_to do |format|
       format.html {
+        @total_categories = Category.all.count
         @filtered = !conditions[0].empty?
         @filter_querystring = remove_empty_elements(filter_params)
         @categories = c.page(params[:page]).per_page(10)

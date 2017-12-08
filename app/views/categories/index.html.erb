@@ -1,14 +1,14 @@
 <h1>Categories</h1>
 
+<div class="links"><%= @total_categories %> categories identified</div>
+
 <div class="links">
   <%= link_to 'New Category', new_category_path %>
-</div>
-
-<% if current_user.admin? %>
-  <div class="links">Download as <%= link_to "CSV", categories_path(@filter_querystring.merge({format: "csv"})) %>
+  <% if current_user.admin? %>
+    Download as <%= link_to "CSV", categories_path(@filter_querystring.merge({format: "csv"})) %>
     | <%= link_to "XLSX", categories_path(@filter_querystring,format: "xlsx") %>
-  </div>
-<% end %>
+  <% end %>
+</div>
 
 <div class="filter-box">
   <button id="show_filter" class="filter-button">Show/Hide Filter</button>
