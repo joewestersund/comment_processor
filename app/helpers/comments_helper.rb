@@ -32,6 +32,10 @@ module CommentsHelper
 
     default_comment_status_type = CommentStatusType.order(:order_in_list).first #by default, assign new comments to the first status in the list
 
+    c_max = Comment.maximum(:order_in_list)
+    current_max_order_in_list = c_max.nil? ? 0 : c_max
+
+
     entries.each do |entry|
       id = entry.string_between_markers('<d:__id m:type="Edm.Int64">','</d:__id>')
 
@@ -47,6 +51,8 @@ module CommentsHelper
         c.comment_text = entry.string_between_markers('<d:comment>','</d:comment>')
         c.manually_entered = false #false because this is imported from DAS
         c.comment_status_type = default_comment_status_type
+        current_max_order_in_list += 1
+        c.order_in_list = current_max_order_in_list
 
         attached_document_info = entry.string_between_markers('<d:additional_document m:type="data.oregon.gov.document">','</d:additional_document>')
         unless attached_document_info.to_s.strip.empty?

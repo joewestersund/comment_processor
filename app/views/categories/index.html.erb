@@ -49,6 +49,7 @@
 <table>
   <thead>
     <tr>
+      <th>#</th>
       <th>Category name</th>
       <th>Summary</th>
       <th>Response text</th>
@@ -63,6 +64,7 @@
   <tbody>
     <% @categories.each_with_index do |category,index| %>
       <tr>
+        <td><%= category.order_in_list %></td>
         <td><%= category.category_name %></td>
         <td><%= category.summary %></td>
         <td><%= category.response_text %></td>

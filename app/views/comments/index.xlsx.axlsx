@@ -8,7 +8,7 @@ wb.add_worksheet(name: 'Comments') do |sheet|
 
   sheet.add_row Comment.csv_header, style: header_style
 
-  @comments.each_with_index do |c,index|
-    sheet.add_row c.to_csv(index), style: data_style
+  @comments.each do |c|
+    sheet.add_row c.to_csv, style: data_style
   end
 end

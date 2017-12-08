@@ -24,12 +24,12 @@ class Category < ApplicationRecord
 
   def self.csv_header
     ['Order In List', 'ID', 'Category Name', 'Summary', 'Response Text', 'Assigned To',
-     'Status', 'Action Needed', 'Comments by ID']
+     'Status', 'Action Needed', 'Comments (by their "order in list")']
   end
 
   def to_csv
     [self.order_in_list, self.id, self.category_name, self.summary, self.response_text, self.assigned_to.present? ? User.find(self.assigned_to).name : '',
-     self.category_status_type.status_text, self.action_needed, self.comments.order(:source_id).collect{|com| com.id}.join(", ")]
+     self.category_status_type.status_text, self.action_needed, self.comments.order(:source_id).collect{|com| com.order_in_list}.join(", ")]
   end
 
 end

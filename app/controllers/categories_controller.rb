@@ -108,7 +108,13 @@ class CategoriesController < ApplicationController
   # DELETE /categories/1
   # DELETE /categories/1.json
   def destroy
+    current_cat = @category.order_in_list
     @category.destroy
+    Category.where("order_in_list > ?",current_cat).order(:order_in_list).each do |cat|
+      cat.order_in_list -= 1
+      cat.save
+    end
+
     respond_to do |format|
       format.html { redirect_to categories_url, notice: 'Category was successfully deleted.' }
       format.json { head :no_content }

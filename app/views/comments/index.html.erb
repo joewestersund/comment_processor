@@ -68,6 +68,7 @@
 <table>
   <thead>
     <tr>
+      <th>#</th>
       <th>Name & email</th>
       <th>Organization & State</th>
       <th>Comment text</th>
@@ -83,6 +84,7 @@
   <tbody>
     <% @comments.each do |comment| %>
       <tr>
+        <td><%= comment.order_in_list %></td>
         <td><%= "#{comment.first_name + ' ' if comment.first_name.present?}#{comment.last_name}#{' <' + comment.email.truncate(25) + '>' if comment.email.present?}"%></td>
         <td><%= "#{comment.organization + ", " if comment.organization.present?}#{comment.state}" %></td>
         <td><%= comment.comment_text.truncate(1000) if comment.comment_text.present?%></td>

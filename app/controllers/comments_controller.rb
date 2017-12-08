@@ -197,8 +197,8 @@ class CommentsController < ApplicationController
         response.stream.write CSV.generate_line(Comment.csv_header)
 
         #write out each row of data
-        comments.each_with_index do |c,index|
-          response.stream.write CSV.generate_line(c.to_csv(index))
+        comments.each do |c|
+          response.stream.write CSV.generate_line(c.to_csv)
         end
       ensure
         response.stream.close
