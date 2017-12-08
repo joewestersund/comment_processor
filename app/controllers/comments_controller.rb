@@ -64,12 +64,8 @@ class CommentsController < ApplicationController
   def do_cleanup
     #actually do the cleanup
     Comment.all.each do |c|
-      if c.comment_text.present?
-        escape_characters_to_replace.each do |replace_strings|
-          c.comment_text = c.comment_text.gsub(replace_strings[0],replace_strings[1])
-        end
-        c.save
-      end
+      clean_comment_text(c)
+      c.save
     end
 
     redirect_to comments_path, notice: "HTML escape characters were successfully cleaned from the comment text."

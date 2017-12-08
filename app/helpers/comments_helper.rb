@@ -48,7 +48,10 @@ module CommentsHelper
         c.email = entry.string_between_markers('<d:email>','</d:email>')
         c.organization = entry.string_between_markers('<d:organization>','</d:organization>')
         c.state = entry.string_between_markers('<d:state>','</d:state>')
+
         c.comment_text = entry.string_between_markers('<d:comment>','</d:comment>')
+        clean_comment_text(c) #remove any escape characters
+
         c.manually_entered = false #false because this is imported from DAS
         c.comment_status_type = default_comment_status_type
         current_max_order_in_list += 1
@@ -87,6 +90,16 @@ module CommentsHelper
         ['&amp;Icirc;&amp;frac14;',''],
         ['&amp;Acirc;&amp;nbsp;',' ']
     ]
+  end
+
+  def clean_comment_text(comment)
+    if comment.comment_text.present?
+      escape_characters_to_replace.each do |replace_strings|
+        comment.comment_text = comment.comment_text.gsub(replace_strings[0],replace_strings[1])
+      end
+      #still need to save changes after this method.
+      comment.comment_text
+    end
   end
 
 end
