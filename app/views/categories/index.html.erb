@@ -55,6 +55,7 @@
       <th>Assigned to</th>
       <th>Status type</th>
       <th>Action needed</th>
+      <th># of comments</th>
       <th colspan="4"></th>
     </tr>
   </thead>
@@ -68,6 +69,7 @@
         <td><%= User.find(category.assigned_to).name if category.assigned_to.present? %></td>
         <td><%= category.category_status_type.status_text if category.category_status_type.present? %></td>
         <td><%= category.action_needed %></td>
+        <td><%= category.comments.count == 0 ? 0 : link_to(category.comments.count, comments_path({category_id: category.id})) %></td>
         <td><%= link_to 'Edit', edit_category_path(category,@filter_querystring) %></td>
         <td><%= link_to 'Delete', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <td><%= (link_to 'Move Up', "/categories/#{category.id}/move_up", method: :post) unless index == 0 %></td>
