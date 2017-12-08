@@ -29,6 +29,8 @@ Rails.application.routes.draw do
 
   get 'comments/import', to: 'comments#import'
   put 'comments/import', to: 'comments#do_import', as: 'comments_do_import'
+  get 'comments/cleanup', to: 'comments#cleanup'
+  put 'comments/cleanup', to: 'comments#do_cleanup', as: 'comments_do_cleanup'
   resources :comments
 
   resources :sessions, only: [:new, :create, :destroy]

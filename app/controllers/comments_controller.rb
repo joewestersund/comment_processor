@@ -4,7 +4,7 @@ class CommentsController < ApplicationController
   require 'csv'
 
   before_action :signed_in_user
-  before_action :admin_user, only: [:import, :do_import]
+  before_action :admin_user, only: [:import, :do_import, :cleanup, :do_cleanup]
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
   before_action :set_select_options, only: [:new, :edit, :index]
 
@@ -54,6 +54,25 @@ class CommentsController < ApplicationController
     #actually do the import
     comments_imported = import_comments_data(rulemaking_data_source)
     redirect_to comments_path, notice: "#{comments_imported} comment(s) were successfully imported into the database."
+  end
+
+  def cleanup
+    #clean up HTML escape characters in the comment text
+    @characters_to_clean_up = escape_characters_to_replace
+  end
+
+  def do_cleanup
+    #actually do the cleanup
+    Comment.all.each do |c|
+      if c.comment_text.present?
+        escape_characters_to_replace.each do |replace_strings|
+          c.comment_text = c.comment_text.gsub(replace_strings[0],replace_strings[1])
+        end
+        c.save
+      end
+    end
+
+    redirect_to comments_path, notice: "HTML escape characters were successfully cleaned from the comment text."
   end
 
   # GET /comments/1/edit

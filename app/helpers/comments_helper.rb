@@ -70,5 +70,23 @@ module CommentsHelper
 
   end
 
+  def escape_characters_to_replace
+    # first element is the string in comment.comment_text to replace
+    # second element is the string to replace it with
+    [
+        ['&amp;acirc;&amp;euro;&amp;oelig;','"'],
+        ['&amp;acirc;&amp;euro;&amp;#65533;','"'],
+        ['&amp;quot;','"'],
+        ['&amp;acirc;&amp;euro;&amp;trade;',"'"],
+        ['&amp;acirc;&amp;euro;&amp;tilde;',"'"],
+        ['&amp;amp;','&'],
+        ['&amp;acirc;&amp;euro;&amp;cent;','-'],
+        ['&amp;acirc;&amp;euro;&amp;rdquo;','-'],
+        ['&amp;acirc;&amp;euro;&amp;ldquo;','-'],
+        ['&amp;iuml;&amp;fnof;&amp;frac14;','-'],
+        ['&amp;Icirc;&amp;frac14;',''],
+        ['&amp;Acirc;&amp;nbsp;',' ']
+    ]
+  end
 
 end

@@ -1,0 +1,28 @@
+<h1>Clean up HTML escape characters in comment text</h1>
+
+These characters will be cleaned up from the comment_txt:
+<div class="links">
+<table>
+  <thead>
+    <tr>
+      <th>Replace this</th>
+      <th>With this</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% @characters_to_clean_up.each do |ccu| %>
+    <tr>
+      <td><%= ccu[0]%> </td>
+      <td><%= ccu[1]%> </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+</div>
+
+<%= form_tag(comments_do_cleanup_path, method: "put") do %>
+  <%= submit_tag('Clean up comment text', class: 'btn btn-large btn-primary')%>
+<% end %>
+
+<%= link_to 'Back', comments_path %>

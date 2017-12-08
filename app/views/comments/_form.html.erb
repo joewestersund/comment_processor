@@ -13,7 +13,7 @@
 
   <table class="read_only_parameters">
     <tbody>
-      <tr><td>Source ID</td><td><%= comment.source_id %></td></tr>
+      <tr><td>Order in List</td><td><%= comment.order_in_list%></td></tr>
       <tr><td>Name & Email</td><td><%= "#{comment.first_name + ' ' if comment.first_name.present?}#{comment.last_name}#{' <' + comment.email + '>' if comment.email.present?}"%></td>
       <tr><td>Organization and State</td><td><%= "#{comment.organization + ", " if comment.organization.present?}#{comment.state}" %></td>
       <tr><td>Comment</td><td><%= comment.comment_text%></td>
