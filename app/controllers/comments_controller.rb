@@ -19,7 +19,7 @@ class CommentsController < ApplicationController
       #do left outer join in case there are no conditions on categories
       c = Comment.where("id IN (?)", Comment.left_outer_joins(:categories).where(conditions).select(:id))
     end
-    c = c.order(:id)
+    c = c.order(:order_in_list)
 
     respond_to do |format|
       format.html {
