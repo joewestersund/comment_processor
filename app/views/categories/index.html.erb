@@ -1,9 +1,11 @@
 <h1>Categories</h1>
 
-<%= link_to 'New Category', new_category_path %>
+<div class="links">
+  <%= link_to 'New Category', new_category_path %>
+</div>
 
 <% if current_user.admin? %>
-  <div>Download as <%= link_to "CSV", categories_path(@filter_querystring.merge({format: "csv"})) %>
+  <div class="links">Download as <%= link_to "CSV", categories_path(@filter_querystring.merge({format: "csv"})) %>
     | <%= link_to "XLSX", categories_path(@filter_querystring,format: "xlsx") %>
   </div>
 <% end %>

@@ -1,10 +1,10 @@
 <h1>Comments</h1>
 
 <% if current_user.admin? %>
-  <div>
+  <div class="links">
     <%= link_to 'Import comments', comments_import_path %>
   </div>
-  <div>Download as <%= link_to "CSV", comments_path(@filter_querystring.merge({format: "csv"})) %>
+  <div class="links">Download as <%= link_to "CSV", comments_path(@filter_querystring.merge({format: "csv"})) %>
     | <%= link_to "XLSX", comments_path(@filter_querystring,format: "xlsx") %>
   </div>
 <% end %>
