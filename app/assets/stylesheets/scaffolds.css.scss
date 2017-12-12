@@ -8,8 +8,9 @@ body {
 }
 
 .pagination {
-  a, span {
+  a, .disabled {
     font-size: 15px;
+    color: #666;
   }
 
   em.current {
