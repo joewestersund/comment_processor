@@ -33,9 +33,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params_new)
     if @user.save
-      sign_in @user
       flash[:notice] = "User has been added."
-      redirect_to welcome_path
+      redirect_to users_path
     else
       render 'new'
     end
