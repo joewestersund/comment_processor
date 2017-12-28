@@ -5,7 +5,7 @@
 
 <div class="links">
   <%= link_to 'Import comments', comments_import_path %> |
-  <% if current_user.admin? %>
+  <% if current_user.admin? && false #functionality not ready yet %>
     <%= link_to 'Manually enter a comment', new_comment_path %> |
   <% end %>
   Download as <%= link_to "CSV", comments_path(@filter_querystring.merge({format: "csv"})) %>
