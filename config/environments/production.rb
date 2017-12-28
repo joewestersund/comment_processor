@@ -60,7 +60,11 @@ Rails.application.configure do
   # Use a real queuing backend for Active Job (and separate queues per environment)
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "comment_processor_#{Rails.env}"
-  config.action_mailer.perform_caching = false
+
+  #don't need this?  config.action_mailer.perform_caching = false
+
+  # set host for action mailer emails- links in the email need to know the full path to the server.
+  config.action_mailer.default_url_options = {:host => "http://comment-processor.herokuapp.com"}
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
