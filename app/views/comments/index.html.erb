@@ -4,7 +4,11 @@
 
 
 <div class="links">
-  <%= link_to 'Import comments', comments_import_path %> | Download as <%= link_to "CSV", comments_path(@filter_querystring.merge({format: "csv"})) %>
+  <%= link_to 'Import comments', comments_import_path %> |
+  <% if current_user.admin? %>
+    <%= link_to 'Manually enter a comment', new_comment_path %> |
+  <% end %>
+  Download as <%= link_to "CSV", comments_path(@filter_querystring.merge({format: "csv"})) %>
   or <%= link_to "XLSX", comments_path(@filter_querystring,format: "xlsx") %>
 </div>
 
@@ -56,6 +60,11 @@
         <%= label_tag :action_needed  %>
         <%= text_field_tag :action_needed, params[:action_needed] %>
       </div>
+      <div class="field">
+        <%= label_tag :manually_entered  %>
+        <%= check_box_tag :manually_entered, params[:manually_entered], params[:manually_entered] == "on" %>
+      </div>
+
       <div class="actions">
         <%= submit_tag "Search" %>
         <%= button_tag 'Clear Filter', {:type => 'reset', id: "clear_filter"} %>
@@ -78,6 +87,7 @@
       <th>Categories</th>
       <th>Action needed</th>
       <th></th>
+      <th></th>
     </tr>
   </thead>
 
@@ -97,6 +107,11 @@
         <% end %></td>
         <td class="<%= highlight_filled_css(comment.action_needed)%>"><%= comment.action_needed %></td>
         <td><%= link_to 'Edit', edit_comment_path(comment,@filter_querystring) %></td>
+        <td>
+          <% if comment.manually_entered && current_user.admin? %>
+            <%= link_to 'Delete', comment, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

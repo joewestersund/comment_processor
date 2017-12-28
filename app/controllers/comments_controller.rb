@@ -71,6 +71,13 @@ class CommentsController < ApplicationController
     redirect_to comments_path, notice: "HTML escape characters were successfully cleaned from the comment text."
   end
 
+  # GET /comments/new
+  def new
+    @comment = Comment.new
+    #this is only used when someone's manually entering a comment
+    @comment.manually_entered = true
+  end
+
   # GET /comments/1/edit
   def edit
     current_comment_source_id = @comment.source_id
@@ -93,10 +100,18 @@ class CommentsController < ApplicationController
   # POST /comments
   # POST /comments.json
   def create
+    # we only get here if this comment is being manually entered.
     @comment = Comment.new(comment_params)
+
+    c_max = Comment.maximum(:order_in_list)
+    next_order_in_list = (c_max.nil? ? 0 : c_max) + 1
+    @comment.order_in_list = next_order_in_list
+
+    @comment.manually_entered = true
+
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to @comment, notice: 'Comment was successfully created.' }
+        format.html { redirect_to edit_comment_path(@comment), notice: 'Comment was successfully created.' }
         format.json { render :show, status: :created, location: @comment }
       else
         format.html { render :new }
@@ -121,6 +136,20 @@ class CommentsController < ApplicationController
     end
   end
 
+  def destroy
+    current_comment = @comment.order_in_list
+    @comment.destroy
+    Comment.where("order_in_list > ?",current_comment).order(:order_in_list).each do |c|
+      c.order_in_list -= 1
+      c.save
+    end
+
+    respond_to do |format|
+      format.html { redirect_to comments_url, notice: 'Comment was successfully deleted.' }
+      format.json { head :no_content }
+    end
+  end
+
   private
     def update_comment_categories
       @categories = Category.where(:id => params[:comment_categories])
@@ -136,7 +165,7 @@ class CommentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
-      params.require(:comment).permit(:source_id, :first_name, :last_name, :email, :organization, :state, :comment_text, :attachment_url, :summary, :comment_status_type_id, :action_needed)
+      params.require(:comment).permit(:source_id, :first_name, :last_name, :email, :organization, :state, :comment_text, :attachment_name, :attachment_url, :summary, :comment_status_type_id, :action_needed, :manually_entered)
     end
 
     def set_select_options
@@ -193,6 +222,10 @@ class CommentsController < ApplicationController
 
       conditions[:action_needed] = "%#{search_terms.action_needed}%" if search_terms.action_needed.present?
       conditions_string << "comments.action_needed ILIKE :action_needed" if search_terms.action_needed.present?
+
+      #can filter down to manually entered, but if not checked all records returned
+      conditions[:manually_entered] = search_terms.manually_entered if search_terms.manually_entered
+      conditions_string << "comments.manually_entered = :manually_entered" if search_terms.manually_entered
 
       return [conditions_string.join(" AND "), conditions]
     end

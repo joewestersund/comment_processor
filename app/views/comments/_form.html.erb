@@ -1,4 +1,4 @@
-<%= form_with(model: comment, local: true, url: comment_path(comment,@filter_querystring)) do |form| %>
+<%= form_with(model: comment, local: true, url: form_url) do |form| %>
   <% if comment.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
@@ -11,15 +11,62 @@
     </div>
   <% end %>
 
-  <table class="read_only_parameters">
-    <tbody>
-      <tr><td>Order in List</td><td><%= comment.order_in_list%></td></tr>
-      <tr><td>Name & Email</td><td><%= "#{comment.first_name + ' ' if comment.first_name.present?}#{comment.last_name}#{' <' + comment.email + '>' if comment.email.present?}"%></td>
-      <tr><td>Organization and State</td><td><%= "#{comment.organization + ", " if comment.organization.present?}#{comment.state}" %></td>
-      <tr><td>Comment</td><td><%= comment.comment_text%></td>
-      <tr><td>Attachment</td><td><%= if comment.attachment_name.present? then link_to comment.attachment_name.to_s, comment.attachment_url end %></td>
-    </tbody>
-  </table>
+  <% if comment.manually_entered && current_user.admin? %>
+    <div class="field">
+      <%= form.label :first_name %>
+      <%= form.text_field :first_name, id: :comment_first_name %>
+    </div>
+
+    <div class="field">
+      <%= form.label :last_name %>
+      <%= form.text_field :last_name, id: :comment_last_name %>
+    </div>
+
+    <div class="field">
+      <%= form.label :email %>
+      <%= form.text_field :email, id: :comment_email %>
+    </div>
+
+    <div class="field">
+      <%= form.label :organization %>
+      <%= form.text_field :organization, id: :comment_organization %>
+    </div>
+
+    <div class="field">
+      <%= form.label :state %>
+      <%= form.text_field :state, id: :comment_state %>
+    </div>
+
+    <div class="field">
+      <%= form.label :comment_text %>
+      <%= form.text_area :comment_text, id: :comment_comment_text, cols: 300, rows: 5, class: 'bigtextarea' %>
+    </div>
+
+    <div>
+      To manually enter an attachment, you must put the file on a folder all users can view, such as on Google drive.
+      <div class="field">
+        <%= form.label :attachment_name %>
+        <%= form.text_field :attachment_name, id: :comment_attachment_name %>
+      </div>
+
+      <div class="field">
+        <%= form.label :attachment_url %>
+        <%= form.text_field :attachment_url, id: :comment_attachment_url %>
+      </div>
+    </div>
+
+  <% else  %>
+    <table class="read_only_parameters">
+      <tbody>
+        <tr><td>Order in List</td><td><%= comment.order_in_list%></td></tr>
+        <tr><td>Manually Entered</td><td><%= comment.manually_entered ? "Yes" : "No"%></td></tr>
+        <tr><td>Name & Email</td><td><%= "#{comment.first_name + ' ' if comment.first_name.present?}#{comment.last_name}#{' <' + comment.email + '>' if comment.email.present?}"%></td>
+        <tr><td>Organization and State</td><td><%= "#{comment.organization + ", " if comment.organization.present?}#{comment.state}" %></td>
+        <tr><td>Comment</td><td><%= comment.comment_text%></td>
+        <tr><td>Attachment</td><td><%= if comment.attachment_name.present? then link_to comment.attachment_name.to_s, comment.attachment_url end %></td>
+      </tbody>
+    </table>
+  <% end  %>
 
   <div class="field">
     <%= form.label :summary %>

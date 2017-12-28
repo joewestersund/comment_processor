@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   get '/addusers', to: 'users#new' # creates named path 'addusers'
 
   resources :users
+  post '/users/:id/reset_password', to: 'users#reset_password'
+
   get '/profile/edit_password', to: 'users#edit_password'
   get '/profile/edit', to: 'users#edit_profile'
   patch '/profile/update_password', to: 'users#update_password'

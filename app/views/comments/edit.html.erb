@@ -12,6 +12,6 @@
   </div>
 </div>
 
-<%= render 'form', comment: @comment %>
+<%= render 'form', comment: @comment, form_url: comment_path(@comment,@filter_querystring) %>
 
 <%= link_to 'Index', comments_path(@filter_querystring) %>

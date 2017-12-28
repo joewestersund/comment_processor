@@ -1,7 +1,9 @@
 class UsersController < ApplicationController
-  before_action :signed_in_user, only: [:new, :edit, :edit_profile, :edit_password, :update, :update_password, :show, :destroy, :index]
-  before_action :admin_user, only: [:new, :edit, :destroy]
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  require 'securerandom'
+
+  before_action :signed_in_user, only: [:new, :edit, :edit_profile, :edit_password, :update, :update_password, :reset_password, :show, :destroy, :index]
+  before_action :admin_user, only: [:new, :edit, :destroy, :reset_password]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :reset_password]
   before_action :set_self_as_user, only: [:edit_profile, :edit_password, :update_password]
 
 
@@ -59,6 +61,22 @@ class UsersController < ApplicationController
     respond_to do |format|
       if params[:user][:password].present? and @user.update(user_params_change_password)
         format.html { redirect_to profile_edit_password_path, notice: 'Your password was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: 'edit_password' }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def reset_password
+    respond_to do |format|
+      random_pw = SecureRandom.hex(8)
+      @user.password = random_pw
+      @user.password_confirmation = random_pw
+      if @user.save
+        NotificationMailer.password_reset_email(@user,current_user,random_pw).deliver
+        format.html { redirect_to users_path, notice: "The password for #{@user.name} was successfully reset. The new password has been emailed to them." }
         format.json { head :no_content }
       else
         format.html { render action: 'edit_password' }
