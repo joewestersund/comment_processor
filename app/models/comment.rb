@@ -28,13 +28,13 @@ class Comment < ApplicationRecord
   def self.csv_header
     ['Order In List', 'DAS ID', 'First Name', 'Last Name', 'Email',
      'Organization', 'State', 'Comment Text', 'Attachment Name', 'Attachment URL', 'Manually Entered?',
-     'Summary','Categories (by their "order in list")','Status','Status Details']
+     'Summary','Status','Status Details','Categories (by their "order in list")']
   end
 
   def to_csv
     [self.order_in_list, self.source_id, self.first_name, self.last_name, self.email,
      self.organization, self.state, self.comment_text, self.attachment_name, self.attachment_url, self.manually_entered,
-     self.summary, self.categories.order(:order_in_list).collect{|cat| cat.order_in_list}.join(", "), self.comment_status_type.status_text, self.status_details]
+     self.summary, self.comment_status_type.status_text, self.status_details, self.categories.order(:order_in_list).collect{|cat| cat.order_in_list}.join(", ")]
   end
 
 end

@@ -11,4 +11,5 @@ wb.add_worksheet(name: 'Categories') do |sheet|
   @categories.each do |cat|
     sheet.add_row cat.to_csv, style: data_style
   end
+
 end
