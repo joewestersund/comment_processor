@@ -148,11 +148,11 @@ class CategoriesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
     def category_params
-      params.require(:category).permit(:category_name, :summary, :response_text, :assigned_to, :category_status_type_id, :action_needed, :rule_change_required, :order_in_list)
+      params.require(:category).permit(:category_name, :description, :response_text, :assigned_to, :category_status_type_id, :action_needed, :rule_change_required, :order_in_list)
     end
 
     def filter_params
-      params.permit(:category_name, :summary, :response_text, :assigned_to, :category_status_type_id, :action_needed, :rule_change_required)
+      params.permit(:category_name, :description, :response_text, :assigned_to, :category_status_type_id, :action_needed, :rule_change_required)
     end
 
     def get_conditions
@@ -165,8 +165,8 @@ class CategoriesController < ApplicationController
         conditions[:category_name] = "%#{search_terms.category_name}%" if search_terms.category_name.present?
         conditions_string << "category_name ILIKE :category_name" if search_terms.category_name.present?
 
-        conditions[:summary] = "%#{search_terms.summary}%" if search_terms.summary.present?
-        conditions_string << "summary ILIKE :summary" if search_terms.summary.present?
+        conditions[:description] = "%#{search_terms.description}%" if search_terms.description.present?
+        conditions_string << "description ILIKE :description" if search_terms.description.present?
 
         conditions[:response_text] = "%#{search_terms.response_text}%" if search_terms.response_text.present?
         conditions_string << "response_text ILIKE :response_text" if search_terms.response_text.present?

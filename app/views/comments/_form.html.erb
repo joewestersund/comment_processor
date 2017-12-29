@@ -83,7 +83,7 @@
   </div>
 
   <div class="field">
-    <%= form.label :comment_status_type_id %>
+    <%= form.label :comment_review_status %>
     <%= form.collection_select :comment_status_type_id, @comment_status_types, :id, :status_text, :selected => @comment.comment_status_type_id  %>
   </div>
 

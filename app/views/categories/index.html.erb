@@ -54,8 +54,8 @@
     <tr>
       <th>#</th>
       <th>Category name</th>
-      <th>Summary</th>
-      <th>Status</th>
+      <th>Category description</th>
+      <th>Category review status</th>
       <th>Response text</th>
       <th>Assigned to</th>
       <th>Rule change required?</th>
@@ -70,7 +70,7 @@
       <tr>
         <td><%= category.order_in_list %></td>
         <td><%= category.category_name %></td>
-        <td><%= category.summary %></td>
+        <td><%= category.description %></td>
         <td class="<%= status_css(category.category_status_type)%>"><%= category.category_status_type.status_text if category.category_status_type.present? %></td>
         <td class="<%= highlight_empty_css(category.response_text)%>"><%= category.response_text %></td>
         <td class="<%= assigned_to_css(category.assigned_to) %>"><%= User.find(category.assigned_to).name if category.assigned_to.present? %></td>

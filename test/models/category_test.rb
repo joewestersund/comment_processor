@@ -4,7 +4,7 @@
 #
 #  id                      :integer          not null, primary key
 #  category_name           :string
-#  summary                 :string
+#  description             :string
 #  response_text           :string
 #  assigned_to             :integer
 #  category_status_type_id :integer
