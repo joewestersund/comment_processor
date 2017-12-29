@@ -80,7 +80,7 @@ class CommentsController < ApplicationController
 
   # GET /comments/1/edit
   def edit
-    current_comment_source_id = @comment.source_id
+    current_comment_order_in_list = @comment.order_in_list
 
     conditions = get_conditions
     if conditions[0].empty?
@@ -90,8 +90,8 @@ class CommentsController < ApplicationController
       c = Comment.where("id IN (?)", Comment.left_outer_joins(:categories).where(conditions).select(:id))
     end
 
-    @previous_comment = c.where("source_id < ?", current_comment_source_id).order(:source_id).last
-    @next_comment = c.where("source_id > ?", current_comment_source_id).order(:source_id).first
+    @previous_comment = c.where("order_in_list < ?", current_comment_order_in_list).order(:order_in_list).last
+    @next_comment = c.where("order_in_list > ?", current_comment_order_in_list).order(:order_in_list).first
 
     @filtered = !conditions[0].empty?
     @filter_querystring = remove_empty_elements(filter_params_all)
