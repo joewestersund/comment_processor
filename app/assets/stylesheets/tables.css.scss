@@ -44,9 +44,21 @@ td {
   &.has-content {
     background: yellow;
   }
-}
 
-td
+  div.separate {
+    border-top: 1px solid black;
+  }
+
+  span.rounded-span {
+    margin: 1px;
+    padding: 1px;
+    //background-color: orange;
+    border: 1px solid black;
+    align: left;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+  }
+}
 
 .link-block {
   margin-bottom: 20px;
@@ -54,6 +66,7 @@ td
     display: inline-block;
     padding-right: 20px;
   }
+
 }
 
 .filter-box {

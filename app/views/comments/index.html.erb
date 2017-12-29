@@ -102,8 +102,13 @@
         <td class="<%= status_css(comment.comment_status_type)%>"><%= comment.comment_status_type.status_text if comment.comment_status_type.present? %></td>
         <td class="<%= highlight_empty_css(comment.summary)%>"><%= comment.summary %></td>
         <td class="<%= highlight_empty_css(comment.categories)%>"><% comment.categories.order(:order_in_list).each_with_index do |c,index|%>
+            <% if index != 0 %>
+              <div class="separate">
+            <% end %>
             <%= link_to(c.category_name, edit_category_path(c)) %>
-            <%= "," unless index == comment.categories.count - 1 %>
+            <% if index != 0 %>
+              </div>
+            <% end %>
         <% end %></td>
         <td class="<%= highlight_filled_css(comment.action_needed)%>"><%= comment.action_needed %></td>
         <td><%= link_to 'Edit', edit_comment_path(comment,@filter_querystring) %></td>
