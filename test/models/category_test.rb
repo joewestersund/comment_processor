@@ -12,6 +12,7 @@
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  order_in_list           :integer
+#  rule_change_required    :boolean
 #
 
 require 'test_helper'

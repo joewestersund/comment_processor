@@ -148,11 +148,11 @@ class CategoriesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
     def category_params
-      params.require(:category).permit(:category_name, :summary, :response_text, :assigned_to, :category_status_type_id, :action_needed, :order_in_list)
+      params.require(:category).permit(:category_name, :summary, :response_text, :assigned_to, :category_status_type_id, :action_needed, :rule_change_required, :order_in_list)
     end
 
     def filter_params
-      params.permit(:category_name, :summary, :response_text, :assigned_to, :category_status_type_id, :action_needed)
+      params.permit(:category_name, :summary, :response_text, :assigned_to, :category_status_type_id, :action_needed, :rule_change_required)
     end
 
     def get_conditions
@@ -176,6 +176,10 @@ class CategoriesController < ApplicationController
 
         conditions[:category_status_type_id] = search_terms.category_status_type_id if search_terms.category_status_type_id.present?
         conditions_string << "category_status_type_id = :category_status_type_id" if search_terms.category_status_type_id.present?
+
+        #can filter down to rule_change_required, but if not checked all records returned
+        conditions[:rule_change_required] = search_terms.rule_change_required if search_terms.rule_change_required
+        conditions_string << "rule_change_required = :rule_change_required" if search_terms.rule_change_required
 
         conditions[:action_needed] = "%#{search_terms.action_needed}%" if search_terms.action_needed.present?
         conditions_string << "action_needed ILIKE :action_needed" if search_terms.action_needed.present?

@@ -12,6 +12,7 @@
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #  order_in_list           :integer
+#  rule_change_required    :boolean
 #
 
 class Category < ApplicationRecord
@@ -24,12 +25,12 @@ class Category < ApplicationRecord
 
   def self.csv_header
     ['Order In List', 'Category Name', 'Summary', 'Response Text', 'Assigned To',
-     'Status', 'Action Needed', 'Comments (by their "order in list")']
+     'Status', 'Action Needed', 'Rule Change Required', 'Comments (by their "order in list")']
   end
 
   def to_csv
     [self.order_in_list, self.category_name, self.summary, self.response_text, self.assigned_to.present? ? User.find(self.assigned_to).name : '',
-     self.category_status_type.status_text, self.action_needed, self.comments.order(:source_id).collect{|com| com.order_in_list}.join(", ")]
+     self.category_status_type.status_text, self.action_needed, self.rule_change_required, self.comments.order(:source_id).collect{|com| com.order_in_list}.join(", ")]
   end
 
 end

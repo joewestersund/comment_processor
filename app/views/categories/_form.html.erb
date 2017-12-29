@@ -37,6 +37,11 @@
   </div>
 
   <div class="field">
+    <%= form.label :rule_change_required %>
+    <%= form.check_box :rule_change_required, id: :category_rule_change_required %>
+  </div>
+
+  <div class="field">
     <%= form.label :action_needed %>
     <%= form.text_field :action_needed, id: :category_action_needed %>
   </div>
