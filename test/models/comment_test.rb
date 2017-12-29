@@ -13,11 +13,12 @@
 #  attachment_url         :string
 #  summary                :string
 #  comment_status_type_id :integer
-#  action_needed          :string
+#  status_details         :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  attachment_name        :string
 #  manually_entered       :boolean
+#  order_in_list          :integer
 #
 
 require 'test_helper'

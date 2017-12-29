@@ -13,11 +13,12 @@
 #  attachment_url         :string
 #  summary                :string
 #  comment_status_type_id :integer
-#  action_needed          :string
+#  status_details         :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  attachment_name        :string
 #  manually_entered       :boolean
+#  order_in_list          :integer
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
@@ -33,7 +34,7 @@ one:
   attachment_url: MyString
   summary: MyString
   status_type_id: 1
-  action_needed: MyString
+  status_details: MyString
 
 two:
   source_id: 1
@@ -46,4 +47,4 @@ two:
   attachment_url: MyString
   summary: MyString
   status_type_id: 1
-  action_needed: MyString
+  status_details: MyString

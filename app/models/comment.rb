@@ -13,11 +13,12 @@
 #  attachment_url         :string
 #  summary                :string
 #  comment_status_type_id :integer
-#  action_needed          :string
+#  status_details         :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  attachment_name        :string
 #  manually_entered       :boolean
+#  order_in_list          :integer
 #
 
 class Comment < ApplicationRecord
@@ -27,13 +28,13 @@ class Comment < ApplicationRecord
   def self.csv_header
     ['Order In List', 'DAS ID', 'First Name', 'Last Name', 'Email',
      'Organization', 'State', 'Comment Text', 'Attachment Name', 'Attachment URL', 'Manually Entered?',
-     'Summary','Categories (by their "order in list")','Status','Action Needed']
+     'Summary','Categories (by their "order in list")','Status','Status Details']
   end
 
   def to_csv
     [self.order_in_list, self.source_id, self.first_name, self.last_name, self.email,
      self.organization, self.state, self.comment_text, self.attachment_name, self.attachment_url, self.manually_entered,
-     self.summary, self.categories.order(:order_in_list).collect{|cat| cat.order_in_list}.join(", "), self.comment_status_type.status_text, self.action_needed]
+     self.summary, self.categories.order(:order_in_list).collect{|cat| cat.order_in_list}.join(", "), self.comment_status_type.status_text, self.status_details]
   end
 
 end
