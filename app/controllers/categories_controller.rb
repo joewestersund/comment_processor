@@ -178,7 +178,7 @@ class CategoriesController < ApplicationController
         conditions_string << "category_status_type_id = :category_status_type_id" if search_terms.category_status_type_id.present?
 
         conditions[:action_needed] = "%#{search_terms.action_needed}%" if search_terms.action_needed.present?
-        conditions_string << "comments.action_needed ILIKE :action_needed" if search_terms.action_needed.present?
+        conditions_string << "action_needed ILIKE :action_needed" if search_terms.action_needed.present?
 
         #no filter on order_in_list.
 
