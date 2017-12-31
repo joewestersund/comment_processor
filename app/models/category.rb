@@ -28,6 +28,18 @@ class Category < ApplicationRecord
      'Status', 'Action Needed', 'Rule Change Required', 'Comments (by their "order in list")']
   end
 
+  def self.excel_column_widths
+    #create array of same length as csv_header, all containing the same initial value
+    column_widths = Array.new(Category.csv_header.length,:auto)
+    #set width of 'Description' and 'Response Text' columns to 100
+    column_widths[2] = 100
+    column_widths[3] = 100
+
+    #return the array
+    column_widths
+  end
+
+
   def to_csv
     [self.order_in_list, self.category_name, self.description, self.response_text, self.assigned_to.present? ? User.find(self.assigned_to).name : '',
      self.category_status_type.status_text, self.action_needed, self.rule_change_required, self.comments.order(:source_id).collect{|com| com.order_in_list}.join(", ")]

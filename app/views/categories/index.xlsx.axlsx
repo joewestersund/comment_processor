@@ -8,8 +8,15 @@ wb.add_worksheet(name: 'Categories') do |sheet|
 
   sheet.add_row Category.csv_header, style: header_style
 
-  @categories.each do |cat|
-    sheet.add_row cat.to_csv, style: data_style
+  num_categories = @categories.length
+
+  @categories.each_with_index do |cat,index|
+    if index == num_categories - 1
+      #only add the styling on the last row
+      sheet.add_row cat.to_csv, style: data_style, widths: Category.excel_column_widths
+    else
+      sheet.add_row cat.to_csv, style: data_style
+    end
   end
 
 end

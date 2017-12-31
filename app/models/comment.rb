@@ -31,6 +31,16 @@ class Comment < ApplicationRecord
      'Summary','Status','Status Details','Categories (by their "order in list")']
   end
 
+  def self.excel_column_widths
+    #create array of same length as csv_header, all containing the same initial value
+    column_widths = Array.new(Comment.csv_header.length,:auto)
+    #set width of 'Comment Text' column to 100
+    column_widths[7] = 100
+
+    #return the array
+    column_widths
+  end
+
   def to_csv
     [self.order_in_list, self.source_id, self.first_name, self.last_name, self.email,
      self.organization, self.state, self.comment_text, self.attachment_name, self.attachment_url, self.manually_entered,

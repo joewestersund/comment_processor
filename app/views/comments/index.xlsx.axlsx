@@ -8,7 +8,15 @@ wb.add_worksheet(name: 'Comments') do |sheet|
 
   sheet.add_row Comment.csv_header, style: header_style
 
-  @comments.each do |c|
-    sheet.add_row c.to_csv, style: data_style
+  num_comments = @comments.length
+
+  @comments.each_with_index do |c, index|
+    if index == num_comments - 1
+      #only add the styling on the last row
+      sheet.add_row c.to_csv, style: data_style, widths: Comment.excel_column_widths
+    else
+      sheet.add_row c.to_csv, style: data_style
+    end
   end
+
 end
