@@ -90,7 +90,7 @@ class CategoriesController < ApplicationController
           sent_to = User.find(@category.assigned_to)
           email_sent_text = " An email was sent to #{sent_to.name} to let them know this category is assigned to them."
         end
-        format.html { redirect_to categories_path, notice: "Category was successfully created.#{email_sent_text}" }
+        format.html { redirect_to edit_category_path(@category), notice: "Category was successfully created.#{email_sent_text}" }
       else
         set_select_options
         format.html { render :new }
