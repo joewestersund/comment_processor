@@ -15,7 +15,7 @@ class CategoriesController < ApplicationController
     else
       c = Category.where(conditions)
     end
-    c = c.order(:order_in_list)
+    c = c.order('LOWER(category_name)')
 
     respond_to do |format|
       format.html {

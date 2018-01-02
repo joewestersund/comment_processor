@@ -170,7 +170,7 @@ class CommentsController < ApplicationController
 
     def set_select_options
       @users = User.order(:name).all
-      @categories = Category.order(:order_in_list).all
+      @categories = Category.order('LOWER(category_name)').all
       @comment_status_types = CommentStatusType.order(:order_in_list).all
     end
 

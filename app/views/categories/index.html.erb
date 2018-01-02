@@ -54,7 +54,6 @@
 <table>
   <thead>
     <tr>
-      <th>#</th>
       <th>Category name</th>
       <th>Category description</th>
       <th>Category review status</th>
@@ -63,14 +62,13 @@
       <th>Rule change required?</th>
       <th>Action needed</th>
       <th># of comments</th>
-      <th colspan="4"></th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @categories.each_with_index do |category,index| %>
       <tr>
-        <td><%= category.order_in_list %></td>
         <td><%= category.category_name %></td>
         <td><%= category.description %></td>
         <td class="<%= status_css(category.category_status_type)%>"><%= category.category_status_type.status_text if category.category_status_type.present? %></td>
@@ -81,8 +79,9 @@
         <td class="<%= highlight_empty_css(category.comments)%>"><%= category.comments.count == 0 ? "none" : link_to(category.comments.count, comments_path({category_id: category.id})) %></td>
         <td><%= link_to 'Edit', edit_category_path(category,@filter_querystring) %></td>
         <td><%= link_to 'Delete', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <td><%= (link_to 'Move Up', "/categories/#{category.id}/move_up", method: :post) unless index == 0 %></td>
-        <td><%= (link_to 'Move Down', "/categories/#{category.id}/move_down", method: :post) unless index == @categories.count-1 %></td>
+
+        <% #<td><%= (link_to 'Move Up', "/categories/#{category.id}/move_up", method: :post) unless index == 0 % ></td> %>
+        <% #<td><%= (link_to 'Move Down', "/categories/#{category.id}/move_down", method: :post) unless index == @categories.count-1 % ></td> %>
       </tr>
     <% end %>
   </tbody>

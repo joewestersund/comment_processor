@@ -104,7 +104,7 @@
         <td class="<%= highlight_empty_css(comment.summary)%>"><%= comment.summary %></td>
         <td class="<%= status_css(comment.comment_status_type)%>"><%= comment.comment_status_type.status_text if comment.comment_status_type.present? %></td>
         <td class="<%= highlight_filled_css(comment.status_details)%>"><%= comment.status_details %></td>
-        <td class="<%= highlight_empty_css(comment.categories)%>"><% comment.categories.order(:order_in_list).each_with_index do |c,index|%>
+        <td class="<%= highlight_empty_css(comment.categories)%>"><% comment.categories.order('LOWER(category_name)').each_with_index do |c,index|%>
             <% if index != 0 %>
               <div class="separate">
             <% end %>
