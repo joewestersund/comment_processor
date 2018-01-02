@@ -80,7 +80,7 @@
   <thead>
     <tr>
       <th>#</th>
-      <th>Name & email</th>
+      <th>Name & Email</th>
       <th>Organization & State</th>
       <th>Comment text</th>
       <th>Attachment</th>
@@ -100,7 +100,7 @@
         <td><%= "#{comment.first_name + ' ' if comment.first_name.present?}#{comment.last_name}#{' <' + comment.email.truncate(25) + '>' if comment.email.present?}"%></td>
         <td><%= "#{comment.organization + ", " if comment.organization.present?}#{comment.state}" %></td>
         <td><%= comment.comment_text.truncate(1000) if comment.comment_text.present?%></td>
-        <td><%= if comment.attachment_name.present? then link_to comment.attachment_name.to_s, comment.attachment_url end %></td>
+        <td><%= (link_to comment.attachment_name.truncate(10), comment.attachment_url) if comment.attachment_name.present? %></td>
         <td class="<%= highlight_empty_css(comment.summary)%>"><%= comment.summary %></td>
         <td class="<%= status_css(comment.comment_status_type)%>"><%= comment.comment_status_type.status_text if comment.comment_status_type.present? %></td>
         <td class="<%= highlight_filled_css(comment.status_details)%>"><%= comment.status_details %></td>
