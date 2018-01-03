@@ -1,5 +1,16 @@
 module CommentsHelper
 
+  def comments_and_commenters_text(category)
+    comments = category.comments.count
+    commenters = category.comments.sum(:num_commenters)
+
+    if commenters > comments
+      "#{comments} (#{commenters} commenters)"
+    else
+      comments
+    end
+  end
+
   def rulemaking_data_source
     'https://data.oregon.gov/OData.svc/gvv7-qhw2'  #OData v2
   end

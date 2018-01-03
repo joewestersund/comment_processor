@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180103011039) do
+ActiveRecord::Schema.define(version: 20180103160837) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,6 +80,7 @@ ActiveRecord::Schema.define(version: 20180103011039) do
     t.boolean "manually_entered"
     t.integer "order_in_list"
     t.integer "comment_tone_type_id"
+    t.integer "num_commenters"
   end
 
   create_table "users", force: :cascade do |t|

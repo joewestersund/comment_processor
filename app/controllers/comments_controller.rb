@@ -76,6 +76,7 @@ class CommentsController < ApplicationController
     @comment = Comment.new
     #this is only used when someone's manually entering a comment
     @comment.manually_entered = true
+    @comment.num_commenters = 1
   end
 
   # GET /comments/1/edit
@@ -110,7 +111,7 @@ class CommentsController < ApplicationController
     @comment.manually_entered = true
 
     respond_to do |format|
-      if @comment.save
+      if @comment.save && save_comment_categories
         format.html { redirect_to edit_comment_path(@comment), notice: 'Comment was successfully created.' }
         format.json { render :show, status: :created, location: @comment }
       else
@@ -125,7 +126,7 @@ class CommentsController < ApplicationController
   def update
 
     respond_to do |format|
-      if @comment.update(comment_params) && update_comment_categories
+      if @comment.update(comment_params) && save_comment_categories
         @filter_querystring = remove_empty_elements(filter_params_all)
         format.html { redirect_to edit_comment_path(@comment,@filter_querystring), notice: 'Comment was successfully updated.' }
         format.json { render :show, status: :ok, location: @comment }
@@ -151,7 +152,7 @@ class CommentsController < ApplicationController
   end
 
   private
-    def update_comment_categories
+    def save_comment_categories
       @categories = Category.where(:id => params[:comment_categories])
       @comment.categories.destroy_all   #disassociate the already added organizers
       @comment.categories << @categories
@@ -165,7 +166,7 @@ class CommentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
-      params.require(:comment).permit(:source_id, :first_name, :last_name, :email, :organization, :state, :comment_text, :attachment_name, :attachment_url, :summary, :comment_status_type_id, :comment_tone_type_id, :status_details, :manually_entered)
+      params.require(:comment).permit(:source_id, :first_name, :last_name, :email, :organization, :state, :comment_text, :attachment_name, :attachment_url, :num_commenters, :summary, :comment_status_type_id, :comment_tone_type_id, :status_details, :manually_entered)
     end
 
     def set_select_options

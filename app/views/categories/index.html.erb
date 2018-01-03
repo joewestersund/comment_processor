@@ -82,9 +82,9 @@
         <td class="<%= assigned_to_css(category.assigned_to) %>"><%= User.find(category.assigned_to).name if category.assigned_to.present? %></td>
         <td class="<%= highlight_filled_css(category.rule_change_required)%>"><%=category.rule_change_required ? "Y" : "N"%></td>
         <td class="<%= highlight_filled_css(category.action_needed)%>"><%= category.action_needed %></td>
-        <td class="<%= highlight_empty_css(category.comments)%>"><%= category.comments.count == 0 ? "none" : link_to(category.comments.count, comments_path({category_id: category.id})) %></td>
+        <td class="<%= highlight_empty_css(category.comments)%>"><%= category.comments.count == 0 ? "none" : link_to(comments_and_commenters_text(category), comments_path({category_id: category.id})) %></td>
         <td><%= link_to 'Edit', edit_category_path(category,@filter_querystring) %></td>
-        <td><%= link_to 'Delete', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Delete', category, method: :delete, data: { confirm: "Are you sure you want to delete '#{category.category_name}'?" } %></td>
       </tr>
     <% end %>
   </tbody>

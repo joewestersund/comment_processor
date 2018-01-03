@@ -20,6 +20,7 @@
 #  manually_entered       :boolean
 #  order_in_list          :integer
 #  comment_tone_type_id   :integer
+#  num_commenters         :integer
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

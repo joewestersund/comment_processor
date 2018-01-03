@@ -69,6 +69,11 @@
   <% end  %>
 
   <div class="field">
+    <%= form.label :num_commenters, "Number of commenters" %>
+    <%= form.number_field :num_commenters, id: :comment_num_commenters, min: 1 %>
+  </div>
+
+  <div class="field">
     <%= form.label :summary %>
     <%= form.text_area :summary, id: :comment_summary, cols: 300, rows: 5, class: 'bigtextarea' %>
   </div>
