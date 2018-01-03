@@ -22,6 +22,11 @@
   </div>
 
   <div class="field">
+    <%= form.label :category_response_type %>
+    <%= form.collection_select :category_response_type_id, @category_response_types, :id, :response_text, :selected => @category.category_response_type_id, include_blank: true  %>
+  </div>
+
+  <div class="field">
     <%= form.label :response_text %>
     <%= form.text_area :response_text, id: :category_response_text, cols: 300, rows: 5, class: 'bigtextarea' %>
   </div>

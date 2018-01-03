@@ -1,0 +1,22 @@
+<%= form_with(model: category_response_type, local: true) do |form| %>
+  <% if category_response_type.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(category_response_type.errors.count, "error") %> prohibited this category_response_type from being saved:</h2>
+
+      <ul>
+      <% category_response_type.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :response_text %>
+    <%= form.text_field :response_text, id: :category_response_type_response_text %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Save" %>
+  </div>
+<% end %>

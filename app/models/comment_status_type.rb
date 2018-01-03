@@ -11,4 +11,8 @@
 
 class CommentStatusType < ApplicationRecord
   has_many :comments
+
+  validates :status_text, presence: true, uniqueness: { case_sensitive: false }
+  validates :order_in_list, numericality: { only_integer: true, greater_than: 0}, uniqueness: true
+
 end

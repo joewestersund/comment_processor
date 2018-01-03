@@ -172,14 +172,15 @@ class CommentsController < ApplicationController
       @users = User.order(:name).all
       @categories = Category.order('LOWER(category_name)').all
       @comment_status_types = CommentStatusType.order(:order_in_list).all
+      @comment_tone_types = CommentToneType.order(:order_in_list).all
     end
 
     def filter_params_in_obj
-      params.permit(:first_name, :last_name, :email, :organization, :state, :comment_text, :summary, :comment_status_type_id, :status_details, :manually_entered)
+      params.permit(:first_name, :last_name, :email, :organization, :state, :comment_text, :summary, :comment_status_type_id, :comment_tone_type_id ,:status_details, :manually_entered)
     end
 
     def filter_params_all
-      params.permit(:first_name, :last_name, :email, :organization, :state, :comment_text, :summary, :comment_status_type_id, :status_details, :manually_entered, :has_attachment, :category_id, )
+      params.permit(:first_name, :last_name, :email, :organization, :state, :comment_text, :summary, :comment_status_type_id, :comment_tone_type_id, :status_details, :manually_entered, :has_attachment, :category_id, )
     end
 
     def get_conditions
@@ -219,6 +220,9 @@ class CommentsController < ApplicationController
 
       conditions[:comment_status_type_id] = search_terms.comment_status_type_id if search_terms.comment_status_type_id.present?
       conditions_string << "comment_status_type_id = :comment_status_type_id" if search_terms.comment_status_type_id.present?
+
+      conditions[:comment_tone_type_id] = search_terms.comment_tone_type_id if search_terms.comment_tone_type_id.present?
+      conditions_string << "comment_tone_type_id = :comment_tone_type_id" if search_terms.comment_tone_type_id.present?
 
       conditions[:status_details] = "%#{search_terms.status_details}%" if search_terms.status_details.present?
       conditions_string << "comments.status_details ILIKE :status_details" if search_terms.status_details.present?

@@ -1,0 +1,28 @@
+<h1>Category Response Types</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Response text</th>
+      <th colspan="4"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @category_response_types.each_with_index do |category_response_type,index| %>
+      <tr>
+        <td class="<%= status_css(category_response_type)%>" ><%= category_response_type.order_in_list %></td>
+        <td><%= category_response_type.response_text %></td>
+        <td><%= link_to 'Edit', edit_category_response_type_path(category_response_type) %></td>
+        <td><%= link_to 'Delete', category_response_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= (link_to 'Move Up', "/category_response_types/#{category_response_type.id}/move_up", method: :post) unless index == 0 %></td>
+        <td><%= (link_to 'Move Down', "/category_response_types/#{category_response_type.id}/move_down", method: :post) unless index == @category_response_types.count-1 %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Category Response Type', new_category_response_type_path %>

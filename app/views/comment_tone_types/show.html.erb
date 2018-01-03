@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Description text:</strong>
+  <%= @comment_tone_type.description_text %>
+</p>
+
+<p>
+  <strong>Order in list:</strong>
+  <%= @comment_tone_type.order_in_list %>
+</p>
+
+<%= link_to 'Edit', edit_comment_tone_type_path(@comment_tone_type) %> |
+<%= link_to 'Back', comment_tone_types_path %>

@@ -56,7 +56,7 @@ class CategoriesController < ApplicationController
 
   # GET /categories/1/edit
   def edit
-    current_category_order_in_list = @category.order_in_list
+    current_category_category_name = @category.category_name.downcase
 
     conditions = get_conditions
     if conditions[0].empty?
@@ -65,8 +65,8 @@ class CategoriesController < ApplicationController
       c = Category.where(conditions)
     end
 
-    @previous_category = c.where("order_in_list < ?", current_category_order_in_list).order(:order_in_list).last
-    @next_category = c.where("order_in_list > ?", current_category_order_in_list).order(:order_in_list).first
+    @previous_category = c.where("LOWER(category_name) < ?", current_category_category_name).order("LOWER(category_name)").last
+    @next_category = c.where("LOWER(category_name) > ?", current_category_category_name).order("LOWER(category_name)").first
 
     @filtered = !conditions[0].empty?
     @filter_querystring = remove_empty_elements(filter_params)
@@ -144,15 +144,16 @@ class CategoriesController < ApplicationController
     def set_select_options
       @users = User.order(:name).all
       @category_status_types = CategoryStatusType.order(:order_in_list).all
+      @category_response_types = CategoryResponseType.order(:order_in_list).all
     end
 
   # Never trust parameters from the scary internet, only allow the white list through.
     def category_params
-      params.require(:category).permit(:category_name, :description, :response_text, :assigned_to, :category_status_type_id, :action_needed, :rule_change_required, :order_in_list)
+      params.require(:category).permit(:category_name, :description, :response_text, :assigned_to, :category_status_type_id, :category_response_type_id ,:action_needed, :rule_change_required, :order_in_list)
     end
 
     def filter_params
-      params.permit(:category_name, :description, :response_text, :assigned_to, :category_status_type_id, :action_needed, :rule_change_required)
+      params.permit(:category_name, :description, :response_text, :assigned_to, :category_status_type_id, :category_response_type_id, :action_needed, :rule_change_required)
     end
 
     def get_conditions
@@ -176,6 +177,9 @@ class CategoriesController < ApplicationController
 
         conditions[:category_status_type_id] = search_terms.category_status_type_id if search_terms.category_status_type_id.present?
         conditions_string << "category_status_type_id = :category_status_type_id" if search_terms.category_status_type_id.present?
+
+        conditions[:category_response_type_id] = search_terms.category_response_type_id if search_terms.category_response_type_id.present?
+        conditions_string << "category_response_type_id = :category_response_type_id" if search_terms.category_response_type_id.present?
 
         #can filter down to rule_change_required, but if not checked all records returned
         conditions[:rule_change_required] = search_terms.rule_change_required if search_terms.rule_change_required

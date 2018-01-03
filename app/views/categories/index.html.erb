@@ -27,6 +27,10 @@
         <%= select_tag :category_status_type_id, options_from_collection_for_select(@category_status_types,:id,:status_text,params[:category_status_type_id]), { :include_blank => true } %>
       </div>
       <div class="field">
+        <%= label_tag :response_type %>
+        <%= select_tag :category_response_type_id, options_from_collection_for_select(@category_response_types,:id,:response_text,params[:category_response_type_id]), { :include_blank => true } %>
+      </div>
+      <div class="field">
         <%= label_tag :response_text  %>
         <%= text_field_tag :response_text, params[:response_text] %>
       </div>
@@ -57,6 +61,7 @@
       <th>Category name</th>
       <th>Category description</th>
       <th>Category review status</th>
+      <th>Response type</th>
       <th>Response text</th>
       <th>Assigned to</th>
       <th>Rule change required?</th>
@@ -72,6 +77,7 @@
         <td><%= category.category_name %></td>
         <td><%= category.description %></td>
         <td class="<%= status_css(category.category_status_type)%>"><%= category.category_status_type.status_text if category.category_status_type.present? %></td>
+        <td><%= category.category_response_type.response_text if category.category_response_type.present? %></td>
         <td class="<%= highlight_empty_css(category.response_text)%>"><%= category.response_text %></td>
         <td class="<%= assigned_to_css(category.assigned_to) %>"><%= User.find(category.assigned_to).name if category.assigned_to.present? %></td>
         <td class="<%= highlight_filled_css(category.rule_change_required)%>"><%=category.rule_change_required ? "Y" : "N"%></td>
@@ -79,9 +85,6 @@
         <td class="<%= highlight_empty_css(category.comments)%>"><%= category.comments.count == 0 ? "none" : link_to(category.comments.count, comments_path({category_id: category.id})) %></td>
         <td><%= link_to 'Edit', edit_category_path(category,@filter_querystring) %></td>
         <td><%= link_to 'Delete', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-
-        <% #<td><%= (link_to 'Move Up', "/categories/#{category.id}/move_up", method: :post) unless index == 0 % ></td> %>
-        <% #<td><%= (link_to 'Move Down', "/categories/#{category.id}/move_down", method: :post) unless index == @categories.count-1 % ></td> %>
       </tr>
     <% end %>
   </tbody>

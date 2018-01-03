@@ -19,16 +19,18 @@
 #  attachment_name        :string
 #  manually_entered       :boolean
 #  order_in_list          :integer
+#  comment_tone_type_id   :integer
 #
 
 class Comment < ApplicationRecord
   has_and_belongs_to_many :categories
   belongs_to :comment_status_type
+  belongs_to :comment_tone_type
 
   def self.csv_header
     ['Order In List', 'DAS ID', 'First Name', 'Last Name', 'Email',
      'Organization', 'State', 'Comment Text', 'Attachment Name', 'Attachment URL', 'Manually Entered?',
-     'Summary','Status','Status Details','Categories (by their "order in list")']
+     'Summary','Status','Status Details','Tone','Categories (by their "order in list")']
   end
 
   def self.excel_column_widths
@@ -44,7 +46,7 @@ class Comment < ApplicationRecord
   def to_csv
     [self.order_in_list, self.source_id, self.first_name, self.last_name, self.email,
      self.organization, self.state, self.comment_text, self.attachment_name, self.attachment_url, self.manually_entered,
-     self.summary, self.comment_status_type.status_text, self.status_details, self.categories.order(:order_in_list).collect{|cat| cat.order_in_list}.join(", ")]
+     self.summary, self.comment_status_type.status_text, self.status_details, self.comment_tone_type.tone_text, self.categories.order(:order_in_list).collect{|cat| cat.order_in_list}.join(", ")]
   end
 
 end
