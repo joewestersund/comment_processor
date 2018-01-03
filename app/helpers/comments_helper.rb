@@ -55,6 +55,8 @@ module CommentsHelper
         c.manually_entered = false #false because this is imported from DAS
         c.comment_status_type = default_comment_status_type
 
+        c.comment_tone_type = nil #default to nil
+
         current_max_order_in_list += 1
         c.order_in_list = current_max_order_in_list
 
