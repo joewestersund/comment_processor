@@ -25,7 +25,7 @@
 class Comment < ApplicationRecord
   has_and_belongs_to_many :categories
   belongs_to :comment_status_type
-  belongs_to :comment_tone_type
+  belongs_to :comment_tone_type, optional: true
 
   def self.csv_header
     ['Order In List', 'DAS ID', 'First Name', 'Last Name', 'Email',

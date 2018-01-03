@@ -19,7 +19,7 @@
 class Category < ApplicationRecord
   has_and_belongs_to_many :comments
   belongs_to :category_status_type
-  belongs_to :category_response_type
+  belongs_to :category_response_type, optional: true
   belongs_to :user, foreign_key: 'assigned_to', optional: true
 
   validates :category_name, presence: true, uniqueness: { case_sensitive: false }

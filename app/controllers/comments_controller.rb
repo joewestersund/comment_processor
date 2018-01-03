@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
   before_action :signed_in_user
   before_action :admin_user, only: [:import, :do_import, :cleanup, :do_cleanup]
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
-  before_action :set_select_options, only: [:new, :edit, :index]
+  before_action :set_select_options, only: [:new, :edit, :index, :update]
 
   # GET /comments
   # GET /comments.json
@@ -165,7 +165,7 @@ class CommentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
-      params.require(:comment).permit(:source_id, :first_name, :last_name, :email, :organization, :state, :comment_text, :attachment_name, :attachment_url, :summary, :comment_status_type_id, :status_details, :manually_entered)
+      params.require(:comment).permit(:source_id, :first_name, :last_name, :email, :organization, :state, :comment_text, :attachment_name, :attachment_url, :summary, :comment_status_type_id, :comment_tone_type_id, :status_details, :manually_entered)
     end
 
     def set_select_options
