@@ -1,8 +1,8 @@
 module CommentsHelper
 
   def comments_and_commenters_text(category)
-    comments = category.comments.count
-    commenters = category.comments.sum(:num_commenters)
+    comments = category.num_comments
+    commenters = category.num_commenters
 
     if commenters > comments
       "#{comments} (#{commenters} commenters)"
@@ -67,6 +67,7 @@ module CommentsHelper
         c.comment_status_type = default_comment_status_type
 
         c.comment_tone_type = nil #default to nil
+        c.num_commenters = 1 #default to one
 
         current_max_order_in_list += 1
         c.order_in_list = current_max_order_in_list

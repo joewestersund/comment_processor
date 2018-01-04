@@ -28,6 +28,9 @@ class Comment < ApplicationRecord
   belongs_to :comment_status_type
   belongs_to :comment_tone_type, optional: true
 
+  validates :num_commenters, presence: true, numericality: { only_integer: true, greater_than: 0}
+
+
   def self.csv_header
     ['Order In List', 'DAS ID', 'First Name', 'Last Name', 'Email',
      'Organization', 'State', 'Comment Text', 'Attachment Name', 'Attachment URL', 'Manually Entered?',

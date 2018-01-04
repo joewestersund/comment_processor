@@ -88,7 +88,7 @@
   </div>
 
   <div class="field">
-    <%= form.label :comment_tone %>
+    <%= form.label :comment_tone, "General tone of the comment" %>
     <%= form.collection_select :comment_tone_type_id, @comment_tone_types, :id, :tone_text, :selected => @comment.comment_tone_type_id, include_blank: true  %>
   </div>
 
