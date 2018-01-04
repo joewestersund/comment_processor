@@ -26,6 +26,9 @@ gem 'jquery-rails', '~>4.3'
 
 gem 'jquery-ui-rails'
 
+gem 'bootstrap-multiselect-rails', '~> 0.9.9'
+#gem 'bootstrap-multiselect-rails4', '~> 0.0.1'
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -47,6 +50,7 @@ gem 'ruby_dep'
 gem 'ruby_odata'
 
 gem 'will_paginate', '~> 3.1.0'
+
 
 #for export to excel
 gem 'rubyzip', '>= 1.2.1'
