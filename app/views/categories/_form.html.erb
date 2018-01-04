@@ -22,7 +22,7 @@
   </div>
 
   <div class="field">
-    <%= form.label :category_response_type %>
+    <%= form.label :category_response_type, "DEQ/OHA response to this category" %>
     <%= form.collection_select :category_response_type_id, @category_response_types, :id, :response_text, :selected => @category.category_response_type_id, include_blank: true  %>
   </div>
 
