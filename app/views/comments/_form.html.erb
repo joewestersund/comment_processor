@@ -84,7 +84,7 @@
       <%= link_to 'Add', new_category_path, target: :_blank %> |
       <%= link_to 'Save and Refresh', "#", :onclick => "$(this).closest('form').submit()" %>
     </div>
-    <%= select_tag "comment_categories", options_from_collection_for_select(@categories, 'id', 'category_name', @comment.categories.map{ |j| j.id }), :multiple => true, id: :comment_categories_multiselect %>
+    <%= select_tag "comment_categories", options_from_collection_for_select(@categories, 'id', 'category_name', @comment.categories.map{ |j| j.id }), multiple: true, class: "multiselect-dropdown" %>
   </div>
 
   <div class="field">
@@ -103,6 +103,6 @@
   </div>
 
   <div class="actions">
-    <%= form.submit "Save" %>
+    <%= form.submit "Save", class: "btn btn-large btn-primary" %>
   </div>
 <% end %>
