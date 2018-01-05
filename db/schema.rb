@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180103160837) do
+ActiveRecord::Schema.define(version: 20180105193000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20180103160837) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "order_in_list"
-    t.boolean "rule_change_required"
+    t.boolean "rule_change_made"
     t.integer "category_response_type_id"
   end
 

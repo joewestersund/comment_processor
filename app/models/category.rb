@@ -12,7 +12,7 @@
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null
 #  order_in_list             :integer
-#  rule_change_required      :boolean
+#  rule_change_made          :boolean
 #  category_response_type_id :integer
 #
 
@@ -27,7 +27,7 @@ class Category < ApplicationRecord
 
   def self.csv_header
     ['Order In List', 'Category Name', 'Description', 'Response Text', 'Response Type', 'Assigned To',
-     'Status', 'Action Needed', 'Rule Change Required', 'Comments (by their "order in list")', '# of Comments', '# of Commenters']
+     'Status', 'Action Needed', 'Rule Change Made', 'Comments (by their "order in list")', '# of Comments', '# of Commenters']
   end
 
   def self.excel_column_widths
@@ -54,7 +54,7 @@ class Category < ApplicationRecord
      self.category_response_type.present? ? self.category_response_type.response_text : '',
      self.assigned_to.present? ? User.find(self.assigned_to).name : '',
      self.category_status_type.present? ? self.category_status_type.status_text : '',
-     self.action_needed, self.rule_change_required, self.comments.order(:source_id).collect{|com| com.order_in_list}.join(", "),
+     self.action_needed, self.rule_change_made, self.comments.order(:source_id).collect{|com| com.order_in_list}.join(", "),
      self.num_comments, self.num_commenters]
   end
 
