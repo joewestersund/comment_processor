@@ -68,7 +68,7 @@ class Category < ApplicationRecord
   def to_csv
     [self.order_in_list, self.category_name, self.description, self.response_text,
      self.category_response_type.present? ? self.category_response_type.response_text : '',
-     self.assigned_to.present? ? self.assigned_to.name : '',
+     self.assigned_to_id.present? ? self.assigned_to.name : '',
      self.category_status_type.present? ? self.category_status_type.status_text : '',
      self.action_needed, self.rule_change_made, self.comments.order(:source_id).collect{|com| com.order_in_list}.join(", "),
      self.num_comments, self.num_commenters]

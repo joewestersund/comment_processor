@@ -51,7 +51,7 @@ class CategoriesController < ApplicationController
   def new
     @category = Category.new
     #by default, assign to whoever created it
-    @category.assigned_to = current_user
+    @category.assigned_to_id = current_user.id
   end
 
   # GET /categories/1/edit
@@ -85,10 +85,9 @@ class CategoriesController < ApplicationController
 
     respond_to do |format|
       if @category.save
-        if @category.assigned_to.present? && @category.assigned_to != current_user.id
+        if @category.assigned_to_id.present? && @category.assigned_to_id != current_user.id
           NotificationMailer.category_assigned_email(@category,current_user,false).deliver
-          sent_to = User.find(@category.assigned_to)
-          email_sent_text = " An email was sent to #{sent_to.name} to let them know this category is assigned to them."
+          email_sent_text = " An email was sent to #{@category.assigned_to.name} to let them know this category is assigned to them."
         end
         format.html { redirect_to edit_category_path(@category), notice: "Category was successfully created.#{email_sent_text}" }
       else
@@ -102,10 +101,10 @@ class CategoriesController < ApplicationController
   # PATCH/PUT /categories/1.json
   def update
     email_sent_text = ""
-    previously_assigned_to = @category.assigned_to
+    previous_assigned_to_id = @category.assigned_to_id
     respond_to do |format|
       if @category.update(category_params)
-        if @category.assigned_to.present? && @category.assigned_to != current_user && @category.assigned_to != previously_assigned_to
+        if @category.assigned_to_id.present? && @category.assigned_to_id != current_user.id && @category.assigned_to_id != previous_assigned_to_id
           NotificationMailer.category_assigned_email(@category,current_user,false).deliver
           email_sent_text = " An email was sent to #{@category.assigned_to.name} to let them know this category is assigned to them."
         end
