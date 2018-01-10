@@ -8,7 +8,7 @@ class NotificationMailer < ActionMailer::Base
     @category = category
     @category_url  = edit_category_url(@category)
     @assigned_by = assigned_by
-    @assigned_to = User.find(@category.assigned_to)
+    @assigned_to = @category.assigned_to
 
     if cc_assigner && (@assigned_to.email != @assigned_by.email)
       cc = @assigned_by.email_address_with_name

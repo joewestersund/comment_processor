@@ -35,8 +35,8 @@
         <%= text_field_tag :response_text, params[:response_text] %>
       </div>
       <div class="field">
-        <%= label_tag :assigned_to %>
-        <%= select_tag :assigned_to, options_from_collection_for_select(@users,:id,:name,params[:assigned_to]), { :include_blank => true } %>
+        <%= label_tag :assigned_to_id %>
+        <%= select_tag :assigned_to_id, options_from_collection_for_select(@users,:id,:name,params[:assigned_to_id]), { :include_blank => true } %>
       </div>
       <div class="field">
         <%= label_tag :rule_change_made  %>
@@ -79,7 +79,7 @@
         <td class="<%= status_css(category.category_status_type)%>"><%= category.category_status_type.status_text if category.category_status_type.present? %></td>
         <td><%= category.category_response_type.response_text if category.category_response_type.present? %></td>
         <td class="<%= highlight_empty_css(category.response_text)%>"><%= category.response_text %></td>
-        <td class="<%= assigned_to_css(category.assigned_to) %>"><%= User.find(category.assigned_to).name if category.assigned_to.present? %></td>
+        <td class="<%= assigned_to_css(category.assigned_to_id) %>"><%= category.assigned_to.name if category.assigned_to.present? %></td>
         <td class="<%= highlight_filled_css(category.rule_change_made)%>"><%=category.rule_change_made ? "Y" : "N"%></td>
         <td class="<%= highlight_filled_css(category.action_needed)%>"><%= category.action_needed %></td>
         <td class="<%= highlight_empty_css(category.comments)%>"><%= category.comments.count == 0 ? "none" : link_to(comments_and_commenters_text(category), comments_path({category_id: category.id})) %></td>

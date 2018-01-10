@@ -1,12 +1,12 @@
-<% content_for :title, 'Stats- basics' %>
+<% content_for :title, 'Stats- status' %>
 
-<h1>Statistics- basics</h1>
+<h1>Stats - by comment and category status</h1>
 
 <span class="inline">
   <table>
     <thead>
     <tr>
-      <td colspan="2">Comments by Status</td>
+      <th colspan="2">Comments by Status</th>
     </tr>
     <tr>
       <th>Comment Status Type</th>
@@ -17,13 +17,13 @@
     <tbody>
     <% @comments_by_status_type.each do |row| %>
       <tr>
-        <td><%= row.status_text %></td>
+        <td><%= link_to row.status_text, comments_path({comment_status_type_id: row.id}) %></td>
         <td><%= row.num_comments %></td>
       </tr>
     <% end %>
       <tr>
-        <td>Total</td>
-        <td><%= @total_comments%></td>
+        <td><%= link_to "Total", comments_path %></td>
+        <td><%= @total_comments %></td>
       </tr>
     </tbody>
 </table>
@@ -33,7 +33,7 @@
   <table>
     <thead>
     <tr>
-      <td colspan="2">Categories by Status</td>
+      <th colspan="2">Categories by Status</th>
     </tr>
     <tr>
       <th>Category Status Type</th>
@@ -44,13 +44,13 @@
     <tbody>
     <% @categories_by_status_type.each do |row| %>
       <tr>
-        <td><%= row.status_text %></td>
+        <td><%= link_to row.status_text, categories_path({category_status_type_id: row.id}) %></td>
         <td><%= row.num_categories %></td>
       </tr>
     <% end %>
     <tr>
-      <td>Total</td>
-      <td><%= @total_categories%></td>
+      <td><%= link_to "Total", categories_path %></td>
+      <td><%= @total_categories %></td>
     </tr>
     </tbody>
   </table>

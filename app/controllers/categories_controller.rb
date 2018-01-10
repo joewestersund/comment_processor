@@ -51,7 +51,7 @@ class CategoriesController < ApplicationController
   def new
     @category = Category.new
     #by default, assign to whoever created it
-    @category.assigned_to = current_user.id
+    @category.assigned_to = current_user
   end
 
   # GET /categories/1/edit
@@ -105,10 +105,9 @@ class CategoriesController < ApplicationController
     previously_assigned_to = @category.assigned_to
     respond_to do |format|
       if @category.update(category_params)
-        if @category.assigned_to.present? && @category.assigned_to != current_user.id && @category.assigned_to != previously_assigned_to
+        if @category.assigned_to.present? && @category.assigned_to != current_user && @category.assigned_to != previously_assigned_to
           NotificationMailer.category_assigned_email(@category,current_user,false).deliver
-          sent_to = User.find(@category.assigned_to)
-          email_sent_text = " An email was sent to #{sent_to.name} to let them know this category is assigned to them."
+          email_sent_text = " An email was sent to #{@category.assigned_to.name} to let them know this category is assigned to them."
         end
         @filter_querystring = remove_empty_elements(filter_params)
         format.html { redirect_to edit_category_path(@category,@filter_querystring), notice: "Category was successfully updated.#{email_sent_text}" }
@@ -149,11 +148,11 @@ class CategoriesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
     def category_params
-      params.require(:category).permit(:category_name, :description, :response_text, :assigned_to, :category_status_type_id, :category_response_type_id ,:action_needed, :rule_change_made, :order_in_list)
+      params.require(:category).permit(:category_name, :description, :response_text, :assigned_to_id, :category_status_type_id, :category_response_type_id ,:action_needed, :rule_change_made, :order_in_list)
     end
 
     def filter_params
-      params.permit(:category_name, :description, :response_text, :assigned_to, :category_status_type_id, :category_response_type_id, :action_needed, :rule_change_made)
+      params.permit(:category_name, :description, :response_text, :assigned_to_id, :category_status_type_id, :category_response_type_id, :action_needed, :rule_change_made)
     end
 
     def get_conditions
@@ -172,8 +171,8 @@ class CategoriesController < ApplicationController
         conditions[:response_text] = "%#{search_terms.response_text}%" if search_terms.response_text.present?
         conditions_string << "response_text ILIKE :response_text" if search_terms.response_text.present?
 
-        conditions[:assigned_to] = search_terms.assigned_to if search_terms.assigned_to.present?
-        conditions_string << "assigned_to = :assigned_to" if search_terms.assigned_to.present?
+        conditions[:assigned_to_id] = search_terms.assigned_to_id if search_terms.assigned_to_id.present?
+        conditions_string << "assigned_to_id = :assigned_to_id" if search_terms.assigned_to_id.present?
 
         conditions[:category_status_type_id] = search_terms.category_status_type_id if search_terms.category_status_type_id.present?
         conditions_string << "category_status_type_id = :category_status_type_id" if search_terms.category_status_type_id.present?

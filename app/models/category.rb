@@ -6,7 +6,7 @@
 #  category_name             :string
 #  description               :string
 #  response_text             :string
-#  assigned_to               :integer
+#  assigned_to_id            :integer
 #  category_status_type_id   :integer
 #  action_needed             :string
 #  created_at                :datetime         not null
@@ -20,7 +20,7 @@ class Category < ApplicationRecord
   has_and_belongs_to_many :comments
   belongs_to :category_status_type
   belongs_to :category_response_type, optional: true
-  belongs_to :user, foreign_key: 'assigned_to', optional: true
+  belongs_to :user, foreign_key: 'assigned_to_id', optional: true
 
   validates :category_name, presence: true, uniqueness: { case_sensitive: false }
   validates :order_in_list, numericality: { only_integer: true, greater_than: 0}, uniqueness: true
@@ -41,6 +41,14 @@ class Category < ApplicationRecord
     column_widths
   end
 
+  def assigned_to
+    if self.assigned_to_id.present?
+      User.find(self.assigned_to_id)
+    else
+      nil
+    end
+  end
+
   def num_comments
     self.comments.count
   end
@@ -52,7 +60,7 @@ class Category < ApplicationRecord
   def to_csv
     [self.order_in_list, self.category_name, self.description, self.response_text,
      self.category_response_type.present? ? self.category_response_type.response_text : '',
-     self.assigned_to.present? ? User.find(self.assigned_to).name : '',
+     self.assigned_to.present? ? self.assigned_to.name : '',
      self.category_status_type.present? ? self.category_status_type.status_text : '',
      self.action_needed, self.rule_change_made, self.comments.order(:source_id).collect{|com| com.order_in_list}.join(", "),
      self.num_comments, self.num_commenters]

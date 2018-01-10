@@ -43,7 +43,7 @@ Rails.application.routes.draw do
   get '/signin', to: "sessions#new"
   delete '/signout', to: "sessions#destroy"
 
-  get '/stats/basics', to: "stats#basics"
+  get '/stats/by_status', to: "stats#by_status"
   get '/stats/categories', to: "stats#categories"
 
   root 'static_pages#about'
