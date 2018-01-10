@@ -12,7 +12,7 @@
   <tbody>
     <% @category_response_types.each_with_index do |category_response_type,index| %>
       <tr>
-        <td class="<%= status_css(category_response_type)%>" ><%= category_response_type.order_in_list %></td>
+        <td class="<%= response_css(category_response_type)%>" ><%= category_response_type.order_in_list %></td>
         <td><%= category_response_type.response_text %></td>
         <td><%= link_to 'Edit', edit_category_response_type_path(category_response_type) %></td>
         <td><%= link_to 'Delete', category_response_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>

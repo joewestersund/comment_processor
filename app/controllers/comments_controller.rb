@@ -24,6 +24,7 @@ class CommentsController < ApplicationController
     respond_to do |format|
       format.html {
         @total_comments = Comment.count
+        @total_commenters = Comment.sum(:num_commenters)
         @filtered = !conditions[0].empty?
         @filter_querystring = remove_empty_elements(filter_params_all)
         @comments = c.page(params[:page]).per_page(10)

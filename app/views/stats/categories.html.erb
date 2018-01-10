@@ -1,57 +1,165 @@
 <% content_for :title, 'Stats- categories' %>
 
-<h1>Statistics- Categories</h1>
+<h1>Stats for Categories</h1>
 
-<span class="inline">
-  <table>
-    <thead>
-    <tr>
-      <th colspan="2">Categories by Status</th>
-    </tr>
-    <tr>
-      <th>Comment Status Type</th>
-      <th># of Comments</th>
-    </tr>
-    </thead>
+<div class="stats">
+  <div>
+    <%= @total_categories %> categories identified
+  </div>
 
-    <tbody>
-    <% @comments_by_status_type.each do |row| %>
+
+  <span class="inline">
+    <table>
+      <thead>
       <tr>
-        <td><%= row.status_text %></td>
-        <td><%= row.num_comments %></td>
+        <th colspan="3">Categories by Status</th>
       </tr>
-    <% end %>
-    <tr>
-      <td>Total</td>
-      <td><%= @total_comments%></td>
-    </tr>
-    </tbody>
-  </table>
-</span>
-
-<span class="inline">
-  <table>
-    <thead>
-    <tr>
-      <th colspan="2">Categories by Status</th>
-    </tr>
-    <tr>
-      <th>Category Status Type</th>
-      <th># of Categories</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    <% @categories_by_status_type.each do |row| %>
       <tr>
-        <td><%= row.status_text %></td>
-        <td><%= row.num_categories %></td>
+        <th>Category Status Type</th>
+        <th># of Categories</th>
+        <th>%</th>
       </tr>
-    <% end %>
-    <tr>
-      <td>Total</td>
-      <td><%= @total_categories%></td>
-    </tr>
-    </tbody>
-  </table>
-</span>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>No category status assigned</td>
+          <td><%= @categories_with_no_status_type %></td>
+          <td ><%= format_percent(@categories_with_no_status_type,@total_categories) %></td>
+        </tr>
+      <% @categories_by_status_type.each do |row| %>
+        <tr>
+          <td><%= link_to row.status_text, categories_path({category_status_type_id: row.id}) %></td>
+          <td class="<%= css_order_in_list('status',row.order_in_list)%>"><%= link_to row.num_categories, categories_path({category_status_type_id: row.id}) %></td>
+          <td class="<%= css_order_in_list('status',row.order_in_list)%>"><%= format_percent(row.num_categories,@total_categories) %></td>
+        </tr>
+      <% end %>
+      <tr>
+        <td><%= link_to "Total", categories_path %></td>
+        <td><%= link_to @total_categories, categories_path %></td>
+        <td>100%</td>
+      </tr>
+      </tbody>
+    </table>
+  </span>
+
+  <span class="inline">
+    <table>
+      <thead>
+      <tr>
+        <th colspan="3">Categories by Agency Response</th>
+      </tr>
+      <tr>
+        <th>Agency Response</th>
+        <th># of Categories</th>
+        <th>%</th>
+      </tr>
+      </thead>
+
+      <tbody>
+
+        <tr>
+          <td>No agency response assigned</td>
+          <td><%= @categories_with_no_agency_response %></td>
+          <td ><%= format_percent(@categories_with_no_agency_response,@total_categories) %></td>
+        </tr>
+      <% @categories_by_agency_response.each do |row| %>
+        <tr>
+          <td><%= link_to row.response_text, categories_path({category_response_type_id: row.id}) %></td>
+          <td class="<%= css_order_in_list('response',row.order_in_list)%>"><%= link_to row.num_categories, categories_path({category_response_type_id: row.id}) %></td>
+          <td class="<%= css_order_in_list('response',row.order_in_list)%>"><%= format_percent(row.num_categories,@total_categories) %></td>
+        </tr>
+      <% end %>
+      <tr>
+        <td><%= link_to "Total", categories_path %></td>
+        <td><%= link_to @total_categories, categories_path %></td>
+        <td>100%</td>
+      </tr>
+      </tbody>
+    </table>
+  </span>
+
+  <span class="inline">
+    <table>
+      <thead>
+      <tr>
+        <th colspan="3">Categories by who they're assigned to</th>
+      </tr>
+      <tr>
+        <th>User</th>
+        <th># of Categories Assigned to Them</th>
+        <th>%</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @categories_by_assigned_to.each do |row| %>
+        <tr>
+          <td class="<%= assigned_to_css(row.id) %>"><%= link_to row.name, categories_path({assigned_to_id: row.id}) %></td>
+          <td class="<%= assigned_to_css(row.id) %>"><%= link_to row.num_categories, categories_path({assigned_to_id: row.id}) %></td>
+          <td class="<%= assigned_to_css(row.id) %>"><%= format_percent(row.num_categories,@total_categories) %></td>
+        </tr>
+      <% end %>
+      <tr>
+        <td class="<%= assigned_to_css(nil) %>">Not assigned to anyone</td>
+        <td class="<%= assigned_to_css(nil) %>"><%= @categories_not_assigned %></td>
+        <td class="<%= assigned_to_css(nil) %>"><%= format_percent(@categories_not_assigned,@total_categories) %></td>
+      </tr>
+      <tr>
+        <td><%= link_to "Total", categories_path %></td>
+        <td><%= link_to @total_categories, categories_path %></td>
+        <td>100%</td>
+      </tr>
+      </tbody>
+    </table>
+  </span>
+
+  <span class="inline">
+    <table>
+      <thead>
+      <tr>
+        <th colspan="<%= "#{@category_status_types.count + 3}" %>">Categories by who they're assigned to and status</th>
+      </tr>
+      <tr>
+        <th>User</th>
+        <% @category_status_types.each do |cst| %>
+          <th class="<%= css_order_in_list('status',cst.order_in_list)%>"><%= link_to cst.status_text, categories_path(category_status_type_id: cst.id) %></th>
+        <% end %>
+        <th>Total</th>
+        <th>%</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @categories_by_assigned_to_and_status.each do |row| %>
+        <tr>
+          <% if row[:user_id].present? %>
+            <td class="<%= assigned_to_css(row[:user_id]) %>"><%= link_to row[:name], categories_path({assigned_to_id: row[:user_id]}) %></td>
+          <% else %>
+            <td class="<%= assigned_to_css(nil) %>">Not assigned to anyone</td>
+          <% end %>
+
+          <% @category_status_types.each do |cst| %>
+            <% if row[cst.id].present?%>
+              <td class="<%= assigned_to_css(row[:user_id]) %>"><%= link_to row[cst.id], categories_path(assigned_to_id: row[:user_id],category_status_type_id: cst.id)%></td>
+            <% else %>
+              <td class="<%= assigned_to_css(row[:user_id]) %>"></td>
+            <% end %>
+          <% end %>
+          <td class="<%= assigned_to_css(row[:user_id]) %>"><%= row[:total_categories] %></td>
+          <td class="<%= assigned_to_css(row[:user_id]) %>"><%= format_percent(row[:total_categories],@total_categories) %></td>
+        </tr>
+      <% end %>
+      <tr>
+        <td><%= link_to "Total", categories_path %></td>
+        <% @categories_by_status_type.each do |cst2| %>
+        <td class="<%= css_order_in_list('status',cst2.order_in_list)%>"><%= link_to cst2.num_categories, categories_path(category_status_type_id: cst2.id) %></td>
+      <% end %>
+        <td><%= link_to @total_categories, categories_path %></td>
+        <td>100%</td>
+      </tr>
+      </tbody>
+    </table>
+  </span>
+
+</div>

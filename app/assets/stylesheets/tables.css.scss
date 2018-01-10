@@ -14,7 +14,7 @@ th:first-of-type, td:first-of-type {
   border-left: none;
 }
 
-td {
+td, th {
   &.not-assigned {
     background: darkgray;
   }
@@ -37,6 +37,23 @@ td {
   &.status-4 {
     background: dodgerblue;
   }
+
+  &.response-1 {
+    background: seagreen;
+  }
+  &.response-2 {
+    background: darkgreen;
+  }
+  &.response-3 {
+    background: greenyellow;
+  }
+  &.response-4 {
+    background: palevioletred;
+  }
+  &.response-5 {
+    background: red;
+  }
+
 
   &.empty {
     background: darkgray;

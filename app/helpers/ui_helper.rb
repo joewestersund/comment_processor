@@ -11,8 +11,23 @@ module UiHelper
 
   def status_css(status_type)
     if status_type.present?
-      "status-#{status_type.order_in_list}"
+      css_order_in_list('status',status_type.order_in_list)
     end
+  end
+
+  def response_css(response_type)
+    if response_type.present?
+      css_order_in_list('response',response_type.order_in_list)
+    end
+  end
+
+  def css_order_in_list(prefix,order_in_list)
+    "#{prefix}-#{order_in_list}"
+  end
+
+  def format_percent(numerator,denominator,decimal_digits = 0)
+    #convert to float in case both arguments are integers. Integer division truncates to an integer.
+    "#{(100 * numerator.to_f/denominator).round(decimal_digits)}%"
   end
 
   def highlight_empty_css(text)

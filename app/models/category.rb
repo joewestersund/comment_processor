@@ -49,6 +49,14 @@ class Category < ApplicationRecord
     end
   end
 
+  def assigned_to_name
+    if self.assigned_to_id.present?
+      User.find(self.assigned_to_id).name
+    else
+      nil
+    end
+  end
+
   def num_comments
     self.comments.count
   end

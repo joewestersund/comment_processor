@@ -1,13 +1,15 @@
 
-span.inline {
-  display: inline-block;
-  padding: 20px;
-
+div.stats {
   tr:first-child {
     font-size: large;
   }
 
-  th,td {
+  th:first-child, td:first-child {
     text-align: left;
+  }
+
+  span.inline {
+    display: inline-block;
+    padding: 20px;
   }
 }
