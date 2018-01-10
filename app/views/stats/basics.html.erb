@@ -1,0 +1,57 @@
+<% content_for :title, 'Stats- basics' %>
+
+<h1>Statistics- basics</h1>
+
+<span class="inline">
+  <table>
+    <thead>
+    <tr>
+      <td colspan="2">Comments by Status</td>
+    </tr>
+    <tr>
+      <th>Comment Status Type</th>
+      <th># of Comments</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @comments_by_status_type.each do |row| %>
+      <tr>
+        <td><%= row.status_text %></td>
+        <td><%= row.num_comments %></td>
+      </tr>
+    <% end %>
+      <tr>
+        <td>Total</td>
+        <td><%= @total_comments%></td>
+      </tr>
+    </tbody>
+</table>
+</span>
+
+<span class="inline">
+  <table>
+    <thead>
+    <tr>
+      <td colspan="2">Categories by Status</td>
+    </tr>
+    <tr>
+      <th>Category Status Type</th>
+      <th># of Categories</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @categories_by_status_type.each do |row| %>
+      <tr>
+        <td><%= row.status_text %></td>
+        <td><%= row.num_categories %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <td>Total</td>
+      <td><%= @total_categories%></td>
+    </tr>
+    </tbody>
+  </table>
+</span>

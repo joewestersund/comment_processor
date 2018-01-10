@@ -2,6 +2,18 @@
 <% if signed_in? %>
   <li class="nav navbar-nav"><%= link_to glyphicon_link("glyphicon-th-list","Comments").html_safe, comments_path %></li>
   <li class="nav navbar-nav"><%= link_to glyphicon_link("glyphicon-tags","Categories").html_safe, categories_path %></li>
+
+  <li id="fat-menu" class="dropdown nav navbar-nav">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+      <%= glyphicon_link("glyphicon-signal","Stats").html_safe%> <b class="caret"></b>
+    </a>
+    <ul class="dropdown-menu">
+      <li class="nav navbar-nav"><%= link_to "Basics", stats_basics_path %></li>
+      <li class="nav navbar-nav"><%= link_to "Categories", stats_categories_path %></li>
+    </ul>
+  </li>
+
+
   <% if current_user.admin? %>
     <li id="fat-menu" class="dropdown nav navbar-nav">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -10,7 +22,6 @@
       <ul class="dropdown-menu">
         <li class="nav navbar-nav"><%= link_to "Clean Up Comment Text", comments_cleanup_path %></li>
         <li class="nav navbar-nav"><%= link_to "Comment Status Types", comment_status_types_path %></li>
-        <li class="nav navbar-nav"><%= link_to "Comment Tone Types", comment_tone_types_path %></li>
         <li class="nav navbar-nav"><%= link_to "Category Status Types", category_status_types_path %></li>
         <li class="nav navbar-nav"><%= link_to "Category Response Types", category_response_types_path %></li>
         <li class="nav navbar-nav"><%= link_to "Users", users_path %></li>

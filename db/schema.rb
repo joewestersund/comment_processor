@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180105193000) do
+ActiveRecord::Schema.define(version: 20180110002709) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,13 +55,6 @@ ActiveRecord::Schema.define(version: 20180105193000) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "comment_tone_types", force: :cascade do |t|
-    t.string "tone_text"
-    t.integer "order_in_list"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "comments", force: :cascade do |t|
     t.integer "source_id"
     t.string "first_name"
@@ -79,7 +72,6 @@ ActiveRecord::Schema.define(version: 20180105193000) do
     t.string "attachment_name"
     t.boolean "manually_entered"
     t.integer "order_in_list"
-    t.integer "comment_tone_type_id"
     t.integer "num_commenters"
   end
 

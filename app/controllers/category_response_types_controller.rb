@@ -56,7 +56,7 @@ class CategoryResponseTypesController < ApplicationController
   def update
     respond_to do |format|
       if @category_response_type.update(category_response_type_params)
-        format.html { redirect_to @category_response_type, notice: 'Category response type was successfully updated.' }
+        format.html { redirect_to category_response_types_path, notice: 'Category response type was successfully updated.' }
         format.json { render :show, status: :ok, location: @category_response_type }
       else
         format.html { render :edit }

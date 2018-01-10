@@ -55,10 +55,6 @@
         <%= select_tag :category_id, options_from_collection_for_select(@categories,:id,:category_name,params[:category_id]), { :include_blank => true } %>
       </div>
       <div class="field">
-        <%= label_tag :tone %>
-        <%= select_tag :comment_tone_type_id, options_from_collection_for_select(@comment_tone_types,:id,:tone_text,params[:comment_tone_type_id]), { :include_blank => true } %>
-      </div>
-      <div class="field">
         <%= label_tag :status %>
         <%= select_tag :comment_status_type_id, options_from_collection_for_select(@comment_status_types,:id,:status_text,params[:comment_status_type_id]), { :include_blank => true } %>
       </div>
@@ -89,7 +85,6 @@
       <th>Comment text</th>
       <th>Attachment</th>
       <th>Summary</th>
-      <th>Tone</th>
       <th>Comment review status</th>
       <th>Status details</th>
       <th>Categories</th>
@@ -107,7 +102,6 @@
         <td><%= comment.comment_text.truncate(1000) if comment.comment_text.present?%></td>
         <td><%= (link_to comment.attachment_name.truncate(10), comment.attachment_url) if comment.attachment_name.present? %></td>
         <td class="<%= highlight_empty_css(comment.summary)%>"><%= comment.summary %></td>
-        <td><%= comment.comment_tone_type.tone_text if comment.comment_tone_type.present? %></td>
         <td class="<%= status_css(comment.comment_status_type)%>"><%= comment.comment_status_type.status_text if comment.comment_status_type.present? %></td>
         <td class="<%= highlight_filled_css(comment.status_details)%>"><%= comment.status_details %></td>
         <td class="<%= highlight_empty_css(comment.categories)%>"><% comment.categories.order('LOWER(category_name)').each_with_index do |c,index|%>

@@ -19,7 +19,6 @@
 #  attachment_name        :string
 #  manually_entered       :boolean
 #  order_in_list          :integer
-#  comment_tone_type_id   :integer
 #  num_commenters         :integer
 #
 
