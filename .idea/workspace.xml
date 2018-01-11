@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d31b2cac-9b5f-40c6-81a4-f9db688f04ee" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/stats/categories.html.erb" afterPath="$PROJECT_DIR$/app/views/stats/categories.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/stats/comments.html.erb" afterPath="$PROJECT_DIR$/app/views/stats/comments.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/tables.css.scss" afterPath="$PROJECT_DIR$/app/assets/stylesheets/tables.css.scss" />
     </list>
     <ignored path="comment_processor.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -32,10 +31,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="comments.html.erb" pinned="false" current-in-tab="true">
+      <file leaf-file-name="comments.html.erb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/stats/comments.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5210918">
+            <state vertical-scroll-proportion="-8.75">
               <caret line="66" column="49" selection-start-line="66" selection-start-column="49" selection-end-line="66" selection-end-column="49" />
               <folding />
             </state>
@@ -102,11 +101,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tables.css.scss" pinned="false" current-in-tab="false">
+      <file leaf-file-name="tables.css.scss" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/tables.css.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.625">
-              <caret line="15" column="26" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.81389576">
+              <caret line="53" column="27" selection-start-line="53" selection-start-column="27" selection-end-line="53" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -181,7 +180,6 @@
         <option value="$PROJECT_DIR$/app/helpers/ui_helper.rb" />
         <option value="$PROJECT_DIR$/app/views/category_response_types/edit.html.erb" />
         <option value="$PROJECT_DIR$/app/views/comment_status_types/edit.html.erb" />
-        <option value="$PROJECT_DIR$/app/assets/stylesheets/tables.css.scss" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/stats.css.scss" />
         <option value="$PROJECT_DIR$/app/controllers/stats_controller.rb" />
         <option value="$PROJECT_DIR$/app/controllers/comments_controller.rb" />
@@ -190,6 +188,7 @@
         <option value="$PROJECT_DIR$/app/models/category.rb" />
         <option value="$PROJECT_DIR$/app/views/stats/categories.html.erb" />
         <option value="$PROJECT_DIR$/app/views/stats/comments.html.erb" />
+        <option value="$PROJECT_DIR$/app/assets/stylesheets/tables.css.scss" />
       </list>
     </option>
   </component>
@@ -1177,14 +1176,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/tables.css.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.625">
-          <caret line="15" column="26" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/helpers/ui_helper.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1219,8 +1210,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/stats/comments.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5210918">
+        <state vertical-scroll-proportion="-8.75">
           <caret line="66" column="49" selection-start-line="66" selection-start-column="49" selection-end-line="66" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/tables.css.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.81389576">
+          <caret line="53" column="27" selection-start-line="53" selection-start-column="27" selection-end-line="53" selection-end-column="27" />
           <folding />
         </state>
       </provider>
