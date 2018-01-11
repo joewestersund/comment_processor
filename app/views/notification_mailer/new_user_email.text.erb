@@ -1,0 +1,10 @@
+Dear <%= @new_user.name %>,
+
+A login to the CAO comment processing website has been set up for you by <%= "#{@added_by.name} <#{@added_by.email}>" %>.
+Here is your new login information:
+
+Web address: <%= @url %>
+Username: <%= @new_user.email %>
+Temporary password: <%= @new_password %>
+
+You can reset your password by going to <%= "Acccount | Reset Password (#{profile_edit_password_url})" %>

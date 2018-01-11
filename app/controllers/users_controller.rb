@@ -33,9 +33,13 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    @user = User.new(user_params_new)
+    @user = User.new(user_params)
+    random_pw = SecureRandom.hex(8)
+    @user.password = random_pw
+    @user.password_confirmation = random_pw
     if @user.save
-      flash[:notice] = "User has been added."
+      NotificationMailer.new_user_email(@user,current_user,random_pw).deliver
+      flash[:notice] = "An account for #{@user.name} was successfully created. A new, random password has been emailed to them."
       redirect_to users_path
     else
       render 'new'
@@ -111,13 +115,11 @@ class UsersController < ApplicationController
       params.require(:user).permit(:name, :email, :admin)
     end
 
-    def user_params_new
+    def user_params_first_user
       params.require(:user).permit(:name, :email, :admin, :password, :password_confirmation)
     end
 
     def user_params_change_password()
       params.require(:user).permit(:password, :password_confirmation)
     end
-
-
 end

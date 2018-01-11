@@ -7,9 +7,11 @@
 Dear <%= @assigned_to.name %>,
 <p>
   A comment response category called <%= link_to @category.category_name, @category_url%> has just been assigned to you in the comment processing database.
+</p>
 
 <div><strong>Category Name:</strong> <%= @category.category_name %></div>
 <div><strong>Description:</strong> <%= @category.description %></div>
+<div><strong>Response Type:</strong> <%= @category.category_response_type.response_text if @category.category_response_type.present? %></div>
 <div><strong>Response Text:</strong> <%= @category.response_text %></div>
 <div><strong>Action Needed:</strong> <%= @category.action_needed %></div>
 <div><strong>Category Status:</strong> <%= @category.category_status_type.status_text if @category.category_status_type.present? %></div>

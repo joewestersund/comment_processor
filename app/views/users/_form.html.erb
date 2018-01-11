@@ -24,7 +24,7 @@
     <%= f.check_box :admin, disabled: locals[:edit_profile] %>
   </div>
 
-  <% if locals[:new_user] %>
+  <% if locals[:first_user] %>
     <div class="field">
       <%= f.label :password %>
       <%= f.password_field :password %>

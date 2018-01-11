@@ -32,4 +32,17 @@ class NotificationMailer < ActionMailer::Base
 
   end
 
+  def new_user_email(new_user,added_by,new_pw)
+    @new_user = new_user
+    @added_by  = added_by
+    @new_password = new_pw
+    @url = signin_url
+
+    cc = @added_by.email_address_with_name
+    to = @new_user.email_address_with_name
+
+    mail(to: to, cc: cc, subject: 'A login for the CAO comment response website has been created for you')
+
+  end
+
 end
