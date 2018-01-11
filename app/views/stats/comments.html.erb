@@ -21,18 +21,18 @@
       </thead>
 
       <tbody>
+        <% @comments_by_status_type.each do |row| %>
+          <tr>
+            <td><%= link_to row.status_text, comments_path({comment_status_type_id: row.id}) %></td>
+            <td class="<%= css_order_in_list('status',row.order_in_list)%>"><%= link_to row.num_comments, comments_path({comment_status_type_id: row.id}) %></td>
+            <td class="<%= css_order_in_list('status',row.order_in_list)%>"><%= format_percent(row.num_comments,@total_comments) %></td>
+          </tr>
+        <% end %>
         <tr>
-          <td>No comment status assigned</td>
-          <td><%= @comments_with_no_status_type %></td>
-          <td ><%= format_percent(@comments_with_no_status_type,@total_comments) %></td>
+          <td class="<%= assigned_to_css(nil) %>">No comment status assigned</td>
+          <td class="<%= assigned_to_css(nil) %>"><%= @comments_with_no_status_type %></td>
+          <td class="<%= assigned_to_css(nil) %>"><%= format_percent(@comments_with_no_status_type,@total_comments) %></td>
         </tr>
-      <% @comments_by_status_type.each do |row| %>
-        <tr>
-          <td><%= link_to row.status_text, comments_path({comment_status_type_id: row.id}) %></td>
-          <td class="<%= css_order_in_list('status',row.order_in_list)%>"><%= link_to row.num_comments, comments_path({comment_status_type_id: row.id}) %></td>
-          <td class="<%= css_order_in_list('status',row.order_in_list)%>"><%= format_percent(row.num_comments,@total_comments) %></td>
-        </tr>
-      <% end %>
         <tr>
           <td><%= link_to "Total", comments_path %></td>
           <td><%= link_to @total_comments, comments_path %></td>
@@ -62,9 +62,9 @@
           <td><%= format_percent(@comments_with_categories,@total_comments) %></td>
         </tr>
         <tr>
-          <td><%= "No categories have been assigned" %></td>
-          <td><%= @comments_without_categories %></td>
-          <td><%= format_percent(@comments_without_categories,@total_comments) %></td>
+          <td class="<%= assigned_to_css(nil) %>"><%= "No categories have been assigned" %></td>
+          <td class="<%= assigned_to_css(nil) %>"><%= @comments_without_categories %></td>
+          <td class="<%= assigned_to_css(nil) %>"><%= format_percent(@comments_without_categories,@total_comments) %></td>
         </tr>
         <tr>
           <td><%= link_to "Total", comments_path %></td>

@@ -11,34 +11,34 @@
   <span class="inline">
     <table>
       <thead>
-      <tr>
-        <th colspan="3">Categories by Status</th>
-      </tr>
-      <tr>
-        <th>Category Status Type</th>
-        <th># of Categories</th>
-        <th>%</th>
-      </tr>
+        <tr>
+          <th colspan="3">Categories by Status</th>
+        </tr>
+        <tr>
+          <th>Category Status Type</th>
+          <th># of Categories</th>
+          <th>%</th>
+        </tr>
       </thead>
 
       <tbody>
+        <% @categories_by_status_type.each do |row| %>
+          <tr>
+            <td><%= link_to row.status_text, categories_path({category_status_type_id: row.id}) %></td>
+            <td class="<%= css_order_in_list('status',row.order_in_list)%>"><%= link_to row.num_categories, categories_path({category_status_type_id: row.id}) %></td>
+            <td class="<%= css_order_in_list('status',row.order_in_list)%>"><%= format_percent(row.num_categories,@total_categories) %></td>
+          </tr>
+        <% end %>
         <tr>
-          <td>No category status assigned</td>
-          <td><%= @categories_with_no_status_type %></td>
-          <td ><%= format_percent(@categories_with_no_status_type,@total_categories) %></td>
+          <td class="<%= assigned_to_css(nil) %>">No category status assigned</td>
+          <td class="<%= assigned_to_css(nil) %>"><%= @categories_with_no_status_type %></td>
+          <td class="<%= assigned_to_css(nil) %>"><%= format_percent(@categories_with_no_status_type,@total_categories) %></td>
         </tr>
-      <% @categories_by_status_type.each do |row| %>
         <tr>
-          <td><%= link_to row.status_text, categories_path({category_status_type_id: row.id}) %></td>
-          <td class="<%= css_order_in_list('status',row.order_in_list)%>"><%= link_to row.num_categories, categories_path({category_status_type_id: row.id}) %></td>
-          <td class="<%= css_order_in_list('status',row.order_in_list)%>"><%= format_percent(row.num_categories,@total_categories) %></td>
+          <td><%= link_to "Total", categories_path %></td>
+          <td><%= link_to @total_categories, categories_path %></td>
+          <td>100%</td>
         </tr>
-      <% end %>
-      <tr>
-        <td><%= link_to "Total", categories_path %></td>
-        <td><%= link_to @total_categories, categories_path %></td>
-        <td>100%</td>
-      </tr>
       </tbody>
     </table>
   </span>
@@ -57,24 +57,23 @@
       </thead>
 
       <tbody>
-
+        <% @categories_by_agency_response.each do |row| %>
+          <tr>
+            <td><%= link_to row.response_text, categories_path({category_response_type_id: row.id}) %></td>
+            <td class="<%= css_order_in_list('response',row.order_in_list)%>"><%= link_to row.num_categories, categories_path({category_response_type_id: row.id}) %></td>
+            <td class="<%= css_order_in_list('response',row.order_in_list)%>"><%= format_percent(row.num_categories,@total_categories) %></td>
+          </tr>
+        <% end %>
         <tr>
-          <td>No agency response assigned</td>
-          <td><%= @categories_with_no_agency_response %></td>
-          <td ><%= format_percent(@categories_with_no_agency_response,@total_categories) %></td>
+          <td class="<%= assigned_to_css(nil) %>">No agency response assigned</td>
+          <td class="<%= assigned_to_css(nil) %>"><%= @categories_with_no_agency_response %></td>
+          <td class="<%= assigned_to_css(nil) %>"><%= format_percent(@categories_with_no_agency_response,@total_categories) %></td>
         </tr>
-      <% @categories_by_agency_response.each do |row| %>
         <tr>
-          <td><%= link_to row.response_text, categories_path({category_response_type_id: row.id}) %></td>
-          <td class="<%= css_order_in_list('response',row.order_in_list)%>"><%= link_to row.num_categories, categories_path({category_response_type_id: row.id}) %></td>
-          <td class="<%= css_order_in_list('response',row.order_in_list)%>"><%= format_percent(row.num_categories,@total_categories) %></td>
+          <td><%= link_to "Total", categories_path %></td>
+          <td><%= link_to @total_categories, categories_path %></td>
+          <td>100%</td>
         </tr>
-      <% end %>
-      <tr>
-        <td><%= link_to "Total", categories_path %></td>
-        <td><%= link_to @total_categories, categories_path %></td>
-        <td>100%</td>
-      </tr>
       </tbody>
     </table>
   </span>
@@ -140,8 +139,10 @@
           <% end %>
 
           <% @category_status_types.each do |cst| %>
-            <% if row[cst.id].present?%>
+            <% if row[cst.id].present? && row[:user_id].present? %>
               <td class="<%= assigned_to_css(row[:user_id]) %>"><%= link_to row[cst.id], categories_path(assigned_to_id: row[:user_id],category_status_type_id: cst.id)%></td>
+            <% elsif row[cst.id].present? %>
+              <td class="<%= assigned_to_css(row[:user_id]) %>"><%= row[cst.id] %></td>
             <% else %>
               <td class="<%= assigned_to_css(row[:user_id]) %>"></td>
             <% end %>
