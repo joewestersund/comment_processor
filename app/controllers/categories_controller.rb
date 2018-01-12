@@ -15,16 +15,18 @@ class CategoriesController < ApplicationController
     else
       c = Category.where(conditions)
     end
-    c = c.order('LOWER(category_name)')
 
     respond_to do |format|
       format.html {
         @total_categories = Category.all.count
         @filtered = !conditions[0].empty?
         @filter_querystring = remove_empty_elements(filter_params)
+
+        c = c.order('LOWER(category_name)')
         @categories = c.page(params[:page]).per_page(10)
       }
       format.xlsx {
+        c = c.order(:order_in_list)
         @categories = c
         response.headers['Content-Disposition'] = 'attachment; filename="categories.xlsx"'
       }

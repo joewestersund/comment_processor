@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180110013942) do
+ActiveRecord::Schema.define(version: 20180112230424) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(version: 20180110013942) do
     t.integer "order_in_list"
     t.boolean "rule_change_made"
     t.integer "category_response_type_id"
+    t.index "lower((category_name)::text)", name: "index_categories_on_lowercase_category_name", unique: true
+    t.index ["order_in_list"], name: "index_categories_on_order_in_list"
   end
 
   create_table "categories_comments", id: false, force: :cascade do |t|
@@ -73,6 +75,7 @@ ActiveRecord::Schema.define(version: 20180110013942) do
     t.boolean "manually_entered"
     t.integer "order_in_list"
     t.integer "num_commenters"
+    t.index ["order_in_list"], name: "index_comments_on_order_in_list"
   end
 
   create_table "users", force: :cascade do |t|
