@@ -1,5 +1,6 @@
 ready = ->
   $('.multiselect-dropdown').multiselect
+    enableFiltering: true,
     delimiterText: '\n',
     maxHeight: 300,
     buttonText: (options, select) ->
