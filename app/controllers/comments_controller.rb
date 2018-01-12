@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
   before_action :signed_in_user
   before_action :admin_user, only: [:import, :do_import, :cleanup, :do_cleanup]
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
-  before_action :set_select_options, only: [:new, :edit, :index, :update]
+  before_action :set_select_options, only: [:new, :edit, :index]
 
   # GET /comments
   # GET /comments.json
@@ -116,6 +116,7 @@ class CommentsController < ApplicationController
         format.html { redirect_to edit_comment_path(@comment), notice: 'Comment was successfully created.' }
         format.json { render :show, status: :created, location: @comment }
       else
+        set_select_options
         format.html { render :new }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
@@ -132,6 +133,7 @@ class CommentsController < ApplicationController
         format.html { redirect_to edit_comment_path(@comment,@filter_querystring), notice: 'Comment was successfully updated.' }
         format.json { render :show, status: :ok, location: @comment }
       else
+        set_select_options
         format.html { render :edit }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
@@ -139,13 +141,9 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    current_comment = @comment.order_in_list
+    current_comment_num = @comment.order_in_list
     @comment.destroy
-    Comment.where("order_in_list > ?",current_comment).order(:order_in_list).each do |c|
-      c.order_in_list -= 1
-      c.save
-    end
-
+    handle_delete_of_order_in_list(Comment,current_comment_num)
     respond_to do |format|
       format.html { redirect_to comments_url, notice: 'Comment was successfully deleted.' }
       format.json { head :no_content }

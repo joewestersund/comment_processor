@@ -5,7 +5,8 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/category_response_types_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/category_response_types_controller.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/category_status_types_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/category_status_types_controller.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/comment_status_types_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/comment_status_types_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/users_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/users_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/comments_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/comments_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/helpers/application_helper.rb" afterPath="$PROJECT_DIR$/app/helpers/application_helper.rb" />
     </list>
     <ignored path="comment_processor.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -34,31 +35,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="password_reset_email.html.erb" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/notification_mailer/password_reset_email.html.erb">
+      <file leaf-file-name="comments_controller.rb" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controllers/comments_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.25">
-              <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="multiselect.js.coffee" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/multiselect.js.coffee">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.625">
-              <caret line="1" column="33" selection-start-line="1" selection-start-column="33" selection-end-line="1" selection-end-column="33" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="users_controller.rb" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/controllers/users_controller.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5784543">
-              <caret line="97" column="149" selection-start-line="97" selection-start-column="149" selection-end-line="97" selection-end-column="149" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="144" column="49" selection-start-line="144" selection-start-column="20" selection-end-line="144" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -68,17 +49,7 @@
         <entry file="file://$PROJECT_DIR$/app/controllers/category_response_types_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="73" column="199" selection-start-line="73" selection-start-column="199" selection-end-line="73" selection-end-column="199" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="user.rb" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models/user.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="5" column="7" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="7" />
+              <caret line="74" column="4" selection-start-line="74" selection-start-column="4" selection-end-line="74" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -88,17 +59,17 @@
         <entry file="file://$PROJECT_DIR$/app/controllers/category_status_types_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="76" column="200" selection-start-line="76" selection-start-column="200" selection-end-line="76" selection-end-column="200" />
+              <caret line="75" column="59" selection-start-line="75" selection-start-column="6" selection-end-line="75" selection-end-column="59" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="comment_status_types_controller.rb" pinned="false" current-in-tab="false">
+      <file leaf-file-name="comment_status_types_controller.rb" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/comment_status_types_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="76" column="196" selection-start-line="76" selection-start-column="196" selection-end-line="76" selection-end-column="196" />
+            <state vertical-scroll-proportion="0.2974239">
+              <caret line="74" column="29" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -121,7 +92,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/views/comments/edit.html.erb" />
         <option value="$PROJECT_DIR$/app/views/category_response_types/_form.html.erb" />
         <option value="$PROJECT_DIR$/app/views/category_status_types/_form.html.erb" />
         <option value="$PROJECT_DIR$/app/views/comment_status_types/_form.html.erb" />
@@ -151,7 +121,6 @@
         <option value="$PROJECT_DIR$/app/views/comment_status_types/edit.html.erb" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/stats.css.scss" />
         <option value="$PROJECT_DIR$/app/controllers/stats_controller.rb" />
-        <option value="$PROJECT_DIR$/app/controllers/comments_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/comments/index.html.erb" />
         <option value="$PROJECT_DIR$/app/controllers/categories_controller.rb" />
         <option value="$PROJECT_DIR$/app/models/category.rb" />
@@ -168,10 +137,12 @@
         <option value="$PROJECT_DIR$/app/views/notification_mailer/category_assigned_email.text.erb" />
         <option value="$PROJECT_DIR$/app/views/notification_mailer/category_assigned_email.html.erb" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/multiselect.js.coffee" />
-        <option value="$PROJECT_DIR$/app/controllers/category_response_types_controller.rb" />
-        <option value="$PROJECT_DIR$/app/controllers/comment_status_types_controller.rb" />
-        <option value="$PROJECT_DIR$/app/controllers/category_status_types_controller.rb" />
         <option value="$PROJECT_DIR$/app/controllers/users_controller.rb" />
+        <option value="$PROJECT_DIR$/app/helpers/application_helper.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/category_status_types_controller.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/category_response_types_controller.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/comments_controller.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/comment_status_types_controller.rb" />
       </list>
     </option>
   </component>
@@ -883,14 +854,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/db/migrate/20180110002701_remove_comment_tone_field.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="105" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/db/migrate/20180110002709_remove_comment_tone_table.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -999,14 +962,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-5.0">
           <caret line="8" column="3" selection-start-line="8" selection-start-column="3" selection-end-line="8" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/comments_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="27" column="8" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="8" />
           <folding />
         </state>
       </provider>
@@ -1251,30 +1206,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/comment_status_types_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="76" column="196" selection-start-line="76" selection-start-column="196" selection-end-line="76" selection-end-column="196" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/category_status_types_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="76" column="200" selection-start-line="76" selection-start-column="200" selection-end-line="76" selection-end-column="200" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/category_response_types_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="73" column="199" selection-start-line="73" selection-start-column="199" selection-end-line="73" selection-end-column="199" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/user.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1285,8 +1216,48 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/users_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5784543">
+        <state vertical-scroll-proportion="0.0">
           <caret line="97" column="149" selection-start-line="97" selection-start-column="149" selection-end-line="97" selection-end-column="149" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/helpers/application_helper.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="78" column="36" selection-start-line="78" selection-start-column="6" selection-end-line="78" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/comments_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="144" column="49" selection-start-line="144" selection-start-column="20" selection-end-line="144" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/category_response_types_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="74" column="4" selection-start-line="74" selection-start-column="4" selection-end-line="74" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/category_status_types_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="75" column="59" selection-start-line="75" selection-start-column="6" selection-end-line="75" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/comment_status_types_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2974239">
+          <caret line="74" column="29" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
           <folding />
         </state>
       </provider>

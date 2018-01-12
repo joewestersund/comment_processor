@@ -69,7 +69,10 @@ class CategoryResponseTypesController < ApplicationController
   # DELETE /category_response_types/1.json
   def destroy
     unassign_categories(@category_response_type)
+
+    current_CRT_num = @category_response_type.order_in_list
     @category_response_type.destroy
+    handle_delete_of_order_in_list(CategoryResponseType,current_CRT_num)
     respond_to do |format|
       format.html { redirect_to category_response_types_url, notice: 'Category response type was successfully destroyed. Any categories assigned to this response type have been set to response = nil.' }
       format.json { head :no_content }

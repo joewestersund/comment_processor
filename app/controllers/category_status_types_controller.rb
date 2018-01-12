@@ -72,7 +72,10 @@ class CategoryStatusTypesController < ApplicationController
       #reassign any categories of this type to the first remaining status type.
       firstCST = CategoryStatusType.where.not(id: @category_status_type.id).order(:order_in_list).first
       reassign_categories(@category_status_type,firstCST)
+
+      current_CST_num = @category_status_type.order_in_list
       @category_status_type.destroy
+      handle_delete_of_order_in_list(CategoryStatusType,current_CST_num)
       respond_to do |format|
         format.html { redirect_to category_status_types_url, notice: "Category status type was successfully deleted. Any categories assigned to this status were reassigned to '#{firstCST.status_text}'." }
         format.json { head :no_content }

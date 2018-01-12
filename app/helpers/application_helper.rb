@@ -76,4 +76,11 @@ module ApplicationHelper
     hash.delete_if { |key, value| value.blank? }
   end
 
+  def handle_delete_of_order_in_list(model,deleted_order_in_list)
+    model.where("order_in_list > ?",deleted_order_in_list).order(:order_in_list).each do |obj|
+      obj.order_in_list -= 1
+      obj.save
+    end
+  end
+
 end

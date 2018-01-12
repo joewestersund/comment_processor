@@ -72,7 +72,10 @@ class CommentStatusTypesController < ApplicationController
       #reassign any comments of this type to the first remaining status type.
       firstCST = CommentStatusType.where.not(id: @comment_status_type.id).order(:order_in_list).first
       reassign_comments(@comment_status_type,firstCST)
+
+      current_CST_num = @comment_status_type.order_in_list
       @comment_status_type.destroy
+      handle_delete_of_order_in_list(CommentStatusType,current_CST_num)
       respond_to do |format|
         format.html { redirect_to comment_status_types_url, notice: "Comment status type was successfully deleted. Any comments assigned to this status were reassigned to '#{firstCST.status_text}'." }
         format.json { head :no_content }
