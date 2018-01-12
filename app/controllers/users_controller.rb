@@ -92,9 +92,10 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
+    unassign_categories(@user)
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+      format.html { redirect_to users_url, notice: 'User was successfully destroyed. Any categories assigned to this user are now assigned to no one.' }
       format.json { head :no_content }
     end
   end
@@ -121,5 +122,12 @@ class UsersController < ApplicationController
 
     def user_params_change_password()
       params.require(:user).permit(:password, :password_confirmation)
+    end
+
+    def unassign_categories(user)
+      Category.where(assigned_to_id: user.id).each do |cat|
+        cat.assigned_to_id = nil
+        cat.save
+      end
     end
 end

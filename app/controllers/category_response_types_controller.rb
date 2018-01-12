@@ -68,9 +68,10 @@ class CategoryResponseTypesController < ApplicationController
   # DELETE /category_response_types/1
   # DELETE /category_response_types/1.json
   def destroy
+    unassign_categories(@category_response_type)
     @category_response_type.destroy
     respond_to do |format|
-      format.html { redirect_to category_response_types_url, notice: 'Category response type was successfully destroyed.' }
+      format.html { redirect_to category_response_types_url, notice: 'Category response type was successfully destroyed. Any categories assigned to this response type have been set to response = nil.' }
       format.json { head :no_content }
     end
   end
@@ -111,6 +112,13 @@ class CategoryResponseTypesController < ApplicationController
         CategoryResponseType.where("order_in_list < ?",current.order_in_list).order("order_in_list DESC").first
       else
         CategoryResponseType.where("order_in_list > ?",current.order_in_list).order(:order_in_list).first
+      end
+    end
+
+    def unassign_categories(category_response_type)
+      Category.where(category_response_type_id: category_response_type.id).each do |cat|
+        cat.category_response_type_id = nil
+        cat.save
       end
     end
 end

@@ -68,10 +68,20 @@ class CategoryStatusTypesController < ApplicationController
   # DELETE /category_status_types/1
   # DELETE /category_status_types/1.json
   def destroy
-    @category_status_type.destroy
-    respond_to do |format|
-      format.html { redirect_to category_status_types_url, notice: 'Category status type was successfully deleted.' }
-      format.json { head :no_content }
+    if CategoryStatusType.count > 1
+      #reassign any categories of this type to the first remaining status type.
+      firstCST = CategoryStatusType.where.not(id: @category_status_type.id).order(:order_in_list).first
+      reassign_categories(@category_status_type,firstCST)
+      @category_status_type.destroy
+      respond_to do |format|
+        format.html { redirect_to category_status_types_url, notice: "Category status type was successfully deleted. Any categories assigned to this status were reassigned to '#{firstCST.status_text}'." }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to category_status_types_url, error: 'Cannot delete the last category status type.' }
+        format.json { head :no_content }
+      end
     end
   end
 
@@ -111,6 +121,13 @@ class CategoryStatusTypesController < ApplicationController
         CategoryStatusType.where("order_in_list < ?",current.order_in_list).order("order_in_list DESC").first
       else
         CategoryStatusType.where("order_in_list > ?",current.order_in_list).order(:order_in_list).first
+      end
+    end
+
+    def reassign_categories(reassign_from_cst, reassign_to_cst)
+      Category.where(category_status_type_id: reassign_from_cst.id).each do |cat|
+        cat.category_status_type_id = reassign_to_cst.id
+        cat.save
       end
     end
 end

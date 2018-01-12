@@ -68,10 +68,20 @@ class CommentStatusTypesController < ApplicationController
   # DELETE /comment_status_types/1
   # DELETE /comment_status_types/1.json
   def destroy
-    @comment_status_type.destroy
-    respond_to do |format|
-      format.html { redirect_to comment_status_types_url, notice: 'Comment status type was successfully deleted.' }
-      format.json { head :no_content }
+    if CommentStatusType.count > 1
+      #reassign any comments of this type to the first remaining status type.
+      firstCST = CommentStatusType.where.not(id: @comment_status_type.id).order(:order_in_list).first
+      reassign_comments(@comment_status_type,firstCST)
+      @comment_status_type.destroy
+      respond_to do |format|
+        format.html { redirect_to comment_status_types_url, notice: "Comment status type was successfully deleted. Any comments assigned to this status were reassigned to '#{firstCST.status_text}'." }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to comment_status_types_url, error: 'Cannot delete the last comment status type.' }
+        format.json { head :no_content }
+      end
     end
   end
 
@@ -111,6 +121,13 @@ class CommentStatusTypesController < ApplicationController
         CommentStatusType.where("order_in_list < ?",current.order_in_list).order("order_in_list DESC").first
       else
         CommentStatusType.where("order_in_list > ?",current.order_in_list).order(:order_in_list).first
+      end
+    end
+
+    def reassign_comments(reassign_from_cst, reassign_to_cst)
+      Comment.where(comment_status_type_id: reassign_from_cst.id).each do |com|
+        com.comment_status_type_id = reassign_to_cst.id
+        com.save
       end
     end
 end
