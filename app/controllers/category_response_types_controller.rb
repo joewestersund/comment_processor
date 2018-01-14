@@ -68,8 +68,7 @@ class CategoryResponseTypesController < ApplicationController
   # DELETE /category_response_types/1
   # DELETE /category_response_types/1.json
   def destroy
-    unassign_categories(@category_response_type)
-
+    #any categories assigned to this response type will be set to null automatically by the foreign key constraint.
     current_CRT_num = @category_response_type.order_in_list
     @category_response_type.destroy
     handle_delete_of_order_in_list(CategoryResponseType,current_CRT_num)
@@ -118,10 +117,4 @@ class CategoryResponseTypesController < ApplicationController
       end
     end
 
-    def unassign_categories(category_response_type)
-      Category.where(category_response_type_id: category_response_type.id).each do |cat|
-        cat.category_response_type_id = nil
-        cat.save
-      end
-    end
 end
