@@ -60,6 +60,10 @@ td, th {
     background: yellowgreen;
   }
 
+  &.admin {
+    font-weight: bold;
+    color: blue;
+  }
 
   &.empty {
     background: darkgray;
