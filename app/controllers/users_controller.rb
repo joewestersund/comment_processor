@@ -51,9 +51,18 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1.json
   def update
     respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to profile_edit_path, notice: 'User successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
+      if @user.admin && params[:admin] != true && User.where(admin: true).count == 1
+        flash[:error] = "There must be at least one admin user."
+        format.html { redirect_to users_path, error: "There must be at least one admin user."}
+        format.json { render json: @user.errors, status: "Error: there must be at least one admin user." }
+      elsif @user.update(user_params)
+        if @user == current_user
+          format.html { redirect_to profile_edit_path, notice: 'Your profile was successfully updated.' }
+          format.json { render :show, status: :ok, location: @user }
+        else
+          format.html { redirect_to users_path, notice: 'User successfully updated.' }
+          format.json { render users_path, status: :ok, location: @user }
+        end
       else
         format.html { render :edit }
         format.json { render json: @user.errors, status: :unprocessable_entity }
@@ -93,10 +102,16 @@ class UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
     #any categories assigned to this user will be set to assigned_to_id = null automatically by the foreign key constraint.
-    @user.destroy
     respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed. Any categories assigned to this user are now assigned to no one.' }
-      format.json { head :no_content }
+      if @user.admin && User.where(admin: true).count == 1
+        flash[:error] = "The last admin user cannot be deleted."
+        format.html { redirect_to users_path }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      else
+        @user.destroy
+        format.html { redirect_to users_url, notice: 'User was successfully destroyed. Any categories assigned to this user are now assigned to no one.' }
+        format.json { head :no_content }
+      end
     end
   end
 
