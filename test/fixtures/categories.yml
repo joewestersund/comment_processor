@@ -19,17 +19,37 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  category_name: MyString
-  summary: MyString
+  id: 1
+  category_name: MyString1
+  description: MyString
   response_text: MyString
-  response_by: 1
-  status_type_id: 1
+  category_status_type_id: 1
   action_needed: MyString
+  rule_change_made: true
+  category_response_type_id: 1
+  assigned_to_id: 1
+  order_in_list: 1
 
 two:
-  category_name: MyString
-  summary: MyString
+  id: 2
+  category_name: MyString2
+  description: MyString
   response_text: MyString
-  response_by: 1
-  status_type_id: 1
+  category_status_type_id: 1
   action_needed: MyString
+  rule_change_made: false
+  category_response_type_id: nil
+  assigned_to_id: nil
+  order_in_list: 2
+
+three:
+  id: 3
+  category_name: MyString3
+  description: MyString
+  response_text: MyString
+  category_status_type_id: 1
+  action_needed: MyString
+  rule_change_made: false
+  category_response_type_id: nil
+  assigned_to_id: nil
+  order_in_list: 3

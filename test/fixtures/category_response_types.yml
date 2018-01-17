@@ -12,9 +12,16 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  response_text: 1
+  id: 1
+  response_text: one
   order_in_list: 1
 
 two:
-  response_text: 1
-  order_in_list: 1
+  id: 2
+  response_text: two
+  order_in_list: 2
+
+three:
+  id: 3
+  response_text: three
+  order_in_list: 3

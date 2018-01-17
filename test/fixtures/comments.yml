@@ -25,6 +25,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  id: 1
   source_id: 1
   first_name: MyString
   last_name: MyString
@@ -34,11 +35,15 @@ one:
   comment_text: MyString
   attachment_url: MyString
   summary: MyString
-  status_type_id: 1
+  comment_status_type_id: 1
   status_details: MyString
+  order_in_list: 1
+  num_commenters: 1
+  categories: one,two,three
 
 two:
-  source_id: 1
+  id: 2
+  source_id: 2
   first_name: MyString
   last_name: MyString
   email: MyString
@@ -47,5 +52,25 @@ two:
   comment_text: MyString
   attachment_url: MyString
   summary: MyString
-  status_type_id: 1
+  comment_status_type_id: 1
   status_details: MyString
+  order_in_list: 2
+  num_commenters: 1
+  categories: one,two
+
+three:
+  id: 3
+  source_id: 3
+  first_name: MyString
+  last_name: MyString
+  email: MyString
+  organization: MyString
+  state: MyString
+  comment_text: MyString
+  attachment_url: MyString
+  summary: MyString
+  comment_status_type_id: 1
+  status_details: MyString
+  order_in_list: 3
+  num_commenters: 1
+  categories: two

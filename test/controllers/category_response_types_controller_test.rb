@@ -3,6 +3,7 @@ require 'test_helper'
 class CategoryResponseTypesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @category_response_type = category_response_types(:one)
+    sign_in_as users(:user1)
   end
 
   test "should get index" do

@@ -3,6 +3,7 @@ require 'test_helper'
 class CommentsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @comment = comments(:one)
+    sign_in_as users(:user1)
   end
 
   test "should get index" do

@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class StaticPagesControllerTest < ActionDispatch::IntegrationTest
+  setup do
+    sign_in_as users(:user1)
+  end
+
   test "should get about" do
     get static_pages_about_url
     assert_response :success

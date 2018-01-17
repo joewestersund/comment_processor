@@ -41,6 +41,10 @@ form {
       &.short {
         width: 100px;
       }
+
+      &.long {
+        width: 90%;
+      }
     }
 
     input.email {
