@@ -1,3 +1,8 @@
+<% help_file = 'https://docs.google.com/document/d/1D8PyA39FPCCvIPf_kt8fP3zBownkA9hqEjb5bhb2y4g/edit?usp=sharing'
+  comments_help_bookmark = '#bookmark=id.r3eacnjt8stw'
+  categories_help_bookmark = '#bookmark=id.c504t7zco7ns'
+  tips_and_tricks_help_bookmark = '#bookmark=id.ofnbvplaornh'
+%>
 <%# add navigation links to this file %>
 <% if signed_in? %>
   <li class="nav navbar-nav"><%= link_to glyphicon_link("glyphicon-th-list","Comments").html_safe, comments_path %></li>
@@ -12,7 +17,16 @@
       <li class="nav navbar-nav"><%= link_to "Categories", stats_categories_path %></li>
     </ul>
   </li>
-
+  <li id="fat-menu" class="dropdown nav navbar-nav">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+      <%= glyphicon_link("glyphicon glyphicon-info-sign","Help").html_safe%> <b class="caret"></b>
+    </a>
+    <ul class="dropdown-menu">
+      <li class="nav navbar-nav"><%= link_to "For reviewing comments", help_file + comments_help_bookmark %></li>
+      <li class="nav navbar-nav"><%= link_to "For creating and responding to categories", help_file + categories_help_bookmark %></li>
+      <li class="nav navbar-nav"><%= link_to "Tips and tricks", help_file + tips_and_tricks_help_bookmark %></li>
+    </ul>
+  </li>
 
   <% if current_user.admin? %>
     <li id="fat-menu" class="dropdown nav navbar-nav">
