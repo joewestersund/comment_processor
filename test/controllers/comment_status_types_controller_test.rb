@@ -18,10 +18,10 @@ class CommentStatusTypesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create comment_status_type" do
     assert_difference('CommentStatusType.count') do
-      post comment_status_types_url, params: { comment_status_type: { order_in_list: @comment_status_type.order_in_list, status_text: @comment_status_type.status_text } }
+      post comment_status_types_url, params: { comment_status_type: { status_text: "new status text not used elsewhere" } }
     end
 
-    assert_redirected_to comment_status_type_url(CommentStatusType.last)
+    assert_redirected_to comment_status_types_url
   end
 
   test "should show comment_status_type" do
@@ -35,8 +35,8 @@ class CommentStatusTypesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update comment_status_type" do
-    patch comment_status_type_url(@comment_status_type), params: { comment_status_type: { order_in_list: @comment_status_type.order_in_list, status_text: @comment_status_type.status_text } }
-    assert_redirected_to comment_status_type_url(@comment_status_type)
+    patch comment_status_type_url(@comment_status_type), params: { comment_status_type: { status_text: @comment_status_type.status_text } }
+    assert_redirected_to comment_status_types_url
   end
 
   test "should destroy comment_status_type" do

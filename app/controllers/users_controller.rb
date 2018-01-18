@@ -51,9 +51,9 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1.json
   def update
     respond_to do |format|
-      if @user.admin && params[:admin] != true && User.where(admin: true).count == 1
+      if @user.admin && !user_params[:admin] && User.where(admin: true).count == 1
         flash[:error] = "There must be at least one admin user."
-        format.html { redirect_to users_path, error: "There must be at least one admin user."}
+        format.html { redirect_to users_path }
         format.json { render json: @user.errors, status: "Error: there must be at least one admin user." }
       elsif @user.update(user_params)
         if @user == current_user
@@ -61,7 +61,7 @@ class UsersController < ApplicationController
           format.json { render :show, status: :ok, location: @user }
         else
           format.html { redirect_to users_path, notice: 'User successfully updated.' }
-          format.json { render users_path, status: :ok, location: @user }
+          format.json { render :show, status: :ok, location: @user }
         end
       else
         format.html { render :edit }

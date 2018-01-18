@@ -18,10 +18,10 @@ class CategoryResponseTypesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create category_response_type" do
     assert_difference('CategoryResponseType.count') do
-      post category_response_types_url, params: { category_response_type: { order_in_list: @category_response_type.order_in_list, response_text: @category_response_type.response_text } }
+      post category_response_types_url, params: { category_response_type: { response_text: "some new text not used elsewhere" } }
     end
 
-    assert_redirected_to category_response_type_url(CategoryResponseType.last)
+    assert_redirected_to category_response_types_url
   end
 
   test "should show category_response_type" do
@@ -35,8 +35,8 @@ class CategoryResponseTypesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update category_response_type" do
-    patch category_response_type_url(@category_response_type), params: { category_response_type: { order_in_list: @category_response_type.order_in_list, response_text: @category_response_type.response_text } }
-    assert_redirected_to category_response_type_url(@category_response_type)
+    patch category_response_type_url(@category_response_type), params: { category_response_type: { response_text: @category_response_type.response_text } }
+    assert_redirected_to category_response_types_url
   end
 
   test "should destroy category_response_type" do

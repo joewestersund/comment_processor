@@ -27,3 +27,10 @@ user2:
   email: test2@test.com
   password_digest: <%= User.digest('password') %>
   admin: false
+
+user3:
+  id: 3
+  name: MyString2
+  email: test3@test.com
+  password_digest: <%= User.digest('password') %>
+  admin: true

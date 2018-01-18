@@ -39,7 +39,6 @@ two:
   action_needed: MyString
   rule_change_made: false
   category_response_type_id: nil
-  assigned_to_id: nil
   order_in_list: 2
 
 three:
@@ -51,5 +50,4 @@ three:
   action_needed: MyString
   rule_change_made: false
   category_response_type_id: nil
-  assigned_to_id: nil
   order_in_list: 3

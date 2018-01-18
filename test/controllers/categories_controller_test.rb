@@ -18,10 +18,10 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create category" do
     assert_difference('Category.count') do
-      post categories_url, params: { category: { action_needed: @category.action_needed, category_name: @category.category_name, response_by: @category.response_by, response_text: @category.response_text, status_type_id: @category.status_type_id, summary: @category.summary } }
+      post categories_url, params: { category: { action_needed: @category.action_needed, category_name: "new category name", assigned_to_id: @category.assigned_to_id, response_text: @category.response_text, category_status_type_id: @category.category_status_type_id, description: @category.description } }
     end
 
-    assert_redirected_to category_url(Category.last)
+    assert_redirected_to edit_category_url(Category.last)
   end
 
   test "should show category" do
@@ -35,8 +35,8 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update category" do
-    patch category_url(@category), params: { category: { action_needed: @category.action_needed, category_name: @category.category_name, response_by: @category.response_by, response_text: @category.response_text, status_type_id: @category.status_type_id, summary: @category.summary } }
-    assert_redirected_to category_url(@category)
+    patch category_url(@category), params: { category: { action_needed: @category.action_needed, category_name: @category.category_name, assigned_to_id: @category.assigned_to_id, response_text: @category.response_text, category_status_type_id: @category.category_status_type_id, category_response_type_id: @category.category_response_type_id, description: @category.description, rule_change_made: @category.rule_change_made } }
+    assert_redirected_to edit_category_url(@category)
   end
 
   test "should destroy category" do
