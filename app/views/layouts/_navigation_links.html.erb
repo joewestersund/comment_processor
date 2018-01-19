@@ -22,9 +22,9 @@
       <%= glyphicon_link("glyphicon glyphicon-info-sign","Help").html_safe%> <b class="caret"></b>
     </a>
     <ul class="dropdown-menu">
-      <li class="nav navbar-nav"><%= link_to "For reviewing comments", help_file + comments_help_bookmark %></li>
-      <li class="nav navbar-nav"><%= link_to "For creating and responding to categories", help_file + categories_help_bookmark %></li>
-      <li class="nav navbar-nav"><%= link_to "Tips and tricks", help_file + tips_and_tricks_help_bookmark %></li>
+      <li class="nav navbar-nav"><%= link_to "For reviewing comments", help_file + comments_help_bookmark, target: :_blank %></li>
+      <li class="nav navbar-nav"><%= link_to "For creating and responding to categories", help_file + categories_help_bookmark, target: :_blank %></li>
+      <li class="nav navbar-nav"><%= link_to "Tips and tricks", help_file + tips_and_tricks_help_bookmark, target: :_blank %></li>
     </ul>
   </li>
 
