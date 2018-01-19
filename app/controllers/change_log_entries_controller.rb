@@ -1,4 +1,7 @@
 class ChangeLogEntriesController < ApplicationController
+  before_action :signed_in_user
+  before_action :admin_user, only: [:edit, :create, :update, :destroy]
+  before_action :not_read_only_user, only: [:new, :edit, :create, :update, :destroy]
   before_action :set_change_log_entry, only: [:show, :edit, :update, :destroy]
 
   # GET /changes

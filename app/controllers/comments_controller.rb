@@ -5,6 +5,7 @@ class CommentsController < ApplicationController
 
   before_action :signed_in_user
   before_action :admin_user, only: [:import, :do_import, :cleanup, :do_cleanup]
+  before_action :not_read_only_user, only: [:new, :edit, :create, :update, :destroy, :import, :do_import, :cleanup, :do_cleanup]
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
   before_action :set_select_options, only: [:new, :edit, :index]
 

@@ -3,6 +3,7 @@ class UsersController < ApplicationController
 
   before_action :signed_in_user, only: [:new, :edit, :edit_profile, :edit_password, :update, :update_password, :reset_password, :show, :destroy, :index]
   before_action :admin_user, only: [:new, :edit, :destroy, :reset_password]
+  before_action :not_read_only_user, only: [:new, :edit, :create, :reset_password, :destroy]
   before_action :set_user, only: [:show, :edit, :update, :destroy, :reset_password]
   before_action :set_self_as_user, only: [:edit_profile, :edit_password, :update_password]
 

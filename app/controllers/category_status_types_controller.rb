@@ -1,6 +1,7 @@
 class CategoryStatusTypesController < ApplicationController
   before_action :signed_in_user
   before_action :admin_user
+  before_action :not_read_only_user, only: [:new, :edit, :create, :update, :destroy, :move_up, :move_down]
   before_action :set_category_status_type, only: [:show, :edit, :update, :destroy]
 
   # GET /category_status_types

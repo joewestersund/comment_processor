@@ -20,7 +20,11 @@ module SessionsHelper
   end
 
   def admin_user
-    redirect_to welcome_path, notice: "That feature is only available to admins." unless current_user.admin?
+    redirect_to welcome_path, notice: "That feature is only available to admins." unless current_user.admin
+  end
+
+  def not_read_only_user
+    redirect_to welcome_path, notice: "That feature is not available to read_only users." if current_user.read_only
   end
 
   def current_user=(user)
