@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :change_log_entries
   resources :category_response_types
   post '/category_response_types/:id/move_up', to: 'category_response_types#move_up'
   post '/category_response_types/:id/move_down', to: 'category_response_types#move_down'

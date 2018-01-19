@@ -10,6 +10,8 @@
 #  updated_at      :datetime         not null
 #  remember_token  :string
 #  admin           :boolean
+#  active          :boolean
+#  read_only       :boolean
 #
 
 require 'test_helper'

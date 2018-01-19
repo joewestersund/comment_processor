@@ -3,12 +3,12 @@
 # Table name: categories
 #
 #  id                        :integer          not null, primary key
-#  category_name             :string
-#  description               :string
-#  response_text             :string
+#  category_name             :text
+#  description               :text
+#  response_text             :text
 #  assigned_to_id            :integer
 #  category_status_type_id   :integer
-#  action_needed             :string
+#  action_needed             :text
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null
 #  order_in_list             :integer

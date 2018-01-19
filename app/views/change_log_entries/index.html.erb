@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Change Log Entries</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Description</th>
+      <th>Comment</th>
+      <th>Category</th>
+      <th>User</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @change_log_entry.each do |change_log_entry| %>
+      <tr>
+        <td><%= change_log_entry.description %></td>
+        <td><%= change_log_entry.comment_id %></td>
+        <td><%= change_log_entry.category_id %></td>
+        <td><%= change_log_entry.user_id %></td>
+        <td><%= link_to 'Show', change_log_entry %></td>
+        <td><%= link_to 'Edit', edit_change_log_entry_path(change_log_entry) %></td>
+        <td><%= link_to 'Delete', change_log_entry, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Change Log Entry', new_change_log_entry_path %>

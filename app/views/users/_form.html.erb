@@ -20,6 +20,14 @@
     <%= f.text_field :email %>
   </div>
   <div class="field">
+    <%= f.label :active %>
+    <%= f.check_box :active, disabled: locals[:edit_profile] %>
+  </div>
+  <div class="field">
+    <%= f.label :read_only %>
+    <%= f.check_box :read_only, disabled: locals[:edit_profile] %>
+  </div>
+  <div class="field">
     <%= f.label :admin %>
     <%= f.check_box :admin, disabled: locals[:edit_profile] %>
   </div>

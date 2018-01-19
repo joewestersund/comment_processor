@@ -10,24 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180114190332) do
+ActiveRecord::Schema.define(version: 20180119213218) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "categories", force: :cascade do |t|
-    t.string "category_name"
-    t.string "description"
-    t.string "response_text"
+    t.text "category_name"
+    t.text "description"
+    t.text "response_text"
     t.integer "assigned_to_id"
     t.integer "category_status_type_id"
-    t.string "action_needed"
+    t.text "action_needed"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "order_in_list"
     t.boolean "rule_change_made"
     t.integer "category_response_type_id"
-    t.index "lower((category_name)::text)", name: "index_categories_on_lowercase_category_name", unique: true
+    t.index "lower(category_name)", name: "index_categories_on_lowercase_category_name", unique: true
     t.index ["order_in_list"], name: "index_categories_on_order_in_list"
   end
 
@@ -50,6 +50,19 @@ ActiveRecord::Schema.define(version: 20180114190332) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "change_log_entries", force: :cascade do |t|
+    t.text "description"
+    t.integer "comment_id"
+    t.integer "category_id"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_change_log_entries_on_category_id"
+    t.index ["comment_id"], name: "index_change_log_entries_on_comment_id"
+    t.index ["created_at"], name: "index_change_log_entries_on_created_at"
+    t.index ["user_id"], name: "index_change_log_entries_on_user_id"
+  end
+
   create_table "comment_status_types", force: :cascade do |t|
     t.string "status_text"
     t.integer "order_in_list"
@@ -64,11 +77,11 @@ ActiveRecord::Schema.define(version: 20180114190332) do
     t.string "email"
     t.string "organization"
     t.string "state"
-    t.string "comment_text"
+    t.text "comment_text"
     t.string "attachment_url"
-    t.string "summary"
+    t.text "summary"
     t.integer "comment_status_type_id"
-    t.string "status_details"
+    t.text "status_details"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "attachment_name"
@@ -86,10 +99,15 @@ ActiveRecord::Schema.define(version: 20180114190332) do
     t.datetime "updated_at", null: false
     t.string "remember_token"
     t.boolean "admin"
+    t.boolean "active"
+    t.boolean "read_only"
   end
 
   add_foreign_key "categories", "category_response_types", on_delete: :nullify
   add_foreign_key "categories", "category_status_types", on_delete: :restrict
   add_foreign_key "categories", "users", column: "assigned_to_id", on_delete: :nullify
+  add_foreign_key "change_log_entries", "categories", on_delete: :cascade
+  add_foreign_key "change_log_entries", "comments", on_delete: :cascade
+  add_foreign_key "change_log_entries", "users", on_delete: :restrict
   add_foreign_key "comments", "comment_status_types", on_delete: :restrict
 end

@@ -3,12 +3,12 @@
 # Table name: categories
 #
 #  id                        :integer          not null, primary key
-#  category_name             :string
-#  description               :string
-#  response_text             :string
+#  category_name             :text
+#  description               :text
+#  response_text             :text
 #  assigned_to_id            :integer
 #  category_status_type_id   :integer
-#  action_needed             :string
+#  action_needed             :text
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null
 #  order_in_list             :integer
@@ -18,6 +18,7 @@
 
 class Category < ApplicationRecord
   has_and_belongs_to_many :comments
+  has_many :change_log_entries
   belongs_to :category_status_type
   belongs_to :category_response_type, optional: true
   belongs_to :user, foreign_key: 'assigned_to_id', optional: true

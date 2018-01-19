@@ -41,4 +41,13 @@ module UiHelper
       'has-content'
     end
   end
+
+  def highlight_true(boolean_value)
+    'highlight-true' if boolean_value
+  end
+
+  def show_boolean_value(boolean_value)
+    boolean_value ? "Y" : "N"
+  end
+
 end

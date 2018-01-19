@@ -10,11 +10,14 @@
 #  updated_at      :datetime         not null
 #  remember_token  :string
 #  admin           :boolean
+#  active          :boolean
+#  read_only       :boolean
 #
 
 class User < ApplicationRecord
   has_secure_password #adds authenticate method, etc.
   has_many :categories
+  has_many :change_log_entries
 
   before_save { |user| user.email.downcase! }
   before_create :create_remember_token

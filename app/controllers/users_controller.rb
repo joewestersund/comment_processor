@@ -21,6 +21,7 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
+    @user.active = true #set to active by default
   end
 
   # GET /users/1/edit
@@ -119,7 +120,6 @@ class UsersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_self_as_user
       @user = self.current_user
-      #@user = User.find(params[:id])
     end
 
     def set_user
@@ -128,11 +128,11 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :email, :admin)
+      params.require(:user).permit(:name, :email, :admin, :read_only, :active)
     end
 
     def user_params_first_user
-      params.require(:user).permit(:name, :email, :admin, :password, :password_confirmation)
+      params.require(:user).permit(:name, :email, :password, :password_confirmation)
     end
 
     def user_params_change_password()

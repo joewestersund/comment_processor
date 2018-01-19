@@ -9,11 +9,11 @@
 #  email                  :string
 #  organization           :string
 #  state                  :string
-#  comment_text           :string
+#  comment_text           :text
 #  attachment_url         :string
-#  summary                :string
+#  summary                :text
 #  comment_status_type_id :integer
-#  status_details         :string
+#  status_details         :text
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  attachment_name        :string
@@ -24,6 +24,7 @@
 
 class Comment < ApplicationRecord
   has_and_belongs_to_many :categories
+  has_many :change_log_entries
   belongs_to :comment_status_type
 
   validates :num_commenters, presence: true, numericality: { only_integer: true, greater_than: 0}

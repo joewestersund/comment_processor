@@ -5,6 +5,8 @@
   <tr>
     <th>Name</th>
     <th>Email</th>
+    <th>Active</th>
+    <th>Read Only</th>
     <th>Admin</th>
     <th></th>
     <th></th>
@@ -17,7 +19,9 @@
     <tr>
       <td><%= user.name %></td>
       <td><%= mail_to user.email %></td>
-      <td class="<%="#{'admin' if user.admin}"%>"><%= user.admin ? "Y" : "N" %></td>
+      <td class="<%="#{highlight_true(user.active)}"%>"><%= show_boolean_value(user.active) %></td>
+      <td class="<%="#{highlight_true(user.read_only)}"%>"><%= show_boolean_value(user.read_only) %></td>
+      <td class="<%="#{highlight_true(user.admin)}"%>"><%= show_boolean_value(user.admin) %></td>
       <td><%= link_to 'Edit', edit_user_path(user) %></td>
       <td><%= link_to 'Reset Password', "/users/#{user.id}/reset_password", method: :post, data: { confirm: "Are you sure you want to reset #{user.name}'s password?" } %></td>
       <td><%= link_to 'Delete', user, method: :delete, data: { confirm: "Are you sure you want to delete #{user.name}?" } %></td>
