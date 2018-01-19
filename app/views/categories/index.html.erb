@@ -27,7 +27,7 @@
         <%= select_tag :category_status_type_id, options_from_collection_for_select(@category_status_types,:id,:status_text,params[:category_status_type_id]), { :include_blank => true } %>
       </div>
       <div class="field">
-        <%= label_tag :response_type %>
+        <%= label_tag :response_type, 'DEQ/OHA response type' %>
         <%= select_tag :category_response_type_id, options_from_collection_for_select(@category_response_types,:id,:response_text,params[:category_response_type_id]), { :include_blank => true } %>
       </div>
       <div class="field">
@@ -61,7 +61,7 @@
       <th>Category name</th>
       <th>Category description</th>
       <th>Category review status</th>
-      <th>Agency response</th>
+      <th>DEQ/OHA response type</th>
       <th>Response text</th>
       <th>Assigned to</th>
       <th>Rule change made?</th>

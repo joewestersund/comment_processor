@@ -4,7 +4,7 @@
 
 form {
   div.field > label {
-    max-width: 150px; //limit width of labels, but only ones directly under the filter div. The Bootstrap dropdowns use labels
+    max-width: 300px; //limit width of labels, but only ones directly under the filter div. The Bootstrap dropdowns use labels
   }
 
   table.read_only_parameters {
