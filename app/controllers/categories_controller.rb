@@ -45,11 +45,6 @@ class CategoriesController < ApplicationController
     move(false)
   end
 
-  # GET /categories/1
-  # GET /categories/1.json
-  def show
-  end
-
   # GET /categories/new
   def new
     @category = Category.new
@@ -57,22 +52,15 @@ class CategoriesController < ApplicationController
     @category.assigned_to_id = current_user.id
   end
 
+  # GET /categories/1
+  # GET /categories/1.json
+  def show
+    get_filtering_and_next_and_previous
+  end
+
   # GET /categories/1/edit
   def edit
-    current_category_category_name = @category.category_name.downcase
-
-    conditions = get_conditions
-    if conditions[0].empty?
-      c = Category.all
-    else
-      c = Category.where(conditions)
-    end
-
-    @previous_category = c.where("LOWER(category_name) < ?", current_category_category_name).order("LOWER(category_name)").last
-    @next_category = c.where("LOWER(category_name) > ?", current_category_category_name).order("LOWER(category_name)").first
-
-    @filtered = !conditions[0].empty?
-    @filter_querystring = remove_empty_elements(filter_params)
+    get_filtering_and_next_and_previous
   end
 
   # POST /categories
@@ -133,7 +121,24 @@ class CategoriesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+    def get_filtering_and_next_and_previous
+
+      current_category_category_name = @category.category_name.downcase
+
+      conditions = get_conditions
+      if conditions[0].empty?
+        c = Category.all
+      else
+        c = Category.where(conditions)
+      end
+
+      @previous_category = c.where("LOWER(category_name) < ?", current_category_category_name).order("LOWER(category_name)").last
+      @next_category = c.where("LOWER(category_name) > ?", current_category_category_name).order("LOWER(category_name)").first
+
+      @filtered = !conditions[0].empty?
+      @filter_querystring = remove_empty_elements(filter_params)
+    end
+
     def set_category
       @category = Category.find(params[:id])
     end

@@ -1,0 +1,36 @@
+<h1>Category Details</h1>
+
+<div class="next-previous">
+  <div>
+    Filter: <%= @filtered ? @filter_querystring : 'none' %>
+    <%= link_to 'Edit', categories_path(@filter_querystring) %>
+  </div>
+
+  <div>
+    <%= link_to("Previous Category", category_path(@previous_category,@filter_querystring), class: "btn btn-large btn-primary") if @previous_category.present? %>
+    <%= link_to("Next Category", category_path(@next_category,@filter_querystring), class: "btn btn-large btn-primary") if @next_category.present? %>
+  </div>
+</div>
+
+<table class="show">
+  <tbody>
+    <tr><td>Comments associated with this category</td>
+      <td><% if @category.comments.any? %>
+          <%= link_to comments_and_commenters_text(@category), comments_path({category_id: @category.id}) %>
+        <% else %>
+          none
+        <% end %>
+      </td>
+    </tr>
+    <tr><td>Category name</td><td><%= @category.category_name %></td></tr>
+    <tr><td>Description</td><td><%= @category.description %></td></tr>
+    <tr><td>Category response type</td><td><%= @category.category_response_type.response_text if @category.category_response_type.present? %></td>
+    <tr><td>Response text</td><td><%= @category.response_text %></td>
+    <tr><td>Assigned to</td><td><%= @category.assigned_to_name if @category.assigned_to.present? %></td>
+    <tr><td>Category review status</td><td><%= @category.category_status_type.status_text if @category.category_status_type.present? %></td></tr>
+    <tr><td>Rule change made?</td><td><%= show_boolean_value(@category.rule_change_made) %></td></tr>
+    <tr><td>Action needed</td><td><%= @category.action_needed %></td>
+  </tbody>
+</table>
+
+<%= link_to 'Index', categories_path(@filter_querystring) %>

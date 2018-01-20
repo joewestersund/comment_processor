@@ -42,11 +42,6 @@ class CommentsController < ApplicationController
 
   end
 
-  # GET /comments/1
-  # GET /comments/1.json
-  def show
-  end
-
   def import
     #import comments from the outside data source
     @data_source = rulemaking_data_source
@@ -81,23 +76,15 @@ class CommentsController < ApplicationController
     @comment.num_commenters = 1
   end
 
+  # GET /comments/1
+  # GET /comments/1.json
+  def show
+    get_filtering_and_next_and_previous
+  end
+
   # GET /comments/1/edit
   def edit
-    current_comment_order_in_list = @comment.order_in_list
-
-    conditions = get_conditions
-    if conditions[0].empty?
-      c = Comment.all
-    else
-      #do left outer join in case there are no conditions on categories
-      c = Comment.where("id IN (?)", Comment.left_outer_joins(:categories).where(conditions).select(:id))
-    end
-
-    @previous_comment = c.where("order_in_list < ?", current_comment_order_in_list).order(:order_in_list).last
-    @next_comment = c.where("order_in_list > ?", current_comment_order_in_list).order(:order_in_list).first
-
-    @filtered = !conditions[0].empty?
-    @filter_querystring = remove_empty_elements(filter_params_all)
+    get_filtering_and_next_and_previous
   end
 
   # POST /comments
@@ -152,6 +139,24 @@ class CommentsController < ApplicationController
   end
 
   private
+    def get_filtering_and_next_and_previous
+      current_comment_order_in_list = @comment.order_in_list
+
+      conditions = get_conditions
+      if conditions[0].empty?
+        c = Comment.all
+      else
+        #do left outer join in case there are no conditions on categories
+        c = Comment.where("id IN (?)", Comment.left_outer_joins(:categories).where(conditions).select(:id))
+      end
+
+      @previous_comment = c.where("order_in_list < ?", current_comment_order_in_list).order(:order_in_list).last
+      @next_comment = c.where("order_in_list > ?", current_comment_order_in_list).order(:order_in_list).first
+
+      @filtered = !conditions[0].empty?
+      @filter_querystring = remove_empty_elements(filter_params_all)
+    end
+
     def save_comment_categories
       @categories = Category.where(:id => params[:comment_categories])
       @comment.categories.destroy_all   #disassociate the already added organizers

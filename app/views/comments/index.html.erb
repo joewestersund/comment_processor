@@ -88,8 +88,7 @@
       <th>Comment review status</th>
       <th>Status details</th>
       <th>Categories</th>
-      <th></th>
-      <th></th>
+      <th colspan="<%= current_user.read_only? ? 1 : 2 %>"></th>
     </tr>
   </thead>
 
@@ -108,17 +107,21 @@
             <% if index != 0 %>
               <div class="separate">
             <% end %>
-            <%= link_to(c.category_name, edit_category_path(c)) %>
+            <%= link_to(c.category_name, current_user.read_only? ? category_path(c) : edit_category_path(c)) %>
             <% if index != 0 %>
               </div>
             <% end %>
         <% end %></td>
-        <td><%= link_to 'Edit', edit_comment_path(comment,@filter_querystring) %></td>
-        <td>
-          <% if comment.manually_entered && current_user.admin? %>
-            <%= link_to 'Delete', comment, method: :delete, data: { confirm: "Are you sure you want to delete comment ##{comment.order_in_list}?" } %>
-          <% end %>
-        </td>
+        <% if current_user.read_only? %>
+          <td><%= link_to 'Show', comment_path(comment,@filter_querystring) %></td>
+        <% else %>
+          <td><%= link_to 'Edit', edit_comment_path(comment,@filter_querystring) %></td>
+          <td>
+            <% if comment.manually_entered && current_user.admin? %>
+              <%= link_to 'Delete', comment, method: :delete, data: { confirm: "Are you sure you want to delete comment ##{comment.order_in_list}?" } %>
+            <% end %>
+          </td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

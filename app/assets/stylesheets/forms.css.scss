@@ -7,14 +7,6 @@ form {
     max-width: 300px; //limit width of labels, but only ones directly under the filter div. The Bootstrap dropdowns use labels
   }
 
-  table.read_only_parameters {
-    width: 75%;
-    border: 1px black solid;
-    td {
-      text-align: left;
-    }
-  }
-
   div.field {
     label {
       display: block;

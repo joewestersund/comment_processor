@@ -67,7 +67,7 @@
       <th>Rule change made?</th>
       <th>Action needed</th>
       <th># of comments</th>
-      <th colspan="2"></th>
+      <th colspan="<%= current_user.read_only? ? 1 : 2 %>"></th>
     </tr>
   </thead>
 
@@ -83,8 +83,12 @@
         <td><%=category.rule_change_made ? "Y" : "N"%></td>
         <td class="<%= highlight_filled_css(category.action_needed)%>"><%= category.action_needed %></td>
         <td class="<%= highlight_empty_css(category.comments)%>"><%= category.comments.count == 0 ? "none" : link_to(comments_and_commenters_text(category), comments_path({category_id: category.id})) %></td>
-        <td><%= link_to 'Edit', edit_category_path(category,@filter_querystring) %></td>
-        <td><%= link_to 'Delete', category, method: :delete, data: { confirm: "Are you sure you want to delete '#{category.category_name}'?" } %></td>
+        <% if current_user.read_only? %>
+          <td><%= link_to 'Show', category_path(category,@filter_querystring) %></td>
+        <% else %>
+          <td><%= link_to 'Edit', edit_category_path(category,@filter_querystring) %></td>
+          <td><%= link_to 'Delete', category, method: :delete, data: { confirm: "Are you sure you want to delete '#{category.category_name}'?" } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

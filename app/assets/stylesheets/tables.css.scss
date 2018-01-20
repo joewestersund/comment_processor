@@ -1,4 +1,13 @@
 
+table.read_only_parameters, table.show {
+  margin-bottom: 10px;
+
+  td {
+    text-align: left;
+    border: 1px black solid;
+  }
+}
+
 th, td {
   border-left: 1px black solid;
   border-bottom: 1px black solid;

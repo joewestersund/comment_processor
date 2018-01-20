@@ -29,6 +29,12 @@ class User < ApplicationRecord
   validates :password, :presence =>true, :confirmation => true, :length => { :within => 6..40 }, :on => :create
   validates :password, :confirmation => true, :length => { :within => 6..40 }, :on => :update_password
 
+  validate do
+    if self.read_only? && self.admin?
+      self.errors.add :base, "cannot be read_only and an admin."
+    end
+  end
+
   def User.new_remember_token
     SecureRandom.urlsafe_base64
   end

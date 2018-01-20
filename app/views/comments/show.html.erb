@@ -1,59 +1,33 @@
-<p id="notice"><%= notice %></p>
+<h1>Comment Details</h1>
 
-<p>
-  <strong>Source:</strong>
-  <%= @comment.source_id %>
-</p>
+<div class="next-previous">
+  <div>
+    Filter: <%= @filtered ? @filter_querystring : 'none' %>
+    <%= link_to 'Edit', comments_path(@filter_querystring) %>
+  </div>
 
-<p>
-  <strong>First name:</strong>
-  <%= @comment.first_name %>
-</p>
+  <div>
+    <%= link_to("Previous Comment", comment_path(@previous_comment,@filter_querystring), class: "btn btn-large btn-primary") if @previous_comment.present? %>
+    <%= link_to("Next Comment", comment_path(@next_comment,@filter_querystring), class: "btn btn-large btn-primary") if @next_comment.present? %>
+  </div>
+</div>
 
-<p>
-  <strong>Last name:</strong>
-  <%= @comment.last_name %>
-</p>
+<table class="show">
+  <tbody>
+    <tr><td>Order in List</td><td><%= @comment.order_in_list%></td></tr>
+    <tr><td>Data Source</td><td><%= @comment.manually_entered ? "Manually entered" : "Imported from DAS comments website"%></td></tr>
+    <tr><td>Name & Email</td><td><%= "#{@comment.first_name + ' ' if @comment.first_name.present?}#{@comment.last_name}#{' <' + @comment.email + '>' if @comment.email.present?}"%></td>
+    <tr><td>Organization and State</td><td><%= "#{@comment.organization + ", " if @comment.organization.present?}#{@comment.state}" %></td>
+    <tr><td>Comment</td><td><%= @comment.comment_text%></td>
+    <tr><td>Attachment</td><td><%= if @comment.attachment_name.present? then link_to @comment.attachment_name.to_s, @comment.attachment_url end %></td>
+    <tr><td>Number of commenters</td><td><%= @comment.num_commenters %></td></tr>
+    <tr><td>Summary</td><td><%= @comment.summary %></td></tr>
+    <tr><td>Categories</td><td><% @comment.categories.each do |cat| %>
+        <li><%=link_to cat.category_name, category_path(cat) %></li>
+      <% end %></td></tr>
+    <tr><td>Comment review status</td><td><%= @comment.comment_status_type.status_text if @comment.comment_status_type.present? %></td></tr>
+    <tr><td>Status details</td><td><%= @comment.status_details %></td></tr>
+  </tbody>
+</table>
 
-<p>
-  <strong>Email:</strong>
-  <%= @comment.email %>
-</p>
-
-<p>
-  <strong>Organization:</strong>
-  <%= @comment.organization %>
-</p>
-
-<p>
-  <strong>State:</strong>
-  <%= @comment.state %>
-</p>
-
-<p>
-  <strong>Comment text:</strong>
-  <%= @comment.comment_text %>
-</p>
-
-<p>
-  <strong>Attachment url:</strong>
-  <%= @comment.attachment_url %>
-</p>
-
-<p>
-  <strong>Summary:</strong>
-  <%= @comment.summary %>
-</p>
-
-<p>
-  <strong>Status type:</strong>
-  <%= @comment.comment_status_type_id %>
-</p>
-
-<p>
-  <strong>Status details:</strong>
-  <%= @comment.status_details %>
-</p>
-
-<%= link_to 'Edit', edit_comment_path(@comment) %> |
-<%= link_to 'Back', comments_path %>
+<%= link_to 'Index', comments_path(@filter_querystring) %>

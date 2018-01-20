@@ -7,7 +7,7 @@ class ChangeLogEntriesController < ApplicationController
   # GET /changes
   # GET /changes.json
   def index
-    @changes = Change.all
+    @changes = Change.all.order(created_at: :desc)
   end
 
   # GET /changes/1
