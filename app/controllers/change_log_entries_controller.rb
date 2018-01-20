@@ -4,30 +4,30 @@ class ChangeLogEntriesController < ApplicationController
   before_action :not_read_only_user, only: [:new, :edit, :create, :update, :destroy]
   before_action :set_change_log_entry, only: [:show, :edit, :update, :destroy]
 
-  # GET /changes
-  # GET /changes.json
+  # GET /change_log_entries
+  # GET /change_log_entries.json
   def index
-    @changes = Change.all.order(created_at: :desc)
+    @change_log_entries = ChangeLogEntry.all.order(created_at: :desc)
   end
 
-  # GET /changes/1
-  # GET /changes/1.json
+  # GET /change_log_entries/1
+  # GET /change_log_entries/1.json
   def show
   end
 
-  # GET /changes/new
+  # GET /change_log_entries/new
   def new
-    @change = Change.new
+    @change_log_entry = ChangeLogEntry.new
   end
 
-  # GET /changes/1/edit
+  # GET /change_log_entries/1/edit
   def edit
   end
 
-  # POST /changes
-  # POST /changes.json
+  # POST /change_log_entries
+  # POST /change_log_entries.json
   def create
-    @change_log_entry = ChangeLogEntry.new(change_params)
+    @change_log_entry = ChangeLogEntry.new(change_log_entry_params)
 
     respond_to do |format|
       if @change_log_entry.save
@@ -40,11 +40,11 @@ class ChangeLogEntriesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /changes/1
-  # PATCH/PUT /changes/1.json
+  # PATCH/PUT /change_log_entries/1
+  # PATCH/PUT /change_log_entries/1.json
   def update
     respond_to do |format|
-      if @change_log_entry.update(change_params)
+      if @change_log_entry.update(change_log_entry_params)
         format.html { redirect_to @change_log_entry, notice: 'Change log entry was successfully updated.' }
         format.json { render :show, status: :ok, location: @change_log_entry }
       else
@@ -54,12 +54,12 @@ class ChangeLogEntriesController < ApplicationController
     end
   end
 
-  # DELETE /changes/1
-  # DELETE /changes/1.json
+  # DELETE /change_log_entries/1
+  # DELETE /change_log_entries/1.json
   def destroy
     @change_log_entry.destroy
     respond_to do |format|
-      format.html { redirect_to changes_url, notice: 'Change log entry was successfully destroyed.' }
+      format.html { redirect_to change_log_entries_url, notice: 'Change log entry was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
