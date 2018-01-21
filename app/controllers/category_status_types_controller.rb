@@ -1,4 +1,6 @@
 class CategoryStatusTypesController < ApplicationController
+  include ChangeLogEntriesHelper
+
   before_action :signed_in_user
   before_action :admin_user
   before_action :not_read_only_user, only: [:new, :edit, :create, :update, :destroy, :move_up, :move_down]
@@ -43,6 +45,7 @@ class CategoryStatusTypesController < ApplicationController
 
     respond_to do |format|
       if @category_status_type.save
+        save_change_log(current_user,{object_type: 'category status type', action_type: 'create', description: "created category status type ID ##{@category_status_type.id} '#{@category_status_type.status_text}'"})
         format.html { redirect_to category_status_types_path, notice: 'Category status type was successfully created.' }
         format.json { render :show, status: :created, location: @category_status_type }
       else
@@ -57,6 +60,9 @@ class CategoryStatusTypesController < ApplicationController
   def update
     respond_to do |format|
       if @category_status_type.update(category_status_type_params)
+        if @category_status_type.previous_changes.any?
+          save_change_log(current_user,{object_type: 'category status type', action_type: 'edit', description: "edited category status type ID ##{@category_status_type.id} to '#{@category_status_type.status_text}'"})
+        end
         format.html { redirect_to category_status_types_path, notice: 'Category status type was successfully updated.' }
         format.json { render :show, status: :ok, location: @category_status_type }
       else
@@ -75,6 +81,7 @@ class CategoryStatusTypesController < ApplicationController
       reassign_categories(@category_status_type,firstCST)
 
       current_CST_num = @category_status_type.order_in_list
+      save_change_log(current_user,{object_type: 'category status type', action_type: 'delete', description: "deleted category status type ID ##{@category_status_type.id} '#{@category_status_type.status_text}'. Any corresponding categories were reassigned to ID ##{firstCST.id} '#{firstCST.status_text}'."})
       @category_status_type.destroy
       handle_delete_of_order_in_list(CategoryStatusType,current_CST_num)
       respond_to do |format|

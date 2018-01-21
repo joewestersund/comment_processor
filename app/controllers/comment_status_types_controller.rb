@@ -1,4 +1,6 @@
 class CommentStatusTypesController < ApplicationController
+  include ChangeLogEntriesHelper
+
   before_action :signed_in_user
   before_action :admin_user
   before_action :not_read_only_user, only: [:new, :edit, :create, :update, :destroy, :move_up, :move_down]
@@ -43,6 +45,7 @@ class CommentStatusTypesController < ApplicationController
 
     respond_to do |format|
       if @comment_status_type.save
+        save_change_log(current_user,{object_type: 'comment status type', action_type: 'create', description: "created comment status type ID ##{@comment_status_type.id} '#{@comment_status_type.status_text}'"})
         format.html { redirect_to comment_status_types_path, notice: 'Comment status type was successfully created.' }
         format.json { render :show, status: :created, location: @comment_status_type }
       else
@@ -57,6 +60,9 @@ class CommentStatusTypesController < ApplicationController
   def update
     respond_to do |format|
       if @comment_status_type.update(comment_status_type_params)
+        if @comment_status_type.previous_changes.any?
+          save_change_log(current_user,{object_type: 'comment status type', action_type: 'edit', description: "edited comment status type ID ##{@comment_status_type.id} to '#{@comment_status_type.status_text}'"})
+        end
         format.html { redirect_to comment_status_types_path, notice: 'Comment status type was successfully updated.' }
         format.json { render :show, status: :ok, location: @comment_status_type }
       else
@@ -75,6 +81,7 @@ class CommentStatusTypesController < ApplicationController
       reassign_comments(@comment_status_type,firstCST)
 
       current_CST_num = @comment_status_type.order_in_list
+      save_change_log(current_user,{object_type: 'comment status type', action_type: 'delete', description: "deleted comment status type ID ##{@comment_status_type.id} '#{@comment_status_type.status_text}'. Any corresponding comments were reassigned to ID #{firstCST.id}, '#{firstCST.status_text}'."})
       @comment_status_type.destroy
       handle_delete_of_order_in_list(CommentStatusType,current_CST_num)
       respond_to do |format|

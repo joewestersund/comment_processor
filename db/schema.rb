@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180119213218) do
+ActiveRecord::Schema.define(version: 20180121222908) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,8 @@ ActiveRecord::Schema.define(version: 20180119213218) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "action_type"
+    t.string "object_type"
     t.index ["category_id"], name: "index_change_log_entries_on_category_id"
     t.index ["comment_id"], name: "index_change_log_entries_on_comment_id"
     t.index ["created_at"], name: "index_change_log_entries_on_created_at"
@@ -106,8 +108,8 @@ ActiveRecord::Schema.define(version: 20180119213218) do
   add_foreign_key "categories", "category_response_types", on_delete: :nullify
   add_foreign_key "categories", "category_status_types", on_delete: :restrict
   add_foreign_key "categories", "users", column: "assigned_to_id", on_delete: :nullify
-  add_foreign_key "change_log_entries", "categories", on_delete: :cascade
-  add_foreign_key "change_log_entries", "comments", on_delete: :cascade
+  add_foreign_key "change_log_entries", "categories", on_delete: :nullify
+  add_foreign_key "change_log_entries", "comments", on_delete: :nullify
   add_foreign_key "change_log_entries", "users", on_delete: :restrict
   add_foreign_key "comments", "comment_status_types", on_delete: :restrict
 end

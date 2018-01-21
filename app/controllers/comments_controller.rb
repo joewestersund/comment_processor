@@ -51,6 +51,7 @@ class CommentsController < ApplicationController
   def do_import
     #actually do the import
     comments_imported = import_comments_data(rulemaking_data_source)
+    save_change_log(current_user,{object_type: 'comment', action_type: 'import', description: "imported #{comments_imported} comments into the database."}) if comments_imported > 0
     redirect_to comments_path, notice: "#{comments_imported} comment(s) were successfully imported into the database."
   end
 
@@ -66,6 +67,7 @@ class CommentsController < ApplicationController
       c.save
     end
 
+    save_change_log(current_user,{object_type: 'comment', action_type: 'clean up', description: "ran the cleanup process to remove HTML escape characters from the database."})
     redirect_to comments_path, notice: "HTML escape characters were successfully cleaned from the comment text."
   end
 
@@ -103,7 +105,7 @@ class CommentsController < ApplicationController
     respond_to do |format|
       if @comment.save
         category_change_hash = save_comment_categories
-        save_change_log(current_user,@comment,nil,category_change_hash)
+        save_change_log(current_user,{comment: @comment, category_changes: category_change_hash, action_type: 'create'})
         format.html { redirect_to edit_comment_path(@comment), notice: 'Comment was successfully created.' }
         format.json { render :show, status: :created, location: @comment }
       else
@@ -121,7 +123,7 @@ class CommentsController < ApplicationController
     respond_to do |format|
       if @comment.update(comment_params)
         category_change_hash = save_comment_categories
-        save_change_log(current_user,@comment,nil,category_change_hash)
+        save_change_log(current_user,{comment: @comment, category_changes: category_change_hash, action_type: 'edit'})
         @filter_querystring = remove_empty_elements(filter_params_all)
         format.html { redirect_to edit_comment_path(@comment,@filter_querystring), notice: 'Comment was successfully updated.' }
         format.json { render :show, status: :ok, location: @comment }
@@ -135,7 +137,8 @@ class CommentsController < ApplicationController
 
   def destroy
     current_comment_num = @comment.order_in_list
-    save_change_log(current_user,@comment,"deleted comment ##{@comment.order_in_list} from #{@comment.first_name} #{@comment.last_name}")
+    #note: can't associate this change log entry with the comment object, because the comment is about to be destroyed.
+    save_change_log(current_user,{object_type: 'comment', action_type: 'delete', description: "deleted comment ID ##{@comment.id} from #{@comment.first_name} #{@comment.last_name}, '#{@comment.comment_text.truncate(1000)}'"})
     @comment.destroy
     handle_delete_of_order_in_list(Comment,current_comment_num)
     respond_to do |format|
@@ -164,14 +167,18 @@ class CommentsController < ApplicationController
     end
 
     def save_comment_categories
-      previous_categories = @comment.categories.map { |cat| cat.id}
+      previous_categories = @comment.categories.map { |cat| get_category_description(cat)}
       @categories = Category.where(:id => params[:comment_categories])
       @comment.categories.destroy_all
       @comment.categories << @categories
       #subtract out any category IDs that were there before and still are after
-      new_categories = @categories.map { |cat| cat.id}
+      new_categories = @categories.map { |cat| get_category_description(cat)}
       in_both = new_categories & previous_categories
       {removed: (previous_categories - in_both).sort!, added: (new_categories - in_both).sort! }
+    end
+
+    def get_category_description(category)
+      "##{category.id} '#{category.category_name.truncate(100)}'"
     end
 
     # Use callbacks to share common setup or constraints between actions.

@@ -1,4 +1,6 @@
 class CategoryResponseTypesController < ApplicationController
+  include ChangeLogEntriesHelper
+
   before_action :signed_in_user
   before_action :admin_user
   before_action :not_read_only_user, only: [:new, :edit, :create, :update, :destroy, :move_up, :move_down]
@@ -43,6 +45,7 @@ class CategoryResponseTypesController < ApplicationController
 
     respond_to do |format|
       if @category_response_type.save
+        save_change_log(current_user,{object_type: 'category response type', action_type: 'create', description: "added category response type ID ##{@category_response_type.id} '#{@category_response_type.response_text}'"})
         format.html { redirect_to category_response_types_path, notice: 'Category response type was successfully created.' }
         format.json { render :show, status: :created, location: @category_response_type }
       else
@@ -57,6 +60,9 @@ class CategoryResponseTypesController < ApplicationController
   def update
     respond_to do |format|
       if @category_response_type.update(category_response_type_params)
+        if @category_response_type.previous_changes.any?
+          save_change_log(current_user,{object_type: 'category response type', action_type: 'edit', description: "edited category response type ID ##{@category_response_type.id} to '#{@category_response_type.response_text}'"})
+        end
         format.html { redirect_to category_response_types_path, notice: 'Category response type was successfully updated.' }
         format.json { render :show, status: :ok, location: @category_response_type }
       else
@@ -69,6 +75,7 @@ class CategoryResponseTypesController < ApplicationController
   # DELETE /category_response_types/1
   # DELETE /category_response_types/1.json
   def destroy
+    save_change_log(current_user,{object_type: 'category response type', action_type: 'delete', description: "deleted category response type ID ##{@category_response_type.id} '#{@category_response_type.response_text}'"})
     #any categories assigned to this response type will be set to null automatically by the foreign key constraint.
     current_CRT_num = @category_response_type.order_in_list
     @category_response_type.destroy

@@ -1,11 +1,49 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Change Log Entries</h1>
 
+<div class="filter-box">
+  <button id="show_filter" class="filter-button">Show/Hide Filter</button>
+  <div class="filter <%="hidden" unless @filtered %>">
+    <%= form_tag request.path, method: 'get' do %>
+      <div class="field">
+        <%= label_tag :user_id %>
+        <%= select_tag :user_id, options_from_collection_for_select(@users,:id,:name,params[:user_id]), { :include_blank => true } %>
+      </div>
+      <div class="field">
+        <%= label_tag :object_types %>
+        <%= select_tag :object_type, options_from_collection_for_select(@object_types,:object_type,:object_type,params[:object_type]), { :include_blank => true } %>
+      </div>
+      <div class="field">
+        <%= label_tag :action_types %>
+        <%= select_tag :action_type, options_from_collection_for_select(@action_types,:action_type,:action_type,params[:action_type]), { :include_blank => true } %>
+      </div>
+      <div class="field">
+        <%= label_tag :comment_id, "Comments by order_in_list" %>
+        <%= select_tag :comment_id, options_from_collection_for_select(@comments,:comment_id,:order_in_list,params[:comment_id]), { :include_blank => true } %>
+      </div>
+      <div class="field">
+        <%= label_tag :category_id, "Categories" %>
+        <%= select_tag :category_id, options_from_collection_for_select(@categories,:category_id,:category_name,params[:category_id]), { :include_blank => true } %>
+      </div>
+      <div class="field">
+        <%= label_tag :description  %>
+        <%= text_field_tag :description, params[:description] %>
+      </div>
+
+      <div class="actions">
+        <%= submit_tag "Search" %>
+        <%= button_tag 'Clear Filter', {:type => 'reset', id: "clear_filter"} %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%= will_paginate @change_log_entries %>
 <table>
   <thead>
     <tr>
       <th>User</th>
+      <th>Object type</th>
+      <th>Action type</th>
       <th>Object changed</th>
       <th>Description</th>
       <th>Date</th>
@@ -19,16 +57,18 @@
     <% @change_log_entries.each do |change_log_entry| %>
       <tr>
         <td><%= change_log_entry.user.name %></td>
+        <td><%= change_log_entry.object_type %></td>
+        <td><%= change_log_entry.action_type %></td>
         <td>
-          <% if current_user.read_only?
-              com_path = comment_path(change_log_entry.comment) if change_log_entry.comment.present?
-              cat_path = category_path(change_log_entry.category) if change_log_entry.category.present?
-            else
-              com_path = edit_comment_path(change_log_entry.comment) if change_log_entry.comment.present?
-              cat_path = edit_category_path(change_log_entry.category) if change_log_entry.category.present?
-            end %>
-          <%= link_to "Comment ##{change_log_entry.comment.order_in_list} from #{change_log_entry.comment.first_name} #{change_log_entry.comment.last_name}", com_path if change_log_entry.comment.present? %>
-          <%= link_to "Category ''#{change_log_entry.category.category_name}''", cat_path if change_log_entry.category.present? %>
+          <% if current_user.admin?
+               com_path = edit_comment_path(change_log_entry.comment) if change_log_entry.comment.present?
+               cat_path = edit_category_path(change_log_entry.category) if change_log_entry.category.present?
+             else
+               com_path = comment_path(change_log_entry.comment) if change_log_entry.comment.present?
+               cat_path = category_path(change_log_entry.category) if change_log_entry.category.present?
+             end %>
+          <%= link_to "Comment ID ##{change_log_entry.comment.id} (order in list #{change_log_entry.comment.order_in_list}) from #{change_log_entry.comment.first_name} #{change_log_entry.comment.last_name}", com_path if change_log_entry.comment.present? %>
+          <%= link_to "Category ID ##{change_log_entry.category.id} '#{change_log_entry.category.category_name}'", cat_path if change_log_entry.category.present? %>
         </td>
         <td><%= change_log_entry.description %></td>
         <td><%= change_log_entry.created_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
@@ -40,7 +80,7 @@
     <% end %>
   </tbody>
 </table>
-
+<%= will_paginate @change_log_entries %>
 <br>
 
 <%= link_to 'New Change Log Entry', new_change_log_entry_path %>
