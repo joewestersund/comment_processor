@@ -8,7 +8,7 @@ class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
 
   def sign_in_as(user)
-    post sessions_url(email:user.email, password: 'password')
+    post sessions_url(email: user.email, password: 'password')
   end
 
 end

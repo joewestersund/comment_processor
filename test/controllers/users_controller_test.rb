@@ -2,8 +2,8 @@ require 'test_helper'
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @user = users(:user1)
-    sign_in_as users(:user1)
+    @user = users(:admin_user_1)
+    sign_in_as users(:admin_user_1)
   end
 
   test "should get index" do
@@ -35,7 +35,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update user" do
-    @user2 = users(:user2)
+    @user2 = users(:regular_user)
     patch user_url(@user2), params: { user: { name: @user2.name, email: @user2.email, admin: @user2.admin } }
 
     assert_redirected_to users_url
@@ -46,8 +46,16 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to profile_edit_url
   end
 
-  test "should destroy user" do
+  test "should not destroy user with change log entries" do
+    assert_raises(Exception) do
+      delete user_url(@user)
+    end
+
+  end
+
+  test "should destroy user without change log entries" do
     assert_difference('User.count', -1) do
+      @user.change_log_entries.delete_all
       delete user_url(@user)
     end
 

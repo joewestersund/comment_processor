@@ -3,7 +3,7 @@ require 'test_helper'
 class CommentStatusTypesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @comment_status_type = comment_status_types(:one)
-    sign_in_as users(:user1)
+    sign_in_as users(:admin_user_1)
   end
 
   test "should get index" do

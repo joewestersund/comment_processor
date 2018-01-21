@@ -15,14 +15,29 @@
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  description: MyText
-  comment_id: 1
-  category_id: 1
+change_to_comment:
+  id: 1
   user_id: 1
+  object_type: comment
+  action_type: create
+  comment_id: 1
+  category_id:
+  description: MyString
 
-two:
-  description: MyText
-  comment_id: 1
-  category_id: 1
+change_to_category:
+  id: 2
   user_id: 1
+  object_type: category
+  action_type: create
+  comment_id:
+  category_id: 1
+  description: MyString
+
+change_to_other_object:
+  id: 3
+  user_id: 1
+  object_type: category response type
+  action_type: create
+  comment_id:
+  category_id:
+  description: MyString

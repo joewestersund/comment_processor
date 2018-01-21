@@ -18,16 +18,6 @@
       <li class="nav navbar-nav"><%= link_to "Recent activity", change_log_entries_path %></li>
     </ul>
   </li>
-  <li id="fat-menu" class="dropdown nav navbar-nav">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-      <%= glyphicon_link("glyphicon glyphicon-info-sign","Help").html_safe%> <b class="caret"></b>
-    </a>
-    <ul class="dropdown-menu">
-      <li class="nav navbar-nav"><%= link_to "For reviewing comments", help_file + comments_help_bookmark, target: :_blank %></li>
-      <li class="nav navbar-nav"><%= link_to "For creating and responding to categories", help_file + categories_help_bookmark, target: :_blank %></li>
-      <li class="nav navbar-nav"><%= link_to "Tips and tricks", help_file + tips_and_tricks_help_bookmark, target: :_blank %></li>
-    </ul>
-  </li>
 
   <% if current_user.admin? %>
     <li id="fat-menu" class="dropdown nav navbar-nav">
@@ -52,5 +42,17 @@
       <li class="nav navbar-nav"><%= link_to "Change Password", profile_edit_password_path %></li>
     </ul>
   </li>
+
+  <li id="fat-menu" class="dropdown nav navbar-nav">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+      <%= glyphicon_link("glyphicon glyphicon-info-sign","Help").html_safe%> <b class="caret"></b>
+    </a>
+    <ul class="dropdown-menu">
+      <li class="nav navbar-nav"><%= link_to "For reviewing comments", help_file + comments_help_bookmark, target: :_blank %></li>
+      <li class="nav navbar-nav"><%= link_to "For creating and responding to categories", help_file + categories_help_bookmark, target: :_blank %></li>
+      <li class="nav navbar-nav"><%= link_to "Tips and tricks", help_file + tips_and_tricks_help_bookmark, target: :_blank %></li>
+    </ul>
+  </li>
+
   <li class="nav navbar-nav"><%= link_to glyphicon_link("glyphicon-log-out","Log Out").html_safe, signout_path, method: :delete %></li>
 <% end %>

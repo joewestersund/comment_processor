@@ -3,7 +3,7 @@ require 'test_helper'
 class CategoryStatusTypesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @category_status_type = category_status_types(:one)
-    sign_in_as users(:user1)
+    sign_in_as users(:admin_user_1)
   end
 
   test "should get index" do
