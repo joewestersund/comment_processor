@@ -1,4 +1,5 @@
 class CategoriesController < ApplicationController
+  include ChangeLogEntriesHelper
   include ActionController::Live
   require 'csv'
 
@@ -76,6 +77,7 @@ class CategoriesController < ApplicationController
 
     respond_to do |format|
       if @category.save
+        save_change_log(current_user,@category)
         if @category.assigned_to_id.present? && @category.assigned_to_id != current_user.id
           NotificationMailer.category_assigned_email(@category,current_user,false).deliver
           email_sent_text = " An email was sent to #{@category.assigned_to.name} to let them know this category is assigned to them."
@@ -95,6 +97,7 @@ class CategoriesController < ApplicationController
     previous_assigned_to_id = @category.assigned_to_id
     respond_to do |format|
       if @category.update(category_params)
+        save_change_log(current_user,@category)
         if @category.assigned_to_id.present? && @category.assigned_to_id != current_user.id && @category.assigned_to_id != previous_assigned_to_id
           NotificationMailer.category_assigned_email(@category,current_user,false).deliver
           email_sent_text = " An email was sent to #{@category.assigned_to.name} to let them know this category is assigned to them."

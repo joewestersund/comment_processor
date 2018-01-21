@@ -103,7 +103,7 @@ class CommentsController < ApplicationController
     respond_to do |format|
       if @comment.save
         category_change_hash = save_comment_categories
-        save_change_log(current_user,@comment,nil,nil,category_change_hash)
+        save_change_log(current_user,@comment,nil,category_change_hash)
         format.html { redirect_to edit_comment_path(@comment), notice: 'Comment was successfully created.' }
         format.json { render :show, status: :created, location: @comment }
       else
@@ -121,7 +121,7 @@ class CommentsController < ApplicationController
     respond_to do |format|
       if @comment.update(comment_params)
         category_change_hash = save_comment_categories
-        save_change_log(current_user,@comment,nil,nil,category_change_hash)
+        save_change_log(current_user,@comment,nil,category_change_hash)
         @filter_querystring = remove_empty_elements(filter_params_all)
         format.html { redirect_to edit_comment_path(@comment,@filter_querystring), notice: 'Comment was successfully updated.' }
         format.json { render :show, status: :ok, location: @comment }
@@ -135,7 +135,7 @@ class CommentsController < ApplicationController
 
   def destroy
     current_comment_num = @comment.order_in_list
-    save_change_log(current_user,@comment,nil,"deleted comment ##{@comment.order_in_list} from #{@comment.first_name} #{@comment.last_name}",nil)
+    save_change_log(current_user,@comment,"deleted comment ##{@comment.order_in_list} from #{@comment.first_name} #{@comment.last_name}")
     @comment.destroy
     handle_delete_of_order_in_list(Comment,current_comment_num)
     respond_to do |format|
