@@ -11,4 +11,8 @@ class ActiveSupport::TestCase
     post sessions_url(email: user.email, password: 'password')
   end
 
+  def sign_user_out
+    delete signout_url
+  end
+
 end

@@ -34,6 +34,32 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "inactive user should not be able to log in" do
+    sign_user_out
+
+    get comments_url
+    assert_redirected_to signin_url
+
+    sign_in_as users(:inactive_user)
+
+    get comments_url
+    assert_redirected_to signin_url
+  end
+
+  test "should not update user to remove last admin" do
+    assert_difference('User.where(admin: true).count',-1) do
+      @user2 = users(:admin_user_2)
+      patch user_url(@user2), params: { user: { name: @user2.name, email: @user2.email, admin: false } }
+    end
+
+    assert_no_difference('User.where(admin: true).count') do
+      @user1 = users(:admin_user_1)
+      patch user_url(@user1), params: { user: { name: @user1.name, email: @user1.email, admin: false } }
+    end
+
+    assert_redirected_to users_url
+  end
+
   test "should update user" do
     @user2 = users(:regular_user)
     patch user_url(@user2), params: { user: { name: @user2.name, email: @user2.email, admin: @user2.admin } }
@@ -52,6 +78,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
 
   end
+
 
   test "should destroy user without change log entries" do
     assert_difference('User.count', -1) do

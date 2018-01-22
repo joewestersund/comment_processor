@@ -18,7 +18,9 @@ class CategoryStatusTypesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create category_status_type" do
     assert_difference('CategoryStatusType.count') do
-      post category_status_types_url, params: { category_status_type: { status_text: "new category status text not used elsewhere" } }
+      assert_difference('ChangeLogEntry.count', 1) do #should write to log
+        post category_status_types_url, params: { category_status_type: { status_text: "new category status text not used elsewhere" } }
+      end
     end
 
     assert_redirected_to category_status_types_url
@@ -34,14 +36,25 @@ class CategoryStatusTypesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "shouldn't write to log if no change" do
+    assert_difference('ChangeLogEntry.count', 0) do
+      patch category_status_type_url(@category_status_type), params: { category_status_type: { status_text: @category_status_type.status_text } }
+    end
+    assert_redirected_to category_status_types_url
+  end
+
   test "should update category_status_type" do
-    patch category_status_type_url(@category_status_type), params: { category_status_type: { status_text: @category_status_type.status_text } }
+    assert_difference('ChangeLogEntry.count', 1) do #should write to log
+      patch category_status_type_url(@category_status_type), params: { category_status_type: { status_text: "#{@category_status_type.status_text} and more" } }
+    end
     assert_redirected_to category_status_types_url
   end
 
   test "should destroy category_status_type" do
     assert_difference('CategoryStatusType.count', -1) do
-      delete category_status_type_url(@category_status_type)
+      assert_difference('ChangeLogEntry.count', 1) do #should write to log
+        delete category_status_type_url(@category_status_type)
+      end
     end
 
     assert_redirected_to category_status_types_url

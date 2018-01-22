@@ -18,7 +18,9 @@ class CommentStatusTypesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create comment_status_type" do
     assert_difference('CommentStatusType.count') do
-      post comment_status_types_url, params: { comment_status_type: { status_text: "new status text not used elsewhere" } }
+      assert_difference('ChangeLogEntry.count', 1) do #should write to log
+        post comment_status_types_url, params: { comment_status_type: { status_text: "new status text not used elsewhere" } }
+      end
     end
 
     assert_redirected_to comment_status_types_url
@@ -34,14 +36,25 @@ class CommentStatusTypesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "shouldn't write to log if no change" do
+    assert_difference('ChangeLogEntry.count', 0) do
+      patch comment_status_type_url(@comment_status_type), params: { comment_status_type: { status_text: @comment_status_type.status_text } }
+    end
+    assert_redirected_to comment_status_types_url
+  end
+
   test "should update comment_status_type" do
-    patch comment_status_type_url(@comment_status_type), params: { comment_status_type: { status_text: @comment_status_type.status_text } }
+    assert_difference('ChangeLogEntry.count', 1) do #should write to log
+      patch comment_status_type_url(@comment_status_type), params: { comment_status_type: { status_text: "#{@comment_status_type.status_text} and more" } }
+    end
     assert_redirected_to comment_status_types_url
   end
 
   test "should destroy comment_status_type" do
     assert_difference('CommentStatusType.count', -1) do
-      delete comment_status_type_url(@comment_status_type)
+      assert_difference('ChangeLogEntry.count', 1) do #should write to log
+        delete comment_status_type_url(@comment_status_type)
+      end
     end
 
     assert_redirected_to comment_status_types_url

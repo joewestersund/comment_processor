@@ -25,23 +25,23 @@ admin_user_1:
   read_only: false
   admin: true
 
-regular_user:
+admin_user_2:
   id: 2
   name: MyString2
   email: test2@test.com
   password_digest: <%= User.digest('password') %>
   active: true
   read_only: false
-  admin: false
+  admin: true
 
-admin_user_2:
+regular_user:
   id: 3
   name: MyString3
   email: test3@test.com
   password_digest: <%= User.digest('password') %>
   active: true
   read_only: false
-  admin: true
+  admin: false
 
 read_only_user:
   id: 4
@@ -54,8 +54,8 @@ read_only_user:
 
 inactive_user:
   id: 5
-  name: MyString4
-  email: test4@test.com
+  name: MyString5
+  email: test5@test.com
   password_digest: <%= User.digest('password') %>
   active: false
   read_only: false

@@ -18,7 +18,9 @@ class CategoryResponseTypesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create category_response_type" do
     assert_difference('CategoryResponseType.count') do
-      post category_response_types_url, params: { category_response_type: { response_text: "some new text not used elsewhere" } }
+      assert_difference('ChangeLogEntry.count', 1) do #should write to log
+        post category_response_types_url, params: { category_response_type: { response_text: "some new text not used elsewhere" } }
+      end
     end
 
     assert_redirected_to category_response_types_url
@@ -34,14 +36,25 @@ class CategoryResponseTypesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should not write to log if no change" do
+    assert_difference('ChangeLogEntry.count', 0) do
+      patch category_response_type_url(@category_response_type), params: { category_response_type: { response_text: @category_response_type.response_text } }
+    end
+    assert_redirected_to category_response_types_url
+  end
+
   test "should update category_response_type" do
-    patch category_response_type_url(@category_response_type), params: { category_response_type: { response_text: @category_response_type.response_text } }
+    assert_difference('ChangeLogEntry.count', 1) do #should write to log
+      patch category_response_type_url(@category_response_type), params: { category_response_type: { response_text: "#{@category_response_type.response_text} and more" } }
+    end
     assert_redirected_to category_response_types_url
   end
 
   test "should destroy category_response_type" do
     assert_difference('CategoryResponseType.count', -1) do
-      delete category_response_type_url(@category_response_type)
+      assert_difference('ChangeLogEntry.count', 1) do #should write to log
+        delete category_response_type_url(@category_response_type)
+      end
     end
 
     assert_redirected_to category_response_types_url

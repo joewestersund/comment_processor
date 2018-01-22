@@ -6,8 +6,13 @@ class SessionsController < ApplicationController
   def create
     user = User.find_by(email: params[:email].downcase)
     if user && user.authenticate(params[:password])
-      sign_in user
-      redirect_to comments_path #root_path
+      if user.active?
+        sign_in user
+        redirect_to comments_path #root_path
+      else
+        flash.now[:error] = "This username is currently marked as inactive. Please contact an administrator."
+        render 'new'
+      end
     else
       flash.now[:error] = "Invalid username / password"
       render 'new'
