@@ -83,6 +83,7 @@ class CommentsController < ApplicationController
   # GET /comments/1.json
   def show
     get_filtering_and_next_and_previous
+    @change_log_entries = ChangeLogEntry.where(comment: @comment).order(created_at: :desc).page(params[:page]).per_page(10)
   end
 
   # GET /comments/1/edit

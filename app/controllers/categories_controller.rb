@@ -57,6 +57,7 @@ class CategoriesController < ApplicationController
   # GET /categories/1.json
   def show
     get_filtering_and_next_and_previous
+    @change_log_entries = ChangeLogEntry.where(category: @category).order(created_at: :desc).page(params[:page]).per_page(10)
   end
 
   # GET /categories/1/edit

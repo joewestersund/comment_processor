@@ -34,3 +34,32 @@
 </table>
 
 <%= link_to 'Index', categories_path(@filter_querystring) %>
+
+<div class="change-log-entries-box">
+  <button id="show_change_log_entries" class="change-log-entries-button">Show/Hide Previous Activity</button>
+  <div class="change-log-entries hidden %>">
+    <%= will_paginate @change_log_entries %>
+    <table>
+      <thead>
+      <tr>
+        <th>User</th>
+        <th>Action type</th>
+        <th>Description</th>
+        <th>Date</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @change_log_entries.each do |change_log_entry| %>
+        <tr>
+          <td><%= change_log_entry.user.name %></td>
+          <td><%= change_log_entry.action_type %></td>
+          <td><%= change_log_entry.description %></td>
+          <td><%= change_log_entry.created_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <%= will_paginate @change_log_entries %>
+  </div>
+</div>
