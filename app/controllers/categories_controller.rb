@@ -48,11 +48,27 @@ class CategoriesController < ApplicationController
   end
 
   def renumber
-
   end
 
   def do_renumber
-    byebug
+    #actually do the renumbering
+    #since there's a uniqueness and >0 validation, first move them all up
+    max_order_in_list = Category.maximum(:order_in_list)
+    Category.all.each do |cat|
+      cat.order_in_list += max_order_in_list
+      cat.save
+    end
+
+    #now renumber them starting from 1
+    order_number = 1
+    Category.order('LOWER(category_name)').each do |cat|
+      cat.order_in_list = order_number
+      cat.save
+      order_number += 1
+    end
+
+    save_change_log(current_user,{object_type: 'category', action_type: 'renumber', description: "ran the renumber process to make order_in_list match up with alphabetical order by category_name."})
+    redirect_to categories_path, notice: "The categories' order_in_list were successfully renumbered to match their alphabetical order by order_in_list."
   end
 
   # GET /categories/new

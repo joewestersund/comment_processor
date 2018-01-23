@@ -30,12 +30,11 @@ Rails.application.routes.draw do
   get '/profile/edit', to: 'users#edit_profile'
   patch '/profile/update_password', to: 'users#update_password'
 
+  get 'categories/renumber', to: 'categories#renumber'
+  put 'categories/renumber', to: 'categories#do_renumber', as: 'categories_do_renumber'
   resources :categories
   post '/categories/:id/move_up', to: 'categories#move_up'
   post '/categories/:id/move_down', to: 'categories#move_down'
-
-  get 'categories/renumber', to: 'categories#renumber'
-  put 'categories/renumber', to: 'categories#do_renumber', as: 'categories_do_renumber'
 
   get 'comments/import', to: 'comments#import'
   put 'comments/import', to: 'comments#do_import', as: 'comments_do_import'

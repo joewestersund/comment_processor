@@ -1,13 +1,13 @@
 <% content_for :title, 'Renumber Categories' %>
 
-<h1>Change the order_in_list for categories, so it matches the current alphabetical order</h1>
+<h1>Renumber Categories</h1>
 
-<p>
-  Don't do this if data for comments or categories has already been downloaded to Excel for further editing.
-</p>
+<p>Change the order_in_list for categories, so it matches the current alphabetical order</p>
+
+<p>Don't do this if data for comments or categories has already been downloaded to Excel for further editing.</p>
 
 <%= form_tag(categories_do_renumber_path, method: "put") do %>
   <%= submit_tag('Renumber Categories', { class: 'btn btn-large btn-primary', data: { confirm: "Are you sure you want to renumber categories? You shouldn't do this if data has already been downloaded to Excel." }})%>
 <% end %>
 
-<%= link_to 'Back', comments_path %>
+<%= link_to 'Back', categories_path %>
