@@ -28,7 +28,7 @@ class Category < ApplicationRecord
 
   def self.csv_header
     ['Order In List', 'Category Name', 'Description', 'Response Text', 'Response Type', 'Assigned To',
-     'Status', 'Action Needed', 'Rule Change Made', 'Comments (by their "order in list")', '# of Comments', '# of Commenters']
+     'Status', 'Action Needed', 'Rule Change Made', 'Comments (by their "order in list")', '# of Comments', '# of Commenters', 'ID']
   end
 
   def self.excel_column_widths
@@ -72,7 +72,7 @@ class Category < ApplicationRecord
      self.assigned_to_id.present? ? self.assigned_to.name : '',
      self.category_status_type.present? ? self.category_status_type.status_text : '',
      self.action_needed, self.rule_change_made, self.comments.order(:source_id).collect{|com| com.order_in_list}.join(", "),
-     self.num_comments, self.num_commenters]
+     self.num_comments, self.num_commenters, self.id]
   end
 
 end
