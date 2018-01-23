@@ -48,6 +48,7 @@ class CategoriesController < ApplicationController
   end
 
   def renumber
+
   end
 
   def do_renumber

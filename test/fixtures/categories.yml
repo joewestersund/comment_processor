@@ -20,7 +20,7 @@
 
 one:
   id: 1
-  category_name: MyString1
+  category_name: This is category 1 name
   description: MyString
   response_text: MyString
   category_status_type_id: 1
@@ -32,22 +32,30 @@ one:
 
 two:
   id: 2
-  category_name: MyString2
+  category_name: Category 2 name
   description: MyString
   response_text: MyString
   category_status_type_id: 1
   action_needed: MyString
   rule_change_made: false
-  category_response_type_id: nil
   order_in_list: 2
 
 three:
   id: 3
-  category_name: MyString3
+  category_name: A name of another category
   description: MyString
   response_text: MyString
   category_status_type_id: 1
   action_needed: MyString
   rule_change_made: false
-  category_response_type_id: nil
   order_in_list: 3
+
+four:
+  id: 4
+  category_name: Name number 4
+  description: MyString
+  response_text: MyString
+  category_status_type_id: 1
+  action_needed: MyString
+  rule_change_made: false
+  order_in_list: 4
