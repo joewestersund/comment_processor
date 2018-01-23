@@ -44,6 +44,13 @@
 
     <div>
       To manually enter an attachment, you must put the file on a folder all users can view, such as on Google drive.
+
+      <% if comment.attachment_name.present? %>
+        <div class="field">
+          <b>Current link:</b> <%= (link_to comment.attachment_name, comment.attachment_url) %>
+        </div>
+      <% end %>
+
       <div class="field">
         <%= form.label :attachment_name %>
         <%= form.text_field :attachment_name, id: :comment_attachment_name %>

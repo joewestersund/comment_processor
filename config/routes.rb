@@ -34,6 +34,9 @@ Rails.application.routes.draw do
   post '/categories/:id/move_up', to: 'categories#move_up'
   post '/categories/:id/move_down', to: 'categories#move_down'
 
+  get 'categories/renumber', to: 'categories#renumber'
+  put 'categories/renumber', to: 'categories#do_renumber', as: 'categories_do_renumber'
+
   get 'comments/import', to: 'comments#import'
   put 'comments/import', to: 'comments#do_import', as: 'comments_do_import'
   get 'comments/cleanup', to: 'comments#cleanup'
