@@ -18,7 +18,7 @@
       </div>
       <div class="field">
         <%= label_tag :comment_id, "Comments by order_in_list" %>
-        <%= select_tag :comment_id, options_from_collection_for_select(@comments,:comment_id,:order_in_list,params[:comment_id]), { :include_blank => true } %>
+        <%= select_tag :comment_id, options_from_collection_for_select(@comments,:comment_id,:key_info,params[:comment_id]), { :include_blank => true } %>
       </div>
       <div class="field">
         <%= label_tag :category_id, "Categories" %>

@@ -84,7 +84,8 @@ class ChangeLogEntriesController < ApplicationController
 
     def set_select_options
       @users = User.order(:name).all
-      @comments = ChangeLogEntry.joins(:comment).select('comment_id, order_in_list').group('comment_id, order_in_list').order('order_in_list')
+      comment_select_str = "comment_id, '#' || order_in_list::text || ' ' || first_name || ' ' || last_name || ' (' || organization || ', ' || state || ')' AS key_info"
+      @comments = ChangeLogEntry.joins(:comment).select(comment_select_str).group('comment_id, key_info').order('key_info')
       @categories = ChangeLogEntry.joins(:category).select('category_id, category_name').group('category_id, category_name').order('category_name')
       @object_types = ChangeLogEntry.select(:object_type).group(:object_type).order(:object_type)
       @action_types = ChangeLogEntry.select(:action_type).group(:action_type).order(:action_type)
