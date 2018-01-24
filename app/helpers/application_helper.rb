@@ -83,4 +83,8 @@ module ApplicationHelper
     end
   end
 
+  def join_without_blanks(array_of_strings, join_string)
+    array_of_strings.reject { |item| item.nil? || item.empty? }.join(join_string)
+  end
+
 end

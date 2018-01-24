@@ -14,6 +14,8 @@ class StatsController < ApplicationController
     @comments_without_categories = Comment.joins('LEFT JOIN categories_comments ON comments.id = categories_comments.comment_id').where('categories_comments.comment_id IS NULL').count
     @comments_with_categories = @total_comments - @comments_without_categories
 
+    @comments_with_multiple_commenters = Comment.where('num_commenters > 1').order(num_commenters: :desc)
+
   end
 
   def categories

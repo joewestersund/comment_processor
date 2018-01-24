@@ -96,7 +96,7 @@
     <% @comments.each do |comment| %>
       <tr>
         <td><%= comment.order_in_list %></td>
-        <td><%= "#{comment.first_name + ' ' if comment.first_name.present?}#{comment.last_name}#{' <' + comment.email.truncate(25) + '>' if comment.email.present?}"%></td>
+        <td><%= comment.name_and_email%></td>
         <td><%= "#{comment.organization + ", " if comment.organization.present?}#{comment.state}" %></td>
         <td><%= comment.comment_text.truncate(1000) if comment.comment_text.present?%></td>
         <td><%= (link_to comment.attachment_name.truncate(10), comment.attachment_url) if comment.attachment_name.present? %></td>

@@ -1,3 +1,4 @@
+include ApplicationHelper
 # == Schema Information
 #
 # Table name: comments
@@ -53,6 +54,18 @@ class Comment < ApplicationRecord
     [self.order_in_list, self.source_id, self.first_name, self.last_name, self.email,
      self.organization, self.state, self.comment_text, self.attachment_name, self.attachment_url, self.manually_entered, self.num_commenters,
      self.summary, status, self.status_details, categories, self.id]
+  end
+
+  def name_and_email
+    str = join_without_blanks([self.first_name,self.last_name], ' ')
+    str += " <#{self.email}>" if self.email.present?
+  end
+
+  def key_info
+    name_str = join_without_blanks([self.first_name,self.last_name], ' ')
+    org_str = join_without_blanks([self.organization,self.state], ', ')
+
+    "##{self.order_in_list} #{name_str} (#{org_str})"
   end
 
 end

@@ -107,4 +107,27 @@
       </tbody>
     </table>
   </span>
+
+  <span class="inline">
+    <table>
+      <thead>
+      <tr>
+        <th colspan="2">Comments from multiple commenters</th>
+      </tr>
+      <tr>
+        <th># of Commenters</th>
+        <th>Name and Organization</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @comments_with_multiple_commenters.each do |comment| %>
+        <tr>
+          <td><%= comment.num_commenters %></td>
+          <td><%= link_to comment.key_info, current_user.read_only? ? comment_path(comment) : edit_comment_path(comment) %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </span>
 </div>
