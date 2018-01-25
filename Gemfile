@@ -29,6 +29,8 @@ gem 'jquery-ui-rails'
 gem 'bootstrap-multiselect-rails', '~> 0.9.9'
 #gem 'bootstrap-multiselect-rails4', '~> 0.0.1'
 
+gem 'bootstrap-select-rails'
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes

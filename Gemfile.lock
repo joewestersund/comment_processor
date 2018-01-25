@@ -68,6 +68,7 @@ GEM
     bootstrap-sass (3.3.7)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
+    bootstrap-select-rails (1.12.4)
     builder (3.2.3)
     byebug (9.1.0)
     capybara (2.15.4)
@@ -240,6 +241,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootstrap-multiselect-rails (~> 0.9.9)
   bootstrap-sass (~> 3.3.6)
+  bootstrap-select-rails
   byebug
   capybara (~> 2.13)
   coffee-rails (~> 4.2)
@@ -269,4 +271,4 @@ RUBY VERSION
    ruby 2.4.2p198
 
 BUNDLED WITH
-   1.16.0
+   1.16.1

@@ -6,23 +6,23 @@
     <%= form_tag request.path, method: 'get' do %>
       <div class="field">
         <%= label_tag :user_id %>
-        <%= select_tag :user_id, options_from_collection_for_select(@users,:id,:name,params[:user_id]), { :include_blank => true } %>
+        <%= select_tag :user_id, options_from_collection_for_select(@users,:id,:name,params[:user_id]), { :include_blank => true, class: "selectpicker", "data-live-search" => "true" } %>
       </div>
       <div class="field">
         <%= label_tag :object_types %>
-        <%= select_tag :object_type, options_from_collection_for_select(@object_types,:object_type,:object_type,params[:object_type]), { :include_blank => true } %>
+        <%= select_tag :object_type, options_from_collection_for_select(@object_types,:object_type,:object_type,params[:object_type]), { :include_blank => true, class: "selectpicker", "data-live-search" => "true" } %>
       </div>
       <div class="field">
         <%= label_tag :action_types %>
-        <%= select_tag :action_type, options_from_collection_for_select(@action_types,:action_type,:action_type,params[:action_type]), { :include_blank => true } %>
+        <%= select_tag :action_type, options_from_collection_for_select(@action_types,:action_type,:action_type,params[:action_type]), { :include_blank => true, class: "selectpicker", "data-live-search" => "true" } %>
       </div>
       <div class="field">
         <%= label_tag :comment_id, "Comments by order_in_list" %>
-        <%= select_tag :comment_id, options_from_collection_for_select(@comments,:comment_id,:key_info,params[:comment_id]), { :include_blank => true } %>
+        <%= select_tag :comment_id, options_from_collection_for_select(@comments,:comment_id,:key_info,params[:comment_id]), { :include_blank => true, class: "selectpicker", "data-live-search" => "true" } %>
       </div>
       <div class="field">
         <%= label_tag :category_id, "Categories" %>
-        <%= select_tag :category_id, options_from_collection_for_select(@categories,:category_id,:category_name,params[:category_id]), { :include_blank => true } %>
+        <%= select_tag :category_id, options_from_collection_for_select(@categories,:category_id,:category_name,params[:category_id]), { :include_blank => true, class: "selectpicker", "data-live-search" => "true" } %>
       </div>
       <div class="field">
         <%= label_tag :description  %>

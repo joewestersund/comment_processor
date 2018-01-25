@@ -16,6 +16,11 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require bootstrap-multiselect
+
+//= require bootstrap-select
+//= require bootstrap/alert
+//= require bootstrap/dropdown
+
 //= require_tree .
 
 

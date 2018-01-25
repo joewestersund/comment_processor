@@ -1,5 +1,5 @@
 ready = ->
-  $('.multiselect-dropdown').multiselect
+  $('.bootstrap-multiselect').multiselect
     enableCaseInsensitiveFiltering: true,
     delimiterText: '\n',
     maxHeight: 300,
@@ -19,4 +19,8 @@ ready = ->
           return
         labels.join('<br>') + ''
 
+ready2 = ->
+  $('*:not(.bootstrap-select) > .selectpicker').selectpicker('refresh')
+
 $(document).on('turbolinks:load', ready)
+$(document).on('turbolinks:load', ready2)

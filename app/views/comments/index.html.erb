@@ -52,11 +52,11 @@
       </div>
       <div class="field">
         <%= label_tag :categories %>
-        <%= select_tag :category_id, options_from_collection_for_select(@categories,:id,:category_name,params[:category_id]), { :include_blank => true } %>
+        <%= select_tag :category_id, options_from_collection_for_select(@categories,:id,:category_name,params[:category_id]), { :include_blank => true, class: "selectpicker", "data-live-search" => "true" } %>
       </div>
       <div class="field">
         <%= label_tag :status %>
-        <%= select_tag :comment_status_type_id, options_from_collection_for_select(@comment_status_types,:id,:status_text,params[:comment_status_type_id]), { :include_blank => true } %>
+        <%= select_tag :comment_status_type_id, options_from_collection_for_select(@comment_status_types,:id,:status_text,params[:comment_status_type_id]), { :include_blank => true, class: "selectpicker", "data-live-search" => "true" } %>
       </div>
       <div class="field">
         <%= label_tag :status_details  %>
