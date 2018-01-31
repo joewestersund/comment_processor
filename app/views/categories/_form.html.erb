@@ -25,11 +25,6 @@
     <%= form.text_field :category_name, id: :category_category_name, class:'long' %>
   </div>
 
-  <div class="field">
-    <%= form.label :category_description %>
-    <%= form.text_area :description, id: :category_description, cols: 300, rows: 3, class: 'bigtextarea' %>
-  </div>
-
   <div class="text-from-comments-box">
     <button id="show_text_from_comments" class="text-from-comments-button">Show/Hide Text from associated comments</button>
     <div class="text-from-comments hidden %>">
@@ -38,6 +33,11 @@
         <%= form.trix_editor :text_from_comments, id: :category_text_from_comments %>
       </div>
     </div>
+  </div>
+
+  <div class="field">
+    <%= form.label :category_description %>
+    <%= form.text_area :description, id: :category_description, cols: 300, rows: 3, class: 'bigtextarea' %>
   </div>
 
   <div class="field">
