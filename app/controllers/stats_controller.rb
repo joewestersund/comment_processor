@@ -24,6 +24,8 @@ class StatsController < ApplicationController
     @categories_by_status_type = CategoryStatusType.select('category_status_types.*, COUNT(categories.id) as num_categories').joins('LEFT JOIN categories ON category_status_types.id = categories.category_status_type_id').group('category_status_types.id').order(:order_in_list)
     @categories_with_no_status_type = Category.where(category_status_type_id: nil).count
 
+    @categories_with_no_comments = Category.joins('LEFT JOIN categories_comments ON categories.id = categories_comments.category_id').where('categories_comments.category_id IS NULL').order(:category_name)
+
     @categories_by_agency_response = CategoryResponseType.select('category_response_types.*, COUNT(categories.id) as num_categories').joins('LEFT JOIN categories ON category_response_types.id = categories.category_response_type_id').group('category_response_types.id').order(:order_in_list)
     @categories_with_no_agency_response = Category.where(category_response_type_id: nil).count
 

@@ -78,6 +78,37 @@
     </table>
   </span>
 
+
+
+  XX
+  <span class="inline">
+    <table>
+      <thead>
+      <tr>
+        <th colspan="2">Categories with no Associated Comments</th>
+      </tr>
+      <tr>
+        <th colspan="2">Comments should be added, or these categories should be deleted.</th>
+      </tr>
+      <tr>
+        <th>Category Name</th>
+        <th>Assigned to</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @categories_with_no_comments.each do |row| %>
+        <tr>
+          <td class="<%= assigned_to_css(row.assigned_to_id) %>"><%= link_to row.category_name, current_user.read_only? ? category_path(row) : edit_category_path(row) %></td>
+          <td class="<%= assigned_to_css(row.assigned_to_id) %>"><%= row.assigned_to.name if row.assigned_to.present? %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </span>
+  XX
+
+
   <span class="inline">
     <table>
       <thead>

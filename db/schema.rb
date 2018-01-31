@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180131033323) do
+ActiveRecord::Schema.define(version: 20180131200021) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,7 +85,7 @@ ActiveRecord::Schema.define(version: 20180131033323) do
     t.string "attachment_url"
     t.text "summary"
     t.integer "comment_status_type_id"
-    t.text "status_details"
+    t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "attachment_name"

@@ -191,7 +191,7 @@ class CommentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
-      params.require(:comment).permit(:source_id, :first_name, :last_name, :email, :organization, :state, :comment_text, :attachment_name, :attachment_url, :num_commenters, :summary, :comment_status_type_id, :status_details, :manually_entered)
+      params.require(:comment).permit(:source_id, :first_name, :last_name, :email, :organization, :state, :comment_text, :attachment_name, :attachment_url, :num_commenters, :summary, :comment_status_type_id, :notes, :manually_entered)
     end
 
     def set_select_options
@@ -201,11 +201,11 @@ class CommentsController < ApplicationController
     end
 
     def filter_params_in_obj
-      params.permit(:first_name, :last_name, :email, :organization, :state, :comment_text, :summary, :comment_status_type_id, :status_details, :manually_entered)
+      params.permit(:first_name, :last_name, :email, :organization, :state, :comment_text, :summary, :comment_status_type_id, :notes, :manually_entered)
     end
 
     def filter_params_all
-      params.permit(:first_name, :last_name, :email, :organization, :state, :comment_text, :summary, :comment_status_type_id, :status_details, :manually_entered, :has_attachment, :category_id, )
+      params.permit(:first_name, :last_name, :email, :organization, :state, :comment_text, :summary, :comment_status_type_id, :notes, :manually_entered, :has_attachment, :category_id, )
     end
 
     def get_conditions
@@ -246,8 +246,8 @@ class CommentsController < ApplicationController
       conditions[:comment_status_type_id] = search_terms.comment_status_type_id if search_terms.comment_status_type_id.present?
       conditions_string << "comment_status_type_id = :comment_status_type_id" if search_terms.comment_status_type_id.present?
 
-      conditions[:status_details] = "%#{search_terms.status_details}%" if search_terms.status_details.present?
-      conditions_string << "comments.status_details ILIKE :status_details" if search_terms.status_details.present?
+      conditions[:notes] = "%#{search_terms.notes}%" if search_terms.notes.present?
+      conditions_string << "comments.notes ILIKE :notes" if search_terms.notes.present?
 
       #can filter down to manually entered, but if not checked all records returned
       conditions[:manually_entered] = search_terms.manually_entered if search_terms.manually_entered

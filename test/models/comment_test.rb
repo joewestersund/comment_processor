@@ -13,7 +13,7 @@
 #  attachment_url         :string
 #  summary                :text
 #  comment_status_type_id :integer
-#  status_details         :text
+#  notes                  :text
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  attachment_name        :string

@@ -26,7 +26,7 @@
         <li><%=link_to cat.category_name, category_path(cat) %></li>
       <% end %></td></tr>
     <tr><td>Comment review status</td><td><%= @comment.comment_status_type.status_text if @comment.comment_status_type.present? %></td></tr>
-    <tr><td>Status details</td><td><%= @comment.status_details %></td></tr>
+    <tr><td>Notes</td><td class='trix-content'><%= @comment.notes %></td></tr>
   </tbody>
 </table>
 
