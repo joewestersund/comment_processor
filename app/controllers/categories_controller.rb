@@ -184,11 +184,11 @@ class CategoriesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
     def category_params
-      params.require(:category).permit(:category_name, :description, :response_text, :assigned_to_id, :category_status_type_id, :category_response_type_id ,:action_needed, :rule_change_made, :order_in_list)
+      params.require(:category).permit(:category_name, :description, :response_text, :assigned_to_id, :category_status_type_id, :category_response_type_id ,:action_needed, :rule_change_made, :order_in_list, :notes, :text_from_comments)
     end
 
     def filter_params
-      params.permit(:category_name, :description, :response_text, :assigned_to_id, :category_status_type_id, :category_response_type_id, :action_needed, :rule_change_made)
+      params.permit(:category_name, :description, :response_text, :assigned_to_id, :category_status_type_id, :category_response_type_id, :action_needed, :rule_change_made, :notes, :text_from_comments)
     end
 
     def get_conditions
@@ -200,6 +200,9 @@ class CategoriesController < ApplicationController
 
         conditions[:category_name] = "%#{search_terms.category_name}%" if search_terms.category_name.present?
         conditions_string << "category_name ILIKE :category_name" if search_terms.category_name.present?
+
+        conditions[:text_from_comments] = "%#{search_terms.text_from_comments}%" if search_terms.text_from_comments.present?
+        conditions_string << "text_from_comments ILIKE :text_from_comments" if search_terms.text_from_comments.present?
 
         conditions[:description] = "%#{search_terms.description}%" if search_terms.description.present?
         conditions_string << "description ILIKE :description" if search_terms.description.present?
@@ -222,6 +225,9 @@ class CategoriesController < ApplicationController
 
         conditions[:action_needed] = "%#{search_terms.action_needed}%" if search_terms.action_needed.present?
         conditions_string << "action_needed ILIKE :action_needed" if search_terms.action_needed.present?
+
+        conditions[:notes] = "%#{search_terms.notes}%" if search_terms.notes.present?
+        conditions_string << "notes ILIKE :notes" if search_terms.notes.present?
 
         #no filter on order_in_list.
 

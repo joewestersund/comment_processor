@@ -53,6 +53,7 @@ gem 'ruby_odata'
 
 gem 'will_paginate', '~> 3.1.0'
 
+gem 'trix'
 
 #for export to excel
 gem 'rubyzip', '>= 1.2.1'

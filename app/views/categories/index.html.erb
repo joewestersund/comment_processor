@@ -19,6 +19,10 @@
         <%= text_field_tag :category_name, params[:category_name] %>
       </div>
       <div class="field">
+        <%= label_tag :text_from_comments  %>
+        <%= text_field_tag :text_from_comments, params[:text_from_comments] %>
+      </div>
+      <div class="field">
         <%= label_tag :description  %>
         <%= text_field_tag :description, params[:description] %>
       </div>
@@ -45,6 +49,10 @@
       <div class="field">
         <%= label_tag :action_needed  %>
         <%= text_field_tag :action_needed, params[:action_needed] %>
+      </div>
+      <div class="field">
+        <%= label_tag :notes  %>
+        <%= text_field_tag :notes, params[:notes] %>
       </div>
       <div class="actions">
         <%= submit_tag "Search" %>

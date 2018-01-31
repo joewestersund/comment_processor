@@ -12,5 +12,6 @@
  *= require jquery-ui
  *= require bootstrap-multiselect
  *= require bootstrap-select
+ *= require trix
  *= require_tree .
  */

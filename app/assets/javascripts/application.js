@@ -20,7 +20,7 @@
 //= require bootstrap-select
 //= require bootstrap/alert
 //= require bootstrap/dropdown
-
+//= require trix
 //= require_tree .
 
 
