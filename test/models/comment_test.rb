@@ -25,7 +25,20 @@
 require 'test_helper'
 
 class CommentTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+
+  test "displays name even if no email address" do
+    comment = Comment.new(first_name: 'Joe', last_name: 'Westersund', comment_text: 'test')
+    assert comment.name_and_email == 'Joe Westersund'
+  end
+
+  test "displays email even if no name" do
+    comment = Comment.new(email: 'test@test.com', comment_text: 'test')
+    assert comment.name_and_email == '<test@test.com>'
+  end
+
+  test "displays name and email" do
+    comment = Comment.new(first_name: 'Joe', email: 'test@test.com', comment_text: 'test')
+    assert comment.name_and_email == 'Joe <test@test.com>'
+  end
+
 end

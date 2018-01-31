@@ -10,98 +10,98 @@
       <schema id="2" parent="1" name="public">
         <object-id>2200</object-id>
         <comment>standard public schema</comment>
-        <introspection-state-number>20680</introspection-state-number>
-        <introspection-timestamp>2018-01-23.07:55:24.236</introspection-timestamp>
+        <introspection-state-number>28360</introspection-state-number>
+        <introspection-timestamp>2018-01-30.14:36:43.757</introspection-timestamp>
       </schema>
       <sequence id="3" parent="2" name="categories_id_seq">
-        <object-id>39884</object-id>
-        <state-number>20655</state-number>
+        <object-id>40275</object-id>
+        <state-number>28335</state-number>
       </sequence>
       <sequence id="4" parent="2" name="category_response_types_id_seq">
-        <object-id>39900</object-id>
-        <state-number>20659</state-number>
+        <object-id>40291</object-id>
+        <state-number>28339</state-number>
       </sequence>
       <sequence id="5" parent="2" name="category_status_types_id_seq">
-        <object-id>39911</object-id>
-        <state-number>20660</state-number>
+        <object-id>40302</object-id>
+        <state-number>28340</state-number>
       </sequence>
       <sequence id="6" parent="2" name="change_log_entries_id_seq">
-        <object-id>39922</object-id>
-        <state-number>20661</state-number>
+        <object-id>40313</object-id>
+        <state-number>28341</state-number>
       </sequence>
       <sequence id="7" parent="2" name="comment_status_types_id_seq">
-        <object-id>39937</object-id>
-        <state-number>20666</state-number>
+        <object-id>40328</object-id>
+        <state-number>28346</state-number>
       </sequence>
       <sequence id="8" parent="2" name="comments_id_seq">
-        <object-id>39948</object-id>
-        <state-number>20667</state-number>
+        <object-id>40339</object-id>
+        <state-number>28347</state-number>
       </sequence>
       <sequence id="9" parent="2" name="users_id_seq">
-        <object-id>39960</object-id>
-        <state-number>20669</state-number>
+        <object-id>40351</object-id>
+        <state-number>28349</state-number>
       </sequence>
       <table id="10" parent="2" name="ar_internal_metadata">
-        <object-id>40014</object-id>
-        <state-number>20680</state-number>
+        <object-id>40405</object-id>
+        <state-number>28360</state-number>
       </table>
       <table id="11" parent="2" name="categories">
-        <object-id>39886</object-id>
-        <state-number>20673</state-number>
+        <object-id>40277</object-id>
+        <state-number>28353</state-number>
       </table>
       <table id="12" parent="2" name="categories_comments">
-        <object-id>39897</object-id>
-        <state-number>20658</state-number>
+        <object-id>40288</object-id>
+        <state-number>28338</state-number>
       </table>
       <table id="13" parent="2" name="category_response_types">
-        <object-id>39902</object-id>
-        <state-number>20670</state-number>
+        <object-id>40293</object-id>
+        <state-number>28350</state-number>
       </table>
       <table id="14" parent="2" name="category_status_types">
-        <object-id>39913</object-id>
-        <state-number>20671</state-number>
+        <object-id>40304</object-id>
+        <state-number>28351</state-number>
       </table>
       <table id="15" parent="2" name="change_log_entries">
-        <object-id>39924</object-id>
-        <state-number>20675</state-number>
+        <object-id>40315</object-id>
+        <state-number>28355</state-number>
       </table>
       <table id="16" parent="2" name="comment_status_types">
-        <object-id>39939</object-id>
-        <state-number>20676</state-number>
+        <object-id>40330</object-id>
+        <state-number>28356</state-number>
       </table>
       <table id="17" parent="2" name="comments">
-        <object-id>39950</object-id>
-        <state-number>20676</state-number>
+        <object-id>40341</object-id>
+        <state-number>28356</state-number>
       </table>
       <table id="18" parent="2" name="schema_migrations">
-        <object-id>40006</object-id>
-        <state-number>20677</state-number>
+        <object-id>40397</object-id>
+        <state-number>28357</state-number>
       </table>
       <table id="19" parent="2" name="users">
-        <object-id>39962</object-id>
-        <state-number>20675</state-number>
+        <object-id>40353</object-id>
+        <state-number>28355</state-number>
       </table>
       <column id="20" parent="10" name="key">
-        <state-number>20680</state-number>
+        <state-number>28360</state-number>
         <mandatory>1</mandatory>
         <data-type>varchar</data-type>
       </column>
       <column id="21" parent="10" name="value">
-        <state-number>20680</state-number>
+        <state-number>28360</state-number>
         <data-type>varchar</data-type>
       </column>
       <column id="22" parent="10" name="created_at">
-        <state-number>20680</state-number>
+        <state-number>28360</state-number>
         <mandatory>1</mandatory>
         <data-type>timestamp</data-type>
       </column>
       <column id="23" parent="10" name="updated_at">
-        <state-number>20680</state-number>
+        <state-number>28360</state-number>
         <mandatory>1</mandatory>
         <data-type>timestamp</data-type>
       </column>
       <index id="24" parent="10" name="ar_internal_metadata_pkey">
-        <object-id>40020</object-id>
+        <object-id>40411</object-id>
         <columns>key</columns>
         <desc-columns></desc-columns>
         <unique>1</unique>
@@ -112,71 +112,71 @@
         <primary>1</primary>
       </key>
       <column id="26" parent="11" name="id">
-        <state-number>20655</state-number>
+        <state-number>28335</state-number>
         <mandatory>1</mandatory>
         <data-type>bigint</data-type>
         <default-expression>nextval(&apos;categories_id_seq&apos;::regclass)</default-expression>
       </column>
       <column id="27" parent="11" name="category_name">
-        <state-number>20655</state-number>
+        <state-number>28335</state-number>
         <data-type>text</data-type>
       </column>
       <column id="28" parent="11" name="description">
-        <state-number>20655</state-number>
+        <state-number>28335</state-number>
         <data-type>text</data-type>
       </column>
       <column id="29" parent="11" name="response_text">
-        <state-number>20655</state-number>
+        <state-number>28335</state-number>
         <data-type>text</data-type>
       </column>
       <column id="30" parent="11" name="assigned_to_id">
-        <state-number>20655</state-number>
+        <state-number>28335</state-number>
         <data-type>integer</data-type>
       </column>
       <column id="31" parent="11" name="category_status_type_id">
-        <state-number>20655</state-number>
+        <state-number>28335</state-number>
         <data-type>integer</data-type>
       </column>
       <column id="32" parent="11" name="action_needed">
-        <state-number>20655</state-number>
+        <state-number>28335</state-number>
         <data-type>text</data-type>
       </column>
       <column id="33" parent="11" name="created_at">
-        <state-number>20655</state-number>
+        <state-number>28335</state-number>
         <mandatory>1</mandatory>
         <data-type>timestamp</data-type>
       </column>
       <column id="34" parent="11" name="updated_at">
-        <state-number>20655</state-number>
+        <state-number>28335</state-number>
         <mandatory>1</mandatory>
         <data-type>timestamp</data-type>
       </column>
       <column id="35" parent="11" name="order_in_list">
-        <state-number>20655</state-number>
+        <state-number>28335</state-number>
         <data-type>integer</data-type>
       </column>
       <column id="36" parent="11" name="rule_change_made">
-        <state-number>20655</state-number>
+        <state-number>28335</state-number>
         <data-type>boolean</data-type>
       </column>
       <column id="37" parent="11" name="category_response_type_id">
-        <state-number>20655</state-number>
+        <state-number>28335</state-number>
         <data-type>integer</data-type>
       </column>
       <index id="38" parent="11" name="categories_pkey">
-        <object-id>39893</object-id>
+        <object-id>40284</object-id>
         <columns>id</columns>
         <desc-columns></desc-columns>
         <unique>1</unique>
       </index>
       <index id="39" parent="11" name="index_categories_on_lowercase_category_name">
-        <object-id>39895</object-id>
+        <object-id>40286</object-id>
         <columns>#0</columns>
         <desc-columns></desc-columns>
         <unique>1</unique>
       </index>
       <index id="40" parent="11" name="index_categories_on_order_in_list">
-        <object-id>39896</object-id>
+        <object-id>40287</object-id>
         <columns>order_in_list</columns>
         <desc-columns></desc-columns>
       </index>
@@ -204,41 +204,41 @@
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
       <column id="45" parent="12" name="comment_id">
-        <state-number>20658</state-number>
+        <state-number>28338</state-number>
         <mandatory>1</mandatory>
         <data-type>bigint</data-type>
       </column>
       <column id="46" parent="12" name="category_id">
-        <state-number>20658</state-number>
+        <state-number>28338</state-number>
         <mandatory>1</mandatory>
         <data-type>bigint</data-type>
       </column>
       <column id="47" parent="13" name="id">
-        <state-number>20659</state-number>
+        <state-number>28339</state-number>
         <mandatory>1</mandatory>
         <data-type>bigint</data-type>
         <default-expression>nextval(&apos;category_response_types_id_seq&apos;::regclass)</default-expression>
       </column>
       <column id="48" parent="13" name="response_text">
-        <state-number>20659</state-number>
+        <state-number>28339</state-number>
         <data-type>varchar</data-type>
       </column>
       <column id="49" parent="13" name="order_in_list">
-        <state-number>20659</state-number>
+        <state-number>28339</state-number>
         <data-type>integer</data-type>
       </column>
       <column id="50" parent="13" name="created_at">
-        <state-number>20659</state-number>
+        <state-number>28339</state-number>
         <mandatory>1</mandatory>
         <data-type>timestamp</data-type>
       </column>
       <column id="51" parent="13" name="updated_at">
-        <state-number>20659</state-number>
+        <state-number>28339</state-number>
         <mandatory>1</mandatory>
         <data-type>timestamp</data-type>
       </column>
       <index id="52" parent="13" name="category_response_types_pkey">
-        <object-id>39909</object-id>
+        <object-id>40300</object-id>
         <columns>id</columns>
         <desc-columns></desc-columns>
         <unique>1</unique>
@@ -249,31 +249,31 @@
         <primary>1</primary>
       </key>
       <column id="54" parent="14" name="id">
-        <state-number>20660</state-number>
+        <state-number>28340</state-number>
         <mandatory>1</mandatory>
         <data-type>bigint</data-type>
         <default-expression>nextval(&apos;category_status_types_id_seq&apos;::regclass)</default-expression>
       </column>
       <column id="55" parent="14" name="status_text">
-        <state-number>20660</state-number>
+        <state-number>28340</state-number>
         <data-type>varchar</data-type>
       </column>
       <column id="56" parent="14" name="order_in_list">
-        <state-number>20660</state-number>
+        <state-number>28340</state-number>
         <data-type>integer</data-type>
       </column>
       <column id="57" parent="14" name="created_at">
-        <state-number>20660</state-number>
+        <state-number>28340</state-number>
         <mandatory>1</mandatory>
         <data-type>timestamp</data-type>
       </column>
       <column id="58" parent="14" name="updated_at">
-        <state-number>20660</state-number>
+        <state-number>28340</state-number>
         <mandatory>1</mandatory>
         <data-type>timestamp</data-type>
       </column>
       <index id="59" parent="14" name="category_status_types_pkey">
-        <object-id>39920</object-id>
+        <object-id>40311</object-id>
         <columns>id</columns>
         <desc-columns></desc-columns>
         <unique>1</unique>
@@ -284,68 +284,70 @@
         <primary>1</primary>
       </key>
       <column id="61" parent="15" name="id">
-        <state-number>20661</state-number>
+        <state-number>28341</state-number>
         <mandatory>1</mandatory>
         <data-type>bigint</data-type>
         <default-expression>nextval(&apos;change_log_entries_id_seq&apos;::regclass)</default-expression>
       </column>
       <column id="62" parent="15" name="description">
-        <state-number>20661</state-number>
+        <state-number>28341</state-number>
         <data-type>text</data-type>
       </column>
       <column id="63" parent="15" name="comment_id">
-        <state-number>20661</state-number>
+        <state-number>28341</state-number>
         <data-type>integer</data-type>
       </column>
       <column id="64" parent="15" name="category_id">
-        <state-number>20661</state-number>
+        <state-number>28341</state-number>
         <data-type>integer</data-type>
       </column>
       <column id="65" parent="15" name="user_id">
-        <state-number>20661</state-number>
+        <state-number>28341</state-number>
         <data-type>integer</data-type>
       </column>
       <column id="66" parent="15" name="created_at">
-        <state-number>20661</state-number>
+        <state-number>28341</state-number>
         <mandatory>1</mandatory>
         <data-type>timestamp</data-type>
       </column>
       <column id="67" parent="15" name="updated_at">
-        <state-number>20661</state-number>
+        <state-number>28341</state-number>
         <mandatory>1</mandatory>
         <data-type>timestamp</data-type>
       </column>
       <column id="68" parent="15" name="action_type">
-        <state-number>20661</state-number>
+        <state-number>28341</state-number>
         <data-type>varchar</data-type>
       </column>
       <column id="69" parent="15" name="object_type">
-        <state-number>20661</state-number>
+        <state-number>28341</state-number>
         <data-type>varchar</data-type>
       </column>
       <index id="70" parent="15" name="change_log_entries_pkey">
-        <object-id>39931</object-id>
+        <object-id>40322</object-id>
         <columns>id</columns>
         <desc-columns></desc-columns>
         <unique>1</unique>
       </index>
-      <index id="71" parent="15" name="index_change_log_entries_on_comment_id">
-        <object-id>39934</object-id>
-        <columns>comment_id</columns>
+      <index id="71" parent="15" name="index_change_log_entries_on_comment_id_and_created_at">
+        <object-id>40325</object-id>
+        <columns>comment_id
+created_at</columns>
         <desc-columns></desc-columns>
       </index>
-      <index id="72" parent="15" name="index_change_log_entries_on_category_id">
-        <object-id>39933</object-id>
-        <columns>category_id</columns>
+      <index id="72" parent="15" name="index_change_log_entries_on_category_id_and_created_at">
+        <object-id>40324</object-id>
+        <columns>category_id
+created_at</columns>
         <desc-columns></desc-columns>
       </index>
       <index id="73" parent="15" name="index_change_log_entries_on_user_id">
-        <object-id>39936</object-id>
+        <object-id>40327</object-id>
         <columns>user_id</columns>
         <desc-columns></desc-columns>
       </index>
       <index id="74" parent="15" name="index_change_log_entries_on_created_at">
-        <object-id>39935</object-id>
+        <object-id>40326</object-id>
         <columns>created_at</columns>
         <desc-columns></desc-columns>
       </index>
@@ -373,31 +375,31 @@
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
       <column id="79" parent="16" name="id">
-        <state-number>20666</state-number>
+        <state-number>28346</state-number>
         <mandatory>1</mandatory>
         <data-type>bigint</data-type>
         <default-expression>nextval(&apos;comment_status_types_id_seq&apos;::regclass)</default-expression>
       </column>
       <column id="80" parent="16" name="status_text">
-        <state-number>20666</state-number>
+        <state-number>28346</state-number>
         <data-type>varchar</data-type>
       </column>
       <column id="81" parent="16" name="order_in_list">
-        <state-number>20666</state-number>
+        <state-number>28346</state-number>
         <data-type>integer</data-type>
       </column>
       <column id="82" parent="16" name="created_at">
-        <state-number>20666</state-number>
+        <state-number>28346</state-number>
         <mandatory>1</mandatory>
         <data-type>timestamp</data-type>
       </column>
       <column id="83" parent="16" name="updated_at">
-        <state-number>20666</state-number>
+        <state-number>28346</state-number>
         <mandatory>1</mandatory>
         <data-type>timestamp</data-type>
       </column>
       <index id="84" parent="16" name="comment_status_types_pkey">
-        <object-id>39946</object-id>
+        <object-id>40337</object-id>
         <columns>id</columns>
         <desc-columns></desc-columns>
         <unique>1</unique>
@@ -408,89 +410,89 @@
         <primary>1</primary>
       </key>
       <column id="86" parent="17" name="id">
-        <state-number>20667</state-number>
+        <state-number>28347</state-number>
         <mandatory>1</mandatory>
         <data-type>bigint</data-type>
         <default-expression>nextval(&apos;comments_id_seq&apos;::regclass)</default-expression>
       </column>
       <column id="87" parent="17" name="source_id">
-        <state-number>20667</state-number>
+        <state-number>28347</state-number>
         <data-type>integer</data-type>
       </column>
       <column id="88" parent="17" name="first_name">
-        <state-number>20667</state-number>
+        <state-number>28347</state-number>
         <data-type>varchar</data-type>
       </column>
       <column id="89" parent="17" name="last_name">
-        <state-number>20667</state-number>
+        <state-number>28347</state-number>
         <data-type>varchar</data-type>
       </column>
       <column id="90" parent="17" name="email">
-        <state-number>20667</state-number>
+        <state-number>28347</state-number>
         <data-type>varchar</data-type>
       </column>
       <column id="91" parent="17" name="organization">
-        <state-number>20667</state-number>
+        <state-number>28347</state-number>
         <data-type>varchar</data-type>
       </column>
       <column id="92" parent="17" name="state">
-        <state-number>20667</state-number>
+        <state-number>28347</state-number>
         <data-type>varchar</data-type>
       </column>
       <column id="93" parent="17" name="comment_text">
-        <state-number>20667</state-number>
+        <state-number>28347</state-number>
         <data-type>text</data-type>
       </column>
       <column id="94" parent="17" name="attachment_url">
-        <state-number>20667</state-number>
+        <state-number>28347</state-number>
         <data-type>varchar</data-type>
       </column>
       <column id="95" parent="17" name="summary">
-        <state-number>20667</state-number>
+        <state-number>28347</state-number>
         <data-type>text</data-type>
       </column>
       <column id="96" parent="17" name="comment_status_type_id">
-        <state-number>20667</state-number>
+        <state-number>28347</state-number>
         <data-type>integer</data-type>
       </column>
       <column id="97" parent="17" name="status_details">
-        <state-number>20667</state-number>
+        <state-number>28347</state-number>
         <data-type>text</data-type>
       </column>
       <column id="98" parent="17" name="created_at">
-        <state-number>20667</state-number>
+        <state-number>28347</state-number>
         <mandatory>1</mandatory>
         <data-type>timestamp</data-type>
       </column>
       <column id="99" parent="17" name="updated_at">
-        <state-number>20667</state-number>
+        <state-number>28347</state-number>
         <mandatory>1</mandatory>
         <data-type>timestamp</data-type>
       </column>
       <column id="100" parent="17" name="attachment_name">
-        <state-number>20667</state-number>
+        <state-number>28347</state-number>
         <data-type>varchar</data-type>
       </column>
       <column id="101" parent="17" name="manually_entered">
-        <state-number>20667</state-number>
+        <state-number>28347</state-number>
         <data-type>boolean</data-type>
       </column>
       <column id="102" parent="17" name="order_in_list">
-        <state-number>20667</state-number>
+        <state-number>28347</state-number>
         <data-type>integer</data-type>
       </column>
       <column id="103" parent="17" name="num_commenters">
-        <state-number>20667</state-number>
+        <state-number>28347</state-number>
         <data-type>integer</data-type>
       </column>
       <index id="104" parent="17" name="comments_pkey">
-        <object-id>39957</object-id>
+        <object-id>40348</object-id>
         <columns>id</columns>
         <desc-columns></desc-columns>
         <unique>1</unique>
       </index>
       <index id="105" parent="17" name="index_comments_on_order_in_list">
-        <object-id>39959</object-id>
+        <object-id>40350</object-id>
         <columns>order_in_list</columns>
         <desc-columns></desc-columns>
       </index>
@@ -506,12 +508,12 @@
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
       <column id="108" parent="18" name="version">
-        <state-number>20677</state-number>
+        <state-number>28357</state-number>
         <mandatory>1</mandatory>
         <data-type>varchar</data-type>
       </column>
       <index id="109" parent="18" name="schema_migrations_pkey">
-        <object-id>40012</object-id>
+        <object-id>40403</object-id>
         <columns>version</columns>
         <desc-columns></desc-columns>
         <unique>1</unique>
@@ -522,51 +524,51 @@
         <primary>1</primary>
       </key>
       <column id="111" parent="19" name="id">
-        <state-number>20669</state-number>
+        <state-number>28349</state-number>
         <mandatory>1</mandatory>
         <data-type>bigint</data-type>
         <default-expression>nextval(&apos;users_id_seq&apos;::regclass)</default-expression>
       </column>
       <column id="112" parent="19" name="name">
-        <state-number>20669</state-number>
+        <state-number>28349</state-number>
         <data-type>varchar</data-type>
       </column>
       <column id="113" parent="19" name="email">
-        <state-number>20669</state-number>
+        <state-number>28349</state-number>
         <data-type>varchar</data-type>
       </column>
       <column id="114" parent="19" name="password_digest">
-        <state-number>20669</state-number>
+        <state-number>28349</state-number>
         <data-type>varchar</data-type>
       </column>
       <column id="115" parent="19" name="created_at">
-        <state-number>20669</state-number>
+        <state-number>28349</state-number>
         <mandatory>1</mandatory>
         <data-type>timestamp</data-type>
       </column>
       <column id="116" parent="19" name="updated_at">
-        <state-number>20669</state-number>
+        <state-number>28349</state-number>
         <mandatory>1</mandatory>
         <data-type>timestamp</data-type>
       </column>
       <column id="117" parent="19" name="remember_token">
-        <state-number>20669</state-number>
+        <state-number>28349</state-number>
         <data-type>varchar</data-type>
       </column>
       <column id="118" parent="19" name="admin">
-        <state-number>20669</state-number>
+        <state-number>28349</state-number>
         <data-type>boolean</data-type>
       </column>
       <column id="119" parent="19" name="active">
-        <state-number>20669</state-number>
+        <state-number>28349</state-number>
         <data-type>boolean</data-type>
       </column>
       <column id="120" parent="19" name="read_only">
-        <state-number>20669</state-number>
+        <state-number>28349</state-number>
         <data-type>boolean</data-type>
       </column>
       <index id="121" parent="19" name="users_pkey">
-        <object-id>39969</object-id>
+        <object-id>40360</object-id>
         <columns>id</columns>
         <desc-columns></desc-columns>
         <unique>1</unique>
@@ -591,8 +593,8 @@
       <schema id="2" parent="1" name="public">
         <object-id>2200</object-id>
         <comment>standard public schema</comment>
-        <introspection-state-number>20643</introspection-state-number>
-        <introspection-timestamp>2018-01-23.07:55:24.240</introspection-timestamp>
+        <introspection-state-number>28332</introspection-state-number>
+        <introspection-timestamp>2018-01-30.14:36:43.759</introspection-timestamp>
       </schema>
       <schema id="3" parent="1" name="pg_catalog">
         <object-id>11</object-id>
@@ -1386,249 +1388,261 @@
         <desc-columns></desc-columns>
         <unique>1</unique>
       </index>
-      <index id="182" parent="20" name="index_change_log_entries_on_comment_id">
+      <index id="182" parent="20" name="index_change_log_entries_on_comment_id_and_created_at">
+        <object-id>40272</object-id>
+        <columns>comment_id
+created_at</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="183" parent="20" name="index_change_log_entries_on_comment_id">
         <object-id>39840</object-id>
         <columns>comment_id</columns>
         <desc-columns></desc-columns>
       </index>
-      <index id="183" parent="20" name="index_change_log_entries_on_category_id">
+      <index id="184" parent="20" name="index_change_log_entries_on_category_id_and_created_at">
+        <object-id>40273</object-id>
+        <columns>category_id
+created_at</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="185" parent="20" name="index_change_log_entries_on_category_id">
         <object-id>39841</object-id>
         <columns>category_id</columns>
         <desc-columns></desc-columns>
       </index>
-      <index id="184" parent="20" name="index_change_log_entries_on_user_id">
+      <index id="186" parent="20" name="index_change_log_entries_on_user_id">
         <object-id>39842</object-id>
         <columns>user_id</columns>
         <desc-columns></desc-columns>
       </index>
-      <index id="185" parent="20" name="index_change_log_entries_on_created_at">
+      <index id="187" parent="20" name="index_change_log_entries_on_created_at">
         <object-id>39843</object-id>
         <columns>created_at</columns>
         <desc-columns></desc-columns>
       </index>
-      <key id="186" parent="20" name="change_log_entries_pkey">
+      <key id="188" parent="20" name="change_log_entries_pkey">
         <columns>id</columns>
         <underlying-index>change_log_entries_pkey</underlying-index>
         <primary>1</primary>
       </key>
-      <foreign-key id="187" parent="20" name="fk_rails_0402ddcce0">
+      <foreign-key id="189" parent="20" name="fk_rails_0402ddcce0">
         <columns>comment_id</columns>
         <ref-key>~.comments.comments_pkey</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="188" parent="20" name="fk_rails_16b70c40f7">
+      <foreign-key id="190" parent="20" name="fk_rails_16b70c40f7">
         <columns>category_id</columns>
         <ref-key>~.categories.categories_pkey</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="189" parent="20" name="fk_rails_4fae61cc70">
+      <foreign-key id="191" parent="20" name="fk_rails_4fae61cc70">
         <columns>user_id</columns>
         <ref-key>~.users.users_pkey</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="190" parent="21" name="id">
+      <column id="192" parent="21" name="id">
         <state-number>10286</state-number>
         <mandatory>1</mandatory>
         <data-type>bigint</data-type>
         <default-expression>nextval(&apos;comment_status_types_id_seq&apos;::regclass)</default-expression>
       </column>
-      <column id="191" parent="21" name="status_text">
+      <column id="193" parent="21" name="status_text">
         <state-number>10286</state-number>
         <data-type>varchar</data-type>
       </column>
-      <column id="192" parent="21" name="order_in_list">
+      <column id="194" parent="21" name="order_in_list">
         <state-number>10286</state-number>
         <data-type>integer</data-type>
       </column>
-      <column id="193" parent="21" name="created_at">
+      <column id="195" parent="21" name="created_at">
         <state-number>10286</state-number>
         <mandatory>1</mandatory>
         <data-type>timestamp</data-type>
       </column>
-      <column id="194" parent="21" name="updated_at">
+      <column id="196" parent="21" name="updated_at">
         <state-number>10286</state-number>
         <mandatory>1</mandatory>
         <data-type>timestamp</data-type>
       </column>
-      <index id="195" parent="21" name="comment_status_types_pkey">
+      <index id="197" parent="21" name="comment_status_types_pkey">
         <object-id>37078</object-id>
         <columns>id</columns>
         <desc-columns></desc-columns>
         <unique>1</unique>
       </index>
-      <key id="196" parent="21" name="comment_status_types_pkey">
+      <key id="198" parent="21" name="comment_status_types_pkey">
         <columns>id</columns>
         <underlying-index>comment_status_types_pkey</underlying-index>
         <primary>1</primary>
       </key>
-      <column id="197" parent="22" name="id">
+      <column id="199" parent="22" name="id">
         <state-number>10278</state-number>
         <mandatory>1</mandatory>
         <data-type>bigint</data-type>
         <default-expression>nextval(&apos;comments_id_seq&apos;::regclass)</default-expression>
       </column>
-      <column id="198" parent="22" name="source_id">
+      <column id="200" parent="22" name="source_id">
         <state-number>10278</state-number>
         <data-type>integer</data-type>
       </column>
-      <column id="199" parent="22" name="first_name">
+      <column id="201" parent="22" name="first_name">
         <state-number>10278</state-number>
         <data-type>varchar</data-type>
       </column>
-      <column id="200" parent="22" name="last_name">
+      <column id="202" parent="22" name="last_name">
         <state-number>10278</state-number>
         <data-type>varchar</data-type>
       </column>
-      <column id="201" parent="22" name="email">
+      <column id="203" parent="22" name="email">
         <state-number>10278</state-number>
         <data-type>varchar</data-type>
       </column>
-      <column id="202" parent="22" name="organization">
+      <column id="204" parent="22" name="organization">
         <state-number>10278</state-number>
         <data-type>varchar</data-type>
       </column>
-      <column id="203" parent="22" name="state">
+      <column id="205" parent="22" name="state">
         <state-number>10278</state-number>
         <data-type>varchar</data-type>
       </column>
-      <column id="204" parent="22" name="comment_text">
+      <column id="206" parent="22" name="comment_text">
         <state-number>19946</state-number>
         <data-type>text</data-type>
       </column>
-      <column id="205" parent="22" name="attachment_url">
+      <column id="207" parent="22" name="attachment_url">
         <state-number>10278</state-number>
         <data-type>varchar</data-type>
       </column>
-      <column id="206" parent="22" name="summary">
+      <column id="208" parent="22" name="summary">
         <state-number>19946</state-number>
         <data-type>text</data-type>
       </column>
-      <column id="207" parent="22" name="comment_status_type_id">
+      <column id="209" parent="22" name="comment_status_type_id">
         <state-number>10290</state-number>
         <data-type>integer</data-type>
       </column>
-      <column id="208" parent="22" name="status_details">
+      <column id="210" parent="22" name="status_details">
         <state-number>19946</state-number>
         <data-type>text</data-type>
       </column>
-      <column id="209" parent="22" name="created_at">
+      <column id="211" parent="22" name="created_at">
         <state-number>10278</state-number>
         <mandatory>1</mandatory>
         <data-type>timestamp</data-type>
       </column>
-      <column id="210" parent="22" name="updated_at">
+      <column id="212" parent="22" name="updated_at">
         <state-number>10278</state-number>
         <mandatory>1</mandatory>
         <data-type>timestamp</data-type>
       </column>
-      <column id="211" parent="22" name="attachment_name">
+      <column id="213" parent="22" name="attachment_name">
         <state-number>10289</state-number>
         <data-type>varchar</data-type>
       </column>
-      <column id="212" parent="22" name="manually_entered">
+      <column id="214" parent="22" name="manually_entered">
         <state-number>10615</state-number>
         <data-type>boolean</data-type>
       </column>
-      <column id="213" parent="22" name="order_in_list">
+      <column id="215" parent="22" name="order_in_list">
         <state-number>10737</state-number>
         <data-type>integer</data-type>
       </column>
-      <column id="214" parent="22" name="num_commenters">
+      <column id="216" parent="22" name="num_commenters">
         <state-number>12037</state-number>
         <data-type>integer</data-type>
       </column>
-      <index id="215" parent="22" name="comments_pkey">
+      <index id="217" parent="22" name="comments_pkey">
         <object-id>37045</object-id>
         <columns>id</columns>
         <desc-columns></desc-columns>
         <unique>1</unique>
       </index>
-      <index id="216" parent="22" name="index_comments_on_order_in_list">
+      <index id="218" parent="22" name="index_comments_on_order_in_list">
         <object-id>39567</object-id>
         <columns>order_in_list</columns>
         <desc-columns></desc-columns>
       </index>
-      <key id="217" parent="22" name="comments_pkey">
+      <key id="219" parent="22" name="comments_pkey">
         <columns>id</columns>
         <underlying-index>comments_pkey</underlying-index>
         <primary>1</primary>
       </key>
-      <foreign-key id="218" parent="22" name="fk_rails_763f01f171">
+      <foreign-key id="220" parent="22" name="fk_rails_763f01f171">
         <columns>comment_status_type_id</columns>
         <ref-key>~.comment_status_types.comment_status_types_pkey</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="219" parent="23" name="version">
+      <column id="221" parent="23" name="version">
         <state-number>10276</state-number>
         <mandatory>1</mandatory>
         <data-type>varchar</data-type>
       </column>
-      <index id="220" parent="23" name="schema_migrations_pkey">
+      <index id="222" parent="23" name="schema_migrations_pkey">
         <object-id>37026</object-id>
         <columns>version</columns>
         <desc-columns></desc-columns>
         <unique>1</unique>
       </index>
-      <key id="221" parent="23" name="schema_migrations_pkey">
+      <key id="223" parent="23" name="schema_migrations_pkey">
         <columns>version</columns>
         <underlying-index>schema_migrations_pkey</underlying-index>
         <primary>1</primary>
       </key>
-      <column id="222" parent="24" name="id">
+      <column id="224" parent="24" name="id">
         <state-number>10280</state-number>
         <mandatory>1</mandatory>
         <data-type>bigint</data-type>
         <default-expression>nextval(&apos;users_id_seq&apos;::regclass)</default-expression>
       </column>
-      <column id="223" parent="24" name="name">
+      <column id="225" parent="24" name="name">
         <state-number>10280</state-number>
         <data-type>varchar</data-type>
       </column>
-      <column id="224" parent="24" name="email">
+      <column id="226" parent="24" name="email">
         <state-number>10280</state-number>
         <data-type>varchar</data-type>
       </column>
-      <column id="225" parent="24" name="password_digest">
+      <column id="227" parent="24" name="password_digest">
         <state-number>10280</state-number>
         <data-type>varchar</data-type>
       </column>
-      <column id="226" parent="24" name="created_at">
+      <column id="228" parent="24" name="created_at">
         <state-number>10280</state-number>
         <mandatory>1</mandatory>
         <data-type>timestamp</data-type>
       </column>
-      <column id="227" parent="24" name="updated_at">
+      <column id="229" parent="24" name="updated_at">
         <state-number>10280</state-number>
         <mandatory>1</mandatory>
         <data-type>timestamp</data-type>
       </column>
-      <column id="228" parent="24" name="remember_token">
+      <column id="230" parent="24" name="remember_token">
         <state-number>10281</state-number>
         <data-type>varchar</data-type>
       </column>
-      <column id="229" parent="24" name="admin">
+      <column id="231" parent="24" name="admin">
         <state-number>10309</state-number>
         <data-type>boolean</data-type>
       </column>
-      <column id="230" parent="24" name="active">
+      <column id="232" parent="24" name="active">
         <state-number>19951</state-number>
         <data-type>boolean</data-type>
       </column>
-      <column id="231" parent="24" name="read_only">
+      <column id="233" parent="24" name="read_only">
         <state-number>19951</state-number>
         <data-type>boolean</data-type>
       </column>
-      <index id="232" parent="24" name="users_pkey">
+      <index id="234" parent="24" name="users_pkey">
         <object-id>37067</object-id>
         <columns>id</columns>
         <desc-columns></desc-columns>
         <unique>1</unique>
       </index>
-      <key id="233" parent="24" name="users_pkey">
+      <key id="235" parent="24" name="users_pkey">
         <columns>id</columns>
         <underlying-index>users_pkey</underlying-index>
         <primary>1</primary>

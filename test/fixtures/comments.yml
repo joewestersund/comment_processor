@@ -74,3 +74,20 @@ three:
   order_in_list: 3
   num_commenters: 1
   categories: two
+
+needs_cleaning:
+  id: 4
+  source_id: 4
+  first_name: MyString
+  last_name: MyString
+  email: MyString
+  organization: MyString
+  state: MyString
+  comment_text: consider this&amp;mdash; all California&amp;rsquo;s rules
+  attachment_url: MyString
+  summary: MyString
+  comment_status_type_id: 1
+  status_details: MyString
+  order_in_list: 4
+  num_commenters: 1
+  categories: two

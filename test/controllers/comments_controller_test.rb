@@ -52,6 +52,18 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to edit_comment_url(@comment)
   end
 
+  test "should clean comment" do
+    sign_user_out
+    sign_in_as users(:admin_user_1)
+
+    needs_cleaning = comments(:needs_cleaning)
+    assert_equal('consider this&amp;mdash; all California&amp;rsquo;s rules',needs_cleaning.comment_text)
+    put comments_do_cleanup_url
+    assert_redirected_to comments_url
+    needs_cleaning.reload #reload attributes from database
+    assert_equal("consider this- all California's rules",needs_cleaning.comment_text)
+  end
+
   test "should destroy comment" do
     assert_difference('Comment.count', -1) do
       assert_difference('ChangeLogEntry.count', 1) do #should write to log

@@ -58,7 +58,8 @@ class Comment < ApplicationRecord
 
   def name_and_email
     str = join_without_blanks([self.first_name,self.last_name], ' ')
-    str += " <#{self.email}>" if self.email.present?
+    str = join_without_blanks([str,"<#{self.email}>"], ' ') if self.email.present?
+    return str
   end
 
   def key_info

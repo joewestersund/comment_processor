@@ -57,11 +57,14 @@ module CommentsHelper
         c.first_name = entry.string_between_markers('<d:first_name>','</d:first_name>')
         c.last_name = entry.string_between_markers('<d:last_name>','</d:last_name>')
         c.email = entry.string_between_markers('<d:email>','</d:email>')
-        c.organization = entry.string_between_markers('<d:organization>','</d:organization>')
+
+        rough_organization_name = entry.string_between_markers('<d:organization>','</d:organization>')
+        c.organization = clean_text(rough_organization_name) #remove any escape characters
+
         c.state = entry.string_between_markers('<d:state>','</d:state>')
 
-        c.comment_text = entry.string_between_markers('<d:comment>','</d:comment>')
-        clean_comment_text(c) #remove any escape characters
+        rough_comment_text = entry.string_between_markers('<d:comment>','</d:comment>')
+        c.comment_text = clean_text(rough_comment_text) #remove any escape characters
 
         c.manually_entered = false #false because this is imported from DAS
         c.comment_status_type = default_comment_status_type
@@ -93,26 +96,37 @@ module CommentsHelper
     [
         ['&amp;acirc;&amp;euro;&amp;oelig;','"'],
         ['&amp;acirc;&amp;euro;&amp;#65533;','"'],
-        ['&amp;quot;','"'],
         ['&amp;acirc;&amp;euro;&amp;trade;',"'"],
         ['&amp;acirc;&amp;euro;&amp;tilde;',"'"],
-        ['&amp;amp;','&'],
         ['&amp;acirc;&amp;euro;&amp;cent;','-'],
         ['&amp;acirc;&amp;euro;&amp;rdquo;','-'],
         ['&amp;acirc;&amp;euro;&amp;ldquo;','-'],
+        ['&amp;acirc;&amp;euro;&amp;brvbar;',''],
+        ['&amp;Acirc;&amp;nbsp;',' '],
         ['&amp;iuml;&amp;fnof;&amp;frac14;','-'],
         ['&amp;Icirc;&amp;frac14;',''],
-        ['&amp;Acirc;&amp;nbsp;',' ']
+        ['&amp;Atilde;&amp;iexcl;','a'],
+        ['&amp;Atilde;&amp;sup3;','o'],
+        ['&amp;Atilde;&amp;ordm;','u'],
+        ['&amp;Atilde;&amp;plusmn;',''],
+        ['&amp;Atilde;&amp;copy;','e'],
+        ['&amp;Atilde;&amp;shy;','i'],
+        ['&amp;mdash;','-'],
+        ['&amp;rsquo;',"'"],
+        ['&amp;bull;','•'],
+        ['&amp;quot;','"'],
+        ['&amp;amp;','&'],
+        ['&amp;','&']
     ]
   end
 
-  def clean_comment_text(comment)
-    if comment.comment_text.present?
+  def clean_text(text)
+    if text.present?
       escape_characters_to_replace.each do |replace_strings|
-        comment.comment_text = comment.comment_text.gsub(replace_strings[0],replace_strings[1])
+        text = text.gsub(replace_strings[0],replace_strings[1])
       end
       #still need to save changes after this method.
-      comment.comment_text
+      return text
     end
   end
 
