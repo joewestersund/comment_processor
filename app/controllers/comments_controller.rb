@@ -234,7 +234,7 @@ class CommentsController < ApplicationController
       conditions_string << "comment_text ILIKE :comment_text" if search_terms.comment_text.present?
 
       # filter is for any attachment
-      conditions_string << "attachment_url IS NOT NULL" if (params[:has_attachment].present? && params[:has_attachment] == "on")
+      conditions_string << "attachment_url IS NOT NULL AND attachment_url <> ''" if (params[:has_attachment].present? && params[:has_attachment] == "on")
 
       conditions[:summary] = "%#{search_terms.summary}%" if search_terms.summary.present?
       conditions_string << "comments.summary ILIKE :summary" if search_terms.summary.present?
