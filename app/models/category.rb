@@ -14,6 +14,8 @@
 #  order_in_list             :integer
 #  rule_change_made          :boolean
 #  category_response_type_id :integer
+#  text_from_comments        :text
+#  notes                     :text
 #
 
 class Category < ApplicationRecord
