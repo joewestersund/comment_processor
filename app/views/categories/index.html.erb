@@ -88,7 +88,7 @@
         <td class="<%= highlight_empty_css(category.response_text)%>"><%= category.response_text.truncate(500) if category.response_text.present? %></td>
         <td class="<%= assigned_to_css(category.assigned_to_id) %>"><%= category.assigned_to_name %></td>
         <td class="<%= highlight_filled_css(category.action_needed)%>"><%= category.action_needed %></td>
-        <td class="trix-content"><%= raw(category.notes) %></td>
+        <td class="trix-content"><%= raw(category.notes.truncate(500)) if category.notes.present? %></td>
         <% if current_user.read_only? %>
           <td><%= link_to 'Show', category_path(category,@filter_querystring) %></td>
         <% else %>
