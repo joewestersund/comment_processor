@@ -5,8 +5,8 @@ class CommentsController < ApplicationController
   require 'csv'
 
   before_action :signed_in_user
-  before_action :admin_user, only: [:import, :do_import, :cleanup, :do_cleanup]
-  before_action :not_read_only_user, only: [:new, :edit, :create, :update, :destroy, :import, :do_import, :cleanup, :do_cleanup]
+  before_action :admin_user, only: [:new, :create, :import, :destroy, :do_import, :cleanup, :do_cleanup]
+  before_action :not_read_only_user, only: [:edit, :update]
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
   before_action :set_select_options, only: [:new, :edit, :index]
 
@@ -141,7 +141,7 @@ class CommentsController < ApplicationController
   def destroy
     current_comment_num = @comment.order_in_list
     #note: can't associate this change log entry with the comment object, because the comment is about to be destroyed.
-    save_change_log(current_user,{object_type: 'comment', action_type: 'delete', description: "deleted comment ID ##{@comment.id} from #{@comment.first_name} #{@comment.last_name}, '#{@comment.comment_text.truncate(1000)}'"})
+    save_change_log(current_user,{object_type: 'comment', action_type: 'delete', description: "deleted comment ID ##{@comment.id} from #{@comment.first_name} #{@comment.last_name}, '#{@comment.comment_text.truncate(1000) if @comment.comment_text.present?}'"})
     @comment.destroy
     handle_delete_of_order_in_list(Comment,current_comment_num)
     respond_to do |format|

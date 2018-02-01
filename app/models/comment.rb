@@ -40,8 +40,11 @@ class Comment < ApplicationRecord
   def self.excel_column_widths
     #create array of same length as csv_header, all containing the same initial value
     column_widths = Array.new(Comment.csv_header.length,:auto)
-    #set width of 'Comment Text' column to 100
-    column_widths[7] = 100
+
+    #set width of some columns
+    column_widths[Comment.csv_header.index('Comment Text')] = 100
+    column_widths[Comment.csv_header.index('Summary')] = 100
+    column_widths[Comment.csv_header.index('Notes')] = 100
 
     #return the array
     column_widths

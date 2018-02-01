@@ -25,12 +25,12 @@
         <%= glyphicon_link("glyphicon-wrench","Setup").html_safe%> <b class="caret"></b>
       </a>
       <ul class="dropdown-menu">
+        <li class="nav navbar-nav"><%= link_to "Clean Up Comment Text", comments_cleanup_path %></li>
         <li class="nav navbar-nav"><%= link_to "Comment Status Types", comment_status_types_path %></li>
         <li class="nav navbar-nav"><%= link_to "Category Status Types", category_status_types_path %></li>
         <li class="nav navbar-nav"><%= link_to "Category Response Types", category_response_types_path %></li>
-        <li class="nav navbar-nav"><%= link_to "Users", users_path %></li>
-        <li class="nav navbar-nav"><%= link_to "Clean Up Comment Text", comments_cleanup_path %></li>
         <li class="nav navbar-nav"><%= link_to "Renumber Categories", categories_renumber_path %></li>
+        <li class="nav navbar-nav"><%= link_to "Users", users_path %></li>
       </ul>
     </li>
   <% end %>

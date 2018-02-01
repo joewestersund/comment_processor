@@ -5,8 +5,10 @@
 <div class="links"><%= @total_categories %> categories identified</div>
 
 <div class="links">
-  <%= link_to 'New Category', new_category_path %>
-    | Download as <%= link_to "CSV", categories_path(@filter_querystring.merge({format: "csv"})) %>
+  <% unless current_user.read_only? %>
+    <%= link_to 'New Category', new_category_path %> |
+  <% end %>
+    Download as <%= link_to "CSV", categories_path(@filter_querystring.merge({format: "csv"})) %>
     or <%= link_to "XLSX", categories_path(@filter_querystring,format: "xlsx") %>
 </div>
 

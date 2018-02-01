@@ -36,9 +36,12 @@ class Category < ApplicationRecord
   def self.excel_column_widths
     #create array of same length as csv_header, all containing the same initial value
     column_widths = Array.new(Category.csv_header.length,:auto)
-    #set width of 'Description' and 'Response Text' columns to 100
-    column_widths[2] = 100
-    column_widths[3] = 100
+
+    #set column widths for some columns
+    column_widths[Category.csv_header.index('Description')] = 100
+    column_widths[Category.csv_header.index('Response Text')] = 100
+    column_widths[Category.csv_header.index('Text from Comments')] = 100
+    column_widths[Category.csv_header.index('Notes')] = 100
 
     #return the array
     column_widths

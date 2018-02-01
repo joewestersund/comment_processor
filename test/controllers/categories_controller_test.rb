@@ -50,7 +50,24 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to edit_category_url(@category)
   end
 
-  test "should renumber categories" do
+  test "non-admin can't renumber categories" do
+    assert_equal(1, Category.find(1).order_in_list)
+    assert_equal(2, Category.find(2).order_in_list)
+    assert_equal(3, Category.find(3).order_in_list)
+    assert_equal(4, Category.find(4).order_in_list)
+
+    put categories_renumber_url
+
+    assert_redirected_to welcome_url
+
+    assert_equal(1, Category.find(1).order_in_list)
+    assert_equal(2, Category.find(2).order_in_list)
+    assert_equal(3, Category.find(3).order_in_list)
+    assert_equal(4, Category.find(4).order_in_list)
+
+  end
+
+  test "admin can renumber categories" do
     sign_user_out
     sign_in_as users(:admin_user_1)
 

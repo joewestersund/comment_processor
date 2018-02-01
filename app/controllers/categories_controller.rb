@@ -4,7 +4,7 @@ class CategoriesController < ApplicationController
   require 'csv'
 
   before_action :signed_in_user
-  before_action :not_read_only_user, only: [:new, :edit, :create, :update, :destroy, :move_up, :move_down, :renumber, :do_renumber]
+  before_action :not_read_only_user, only: [:new, :edit, :create, :update, :destroy, :move_up, :move_down]
   before_action :admin_user, only: [:renumber, :do_renumber]
   before_action :set_category, only: [:show, :edit, :update, :destroy]
   before_action :set_select_options, only: [:new, :edit, :index]
