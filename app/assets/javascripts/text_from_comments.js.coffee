@@ -4,3 +4,4 @@ ready = ->
     $('.text-from-comments').toggleClass('hidden')
 
 $(document).on('turbolinks:load', ready)
+
