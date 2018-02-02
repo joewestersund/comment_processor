@@ -12,6 +12,11 @@
   <% end %>
 
   <% if comment.manually_entered && current_user.admin? %>
+
+    <div class="actions">
+      <%= form.submit "Save", class: "btn btn-large btn-primary" %>
+    </div>
+
     <div class="field">
       <%= form.label :first_name %>
       <%= form.text_field :first_name, id: :comment_first_name %>
@@ -73,6 +78,10 @@
         <tr><td>Attachment</td><td><%= if comment.attachment_name.present? then link_to comment.attachment_name.to_s, comment.attachment_url end %></td>
       </tbody>
     </table>
+
+    <div class="actions">
+      <%= form.submit "Save", class: "btn btn-large btn-primary" %>
+    </div>
   <% end  %>
 
   <div class="field">
