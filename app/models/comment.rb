@@ -56,7 +56,7 @@ class Comment < ApplicationRecord
 
     [self.order_in_list, self.source_id, self.first_name, self.last_name, self.email,
      self.organization, self.state, self.comment_text, self.attachment_name, self.attachment_url, self.manually_entered, self.num_commenters,
-     self.summary, status, self.notes, categories, self.id]
+     self.summary, status, remove_html(self.notes), categories, self.id]
   end
 
   def name_and_email

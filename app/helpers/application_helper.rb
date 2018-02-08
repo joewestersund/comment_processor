@@ -87,4 +87,9 @@ module ApplicationHelper
     array_of_strings.reject { |item| item.nil? || item.empty? }.join(join_string)
   end
 
+  def remove_html(string)
+    sanitizer = Rails::Html::FullSanitizer.new
+    sanitizer.sanitize(string)
+  end
+
 end

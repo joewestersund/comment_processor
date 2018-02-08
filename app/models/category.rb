@@ -77,7 +77,7 @@ class Category < ApplicationRecord
      self.assigned_to_id.present? ? self.assigned_to.name : '',
      self.category_status_type.present? ? self.category_status_type.status_text : '',
      self.action_needed, self.rule_change_made, self.comments.order(:source_id).collect{|com| com.order_in_list}.join(", "),
-     self.num_comments, self.num_commenters, self.id, self.text_from_comments, self.notes]
+     self.num_comments, self.num_commenters, self.id, remove_html(self.text_from_comments), remove_html(self.notes)]
   end
 
 end
