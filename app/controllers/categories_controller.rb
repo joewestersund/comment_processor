@@ -34,6 +34,7 @@ class CategoriesController < ApplicationController
         response.headers['Content-Disposition'] = 'attachment; filename="categories.xlsx"'
       }
       format.csv {
+        c = c.order(:order_in_list)
         stream_csv(c)
       }
     end
