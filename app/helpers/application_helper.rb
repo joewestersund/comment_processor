@@ -56,9 +56,8 @@ module ApplicationHelper
 
   def set_csv_file_headers(file_name)
     headers["Content-Type"] = "text/csv"
-    headers["Content-disposition"] = "attachment; filename=\"#{file_name}\""
+    headers["Content-disposition"] = "attachment; filename=#{file_name}"
   end
-
 
   def set_csv_streaming_headers
     #nginx doc: Setting this to "no" will allow unbuffered responses suitable for Comet and HTTP streaming applications
