@@ -1,6 +1,6 @@
-#wb = xlsx_package.workbook
-package = Axlsx::Package.new
-wb = package.workbook
+wb = xlsx_package.workbook
+#package = Axlsx::Package.new
+#wb = package.workbook
 #wb.use_shared_strings = true
 
 header_style = wb.styles.add_style alignment: {horizontal: :center, vertical: :center, wrap_text: true}, b: true, sz: 10, bg_color: "C0C0C0"
