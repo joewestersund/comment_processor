@@ -5,7 +5,7 @@
 <div class="next-previous">
   <div>
     Filter: <%= @filtered ? @filter_querystring : 'none' %>
-    <%= link_to 'Edit', comments_path(@filter_querystring) %>
+    | <%= link_to 'Back to Index', comments_path(@filter_querystring) %>
   </div>
 
   <div>

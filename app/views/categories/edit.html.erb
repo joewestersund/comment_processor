@@ -8,7 +8,7 @@
 <div class="next-previous">
   <div>
     Filter: <%= @filtered ? @filter_querystring : 'none' %>
-    <%= link_to 'Edit', categories_path(@filter_querystring) %>
+    | <%= link_to 'Back to Index', categories_path(@filter_querystring) %>
   </div>
 
   <div>
