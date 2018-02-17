@@ -22,7 +22,7 @@
     <tr><td>Attachment</td><td><%= if @comment.attachment_name.present? then link_to @comment.attachment_name.to_s, @comment.attachment_url end %></td>
     <tr><td>Number of commenters</td><td><%= @comment.num_commenters %></td></tr>
     <tr><td>Summary</td><td><%= @comment.summary %></td></tr>
-    <tr><td>Categories</td><td><% @comment.categories.each do |cat| %>
+    <tr><td>Categories</td><td><% @comment.categories.order('LOWER(category_name)').each do |cat| %>
         <li><%=link_to cat.category_name, category_path(cat) %></li>
       <% end %></td></tr>
     <tr><td>Comment review status</td><td><%= @comment.comment_status_type.status_text if @comment.comment_status_type.present? %></td></tr>
