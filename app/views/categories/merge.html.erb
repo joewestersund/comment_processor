@@ -1,0 +1,28 @@
+<% content_for :title, 'Merge Categories' %>
+
+<h1>Merge Categories</h1>
+
+<p>If two categories overlap, use this feature to merge one into another.</p>
+<p>Here's what that will do:</p>
+<ul>
+  <li>Any comments tagged to the 'from' category will be moved to the 'to' category</li>
+  <li>The text from comments, description, response text, action needed and notes
+    from the 'to' comment will be appended to the 'from' comment</li>
+  <li>The category name, response type, assigned to person, category review status and rule change made checkbox values
+    for the 'to' category will stay the same</li>
+  <li>The 'to' comment will be deleted (but a record of the deletion will be kept)</li>
+</ul>
+<p>You'll get a chance to see the changes before they are saved.</p>
+
+
+<%= form_tag(categories_preview_merge_path, method: "put") do %>
+  <div class="field">
+    <%= label_tag :from_category, "Merge from" %>
+    <%= select_tag :from_category_id, options_from_collection_for_select(@categories,:id,:category_name,params[:from_category_id]), { :include_blank => true, class: "selectpicker", "data-live-search" => "true" } %>
+  </div>
+  <div class="field">
+    <%= label_tag :to_category, "Merge into" %>
+    <%= select_tag :to_category_id, options_from_collection_for_select(@categories,:id,:category_name,params[:to_category_id]), { :include_blank => true, class: "selectpicker", "data-live-search" => "true" } %>
+  </div>
+  <%= submit_tag('Preview Merge', { class: 'btn btn-large btn-primary'})%>
+<% end %>

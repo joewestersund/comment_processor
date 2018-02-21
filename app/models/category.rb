@@ -80,4 +80,49 @@ class Category < ApplicationRecord
      self.num_comments, self.num_commenters, self.id, remove_html(self.text_from_comments).to_s.truncate(1000), remove_html(self.notes).to_s.truncate(1000)]
   end
 
+  def preview_merge(merge_from_category)
+    return merge_category_fields(merge_from_category,self.duplicate)
+  end
+
+  def duplicate
+    duplicate_copy = self.dup
+    duplicate_copy.comments << self.comments
+    duplicate_copy
+  end
+
+  private
+
+  def get_merged_text(current_text, text_to_add,delimiter,options={})
+    if text_to_add.to_s.empty?
+      current_text
+    elsif current_text.to_s.empty?
+      text_to_add
+    else
+      if options[:multiline] && options[:html]
+        "#{current_text}<br>#{delimiter}<br>#{text_to_add}"
+      elsif options[:multiline]
+        "#{current_text}\n#{delimiter}\n#{text_to_add}"
+      else
+        "#{current_text}#{delimiter}#{text_to_add}"
+      end
+    end
+  end
+
+  def merge_category_fields(from_category, to_category)
+    multiline_delimiter = "[merged from category '#{from_category.category_name}']"
+    short_delimiter = " | "
+
+    #copy over any new comments. Don't copy if a comment is already in to_category
+    to_category.comments << (from_category.comments - to_category.comments)
+
+    to_category.text_from_comments = get_merged_text(to_category.text_from_comments,from_category.text_from_comments,multiline_delimiter, {multiline:true, html:true})
+    to_category.description = get_merged_text(to_category.description,from_category.description,multiline_delimiter, {multiline:true})
+    to_category.response_text = get_merged_text(to_category.response_text,from_category.response_text,multiline_delimiter, {multiline:true})
+    to_category.action_needed = get_merged_text(to_category.action_needed,from_category.action_needed,short_delimiter)
+    to_category.notes = get_merged_text(to_category.notes,from_category.notes,multiline_delimiter, {multiline:true, html:true})
+
+    return to_category
+  end
+
+
 end

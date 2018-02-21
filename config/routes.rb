@@ -32,6 +32,11 @@ Rails.application.routes.draw do
 
   get 'categories/renumber', to: 'categories#renumber'
   put 'categories/renumber', to: 'categories#do_renumber', as: 'categories_do_renumber'
+  get 'categories/merge', to: 'categories#merge'
+  put 'categories/preview_merge', to: 'categories#preview_merge'
+  post 'categories/:id/merge/:from_category_id', to: 'categories#do_merge', as: 'categories_do_merge'
+  get 'categories/copy', to: 'categories#copy'
+  put 'categories/:id/copy', to: 'categories#do_copy'
   resources :categories
   post '/categories/:id/move_up', to: 'categories#move_up'
   post '/categories/:id/move_down', to: 'categories#move_down'

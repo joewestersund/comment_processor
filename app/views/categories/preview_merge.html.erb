@@ -1,0 +1,127 @@
+<% content_for :title, 'Preview Merge' %>
+
+<h1>Category Merge Preview</h1>
+
+<% categories_to_show = [{title:"From category- will be deleted after merge", category:@from_category},
+                         {title:"To category- Before merge", category:@to_category}]
+   categories_to_show.each do |cat_item|
+%>
+  <div>
+    <table class="show">
+      <tbody>
+      <tr><th colspan="2"><%=cat_item[:title]%></th></tr>
+      <tr><td>Comments associated with this category</td>
+        <td><% if cat_item[:category].comments.any? %>
+            <%= cat_item[:category].comments.count %>
+          <% else %>
+            none
+          <% end %>
+        </td>
+      </tr>
+      <tr><td>Category name</td><td><%= cat_item[:category].category_name %></td></tr>
+      <tr><td>Text from comments</td><td><%= raw(cat_item[:category].text_from_comments) %></td></tr>
+      <tr><td>Description</td><td><%= cat_item[:category].description %></td></tr>
+      <tr><td>Category response type</td><td><%= cat_item[:category].category_response_type.response_text if cat_item[:category].category_response_type.present? %></td>
+      <tr><td>Response text</td><td><%= cat_item[:category].response_text %></td>
+      <tr><td>Assigned to</td><td><%= cat_item[:category].assigned_to_name if cat_item[:category].assigned_to.present? %></td>
+      <tr><td>Category review status</td><td><%= cat_item[:category].category_status_type.status_text if cat_item[:category].category_status_type.present? %></td></tr>
+      <tr><td>Rule change made?</td><td><%= show_boolean_value(cat_item[:category].rule_change_made) %></td></tr>
+      <tr><td>Action needed</td><td><%= cat_item[:category].action_needed %></td>
+      <tr><td>Notes</td><td><%= raw(cat_item[:category].notes) %></td>
+      </tbody>
+    </table>
+  </div>
+<% end %>
+
+<div>
+  <table class="show">
+    <tbody>
+    <tr><th>Preview of merged category</th></tr>
+    <tr><td>
+      <%= form_with(model: @preview_of_merged_category, local: true, url: categories_do_merge_path(@to_category, @from_category )) do |form| %>
+
+        <% if @preview_of_merged_category.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@preview_of_merged_category.errors.count, "error") %> prohibited this category from being saved:</h2>
+
+            <ul>
+              <% @preview_of_merged_category.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+
+        <div class="field">
+          <% if @preview_of_merged_category.comments.any? %>
+            <%= "Comments associated with this category: #{@preview_of_merged_category.comments.size}" %>
+          <% else%>
+            Comments associated with this category: none
+          <% end %>
+        </div>
+
+        <div class="field">
+          <%= form.label :category_name %>
+          <%= form.text_field :category_name, id: :category_category_name, class:'long' %>
+        </div>
+
+        <div class="text-from-comments-box">
+          <button id="show_text_from_comments" class="text-from-comments-button">Show/Hide Text from associated comments</button>
+          <div class="text-from-comments hidden %>">
+            <div class="field">
+              <%= form.label :text_from_comments %>
+              <%= form.trix_editor :text_from_comments, id: :category_text_from_comments %>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <%= form.label :category_description %>
+          <%= form.text_area :description, id: :category_description, cols: 300, rows: 3, class: 'bigtextarea' %>
+        </div>
+
+        <div class="field">
+          <%= form.label :category_response_type, "DEQ/OHA response type" %>
+          <%= form.collection_select :category_response_type_id, @category_response_types, :id, :response_text, :selected => @preview_of_merged_category.category_response_type_id, include_blank: true  %>
+        </div>
+
+        <div class="field">
+          <%= form.label :response_text %>
+          <%= form.text_area :response_text, id: :category_response_text, cols: 300, rows: 7, class: 'bigtextarea' %>
+        </div>
+
+        <div class="field">
+          <%= form.label :assigned_to_id %>
+          <%= form.collection_select :assigned_to_id, @users, :id, :name, :selected => @preview_of_merged_category.assigned_to_id, include_blank: true  %>
+        </div>
+
+        <div class="field">
+          <%= form.label :category_review_status %>
+          <%= form.collection_select :category_status_type_id, @category_status_types, :id, :status_text, :selected => @preview_of_merged_category.category_status_type_id, prompt: true  %>
+        </div>
+
+        <div class="field">
+          <%= form.label :rule_change_made, "Rule change made?", title: "Checked if the draft rule language has been updated to include the suggested change." %>
+          <%= form.check_box :rule_change_made, id: :category_rule_change_made %>
+        </div>
+
+        <div class="field">
+          <%= form.label :action_needed %>
+          <%= form.text_field :action_needed, id: :category_action_needed, class:'long' %>
+        </div>
+
+        <div class="field">
+          <%= form.label :notes %>
+          <%= form.trix_editor :notes, id: :category_notes %>
+        </div>
+
+        <div class="actions">
+          <%= form.submit "Save Merged Category", class: "btn btn-large btn-primary" %>
+        </div>
+      <% end %>
+    </td></tr>
+    </tbody>
+  </table>
+</div>
+<%= link_to 'Back', categories_merge_path %>

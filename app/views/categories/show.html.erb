@@ -24,6 +24,7 @@
       </td>
     </tr>
     <tr><td>Category name</td><td><%= @category.category_name %></td></tr>
+    <tr><td>Text from comments</td><td><%= @category.text_from_comments %></td></tr>
     <tr><td>Description</td><td><%= @category.description %></td></tr>
     <tr><td>Category response type</td><td><%= @category.category_response_type.response_text if @category.category_response_type.present? %></td>
     <tr><td>Response text</td><td><%= @category.response_text %></td>

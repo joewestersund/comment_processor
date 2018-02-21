@@ -87,6 +87,55 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
 
   end
 
+  test "non-admin can't merge categories" do
+    action_needed_before = @category.action_needed
+    comments_before = @category.comments
+
+    assert_equal(action_needed_before, @category.action_needed)
+    category2 = categories(:two)
+
+    get categories_merge_url
+    assert_redirected_to welcome_url
+
+    put categories_preview_merge_url(to_category_id: @category, from_category_id: category2)
+    assert_redirected_to welcome_url
+
+    post categories_do_merge_url(@category, category2), params: { category: { action_needed: "#{@category.action_needed} plus some more", category_name: "#{@category.category_name} and more", assigned_to_id: @category.assigned_to_id, response_text: "#{@category.response_text} and more", category_status_type_id: @category.category_status_type_id, category_response_type_id: @category.category_response_type_id, description: @category.description, rule_change_made: @category.rule_change_made } }
+    assert_redirected_to welcome_url
+
+    @category.reload
+    assert_equal(action_needed_before, @category.action_needed)
+    assert_equal(comments_before, @category.comments)
+    assert_not_equal(nil, category2.reload)
+  end
+
+  test "admin can merge categories" do
+    sign_user_out
+    sign_in_as users(:admin_user_1)
+    category2 = categories(:two)
+
+    action_needed_before = @category.action_needed
+    comments_before = @category.comments
+    merged_comments = (category2.comments - @category.comments)
+    assert_equal(action_needed_before, @category.action_needed)
+
+    get categories_merge_url
+    assert_response :success
+
+    put categories_preview_merge_url(to_category_id: @category, from_category_id: category2)
+    assert_response :success
+
+    post categories_do_merge_url(@category, category2), params: { category: { action_needed: "#{@category.action_needed} plus some more", category_name: "#{@category.category_name} and more", assigned_to_id: @category.assigned_to_id, response_text: "#{@category.response_text} and more", category_status_type_id: @category.category_status_type_id, category_response_type_id: @category.category_response_type_id, description: @category.description, rule_change_made: @category.rule_change_made } }
+    assert_redirected_to edit_category_url(@category)
+
+    @category.reload
+    assert_not_equal(action_needed_before, @category.action_needed)
+    assert_equal(merged_comments, @category.comments)
+    assert_raises(Exception) do
+      category2.reload #should not exist any more.
+    end
+  end
+
   test "should destroy category" do
     assert_difference('Category.count', -1) do
       assert_difference('ChangeLogEntry.count', 1) do #should write to log

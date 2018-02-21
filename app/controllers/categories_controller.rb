@@ -5,9 +5,9 @@ class CategoriesController < ApplicationController
 
   before_action :signed_in_user
   before_action :not_read_only_user, only: [:new, :edit, :create, :update, :destroy, :move_up, :move_down]
-  before_action :admin_user, only: [:renumber, :do_renumber]
-  before_action :set_category, only: [:show, :edit, :update, :destroy]
-  before_action :set_select_options, only: [:new, :edit, :index]
+  before_action :admin_user, only: [:renumber, :do_renumber, :merge, :preview_merge, :do_merge, :copy, :do_copy]
+  before_action :set_category, only: [:show, :edit, :update, :destroy, :do_merge]
+  before_action :set_select_options, only: [:new, :edit, :index, :preview_merge]
 
   # GET /categories
   # GET /categories.json
@@ -71,6 +71,45 @@ class CategoriesController < ApplicationController
 
     save_change_log(current_user,{object_type: 'category', action_type: 'renumber', description: "ran the renumber process to make order_in_list match up with alphabetical order by category_name."})
     redirect_to categories_path, notice: "The categories' order_in_list were successfully renumbered to match their alphabetical order by order_in_list."
+  end
+
+  def copy
+    @categories = Category.order('LOWER(category_name)').all
+  end
+
+  def do_copy
+
+  end
+
+  def merge
+    @categories = Category.order('LOWER(category_name)').all
+  end
+
+  def preview_merge
+    if params[:from_category_id].empty? || params[:to_category_id].empty?
+      redirect_to categories_merge_path, alert: 'Error: must select a category to copy from, and one to copy into.'
+    elsif params[:from_category_id] == params[:to_category_id]
+      redirect_to categories_merge_path, alert: "Error: the 'from' category must be different from the 'to' category."
+    else
+      @from_category = Category.find(params[:from_category_id])
+      @to_category = Category.find(params[:to_category_id])
+      @preview_of_merged_category = @to_category.preview_merge(@from_category)
+      @preview_of_merged_category.id = @to_category.id #so that when it's saved, it will save over @to_category.
+    end
+  end
+
+  def do_merge
+    from_category = Category.find(params[:from_category_id])
+    respond_to do |format|
+      if @category.update(category_params)
+        @category.comments << (from_category.comments - @category.comments)
+        save_change_log(current_user,{category: @category, action_type: 'update via merge'})
+        destroy_category(from_category, {action_type: 'delete via merge'})
+        format.html { redirect_to edit_category_path(@category), notice: "Categories were successfully merged." }
+      else
+        format.html { render :merge }
+      end
+    end
   end
 
   # GET /categories/new
@@ -143,11 +182,7 @@ class CategoriesController < ApplicationController
   # DELETE /categories/1
   # DELETE /categories/1.json
   def destroy
-    current_cat_num = @category.order_in_list
-    #note: can't associate this change log entry with the category object, because the category is about to be destroyed.
-    save_change_log(current_user,{object_type: 'category', action_type: 'delete', description: "deleted category ID ##{@category.order_in_list}, '#{@category.category_name}'"})
-    @category.destroy
-    handle_delete_of_order_in_list(Category,current_cat_num)
+    destroy_category(@category)
     respond_to do |format|
       format.html { redirect_to categories_url, notice: 'Category was successfully deleted.' }
       format.json { head :no_content }
@@ -155,6 +190,15 @@ class CategoriesController < ApplicationController
   end
 
   private
+    def destroy_category(category, options = {})
+      current_cat_num = category.order_in_list
+      #note: can't associate this change log entry with the category object, because the category is about to be destroyed.
+      action_type = options[:action_type] || "delete"
+      save_change_log(current_user,{object_type: 'category', action_type: action_type, description: "deleted category ID ##{category.order_in_list}, '#{category.category_name}', #{category.as_json}"})
+      category.destroy
+      handle_delete_of_order_in_list(Category,current_cat_num)
+    end
+
     def get_filtering_and_next_and_previous
 
       current_category_category_name = @category.category_name.downcase
