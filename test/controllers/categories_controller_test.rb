@@ -97,7 +97,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     get categories_merge_url
     assert_redirected_to welcome_url
 
-    put categories_preview_merge_url(to_category_id: @category, from_category_id: category2)
+    put categories_merge_preview_url(to_category_id: @category, from_category_id: category2)
     assert_redirected_to welcome_url
 
     post categories_do_merge_url(@category, category2), params: { category: { action_needed: "#{@category.action_needed} plus some more", category_name: "#{@category.category_name} and more", assigned_to_id: @category.assigned_to_id, response_text: "#{@category.response_text} and more", category_status_type_id: @category.category_status_type_id, category_response_type_id: @category.category_response_type_id, description: @category.description, rule_change_made: @category.rule_change_made } }
@@ -122,7 +122,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     get categories_merge_url
     assert_response :success
 
-    put categories_preview_merge_url(to_category_id: @category, from_category_id: category2)
+    put categories_merge_preview_url(to_category_id: @category, from_category_id: category2)
     assert_response :success
 
     post categories_do_merge_url(@category, category2), params: { category: { action_needed: "#{@category.action_needed} plus some more", category_name: "#{@category.category_name} and more", assigned_to_id: @category.assigned_to_id, response_text: "#{@category.response_text} and more", category_status_type_id: @category.category_status_type_id, category_response_type_id: @category.category_response_type_id, description: @category.description, rule_change_made: @category.rule_change_made } }

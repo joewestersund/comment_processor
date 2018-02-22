@@ -5,9 +5,9 @@ class CategoriesController < ApplicationController
 
   before_action :signed_in_user
   before_action :not_read_only_user, only: [:new, :edit, :create, :update, :destroy, :move_up, :move_down]
-  before_action :admin_user, only: [:renumber, :do_renumber, :merge, :preview_merge, :do_merge, :copy, :do_copy]
+  before_action :admin_user, only: [:renumber, :do_renumber, :merge, :merge_preview, :do_merge, :copy, :do_copy]
   before_action :set_category, only: [:show, :edit, :update, :destroy, :do_merge]
-  before_action :set_select_options, only: [:new, :edit, :index, :preview_merge]
+  before_action :set_select_options, only: [:new, :edit, :index, :merge_preview]
 
   # GET /categories
   # GET /categories.json
@@ -106,7 +106,7 @@ class CategoriesController < ApplicationController
     @categories = Category.order('LOWER(category_name)').all
   end
 
-  def preview_merge
+  def merge_preview
     if params[:from_category_id].empty? || params[:to_category_id].empty?
       redirect_to categories_merge_path, alert: 'Error: must select a category to copy from, and one to copy into.'
     elsif params[:from_category_id] == params[:to_category_id]
@@ -116,6 +116,15 @@ class CategoriesController < ApplicationController
       @to_category = Category.find(params[:to_category_id])
       @preview_of_merged_category = @to_category.preview_merge(@from_category)
       @preview_of_merged_category.id = @to_category.id #so that when it's saved, it will save over @to_category.
+
+      comments_only_in_from_category = (@preview_of_merged_category.comments - @to_category.comments)
+      comments_only_in_to_category = (@preview_of_merged_category.comments - @from_category.comments)
+      comments_in_both_categories = (@preview_of_merged_category.comments - comments_only_in_from_category - comments_only_in_to_category)
+
+      @comment_source = [{source: "only in 'from' category", comment_count: comments_only_in_from_category.count},
+                         {source: "only in 'to' category", comment_count: comments_only_in_to_category.count},
+                         {source: "in both categories", comment_count: comments_in_both_categories.count}]
+
     end
   end
 

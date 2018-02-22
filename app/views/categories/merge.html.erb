@@ -15,7 +15,7 @@
 <p>You'll get a chance to see the changes before they are saved.</p>
 
 
-<%= form_tag(categories_preview_merge_path, method: "put") do %>
+<%= form_tag(categories_merge_preview_path, method: "put") do %>
   <div class="field">
     <%= label_tag :from_category, "Merge from" %>
     <%= select_tag :from_category_id, options_from_collection_for_select(@categories,:id,:category_name,params[:from_category_id]), { :include_blank => true, class: "selectpicker", "data-live-search" => "true" } %>

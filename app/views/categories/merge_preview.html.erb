@@ -1,4 +1,4 @@
-<% content_for :title, 'Preview Merge' %>
+<% content_for :title, 'Merge Preview' %>
 
 <h1>Category Merge Preview</h1>
 
@@ -56,6 +56,13 @@
         <div class="field">
           <% if @preview_of_merged_category.comments.any? %>
             <%= "Comments associated with this category: #{@preview_of_merged_category.comments.size}" %>
+            <ul>
+              <% @comment_source.each do |comment_item|
+                if comment_item[:comment_count] > 0 %>
+                  <li><%= comment_item[:comment_count]%> that were <%= comment_item[:source]%></li>
+                <% end
+               end %>
+            </ul>
           <% else%>
             Comments associated with this category: none
           <% end %>
