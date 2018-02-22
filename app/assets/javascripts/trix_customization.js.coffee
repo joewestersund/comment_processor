@@ -12,9 +12,12 @@ Trix.config.textAttributes.blue =
 
 ready = ->
   document.addEventListener 'trix-initialize', (event) ->
-    buttonHTML = '<button type="button" data-trix-attribute="red">Red</button>'
-    buttonHTML += '<button type="button" data-trix-attribute="blue">Blue</button>'
-    event.target.toolbarElement.querySelector('.trix-button-group--text-tools').insertAdjacentHTML 'beforeend', buttonHTML
+    if !event.target.toolbarElement.querySelector('.trix-button-group--text-tools').querySelector('[data-trix-attribute="red"]')
+      #if querySelector returns null, then buttons aren't there yet and we should add.
+      #if this if statement is left out, hitting the back button can result in multiple copies of the buttons.
+      buttonHTML = '<button type="button" data-trix-attribute="red">Red</button>'
+      buttonHTML += '<button type="button" data-trix-attribute="blue">Blue</button>'
+      event.target.toolbarElement.querySelector('.trix-button-group--text-tools').insertAdjacentHTML 'beforeend', buttonHTML
     return
 
 # don't do on turbolinks:load, otherwise multiple copies of the buttons get added.
