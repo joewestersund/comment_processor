@@ -78,6 +78,27 @@ class CategoriesController < ApplicationController
   end
 
   def do_copy
+    if params[:category_id].nil?
+      redirect_to category_copy_path, alert: 'Error: must select which category to copy.'
+    end
+
+    existing_category = Category.find(params[:category_id])
+
+    @category = existing_category.duplicate
+    @category.category_name = "Copy of #{existing_category.category_name}"
+    @category.assigned_to_id = current_user.id
+
+    #set the order_in_list
+    c_max = Category.maximum(:order_in_list)
+    @category.order_in_list = c_max.nil? ? 1 : c_max + 1
+
+    if @category.save
+      save_change_log(current_user,{category: @category, action_type: 'create copy'})
+      redirect_to edit_category_path(@category), notice: "Category was successfully copied"
+    else
+      @categories = Category.order('LOWER(category_name)').all
+      render :copy
+    end
 
   end
 
