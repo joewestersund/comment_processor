@@ -136,6 +136,40 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "non-admin can't copy a category" do
+    count_before = Category.count
+
+    get category_copy_url
+    assert_redirected_to welcome_url
+
+    put category_copy_url(category_id: @category)
+    assert_redirected_to welcome_url
+
+    assert_equal(count_before, Category.count)
+  end
+
+  test "admin can copy a category" do
+    sign_user_out
+    sign_in_as users(:admin_user_1)
+
+    count_before = Category.count
+    highest_category_id = Category.maximum(:id)
+
+    get category_copy_url
+    assert_response :success
+
+    put category_copy_url(category_id: @category)
+
+    new_category = Category.order(:id).last
+    assert_redirected_to edit_category_url(new_category)
+
+    assert_equal(count_before + 1, Category.count)
+
+    assert_equal(new_category.category_name, "Copy of #{@category.category_name}")
+    assert_equal(new_category.comments, @category.comments)
+
+  end
+
   test "should destroy category" do
     assert_difference('Category.count', -1) do
       assert_difference('ChangeLogEntry.count', 1) do #should write to log
