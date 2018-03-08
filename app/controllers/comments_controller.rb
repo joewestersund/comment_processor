@@ -186,7 +186,13 @@ class CommentsController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_comment
-      @comment = Comment.find(params[:id])
+      @comment = Comment.find_by(id: params[:id])
+      if @comment.nil?
+        respond_to do |format|
+          format.html { redirect_to comments_url, alert: "Comment #{params[:id]} was not found." }
+          format.json { head :no_content }
+        end
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

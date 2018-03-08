@@ -248,7 +248,13 @@ class CategoriesController < ApplicationController
     end
 
     def set_category
-      @category = Category.find(params[:id])
+      @category = Category.find_by(id: params[:id])
+      if @category.nil?
+        respond_to do |format|
+          format.html { redirect_to categories_url, alert: "Category #{params[:id]} was not found." }
+          format.json { head :no_content }
+        end
+      end
     end
 
     def set_select_options
