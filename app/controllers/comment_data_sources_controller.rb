@@ -1,4 +1,6 @@
 class CommentDataSourcesController < ApplicationController
+  before_action :signed_in_user, only: [:new, :edit, :update, :destroy, :index]
+  before_action :admin_user, only: [:new, :edit, :update, :destroy]
   before_action :set_comment_data_source, only: [:show, :edit, :update, :destroy]
 
   # GET /comment_data_sources
@@ -56,7 +58,7 @@ class CommentDataSourcesController < ApplicationController
   def destroy
     @comment_data_source.destroy
     respond_to do |format|
-      format.html { redirect_to comment_data_sources_url, notice: 'Comment data source was successfully destroyed.' }
+      format.html { redirect_to comment_data_sources_url, notice: 'Comment data source was successfully deleted. All associated comments were also deleted.' }
       format.json { head :no_content }
     end
   end

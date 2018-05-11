@@ -18,6 +18,11 @@
     </div>
 
     <div class="field">
+      <%= form.label :comment_data_source, "Comment data source" %>
+      <%= form.collection_select :comment_data_source_id, @comment_data_sources, :id, :data_source_name, :selected => @comment.comment_data_source_id, include_blank: true  %>
+    </div>
+
+    <div class="field">
       <%= form.label :first_name %>
       <%= form.text_field :first_name, id: :comment_first_name %>
     </div>
@@ -71,7 +76,8 @@
     <table class="read_only_parameters">
       <tbody>
         <tr><td>Order in List</td><td><%= comment.order_in_list%></td></tr>
-        <tr><td>Data Source</td><td><%= comment.manually_entered ? "Manually entered" : "Imported from DAS comments website"%></td></tr>
+        <tr><td>Comment Data Source</td><td><%= comment.comment_data_source.data_source_name if comment.comment_data_source.present? %></td></tr>
+        <tr><td>Manually Entered?</td><td><%= comment.manually_entered %></td></tr>
         <tr><td>Name & Email</td><td><%= "#{comment.first_name + ' ' if comment.first_name.present?}#{comment.last_name}#{' <' + comment.email + '>' if comment.email.present?}"%></td>
         <tr><td>Organization and State</td><td><%= "#{comment.organization + ", " if comment.organization.present?}#{comment.state}" %></td>
         <tr><td>Comment</td><td><%= comment.comment_text%></td>

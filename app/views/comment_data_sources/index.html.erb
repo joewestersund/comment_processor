@@ -6,7 +6,6 @@
   <thead>
     <tr>
       <th>Data source name</th>
-      <th>String</th>
       <th>Description</th>
       <th>Comment download url</th>
       <th>Active</th>
@@ -18,13 +17,11 @@
     <% @comment_data_sources.each do |comment_data_source| %>
       <tr>
         <td><%= comment_data_source.data_source_name %></td>
-        <td><%= comment_data_source.string %></td>
         <td><%= comment_data_source.description %></td>
-        <td><%= comment_data_source.comment_download_url %></td>
-        <td><%= comment_data_source.active %></td>
-        <td><%= link_to 'Show', comment_data_source %></td>
+        <td><%= link_to comment_data_source.comment_download_url %></td>
+        <td class="<%="#{highlight_true(comment_data_source.active)}"%>"><%= show_boolean_value(comment_data_source.active) %></td>
         <td><%= link_to 'Edit', edit_comment_data_source_path(comment_data_source) %></td>
-        <td><%= link_to 'Destroy', comment_data_source, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Delete', comment_data_source, method: :delete, data: { confirm: 'Are you sure? This will also delete all the comments associated with this data source.' } %></td>
       </tr>
     <% end %>
   </tbody>

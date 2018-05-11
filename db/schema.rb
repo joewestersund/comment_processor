@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180511221035) do
+ActiveRecord::Schema.define(version: 20180511224544) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -124,6 +124,6 @@ ActiveRecord::Schema.define(version: 20180511221035) do
   add_foreign_key "change_log_entries", "categories", on_delete: :nullify
   add_foreign_key "change_log_entries", "comments", on_delete: :nullify
   add_foreign_key "change_log_entries", "users", on_delete: :restrict
-  add_foreign_key "comments", "comment_data_sources", on_delete: :cascade
+  add_foreign_key "comments", "comment_data_sources", on_delete: :nullify
   add_foreign_key "comments", "comment_status_types", on_delete: :restrict
 end

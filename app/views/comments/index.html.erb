@@ -19,6 +19,10 @@
   <div class="filter <%="hidden" unless @filtered %>">
     <%= form_tag request.path, method: 'get' do %>
       <div class="field">
+        <%= label_tag :comment_data_sources %>
+        <%= select_tag :comment_data_source_id, options_from_collection_for_select(@comment_data_sources,:id,:data_source_name,params[:comment_data_source_id]), { :include_blank => true, class: "selectpicker", "data-live-search" => "true" } %>
+      </div>
+      <div class="field">
         <%= label_tag :first_name  %>
         <%= text_field_tag :first_name, params[:first_name], class: 'short' %>
       </div>
@@ -80,6 +84,7 @@
   <thead>
     <tr>
       <th>#</th>
+      <th>Data source</th>
       <th>Name & Email</th>
       <th>Organization & State</th>
       <th>Comment text</th>
@@ -96,6 +101,7 @@
     <% @comments.each do |comment| %>
       <tr>
         <td><%= comment.order_in_list %></td>
+        <td><%= comment.comment_data_source.data_source_name if comment.comment_data_source.present? %></td>
         <td><%= comment.name_and_email%></td>
         <td><%= "#{comment.organization + ", " if comment.organization.present?}#{comment.state}" %></td>
         <td><%= comment.comment_text.truncate(1000) if comment.comment_text.present?%></td>

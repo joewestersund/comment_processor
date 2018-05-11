@@ -28,13 +28,13 @@ class Comment < ApplicationRecord
   has_and_belongs_to_many :categories
   has_many :change_log_entries
   belongs_to :comment_status_type
-  belongs_to :comment_data_source
+  belongs_to :comment_data_source, optional: true
 
   validates :num_commenters, presence: true, numericality: { only_integer: true, greater_than: 0}
 
 
   def self.csv_header
-    ['Order In List', 'DAS ID', 'First Name', 'Last Name', 'Email',
+    ['Order In List', 'Comment Data Source', 'DAS ID', 'First Name', 'Last Name', 'Email',
      'Organization', 'State', 'Comment Text', 'Attachment Name', 'Attachment URL', 'Manually Entered?',
      'Num Commenters','Summary','Status','Notes','Categories (by their "order in list")', 'ID']
   end
@@ -56,7 +56,7 @@ class Comment < ApplicationRecord
     status = self.comment_status_type.present? ? self.comment_status_type.status_text : nil
     categories = self.categories.order(:order_in_list).collect{|cat| cat.order_in_list}.join(", ")
 
-    [self.order_in_list, self.source_id, self.first_name, self.last_name, self.email,
+    [self.order_in_list, self.comment_data_source.data_source_name, self.source_id, self.first_name, self.last_name, self.email,
      self.organization, self.state, self.comment_text, self.attachment_name, self.attachment_url, self.manually_entered, self.num_commenters,
      self.summary, status, remove_html(self.notes).to_s.truncate(1000), categories, self.id]
   end

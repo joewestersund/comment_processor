@@ -13,4 +13,8 @@
 
 class CommentDataSource < ApplicationRecord
   has_many :comments
+
+  validates :data_source_name, presence: true, uniqueness: { case_sensitive: false }
+  validates :comment_download_url, presence: true, uniqueness: { case_sensitive: false }
+
 end
