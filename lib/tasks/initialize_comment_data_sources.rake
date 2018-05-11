@@ -6,7 +6,10 @@ namespace :initialize_comment_data_sources do
 
     if !CommentDataSource.any? #only do this once
       puts 'adding a comment data source'
-      cds = CommentDataSource.new(data_source_name: "CAO Comment Period 1", description: "10/20/2017 to 1/22/2018", comment_download_url: 'https://data.oregon.gov/OData.svc/gvv7-qhw2', active: true)
+      cds = CommentDataSource.new(data_source_name: "CAO Comment Period 1",
+                                  description: "10/20/2017 to 1/22/2018",
+                                  comment_download_url: 'https://data.oregon.gov/OData.svc/gvv7-qhw2',
+                                  active: true)
       cds.save
       puts 'linking each comment to the new comment data source that was created'
       Comment.all.each do |c|

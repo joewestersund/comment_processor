@@ -11,10 +11,6 @@ module CommentsHelper
     end
   end
 
-  def rulemaking_data_source
-    'https://data.oregon.gov/OData.svc/gvv7-qhw2'  #OData v2
-  end
-
   def import_comments_data_odata(comment_data_url)
     #note, this doesn't work. Gives 400 bad request error.
     require 'ruby_odata'

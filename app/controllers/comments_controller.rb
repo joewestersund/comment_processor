@@ -8,7 +8,7 @@ class CommentsController < ApplicationController
   before_action :admin_user, only: [:new, :create, :import, :destroy, :do_import, :cleanup, :do_cleanup]
   before_action :not_read_only_user, only: [:edit, :update]
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
-  before_action :set_select_options, only: [:new, :edit, :index]
+  before_action :set_select_options, only: [:new, :edit, :index, :import]
 
   # GET /comments
   # GET /comments.json
@@ -44,14 +44,15 @@ class CommentsController < ApplicationController
   end
 
   def import
-    #import comments from the outside data source
-    @data_source = rulemaking_data_source
+    #import comments from an outside data source
+    @current_comment_data_source = CommentDataSource.where(active:true).last
   end
 
   def do_import
     #actually do the import
-    comments_imported = import_comments_data(rulemaking_data_source)
-    save_change_log(current_user,{object_type: 'comment', action_type: 'import', description: "imported #{comments_imported} comments into the database."}) if comments_imported > 0
+    cds = CommentDataSource.find_by(id: comment_import_params[:comment_data_source_id])
+    comments_imported = import_comments_data(cds.comment_download_url)
+    save_change_log(current_user,{object_type: 'comment', action_type: 'import', description: "imported #{comments_imported} comments into the database from #{cds.data_source_name}."}) if comments_imported > 0
     redirect_to comments_path, notice: "#{comments_imported} comment(s) were successfully imported into the database."
   end
 
@@ -196,8 +197,13 @@ class CommentsController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
+
     def comment_params
       params.require(:comment).permit(:source_id, :first_name, :last_name, :email, :organization, :state, :comment_text, :attachment_name, :attachment_url, :num_commenters, :summary, :comment_status_type_id, :notes, :manually_entered, :comment_data_source_id)
+    end
+
+    def comment_import_params
+      params.permit(:comment_data_source_id)
     end
 
     def set_select_options
