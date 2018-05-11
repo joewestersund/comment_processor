@@ -1,0 +1,42 @@
+<%= form_with(model: comment_data_source, local: true) do |form| %>
+  <% if comment_data_source.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(comment_data_source.errors.count, "error") %> prohibited this comment_data_source from being saved:</h2>
+
+      <ul>
+      <% comment_data_source.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :data_source_name %>
+    <%= form.text_field :data_source_name, id: :comment_data_source_data_source_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :string %>
+    <%= form.text_field :string, id: :comment_data_source_string %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_field :description, id: :comment_data_source_description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :comment_download_url %>
+    <%= form.text_field :comment_download_url, id: :comment_data_source_comment_download_url %>
+  </div>
+
+  <div class="field">
+    <%= form.label :active %>
+    <%= form.check_box :active, id: :comment_data_source_active %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
