@@ -8,7 +8,7 @@ class CommentDataSourcesController < ApplicationController
   # GET /comment_data_sources
   # GET /comment_data_sources.json
   def index
-    @comment_data_sources = CommentDataSource.all
+    @comment_data_sources = CommentDataSource.order(:data_source_name).all
   end
 
   # GET /comment_data_sources/1

@@ -8,7 +8,7 @@ class CommentsController < ApplicationController
   before_action :admin_user, only: [:new, :create, :import, :destroy, :do_import, :cleanup, :do_cleanup]
   before_action :not_read_only_user, only: [:edit, :update]
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
-  before_action :set_select_options, only: [:new, :edit, :index, :import]
+  before_action :set_select_options, only: [:new, :edit, :index ]
 
   # GET /comments
   # GET /comments.json
@@ -45,7 +45,8 @@ class CommentsController < ApplicationController
 
   def import
     #import comments from an outside data source
-    @current_comment_data_source = CommentDataSource.where(active:true).last
+    @comment_data_sources = CommentDataSource.where(active:true).order(:data_source_name).all
+
   end
 
   def do_import

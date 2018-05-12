@@ -2,14 +2,18 @@
 
 <h1>Check for updated comments</h1>
 
-<%= form_with(url: comments_do_import_path, method: "put", local: true) do |form| %>
-  Import comments data from
-  <div class="field">
-    <%= form.label :comment_data_source, "Comment data source" %>
-    <%= form.collection_select :comment_data_source_id, @comment_data_sources, :id, :data_source_name, :selected => @current_comment_data_source %>
-  </div>
+<% if @comment_data_sources.any? %>
+  <%= form_with(url: comments_do_import_path, method: "put", local: true) do |form| %>
+    Import comments data from
+    <div class="field">
+      <%= form.label :comment_data_source, "Comment data source" %>
+      <%= form.collection_select :comment_data_source_id, @comment_data_sources, :id, :data_source_name %>
+    </div>
 
-  <%= form.submit('Import comments', class: 'btn btn-large btn-primary')%>
+    <%= form.submit('Import comments', class: 'btn btn-large btn-primary')%>
+  <% end %>
+<% else %>
+  <p>Currently there are no active comment data sources set up in the system. Please have an admin add one, under Setup | Comment Data Sources.</p>
+
 <% end %>
-
 <%= link_to 'Back', comments_path %>
