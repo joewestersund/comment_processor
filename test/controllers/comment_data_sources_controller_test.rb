@@ -31,6 +31,13 @@ class CommentDataSourcesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "shouldn't write to log if no change" do
+    assert_difference('ChangeLogEntry.count', 0) do
+      patch comment_data_source_url(@comment_data_source), params: { comment_data_source: { active: @comment_data_source.active, comment_download_url: "#{@comment_data_source.comment_download_url}", data_source_name: @comment_data_source.data_source_name, description: @comment_data_source.description } }
+    end
+    assert_redirected_to comment_data_sources_url
+  end
+
   test "should update comment_data_source" do
     assert_difference('ChangeLogEntry.count', 1) do #should write to log
       patch comment_data_source_url(@comment_data_source), params: { comment_data_source: { active: @comment_data_source.active, comment_download_url: "#{@comment_data_source.comment_download_url}9", data_source_name: @comment_data_source.data_source_name, description: @comment_data_source.description } }

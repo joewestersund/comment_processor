@@ -14,12 +14,14 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  id: 1
   data_source_name: MyString1
   description: MyString
   comment_download_url: MyString1
   active: false
 
 two:
+  id: 2
   data_source_name: MyString2
   description: MyString
   comment_download_url: MyString2

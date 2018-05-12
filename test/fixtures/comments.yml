@@ -27,6 +27,7 @@
 
 one:
   id: 1
+  comment_data_source_id: 1
   source_id: 1
   first_name: MyString
   last_name: MyString
@@ -44,6 +45,7 @@ one:
 
 two:
   id: 2
+  comment_data_source_id: 2
   source_id: 2
   first_name: MyString
   last_name: MyString
@@ -61,6 +63,7 @@ two:
 
 three:
   id: 3
+  comment_data_source_id: nil
   source_id: 3
   first_name: MyString
   last_name: MyString
@@ -78,6 +81,7 @@ three:
 
 needs_cleaning:
   id: 4
+  comment_data_source_id: 1
   source_id: 4
   first_name: MyString
   last_name: MyString
