@@ -1,4 +1,6 @@
 class CommentDataSourcesController < ApplicationController
+  include ChangeLogEntriesHelper
+
   before_action :signed_in_user, only: [:new, :edit, :update, :destroy, :index]
   before_action :admin_user, only: [:new, :edit, :update, :destroy]
   before_action :set_comment_data_source, only: [:show, :edit, :update, :destroy]
@@ -30,7 +32,8 @@ class CommentDataSourcesController < ApplicationController
 
     respond_to do |format|
       if @comment_data_source.save
-        format.html { redirect_to @comment_data_source, notice: 'Comment data source was successfully created.' }
+        save_change_log(current_user,{object_type: 'comment data source', action_type: 'create', description: "created comment data source ID ##{@comment_data_source.id} '#{@comment_data_source.data_source_name}' at '#{@comment_data_source.comment_download_url}'."})
+        format.html { redirect_to comment_data_sources_path, notice: 'Comment data source was successfully created.' }
         format.json { render :show, status: :created, location: @comment_data_source }
       else
         format.html { render :new }
@@ -44,7 +47,10 @@ class CommentDataSourcesController < ApplicationController
   def update
     respond_to do |format|
       if @comment_data_source.update(comment_data_source_params)
-        format.html { redirect_to @comment_data_source, notice: 'Comment data source was successfully updated.' }
+        if @comment_data_source.previous_changes.any?
+          save_change_log(current_user,{object_type: 'comment data source', action_type: 'edit', description: "edited comment data source ID ##{@comment_data_source.id} to '#{@comment_data_source.data_source_name}' at '#{@comment_data_source.comment_download_url}'."})
+        end
+        format.html { redirect_to comment_data_sources_path, notice: 'Comment data source was successfully updated.' }
         format.json { render :show, status: :ok, location: @comment_data_source }
       else
         format.html { render :edit }
@@ -56,6 +62,7 @@ class CommentDataSourcesController < ApplicationController
   # DELETE /comment_data_sources/1
   # DELETE /comment_data_sources/1.json
   def destroy
+    save_change_log(current_user,{object_type: 'comment data source', action_type: 'delete', description: "deleted comment data source ID ##{@comment_data_source.id} '#{@comment_data_source.data_source_name}' at '#{@comment_data_source.comment_download_url}'. Any corresponding comments were reassigned to comment_data_source_id = nil."})
     @comment_data_source.destroy
     respond_to do |format|
       format.html { redirect_to comment_data_sources_url, notice: 'Comment data source was successfully deleted. All associated comments were also deleted.' }

@@ -20,17 +20,17 @@ module CommentsHelper
     entries = svc.execute
   end
 
-  def import_comments_data(comment_data_url)
+  def import_comments_data(comment_data_source)
     require 'net/http'
 
-    uri = URI(comment_data_url)
+    uri = URI(comment_data_source.comment_download_url)
     response = Net::HTTP.get(uri)
 
-    parse_response(response) #returns the number of comments added to the db
+    parse_response(comment_data_source,response) #returns the number of comments added to the db
 
   end
 
-  def parse_response(response_text)
+  def parse_response(comment_data_source, response_text)
 
     comments_added = 0
     response_text.slice! "</entry" #remove the end tags
@@ -49,6 +49,7 @@ module CommentsHelper
       if id.present? && Comment.find_by(source_id: id).nil?
         #this comment isn't in the db yet. add it.
         c = Comment.new
+        c.comment_data_source = comment_data_source
         c.source_id = id
         c.first_name = entry.string_between_markers('<d:first_name>','</d:first_name>')
         c.last_name = entry.string_between_markers('<d:last_name>','</d:last_name>')

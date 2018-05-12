@@ -3,6 +3,7 @@ require 'test_helper'
 class CommentDataSourcesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @comment_data_source = comment_data_sources(:one)
+    sign_in_as users(:admin_user_1)
   end
 
   test "should get index" do
@@ -17,15 +18,12 @@ class CommentDataSourcesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create comment_data_source" do
     assert_difference('CommentDataSource.count') do
-      post comment_data_sources_url, params: { comment_data_source: { active: @comment_data_source.active, comment_download_url: @comment_data_source.comment_download_url, data_source_name: @comment_data_source.data_source_name, description: @comment_data_source.description, string: @comment_data_source.string } }
+      assert_difference('ChangeLogEntry.count', 1) do #should write to log
+        post comment_data_sources_url, params: { comment_data_source: { active: @comment_data_source.active, comment_download_url: "#{@comment_data_source.comment_download_url}123", data_source_name: "#{@comment_data_source.data_source_name}456", description: @comment_data_source.description } }
+      end
     end
 
-    assert_redirected_to comment_data_source_url(CommentDataSource.last)
-  end
-
-  test "should show comment_data_source" do
-    get comment_data_source_url(@comment_data_source)
-    assert_response :success
+    assert_redirected_to comment_data_sources_url
   end
 
   test "should get edit" do
@@ -34,13 +32,17 @@ class CommentDataSourcesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update comment_data_source" do
-    patch comment_data_source_url(@comment_data_source), params: { comment_data_source: { active: @comment_data_source.active, comment_download_url: @comment_data_source.comment_download_url, data_source_name: @comment_data_source.data_source_name, description: @comment_data_source.description, string: @comment_data_source.string } }
-    assert_redirected_to comment_data_source_url(@comment_data_source)
+    assert_difference('ChangeLogEntry.count', 1) do #should write to log
+      patch comment_data_source_url(@comment_data_source), params: { comment_data_source: { active: @comment_data_source.active, comment_download_url: "#{@comment_data_source.comment_download_url}9", data_source_name: @comment_data_source.data_source_name, description: @comment_data_source.description } }
+    end
+    assert_redirected_to comment_data_sources_url
   end
 
   test "should destroy comment_data_source" do
     assert_difference('CommentDataSource.count', -1) do
-      delete comment_data_source_url(@comment_data_source)
+      assert_difference('ChangeLogEntry.count', 1) do #should write to log
+        delete comment_data_source_url(@comment_data_source)
+      end
     end
 
     assert_redirected_to comment_data_sources_url

@@ -51,7 +51,7 @@ class CommentsController < ApplicationController
   def do_import
     #actually do the import
     cds = CommentDataSource.find_by(id: comment_import_params[:comment_data_source_id])
-    comments_imported = import_comments_data(cds.comment_download_url)
+    comments_imported = import_comments_data(cds)
     save_change_log(current_user,{object_type: 'comment', action_type: 'import', description: "imported #{comments_imported} comments into the database from #{cds.data_source_name}."}) if comments_imported > 0
     redirect_to comments_path, notice: "#{comments_imported} comment(s) were successfully imported into the database."
   end
