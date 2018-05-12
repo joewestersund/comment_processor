@@ -11,9 +11,25 @@ class CommentDataSourcesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "non-admin can get index" do
+    sign_user_out
+    sign_in_as users(:regular_user)
+
+    get comment_data_sources_url
+    assert_response :success
+  end
+
   test "should get new" do
     get new_comment_data_source_url
     assert_response :success
+  end
+
+  test "non-admin can't get new" do
+    sign_user_out
+    sign_in_as users(:regular_user)
+
+    get new_comment_url
+    assert_redirected_to welcome_url
   end
 
   test "should create comment_data_source" do

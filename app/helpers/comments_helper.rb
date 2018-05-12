@@ -46,7 +46,7 @@ module CommentsHelper
     entries.each do |entry|
       id = entry.string_between_markers('<d:__id m:type="Edm.Int64">','</d:__id>')
 
-      if id.present? && Comment.find_by(source_id: id).nil?
+      if id.present? && Comment.find_by(comment_data_source_id: comment_data_source, source_id: id).nil?
         #this comment isn't in the db yet. add it.
         c = Comment.new
         c.comment_data_source = comment_data_source
