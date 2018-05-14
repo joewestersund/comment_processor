@@ -65,7 +65,7 @@ class CommentDataSourcesController < ApplicationController
     save_change_log(current_user,{object_type: 'comment data source', action_type: 'delete', description: "deleted comment data source ID ##{@comment_data_source.id} '#{@comment_data_source.data_source_name}' at '#{@comment_data_source.comment_download_url}'. Any corresponding comments were reassigned to comment_data_source_id = nil."})
     @comment_data_source.destroy
     respond_to do |format|
-      format.html { redirect_to comment_data_sources_url, notice: 'Comment data source was successfully deleted. All associated comments were also deleted.' }
+      format.html { redirect_to comment_data_sources_url, notice: 'Comment data source was successfully deleted. All associated comments were set to comment_data_source = nil.' }
       format.json { head :no_content }
     end
   end
