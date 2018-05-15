@@ -16,7 +16,7 @@ namespace :initialize_comment_data_sources do
         c.comment_data_source = cds
         c.save
       end
-      puts "done moving category descriptions to text_from_comments field. Updated #{Comment.count} records."
+      puts "done updating comment data source for existing comment records. Updated #{Comment.count} records."
     else
       puts 'comment data sources are already set up in the database.'
     end
