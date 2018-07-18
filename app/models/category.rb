@@ -16,11 +16,13 @@
 #  category_response_type_id :integer
 #  text_from_comments        :text
 #  notes                     :text
+#  rulemaking_id             :integer
 #
 
 class Category < ApplicationRecord
   has_and_belongs_to_many :comments
   has_many :change_log_entries
+  belongs_to :rulemaking
   belongs_to :category_status_type
   belongs_to :category_response_type, optional: true
   belongs_to :user, foreign_key: 'assigned_to_id', optional: true

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180511224544) do
+ActiveRecord::Schema.define(version: 20180718183810) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20180511224544) do
     t.integer "category_response_type_id"
     t.text "text_from_comments"
     t.text "notes"
+    t.integer "rulemaking_id"
     t.index "lower(category_name)", name: "index_categories_on_lowercase_category_name", unique: true
     t.index ["order_in_list"], name: "index_categories_on_order_in_list"
   end
@@ -43,6 +44,7 @@ ActiveRecord::Schema.define(version: 20180511224544) do
     t.integer "order_in_list"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "rulemaking_id"
   end
 
   create_table "category_status_types", force: :cascade do |t|
@@ -50,6 +52,7 @@ ActiveRecord::Schema.define(version: 20180511224544) do
     t.integer "order_in_list"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "rulemaking_id"
   end
 
   create_table "change_log_entries", force: :cascade do |t|
@@ -61,6 +64,7 @@ ActiveRecord::Schema.define(version: 20180511224544) do
     t.datetime "updated_at", null: false
     t.string "action_type"
     t.string "object_type"
+    t.integer "rulemaking_id"
     t.index ["category_id", "created_at"], name: "index_change_log_entries_on_category_id_and_created_at"
     t.index ["comment_id", "created_at"], name: "index_change_log_entries_on_comment_id_and_created_at"
     t.index ["created_at"], name: "index_change_log_entries_on_created_at"
@@ -74,6 +78,7 @@ ActiveRecord::Schema.define(version: 20180511224544) do
     t.boolean "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "rulemaking_id"
   end
 
   create_table "comment_status_types", force: :cascade do |t|
@@ -81,6 +86,7 @@ ActiveRecord::Schema.define(version: 20180511224544) do
     t.integer "order_in_list"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "rulemaking_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -102,8 +108,26 @@ ActiveRecord::Schema.define(version: 20180511224544) do
     t.integer "order_in_list"
     t.integer "num_commenters"
     t.integer "comment_data_source_id"
+    t.integer "rulemaking_id"
     t.index ["comment_data_source_id"], name: "index_comments_on_comment_data_source_id"
     t.index ["order_in_list"], name: "index_comments_on_order_in_list"
+  end
+
+  create_table "rulemakings", force: :cascade do |t|
+    t.string "rulemaking_name"
+    t.string "agency"
+    t.boolean "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_permissions", force: :cascade do |t|
+    t.boolean "admin"
+    t.boolean "read_only"
+    t.integer "user_id"
+    t.integer "rulemaking_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -113,9 +137,11 @@ ActiveRecord::Schema.define(version: 20180511224544) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "remember_token"
-    t.boolean "admin"
+    t.boolean "application_admin"
     t.boolean "active"
-    t.boolean "read_only"
+    t.integer "last_rulemaking_viewed"
+    t.string "reset_password_token"
+    t.datetime "reset_passwod_sent_at"
   end
 
   add_foreign_key "categories", "category_response_types", on_delete: :nullify

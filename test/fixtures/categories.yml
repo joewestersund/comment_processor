@@ -16,6 +16,7 @@
 #  category_response_type_id :integer
 #  text_from_comments        :text
 #  notes                     :text
+#  rulemaking_id             :integer
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

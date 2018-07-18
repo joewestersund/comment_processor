@@ -16,6 +16,7 @@
 #  category_response_type_id :integer
 #  text_from_comments        :text
 #  notes                     :text
+#  rulemaking_id             :integer
 #
 
 require 'test_helper'

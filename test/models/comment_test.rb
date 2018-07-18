@@ -21,6 +21,7 @@
 #  order_in_list          :integer
 #  num_commenters         :integer
 #  comment_data_source_id :integer
+#  rulemaking_id          :integer
 #
 
 require 'test_helper'

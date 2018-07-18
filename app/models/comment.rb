@@ -22,11 +22,13 @@ include ApplicationHelper
 #  order_in_list          :integer
 #  num_commenters         :integer
 #  comment_data_source_id :integer
+#  rulemaking_id          :integer
 #
 
 class Comment < ApplicationRecord
   has_and_belongs_to_many :categories
   has_many :change_log_entries
+  belongs_to :rulemaking
   belongs_to :comment_status_type
   belongs_to :comment_data_source, optional: true
 

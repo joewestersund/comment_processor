@@ -1,0 +1,32 @@
+<%= form_with(model: rulemaking, local: true) do |form| %>
+  <% if rulemaking.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(rulemaking.errors.count, "error") %> prohibited this rulemaking from being saved:</h2>
+
+      <ul>
+      <% rulemaking.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :rulemaking_name %>
+    <%= form.text_field :rulemaking_name, id: :rulemaking_rulemaking_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :agency %>
+    <%= form.text_field :agency, id: :rulemaking_agency %>
+  </div>
+
+  <div class="field">
+    <%= form.label :active %>
+    <%= form.check_box :active, id: :rulemaking_active %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

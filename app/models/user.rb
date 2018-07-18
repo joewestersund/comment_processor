@@ -2,20 +2,23 @@
 #
 # Table name: users
 #
-#  id              :integer          not null, primary key
-#  name            :string
-#  email           :string
-#  password_digest :string
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  remember_token  :string
-#  admin           :boolean
-#  active          :boolean
-#  read_only       :boolean
+#  id                     :integer          not null, primary key
+#  name                   :string
+#  email                  :string
+#  password_digest        :string
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  remember_token         :string
+#  application_admin      :boolean
+#  active                 :boolean
+#  last_rulemaking_viewed :integer
+#  reset_password_token   :string
+#  reset_passwod_sent_at  :datetime
 #
 
 class User < ApplicationRecord
   has_secure_password #adds authenticate method, etc.
+  has_many :user_permissions
   has_many :categories
   has_many :change_log_entries
 
@@ -49,13 +52,31 @@ class User < ApplicationRecord
     BCrypt::Password.create(string, cost: cost)
   end
 
+  def User.hours_to_reset_password
+    4
+  end
+
   def email_address_with_name
     "#{self.name} <#{self.email}>"
+  end
+
+  def generate_password_token!
+    self.reset_password_token = generate_pw_token
+    self.reset_password_sent_at = Time.now.utc
+    save!
+  end
+
+  def password_token_valid?(token)
+    self.reset_password_token.present? && self.reset_password_token == token && (self.reset_password_sent_at + User.hours_to_reset_password.hours) > Time.now.utc
   end
 
   private
   def create_remember_token
     self.remember_token = User.encrypt(User.new_remember_token)
+  end
+
+  def generate_pw_token
+    SecureRandom.hex(10)
   end
 
 end

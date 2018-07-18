@@ -9,9 +9,11 @@
 #  active               :boolean
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
+#  rulemaking_id        :integer
 #
 
 class CommentDataSource < ApplicationRecord
+  belongs_to :rulemaking
   has_many :comments
 
   validates :data_source_name, presence: true, uniqueness: { case_sensitive: false }

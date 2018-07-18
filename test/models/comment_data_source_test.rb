@@ -9,6 +9,7 @@
 #  active               :boolean
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
+#  rulemaking_id        :integer
 #
 
 require 'test_helper'

@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
 
+  get 'password/forgot', to: 'users#forgot_password'
+  post 'password/reset/:token', to: 'users#reset_password'
+
+  resources :rulemakings
+  resources :user_permissions
   resources :comment_data_sources
   resources :change_log_entries
   resources :category_response_types

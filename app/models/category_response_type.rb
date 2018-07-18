@@ -7,9 +7,11 @@
 #  order_in_list :integer
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#  rulemaking_id :integer
 #
 
 class CategoryResponseType < ApplicationRecord
+  belongs_to :rulemaking
   has_many :categories
 
   validates :response_text, presence: true, uniqueness: { case_sensitive: false }

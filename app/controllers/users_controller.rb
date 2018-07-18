@@ -72,6 +72,22 @@ class UsersController < ApplicationController
     end
   end
 
+  def forgot_password
+    respond_to do |format|
+      if params[:email].present?
+        @user = User.find_by(email: params[:email])
+        if @user.present? && @user.active?
+          @user.generate_password_token!
+          NotificationMailer.password_reset_email(@user).deliver
+          format.html { redirect_to users_path, notice: "A password reset email has been sent to #{@user.name} at #{@user.email}. Please use the link in that email to reset your password in the next #{User.hours_to_reset_password} hours." }
+        else
+          format.html { render action: 'forgot_password' }
+          format.json { render json: @user.errors, status: :unprocessable_entity }
+        end
+      end
+    end
+  end
+
   def update_password
     respond_to do |format|
       if params[:user][:password].present? and @user.update(user_params_change_password)

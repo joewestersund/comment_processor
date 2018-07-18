@@ -7,6 +7,7 @@
 #  order_in_list :integer
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#  rulemaking_id :integer
 #
 
 require 'test_helper'

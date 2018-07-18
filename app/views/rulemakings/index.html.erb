@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Rulemakings</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Rulemaking name</th>
+      <th>Agency</th>
+      <th>Active</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @rulemakings.each do |rulemaking| %>
+      <tr>
+        <td><%= rulemaking.rulemaking_name %></td>
+        <td><%= rulemaking.agency %></td>
+        <td><%= rulemaking.active %></td>
+        <td><%= link_to 'Show', rulemaking %></td>
+        <td><%= link_to 'Edit', edit_rulemaking_path(rulemaking) %></td>
+        <td><%= link_to 'Destroy', rulemaking, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Rulemaking', new_rulemaking_path %>
