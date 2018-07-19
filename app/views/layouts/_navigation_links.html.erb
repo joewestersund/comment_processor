@@ -5,6 +5,7 @@
 %>
 <%# add navigation links to this file %>
 <% if signed_in? %>
+  <% if current_rulemaking.present?%>
   <li class="nav navbar-nav"><%= link_to glyphicon_link("glyphicon-th-list","Comments").html_safe, comments_path %></li>
   <li class="nav navbar-nav"><%= link_to glyphicon_link("glyphicon-tags","Categories").html_safe, categories_path %></li>
 
@@ -18,8 +19,20 @@
       <li class="nav navbar-nav"><%= link_to "Recent activity", change_log_entries_path %></li>
     </ul>
   </li>
-
-  <% if current_user.admin? %>
+  <% end %>
+  <% if current_user.application_admin? %>
+    <li id="fat-menu" class="dropdown nav navbar-nav">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <%= glyphicon_link("glyphicon-wrench","Admin").html_safe%> <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li class="nav navbar-nav"><%= link_to "Rulemakings", rulemakings_path %></li>
+        <li class="nav navbar-nav"><%= link_to "Users", users_path %></li>
+        <li class="nav navbar-nav"><%= link_to "User Permissions", user_permissions_path %></li>
+      </ul>
+    </li>
+  <% end %>
+  <% if admin_for_current_rulemaking? %>
     <li id="fat-menu" class="dropdown nav navbar-nav">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
         <%= glyphicon_link("glyphicon-wrench","Setup").html_safe%> <b class="caret"></b>
@@ -33,6 +46,7 @@
         <li class="nav navbar-nav"><%= link_to "Copy a Category", category_copy_path %></li>
         <li class="nav navbar-nav"><%= link_to "Merge Categories", categories_merge_path %></li>
         <li class="nav navbar-nav"><%= link_to "Users", users_path %></li>
+        <li class="nav navbar-nav"><%= link_to "User Permissions", user_permissions_path %></li>
         <li class="nav navbar-nav"><%= link_to "Comment Data Sources", comment_data_sources_path %></li>
       </ul>
     </li>

@@ -13,7 +13,7 @@
 #  active                 :boolean
 #  last_rulemaking_viewed :integer
 #  reset_password_token   :string
-#  reset_passwod_sent_at  :datetime
+#  password_reset_sent_at :datetime
 #
 
 class User < ApplicationRecord
@@ -31,12 +31,6 @@ class User < ApplicationRecord
 
   validates :password, :presence =>true, :confirmation => true, :length => { :within => 6..40 }, :on => :create
   validates :password, :confirmation => true, :length => { :within => 6..40 }, :on => :update_password
-
-  validate do
-    if self.read_only? && self.admin?
-      self.errors.add :base, "cannot be read_only and an admin."
-    end
-  end
 
   def User.new_remember_token
     SecureRandom.urlsafe_base64
@@ -62,12 +56,12 @@ class User < ApplicationRecord
 
   def generate_password_token!
     self.reset_password_token = generate_pw_token
-    self.reset_password_sent_at = Time.now.utc
+    self.password_reset_sent_at = Time.now.utc
     save!
   end
 
-  def password_token_valid?(token)
-    self.reset_password_token.present? && self.reset_password_token == token && (self.reset_password_sent_at + User.hours_to_reset_password.hours) > Time.now.utc
+  def password_token_valid?
+    (self.password_reset_sent_at + User.hours_to_reset_password.hours) > Time.now.utc
   end
 
   private

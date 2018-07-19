@@ -13,7 +13,7 @@
 #  active                 :boolean
 #  last_rulemaking_viewed :integer
 #  reset_password_token   :string
-#  reset_passwod_sent_at  :datetime
+#  password_reset_sent_at :datetime
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

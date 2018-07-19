@@ -1,10 +1,10 @@
 class UsersController < ApplicationController
   require 'securerandom'
 
-  before_action :signed_in_user, only: [:new, :edit, :edit_profile, :edit_password, :update, :update_password, :reset_password, :show, :destroy, :index]
-  before_action :admin_user, only: [:new, :edit, :destroy, :reset_password]
-  before_action :not_read_only_user, only: [:new, :edit, :create, :reset_password, :destroy]
-  before_action :set_user, only: [:show, :edit, :update, :destroy, :reset_password]
+  before_action :signed_in_user, only: [:new, :edit, :edit_profile, :edit_password, :update, :update_password, :show, :destroy, :index]
+  before_action :admin_user, only: [:new, :edit, :destroy]
+  before_action :not_read_only_user, only: [:new, :edit, :create, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :set_self_as_user, only: [:edit_profile, :edit_password, :update_password]
 
 
@@ -73,17 +73,29 @@ class UsersController < ApplicationController
   end
 
   def forgot_password
+  end
+
+  def send_password_reset_email
     respond_to do |format|
-      if params[:email].present?
-        @user = User.find_by(email: params[:email])
-        if @user.present? && @user.active?
-          @user.generate_password_token!
-          NotificationMailer.password_reset_email(@user).deliver
-          format.html { redirect_to users_path, notice: "A password reset email has been sent to #{@user.name} at #{@user.email}. Please use the link in that email to reset your password in the next #{User.hours_to_reset_password} hours." }
-        else
-          format.html { render action: 'forgot_password' }
-          format.json { render json: @user.errors, status: :unprocessable_entity }
-        end
+      @user = User.find_by(email: params[:email])
+      if @user.present? && @user.active?
+        @user.generate_password_token!
+        NotificationMailer.password_reset_email(@user).deliver
+        format.html { redirect_to signin_path, notice: "A password reset email has been sent to #{@user.name} at #{@user.email}. Please use the link in that email to reset your password in the next #{User.hours_to_reset_password} hours." }
+      else
+        format.html { redirect_to password_forgot_path, alert: "That email address was not recognized." }
+      end
+    end
+  end
+
+  def reset_password
+    respond_to do |format|
+      user = User.find_by(reset_password_token: params[:token])
+      if user.present? && user.password_token_valid? then
+        sign_in user
+        format.html {redirect_to profile_edit_password_path, notice: "Please enter a new password"}
+      else
+        format.html {redirect_to password_forgot_path, alert: "That email address was not recognized."}
       end
     end
   end
@@ -92,22 +104,6 @@ class UsersController < ApplicationController
     respond_to do |format|
       if params[:user][:password].present? and @user.update(user_params_change_password)
         format.html { redirect_to profile_edit_password_path, notice: 'Your password was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit_password' }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  def reset_password
-    respond_to do |format|
-      random_pw = SecureRandom.hex(8)
-      @user.password = random_pw
-      @user.password_confirmation = random_pw
-      if @user.save
-        NotificationMailer.password_reset_email(@user,current_user,random_pw).deliver
-        format.html { redirect_to users_path, notice: "The password for #{@user.name} was successfully reset. The new password has been emailed to them." }
         format.json { head :no_content }
       else
         format.html { render action: 'edit_password' }

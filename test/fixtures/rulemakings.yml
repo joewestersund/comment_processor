@@ -5,7 +5,6 @@
 #  id              :integer          not null, primary key
 #  rulemaking_name :string
 #  agency          :string
-#  active          :boolean
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #

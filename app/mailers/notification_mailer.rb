@@ -19,12 +19,12 @@ class NotificationMailer < ActionMailer::Base
     mail(to: to, cc: cc, subject: "a CAO comment response category has been assigned to you: '#{@category.category_name}'")
   end
 
-  def password_reset_email(user_to_reset)
-    @user_to_reset = user_to_reset
-    @url = signin_url
+  def password_reset_email(user)
+    @user = user
+    @url = "#{Rails.configuration.action_mailer.default_url_options[:host]}/password/reset/#{@user.reset_password_token}"
 
-    to = @user_to_reset.email_address_with_name
-
+    to = @user.email_address_with_name
+    cc = nil
     mail(to: to, cc: cc, subject: 'Link to reset your password for comment response')
 
   end

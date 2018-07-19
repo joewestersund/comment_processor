@@ -14,4 +14,10 @@
 class UserPermission < ApplicationRecord
   belongs_to :rulemaking
   belongs_to :user
+
+  validate do
+    if self.read_only? && self.admin?
+      self.errors.add :base, "cannot be read_only and an admin."
+    end
+  end
 end

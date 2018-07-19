@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180718183810) do
+ActiveRecord::Schema.define(version: 20180719004135) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -116,7 +116,6 @@ ActiveRecord::Schema.define(version: 20180718183810) do
   create_table "rulemakings", force: :cascade do |t|
     t.string "rulemaking_name"
     t.string "agency"
-    t.boolean "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -141,7 +140,7 @@ ActiveRecord::Schema.define(version: 20180718183810) do
     t.boolean "active"
     t.integer "last_rulemaking_viewed"
     t.string "reset_password_token"
-    t.datetime "reset_passwod_sent_at"
+    t.datetime "password_reset_sent_at"
   end
 
   add_foreign_key "categories", "category_response_types", on_delete: :nullify
