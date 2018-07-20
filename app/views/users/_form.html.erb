@@ -24,12 +24,8 @@
     <%= f.check_box :active, disabled: locals[:edit_profile] %>
   </div>
   <div class="field">
-    <%= f.label :read_only %>
-    <%= f.check_box :read_only, disabled: locals[:edit_profile] %>
-  </div>
-  <div class="field">
-    <%= f.label :admin %>
-    <%= f.check_box :admin, disabled: locals[:edit_profile] %>
+    <%= f.label :application_admin %>
+    <%= f.check_box :application_admin, disabled: locals[:edit_profile] %>
   </div>
 
   <% if locals[:first_user] %>

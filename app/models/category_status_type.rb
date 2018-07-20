@@ -14,7 +14,7 @@ class CategoryStatusType < ApplicationRecord
   belongs_to :rulemaking
   has_many :categories
 
-  validates :status_text, presence: true, uniqueness: { case_sensitive: false }
-  validates :order_in_list, numericality: { only_integer: true, greater_than: 0}, uniqueness: true
+  validates :status_text, presence: true, uniqueness: { case_sensitive: false, scope: :rulemaking_id }
+  validates :order_in_list, numericality: { only_integer: true, greater_than: 0}, uniqueness: {scope: :rulemaking_id }
 
 end

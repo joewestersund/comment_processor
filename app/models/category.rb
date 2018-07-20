@@ -27,8 +27,8 @@ class Category < ApplicationRecord
   belongs_to :category_response_type, optional: true
   belongs_to :user, foreign_key: 'assigned_to_id', optional: true
 
-  validates :category_name, presence: true, uniqueness: { case_sensitive: false }
-  validates :order_in_list, numericality: { only_integer: true, greater_than: 0}, uniqueness: true
+  validates :category_name, presence: true, uniqueness: { case_sensitive: false, scope: :rulemaking_id }
+  validates :order_in_list, numericality: { only_integer: true, greater_than: 0}, uniqueness: {scope: :rulemaking_id }
 
   def self.csv_header
     ['Order In List', 'Category Name', 'Description', 'Response Text', 'Response Type', 'Assigned To',

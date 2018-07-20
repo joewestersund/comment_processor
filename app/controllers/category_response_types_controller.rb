@@ -9,7 +9,7 @@ class CategoryResponseTypesController < ApplicationController
   # GET /category_response_types
   # GET /category_response_types.json
   def index
-    @category_response_types = CategoryResponseType.order(:order_in_list).all
+    @category_response_types = current_rulemaking.category_response_types.order(:order_in_list).all
   end
 
   # GET /category_response_types/1
@@ -28,6 +28,7 @@ class CategoryResponseTypesController < ApplicationController
   # GET /category_response_types/new
   def new
     @category_response_type = CategoryResponseType.new
+    @category_response_type.rulemaking = current_rulemaking
   end
 
   # GET /category_response_types/1/edit
@@ -38,9 +39,10 @@ class CategoryResponseTypesController < ApplicationController
   # POST /category_response_types.json
   def create
     @category_response_type = CategoryResponseType.new(category_response_type_params)
+    @category_response_type.rulemaking = current_rulemaking
 
     #set the order_in_list
-    crt_max = CategoryResponseType.maximum(:order_in_list)
+    crt_max = current_rulemaking.category_response_types.maximum(:order_in_list)
     @category_response_type.order_in_list = crt_max.nil? ? 1 : crt_max + 1
 
     respond_to do |format|
@@ -79,7 +81,7 @@ class CategoryResponseTypesController < ApplicationController
     #any categories assigned to this response type will be set to null automatically by the foreign key constraint.
     current_CRT_num = @category_response_type.order_in_list
     @category_response_type.destroy
-    handle_delete_of_order_in_list(CategoryResponseType,current_CRT_num)
+    handle_delete_of_order_in_list(current_rulemaking.category_response_types,current_CRT_num)
     respond_to do |format|
       format.html { redirect_to category_response_types_url, notice: 'Category response type was successfully destroyed. Any categories assigned to this response type have been set to response = nil.' }
       format.json { head :no_content }
@@ -89,7 +91,7 @@ class CategoryResponseTypesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_category_response_type
-      @category_response_type = CategoryResponseType.find(params[:id])
+      @category_response_type = current_rulemaking.category_response_types.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -98,7 +100,7 @@ class CategoryResponseTypesController < ApplicationController
     end
 
     def move(up = true)
-      crt = CategoryResponseType.find(params[:id])
+      crt = current_rulemaking.category_response_types.find(params[:id])
 
       if crt.present?
         crt2 = get_adjacent(crt,up)
@@ -119,9 +121,9 @@ class CategoryResponseTypesController < ApplicationController
 
     def get_adjacent(current, get_previous = false)
       if get_previous
-        CategoryResponseType.where("order_in_list < ?",current.order_in_list).order("order_in_list DESC").first
+        current_rulemaking.category_response_types.where("order_in_list < ?",current.order_in_list).order("order_in_list DESC").first
       else
-        CategoryResponseType.where("order_in_list > ?",current.order_in_list).order(:order_in_list).first
+        current_rulemaking.category_response_types.where("order_in_list > ?",current.order_in_list).order(:order_in_list).first
       end
     end
 

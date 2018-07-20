@@ -16,7 +16,7 @@ class CommentDataSource < ApplicationRecord
   belongs_to :rulemaking
   has_many :comments
 
-  validates :data_source_name, presence: true, uniqueness: { case_sensitive: false }
-  validates :comment_download_url, presence: true, uniqueness: { case_sensitive: false }
+  validates :data_source_name, presence: true, uniqueness: { case_sensitive: false, scope: :rulemaking_id }
+  validates :comment_download_url, presence: true, uniqueness: { case_sensitive: false, scope: :rulemaking_id }
 
 end

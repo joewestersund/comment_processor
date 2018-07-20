@@ -14,14 +14,14 @@ class CategoriesController < ApplicationController
   def index
     conditions = get_conditions
     if conditions[0].empty?
-      c = Category.all
+      c = current_rulemaking.categories.all
     else
-      c = Category.where(conditions)
+      c = current_rulemaking.categories.where(conditions)
     end
 
     respond_to do |format|
       format.html {
-        @total_categories = Category.all.count
+        @total_categories = current_rulemaking.categories.all.count
         @filtered = !conditions[0].empty?
         @filter_querystring = remove_empty_elements(filter_params)
 
@@ -55,15 +55,15 @@ class CategoriesController < ApplicationController
   def do_renumber
     #actually do the renumbering
     #since there's a uniqueness and >0 validation, first move them all up
-    max_order_in_list = Category.maximum(:order_in_list)
-    Category.all.each do |cat|
+    max_order_in_list = current_rulemaking.categories.maximum(:order_in_list)
+    current_rulemaking.categories.all.each do |cat|
       cat.order_in_list += max_order_in_list
       cat.save
     end
 
     #now renumber them starting from 1
     order_number = 1
-    Category.order('LOWER(category_name)').each do |cat|
+    current_rulemaking.categories.order('LOWER(category_name)').each do |cat|
       cat.order_in_list = order_number
       cat.save
       order_number += 1
@@ -74,7 +74,7 @@ class CategoriesController < ApplicationController
   end
 
   def copy
-    @categories = Category.order('LOWER(category_name)').all
+    @categories = current_rulemaking.categories.order('LOWER(category_name)').all
   end
 
   def do_copy
@@ -82,28 +82,28 @@ class CategoriesController < ApplicationController
       redirect_to category_copy_path, alert: 'Error: must select which category to copy.'
     end
 
-    existing_category = Category.find(params[:category_id])
+    existing_category = current_rulemaking.categories.find(params[:category_id])
 
     @category = existing_category.duplicate
     @category.category_name = "Copy of #{existing_category.category_name}"
     @category.assigned_to_id = current_user.id
 
     #set the order_in_list
-    c_max = Category.maximum(:order_in_list)
+    c_max = current_rulemaking.categories.maximum(:order_in_list)
     @category.order_in_list = c_max.nil? ? 1 : c_max + 1
 
     if @category.save
       save_change_log(current_user,{category: @category, action_type: 'create copy'})
       redirect_to edit_category_path(@category), notice: "Category was successfully copied"
     else
-      @categories = Category.order('LOWER(category_name)').all
+      @categories = current_rulemaking.categories.order('LOWER(category_name)').all
       render :copy
     end
 
   end
 
   def merge
-    @categories = Category.order('LOWER(category_name)').all
+    @categories = current_rulemaking.categories.order('LOWER(category_name)').all
   end
 
   def merge_preview
@@ -112,8 +112,8 @@ class CategoriesController < ApplicationController
     elsif params[:from_category_id] == params[:to_category_id]
       redirect_to categories_merge_path, alert: "Error: the 'from' category must be different from the 'to' category."
     else
-      @from_category = Category.find(params[:from_category_id])
-      @to_category = Category.find(params[:to_category_id])
+      @from_category = current_rulemaking.categories.find(params[:from_category_id])
+      @to_category = current_rulemaking.categories.find(params[:to_category_id])
       @preview_of_merged_category = @to_category.preview_merge(@from_category)
       @preview_of_merged_category.id = @to_category.id #so that when it's saved, it will save over @to_category.
 
@@ -129,7 +129,7 @@ class CategoriesController < ApplicationController
   end
 
   def do_merge
-    from_category = Category.find(params[:from_category_id])
+    from_category = current_rulemaking.categories.find(params[:from_category_id])
     respond_to do |format|
       if @category.update(category_params)
         @category.comments << (from_category.comments - @category.comments)
@@ -147,28 +147,30 @@ class CategoriesController < ApplicationController
     @category = Category.new
     #by default, assign to whoever created it
     @category.assigned_to_id = current_user.id
+    @category.rulemaking = current_rulemaking
   end
 
   # GET /categories/1
   # GET /categories/1.json
   def show
     get_filtering_and_next_and_previous
-    @change_log_entries = ChangeLogEntry.where(category: @category).order(created_at: :desc).page(params[:page]).per_page(10)
+    @change_log_entries = current_rulemaking.change_log_entries.where(category: @category).order(created_at: :desc).page(params[:page]).per_page(10)
   end
 
   # GET /categories/1/edit
   def edit
     get_filtering_and_next_and_previous
-    @change_log_entries = ChangeLogEntry.where(category: @category).order(created_at: :desc).page(params[:page]).per_page(10)
+    @change_log_entries = current_rulemaking.change_log_entries.where(category: @category).order(created_at: :desc).page(params[:page]).per_page(10)
   end
 
   # POST /categories
   # POST /categories.json
   def create
     @category = Category.new(category_params)
+    @category.rulemaking = current_rulemaking
 
     #set the order_in_list
-    c_max = Category.maximum(:order_in_list)
+    c_max = current_rulemaking.categories.maximum(:order_in_list)
     @category.order_in_list = c_max.nil? ? 1 : c_max + 1
 
     email_sent_text = ""
@@ -226,7 +228,7 @@ class CategoriesController < ApplicationController
       action_type = options[:action_type] || "delete"
       save_change_log(current_user,{object_type: 'category', action_type: action_type, description: "deleted category ID ##{category.order_in_list}, '#{category.category_name}', #{category.as_json}"})
       category.destroy
-      handle_delete_of_order_in_list(Category,current_cat_num)
+      handle_delete_of_order_in_list(current_rulemaking.categories,current_cat_num)
     end
 
     def get_filtering_and_next_and_previous
@@ -235,9 +237,9 @@ class CategoriesController < ApplicationController
 
       conditions = get_conditions
       if conditions[0].empty?
-        c = Category.all
+        c = current_rulemaking.categories.all
       else
-        c = Category.where(conditions)
+        c = current_rulemaking.categories.where(conditions)
       end
 
       @previous_category = c.where("LOWER(category_name) < ?", current_category_category_name).order("LOWER(category_name)").last
@@ -248,7 +250,7 @@ class CategoriesController < ApplicationController
     end
 
     def set_category
-      @category = Category.find_by(id: params[:id])
+      @category = current_rulemaking.categories.find_by(id: params[:id])
       if @category.nil?
         respond_to do |format|
           format.html { redirect_to categories_url, alert: "Category #{params[:id]} was not found." }
@@ -258,9 +260,9 @@ class CategoriesController < ApplicationController
     end
 
     def set_select_options
-      @users = User.order(:name).all
-      @category_status_types = CategoryStatusType.order(:order_in_list).all
-      @category_response_types = CategoryResponseType.order(:order_in_list).all
+      @users = User.includes(:user_permissions).where('user_permissions.rulemaking_id' => current_rulemaking.id).order(:name).all
+      @category_status_types = current_rulemaking.category_status_types.order(:order_in_list).all
+      @category_response_types = current_rulemaking.category_response_types.order(:order_in_list).all
     end
 
   # Never trust parameters from the scary internet, only allow the white list through.
@@ -316,7 +318,7 @@ class CategoriesController < ApplicationController
       end
 
     def move(up = true)
-      c = Category.find(params[:id])
+      c = current_rulemaking.categories.find(params[:id])
 
       if c.present?
         c2 = get_adjacent(c,up)
@@ -337,9 +339,9 @@ class CategoriesController < ApplicationController
 
     def get_adjacent(current, get_previous = false)
       if get_previous
-        Category.where("order_in_list < ?",current.order_in_list).order("order_in_list DESC").first
+        current_rulemaking.categories.where("order_in_list < ?",current.order_in_list).order("order_in_list DESC").first
       else
-        Category.where("order_in_list > ?",current.order_in_list).order(:order_in_list).first
+        current_rulemaking.categories.where("order_in_list > ?",current.order_in_list).order(:order_in_list).first
       end
     end
 

@@ -210,7 +210,6 @@ class CommentsController < ApplicationController
     end
 
     def set_select_options
-      @users = current_rulemaking.user_permissions.includes(:user).order(:name).all
       @categories = current_rulemaking.categories.order('LOWER(category_name)').all
       @comment_status_types = current_rulemaking.comment_status_types.order(:order_in_list).all
       @comment_data_sources = current_rulemaking.comment_data_sources.order(:id).all
