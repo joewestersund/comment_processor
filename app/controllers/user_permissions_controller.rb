@@ -1,10 +1,11 @@
 class UserPermissionsController < ApplicationController
+  before_action :admin_user, except: [:show, :index]
   before_action :set_user_permission, only: [:show, :edit, :update, :destroy]
 
   # GET /user_permissions
   # GET /user_permissions.json
   def index
-    @user_permissions = UserPermission.all
+    @user_permissions = UserPermission.where(rulemaking: current_rulemaking).includes(:user).order("users.name")
   end
 
   # GET /user_permissions/1

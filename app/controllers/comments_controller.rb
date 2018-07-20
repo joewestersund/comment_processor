@@ -16,17 +16,17 @@ class CommentsController < ApplicationController
 
     conditions = get_conditions
     if conditions[0].empty?
-      c = Comment.all
+      c = current_rulemaking.comments.all
     else
       #do left outer join in case there are no conditions on categories
-      c = Comment.where("id IN (?)", Comment.left_outer_joins(:categories).where(conditions).select(:id))
+      c = current_rulemaking.comments.where("id IN (?)", current_rulemaking.comments.left_outer_joins(:categories).where(conditions).select(:id))
     end
     c = c.order(:order_in_list)
 
     respond_to do |format|
       format.html {
-        @total_comments = Comment.count
-        @total_commenters = Comment.sum(:num_commenters)
+        @total_comments = current_rulemaking.comments.count
+        @total_commenters = current_rulemaking.comments.sum(:num_commenters)
         @filtered = !conditions[0].empty?
         @filter_querystring = remove_empty_elements(filter_params_all)
         @comments = c.page(params[:page]).per_page(10)
@@ -45,13 +45,13 @@ class CommentsController < ApplicationController
 
   def import
     #import comments from an outside data source
-    @comment_data_sources = CommentDataSource.where(active:true).order(:data_source_name).all
+    @comment_data_sources = current_rulemaking.comment_data_sources.where(active:true).order(:data_source_name).all
 
   end
 
   def do_import
     #actually do the import
-    cds = CommentDataSource.find_by(id: comment_import_params[:comment_data_source_id])
+    cds = current_rulemaking.comment_data_sources.find_by(id: comment_import_params[:comment_data_source_id])
     comments_imported = import_comments_data(cds)
     save_change_log(current_user,{object_type: 'comment', action_type: 'import', description: "imported #{comments_imported} comments into the database from #{cds.data_source_name}."}) if comments_imported > 0
     redirect_to comments_path, notice: "#{comments_imported} comment(s) were successfully imported into the database."
@@ -78,6 +78,7 @@ class CommentsController < ApplicationController
   def new
     @comment = Comment.new
     #this is only used when someone's manually entering a comment
+    @comment.rulemaking = current_rulemaking
     @comment.manually_entered = true
     @comment.num_commenters = 1
   end
@@ -86,13 +87,13 @@ class CommentsController < ApplicationController
   # GET /comments/1.json
   def show
     get_filtering_and_next_and_previous
-    @change_log_entries = ChangeLogEntry.where(comment: @comment).order(created_at: :desc).page(params[:page]).per_page(10)
+    @change_log_entries = current_rulemaking.change_log_entries.where(comment: @comment).order(created_at: :desc).page(params[:page]).per_page(10)
   end
 
   # GET /comments/1/edit
   def edit
     get_filtering_and_next_and_previous
-    @change_log_entries = ChangeLogEntry.where(comment: @comment).order(created_at: :desc).page(params[:page]).per_page(10)
+    @change_log_entries = current_rulemaking.change_log_entries.where(comment: @comment).order(created_at: :desc).page(params[:page]).per_page(10)
   end
 
   # POST /comments
@@ -105,6 +106,7 @@ class CommentsController < ApplicationController
     next_order_in_list = (c_max.nil? ? 0 : c_max) + 1
     @comment.order_in_list = next_order_in_list
 
+    @comment.rulemaking = current_rulemaking
     @comment.manually_entered = true
 
     respond_to do |format|
@@ -145,7 +147,7 @@ class CommentsController < ApplicationController
     #note: can't associate this change log entry with the comment object, because the comment is about to be destroyed.
     save_change_log(current_user,{object_type: 'comment', action_type: 'delete', description: "deleted comment ID ##{@comment.id} from #{@comment.first_name} #{@comment.last_name}, '#{@comment.comment_text.truncate(1000) if @comment.comment_text.present?}'"})
     @comment.destroy
-    handle_delete_of_order_in_list(Comment,current_comment_num)
+    handle_delete_of_order_in_list(current_rulemaking.comments,current_comment_num)
     respond_to do |format|
       format.html { redirect_to comments_url, notice: 'Comment was successfully deleted.' }
       format.json { head :no_content }
@@ -158,10 +160,10 @@ class CommentsController < ApplicationController
 
       conditions = get_conditions
       if conditions[0].empty?
-        c = Comment.all
+        c = current_rulemaking.comments.all
       else
         #do left outer join in case there are no conditions on categories
-        c = Comment.where("id IN (?)", Comment.left_outer_joins(:categories).where(conditions).select(:id))
+        c = current_rulemaking.comments.where("id IN (?)", current_rulemaking.comments.left_outer_joins(:categories).where(conditions).select(:id))
       end
 
       @previous_comment = c.where("order_in_list < ?", current_comment_order_in_list).order(:order_in_list).last
@@ -173,7 +175,7 @@ class CommentsController < ApplicationController
 
     def save_comment_categories
       previous_categories = @comment.categories.map { |cat| get_category_description(cat)}
-      @categories = Category.where(:id => params[:comment_categories])
+      @categories = current_rulemaking.categories.where(:id => params[:comment_categories])
       @comment.categories.destroy_all
       @comment.categories << @categories
       #subtract out any category IDs that were there before and still are after
@@ -188,7 +190,7 @@ class CommentsController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_comment
-      @comment = Comment.find_by(id: params[:id])
+      @comment = current_rulemaking.comments.find_by(id: params[:id])
       if @comment.nil?
         respond_to do |format|
           format.html { redirect_to comments_url, alert: "Comment #{params[:id]} was not found." }
@@ -208,10 +210,10 @@ class CommentsController < ApplicationController
     end
 
     def set_select_options
-      @users = User.order(:name).all
-      @categories = Category.order('LOWER(category_name)').all
-      @comment_status_types = CommentStatusType.order(:order_in_list).all
-      @comment_data_sources = CommentDataSource.order(:id).all
+      @users = current_rulemaking.user_permissions.includes(:user).order(:name).all
+      @categories = current_rulemaking.categories.order('LOWER(category_name)').all
+      @comment_status_types = current_rulemaking.comment_status_types.order(:order_in_list).all
+      @comment_data_sources = current_rulemaking.comment_data_sources.order(:id).all
     end
 
     def filter_params_in_obj

@@ -2,8 +2,7 @@ class UsersController < ApplicationController
   require 'securerandom'
 
   before_action :signed_in_user, only: [:new, :edit, :edit_profile, :edit_password, :update, :update_password, :show, :destroy, :index]
-  before_action :admin_user, only: [:new, :edit, :destroy]
-  before_action :not_read_only_user, only: [:new, :edit, :create, :destroy]
+  before_action :application_admin_user, only: [:new, :edit, :create, :destroy]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :set_self_as_user, only: [:edit_profile, :edit_password, :update_password]
 
@@ -53,10 +52,10 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1.json
   def update
     respond_to do |format|
-      if @user.admin? && user_params[:admin] != '1' && User.where(admin: true).count == 1
-        flash[:error] = "There must be at least one admin user."
+      if @user.application_admin? && user_params[:application_admin] != '1' && User.where(application_admin: true).count == 1
+        flash[:error] = "There must be at least one application admin user."
         format.html { redirect_to users_path }
-        format.json { render json: @user.errors, status: "Error: there must be at least one admin user." }
+        format.json { render json: @user.errors, status: "Error: there must be at least one application admin user." }
       elsif @user.update(user_params)
         if @user == current_user
           format.html { redirect_to profile_edit_path, notice: 'Your profile was successfully updated.' }
@@ -117,8 +116,8 @@ class UsersController < ApplicationController
   def destroy
     #any categories assigned to this user will be set to assigned_to_id = null automatically by the foreign key constraint.
     respond_to do |format|
-      if @user.admin && User.where(admin: true).count == 1
-        flash[:error] = "The last admin user cannot be deleted."
+      if @user.application_admin? && User.where(application_admin?: true).count == 1
+        flash[:error] = "The last application admin user cannot be deleted."
         format.html { redirect_to users_path }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       else
@@ -141,7 +140,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :email, :admin, :read_only, :active)
+      params.require(:user).permit(:name, :email, :application_admin, :active)
     end
 
     def user_params_first_user

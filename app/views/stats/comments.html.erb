@@ -1,6 +1,7 @@
 <% content_for :title, 'Stats- Comments' %>
 
 <h1>Stats for Comments</h1>
+<h3>Rulemaking: <%= current_rulemaking.rulemaking_name %></h3>
 
 <div class="stats">
   <div>
@@ -124,7 +125,7 @@
       <% @comments_with_multiple_commenters.each do |comment| %>
         <tr>
           <td><%= comment.num_commenters %></td>
-          <td><%= link_to comment.key_info, current_user.read_only? ? comment_path(comment) : edit_comment_path(comment) %></td>
+          <td><%= link_to comment.key_info, current_user.can_edit?(current_rulemaking) ? edit_comment_path(comment) : comment_path(comment) %></td>
         </tr>
       <% end %>
       </tbody>

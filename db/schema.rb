@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180719004135) do
+ActiveRecord::Schema.define(version: 20180720175236) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,8 +30,8 @@ ActiveRecord::Schema.define(version: 20180719004135) do
     t.text "text_from_comments"
     t.text "notes"
     t.integer "rulemaking_id"
-    t.index "lower(category_name)", name: "index_categories_on_lowercase_category_name", unique: true
-    t.index ["order_in_list"], name: "index_categories_on_order_in_list"
+    t.index "rulemaking_id, lower(category_name)", name: "index_categories_on_rulemaking_and_lowercase_category_name", unique: true
+    t.index ["rulemaking_id", "order_in_list"], name: "index_categories_on_rulemaking_id_and_order_in_list"
   end
 
   create_table "categories_comments", id: false, force: :cascade do |t|
@@ -65,10 +65,10 @@ ActiveRecord::Schema.define(version: 20180719004135) do
     t.string "action_type"
     t.string "object_type"
     t.integer "rulemaking_id"
-    t.index ["category_id", "created_at"], name: "index_change_log_entries_on_category_id_and_created_at"
-    t.index ["comment_id", "created_at"], name: "index_change_log_entries_on_comment_id_and_created_at"
-    t.index ["created_at"], name: "index_change_log_entries_on_created_at"
-    t.index ["user_id"], name: "index_change_log_entries_on_user_id"
+    t.index ["rulemaking_id", "category_id", "created_at"], name: "index_cle_on_rulemaking_and_category_and_created_at"
+    t.index ["rulemaking_id", "comment_id", "created_at"], name: "index_cle_on_rulemaking_and_comment_and_created_at"
+    t.index ["rulemaking_id", "created_at"], name: "index_change_log_entries_on_rulemaking_id_and_created_at"
+    t.index ["rulemaking_id", "user_id"], name: "index_change_log_entries_on_rulemaking_id_and_user_id"
   end
 
   create_table "comment_data_sources", force: :cascade do |t|
@@ -109,8 +109,8 @@ ActiveRecord::Schema.define(version: 20180719004135) do
     t.integer "num_commenters"
     t.integer "comment_data_source_id"
     t.integer "rulemaking_id"
-    t.index ["comment_data_source_id"], name: "index_comments_on_comment_data_source_id"
-    t.index ["order_in_list"], name: "index_comments_on_order_in_list"
+    t.index ["rulemaking_id", "comment_data_source_id"], name: "index_comments_on_rulemaking_id_and_comment_data_source_id"
+    t.index ["rulemaking_id", "order_in_list"], name: "index_comments_on_rulemaking_id_and_order_in_list"
   end
 
   create_table "rulemakings", force: :cascade do |t|
@@ -145,10 +145,19 @@ ActiveRecord::Schema.define(version: 20180719004135) do
 
   add_foreign_key "categories", "category_response_types", on_delete: :nullify
   add_foreign_key "categories", "category_status_types", on_delete: :restrict
+  add_foreign_key "categories", "rulemakings", on_delete: :cascade
   add_foreign_key "categories", "users", column: "assigned_to_id", on_delete: :nullify
+  add_foreign_key "category_response_types", "rulemakings", on_delete: :cascade
+  add_foreign_key "category_status_types", "rulemakings", on_delete: :cascade
   add_foreign_key "change_log_entries", "categories", on_delete: :nullify
   add_foreign_key "change_log_entries", "comments", on_delete: :nullify
+  add_foreign_key "change_log_entries", "rulemakings", on_delete: :cascade
   add_foreign_key "change_log_entries", "users", on_delete: :restrict
+  add_foreign_key "comment_data_sources", "rulemakings", on_delete: :cascade
+  add_foreign_key "comment_status_types", "rulemakings", on_delete: :cascade
   add_foreign_key "comments", "comment_data_sources", on_delete: :nullify
   add_foreign_key "comments", "comment_status_types", on_delete: :restrict
+  add_foreign_key "comments", "rulemakings", on_delete: :cascade
+  add_foreign_key "user_permissions", "rulemakings", on_delete: :cascade
+  add_foreign_key "user_permissions", "users", on_delete: :cascade
 end

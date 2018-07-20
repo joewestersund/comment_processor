@@ -1,15 +1,12 @@
 class RulemakingsController < ApplicationController
-  before_action :set_rulemaking, only: [:show, :edit, :update, :destroy]
+  before_action :signed_in_user
+  before_action :application_admin_user
+  before_action :set_rulemaking, only: [:edit, :update, :destroy]
 
   # GET /rulemakings
   # GET /rulemakings.json
   def index
     @rulemakings = Rulemaking.all
-  end
-
-  # GET /rulemakings/1
-  # GET /rulemakings/1.json
-  def show
   end
 
   # GET /rulemakings/new
@@ -28,11 +25,11 @@ class RulemakingsController < ApplicationController
 
     respond_to do |format|
       if @rulemaking.save
-        format.html { redirect_to @rulemaking, notice: 'Rulemaking was successfully created.' }
-        format.json { render :show, status: :created, location: @rulemaking }
+        up = UserPermission.new(rulemaking: @rulemaking, user: current_user, admin: true)
+        up.save
+        format.html { redirect_to rulemakings_path, notice: 'Rulemaking was successfully created.' }
       else
         format.html { render :new }
-        format.json { render json: @rulemaking.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -42,11 +39,9 @@ class RulemakingsController < ApplicationController
   def update
     respond_to do |format|
       if @rulemaking.update(rulemaking_params)
-        format.html { redirect_to @rulemaking, notice: 'Rulemaking was successfully updated.' }
-        format.json { render :show, status: :ok, location: @rulemaking }
+        format.html { redirect_to rulemakings_path, notice: 'Rulemaking was successfully updated.' }
       else
         format.html { render :edit }
-        format.json { render json: @rulemaking.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -57,7 +52,6 @@ class RulemakingsController < ApplicationController
     @rulemaking.destroy
     respond_to do |format|
       format.html { redirect_to rulemakings_url, notice: 'Rulemaking was successfully destroyed.' }
-      format.json { head :no_content }
     end
   end
 
@@ -69,6 +63,6 @@ class RulemakingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def rulemaking_params
-      params.require(:rulemaking).permit(:rulemaking_name, :agency, :active)
+      params.require(:rulemaking).permit(:rulemaking_name, :agency)
     end
 end

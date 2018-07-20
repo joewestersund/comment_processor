@@ -8,20 +8,20 @@ namespace :initialize_rulemakings do
     else
       puts 'adding a rulemaking record for CAO'
       r = Rulemaking.new(rulemaking_name: 'CAO', agency: 'DEQ/OHA')
+      r.save
 
       puts 'connecting existing objects to that record'
 
       object_groups = [Category, CategoryResponseType, CategoryStatusType, ChangeLogEntry, Comment, CommentStatusType]
 
       object_groups.each do |object_type|
-        object_type.each do |object|
-          object.rulemaking = r
-          object.save
+        object_type.in_batches.each do |relation|
+          relation.update_all(rulemaking_id: r.id)
         end
       end
 
       'puts adding user permissions for the new rulemaking'
-      User.each do |u|
+      User.all.each do |u|
         up = UserPermission.new(user: u, rulemaking: r)
         up.admin = u.application_admin
         up.save

@@ -1,6 +1,7 @@
 <% content_for :title, 'Stats- Categories' %>
 
 <h1>Stats for Categories</h1>
+<h3>Rulemaking: <%= current_rulemaking.rulemaking_name %></h3>
 
 <div class="stats">
   <div>
@@ -96,7 +97,7 @@
       <tbody>
       <% @categories_with_no_comments.each do |row| %>
         <tr>
-          <td class="<%= assigned_to_css(row.assigned_to_id) %>"><%= link_to row.category_name, current_user.read_only? ? category_path(row) : edit_category_path(row) %></td>
+          <td class="<%= assigned_to_css(row.assigned_to_id) %>"><%= link_to row.category_name, current_user.can_edit?(current_rulemaking) ? edit_category_path(row) : category_path(row) %></td>
           <td class="<%= assigned_to_css(row.assigned_to_id) %>"><%= row.assigned_to.name if row.assigned_to.present? %></td>
         </tr>
       <% end %>

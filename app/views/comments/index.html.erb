@@ -6,7 +6,7 @@
 
 
 <div class="links">
-  <% if current_user.admin? %>
+  <% if current_user.can_edit?(current_rulemaking) %>
     <%= link_to 'Import comments', comments_import_path %> |
     <%= link_to 'Manually enter a comment', new_comment_path %> |
   <% end %>
@@ -93,7 +93,7 @@
       <th>Comment review status</th>
       <th>Notes</th>
       <th>Categories</th>
-      <th colspan="<%= current_user.read_only? ? 1 : 2 %>"></th>
+      <th colspan="<%= current_user.can_edit?(current_rulemaking) ? 2 : 1 %>"></th>
     </tr>
   </thead>
 
@@ -113,20 +113,20 @@
             <% if index != 0 %>
               <div class="separate">
             <% end %>
-            <%= link_to(c.category_name, current_user.read_only? ? category_path(c) : edit_category_path(c)) %>
+            <%= link_to(c.category_name, current_user.can_edit?(current_rulemaking) ? edit_category_path(c) : category_path(c)) %>
             <% if index != 0 %>
               </div>
             <% end %>
         <% end %></td>
-        <% if current_user.read_only? %>
-          <td><%= link_to 'Show', comment_path(comment,@filter_querystring) %></td>
-        <% else %>
+        <% if current_user.can_edit?(current_rulemaking) %>
           <td><%= link_to 'Edit', edit_comment_path(comment,@filter_querystring) %></td>
           <td>
             <% if comment.manually_entered && current_user.admin? %>
               <%= link_to 'Delete', comment, method: :delete, data: { confirm: "Are you sure you want to delete comment ##{comment.order_in_list}?" } %>
             <% end %>
           </td>
+        <% else %>
+          <td><%= link_to 'Show', comment_path(comment,@filter_querystring) %></td>
         <% end %>
       </tr>
     <% end %>

@@ -20,4 +20,6 @@ class UserPermission < ApplicationRecord
       self.errors.add :base, "cannot be read_only and an admin."
     end
   end
+
+  validates :user_id, uniqueness: { scope: :rulemaking }
 end

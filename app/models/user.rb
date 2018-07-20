@@ -18,7 +18,8 @@
 
 class User < ApplicationRecord
   has_secure_password #adds authenticate method, etc.
-  has_many :user_permissions
+
+  has_many :user_permissions, dependent: :destroy
   has_many :categories
   has_many :change_log_entries
 
@@ -62,6 +63,36 @@ class User < ApplicationRecord
 
   def password_token_valid?
     (self.password_reset_sent_at + User.hours_to_reset_password.hours) > Time.now.utc
+  end
+
+  def admin_for?(rulemaking)
+    return false if rulemaking.nil?
+    if self.application_admin?
+      return true
+    else
+      up = self.user_permissions.where(rulemaking: rulemaking)
+      return up.present? && up.admin?
+    end
+  end
+
+  def can_edit?(rulemaking)
+    return false if rulemaking.nil?
+    if self.application_admin?
+      return true
+    else
+      up = self.user_permissions.where(rulemaking: rulemaking)
+      return up.present? && !up.read_only?
+    end
+  end
+
+  def can_view?(rulemaking)
+    return false if rulemaking.nil?
+    if self.application_admin?
+      return true
+    else
+      up = self.user_permissions.where(rulemaking: rulemaking)
+      return up.present?
+    end
   end
 
   private

@@ -7,8 +7,7 @@
     <tr>
       <th>Rulemaking name</th>
       <th>Agency</th>
-      <th>Active</th>
-      <th colspan="3"></th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
@@ -17,10 +16,8 @@
       <tr>
         <td><%= rulemaking.rulemaking_name %></td>
         <td><%= rulemaking.agency %></td>
-        <td><%= rulemaking.active %></td>
-        <td><%= link_to 'Show', rulemaking %></td>
         <td><%= link_to 'Edit', edit_rulemaking_path(rulemaking) %></td>
-        <td><%= link_to 'Destroy', rulemaking, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Delete', rulemaking, method: :delete, data: { confirm: 'Are you sure you want to delete this rulemaking?' } %></td>
       </tr>
     <% end %>
   </tbody>
