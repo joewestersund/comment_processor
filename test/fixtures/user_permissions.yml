@@ -13,14 +13,32 @@
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  admin: 
-  read_only: 
-  user_id: 
+admin_user_1_permission:
+  read_only: false
+  admin: true
+  user_id: 1
   rulemaking_id: 1
 
-two:
-  admin: 
-  read_only: 
-  user_id: 
+admin_user_2_permission:
+  read_only: false
+  admin: true
+  user_id: 2
+  rulemaking_id: 1
+
+regular_user_permission:
+  read_only: false
+  admin: false
+  user_id: 3
+  rulemaking_id: 1
+
+read_only_user_permission:
+  read_only: true
+  admin: false
+  user_id: 4
+  rulemaking_id: 1
+
+inactive_user_permission:
+  read_only: false
+  admin: false
+  user_id: 5
   rulemaking_id: 1

@@ -17,7 +17,7 @@ class RulemakingsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create rulemaking" do
     assert_difference('Rulemaking.count') do
-      post rulemakings_url, params: { rulemaking: { active: @rulemaking.active, agency: @rulemaking.agency, rulemaking_name: @rulemaking.rulemaking_name } }
+      post rulemakings_url, params: { rulemaking: { agency: @rulemaking.agency, rulemaking_name: @rulemaking.rulemaking_name } }
     end
 
     assert_redirected_to rulemaking_url(Rulemaking.last)
@@ -34,7 +34,7 @@ class RulemakingsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update rulemaking" do
-    patch rulemaking_url(@rulemaking), params: { rulemaking: { active: @rulemaking.active, agency: @rulemaking.agency, rulemaking_name: @rulemaking.rulemaking_name } }
+    patch rulemaking_url(@rulemaking), params: { rulemaking: { agency: @rulemaking.agency, rulemaking_name: @rulemaking.rulemaking_name } }
     assert_redirected_to rulemaking_url(@rulemaking)
   end
 

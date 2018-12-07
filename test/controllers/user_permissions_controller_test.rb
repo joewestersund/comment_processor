@@ -2,7 +2,9 @@ require 'test_helper'
 
 class UserPermissionsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @user_permission = user_permissions(:one)
+    @user = users(:admin_user_1)
+    sign_in_as users(:admin_user_1)
+    @user_permission = user_permissions(:regular_user_permission)
   end
 
   test "should get index" do
@@ -44,5 +46,19 @@ class UserPermissionsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to user_permissions_url
+  end
+
+  test "should not update user permissions to remove last admin for this rulemaking" do
+    assert_difference('UserPermission.where(admin: true).count',-1) do
+      @other_admin_user_permissions = user_permissions(:admin_user_2_permission)
+      patch user_permissions_url(@other_admin_user_permissions), params: { admin: false }
+    end
+
+    assert_no_difference('User.where(admin: true).count') do
+      @last_admin_user_permissions = user_permissions(:admin_user_1_permission)
+      patch user_permissions_url(@last_admin_user_permissions), params: { admin: false }
+    end
+
+    assert_redirected_to users_url
   end
 end
