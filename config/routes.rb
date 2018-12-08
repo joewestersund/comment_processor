@@ -4,13 +4,13 @@ Rails.application.routes.draw do
   resources :user_permissions
   resources :comment_data_sources
   resources :change_log_entries
-  resources :category_response_types
-  post '/category_response_types/:id/move_up', to: 'category_response_types#move_up'
-  post '/category_response_types/:id/move_down', to: 'category_response_types#move_down'
+  resources :suggested_change_response_types
+  post '/suggested_change_response_types/:id/move_up', to: 'suggested_change_response_types#move_up'
+  post '/suggested_change_response_types/:id/move_down', to: 'suggested_change_response_types#move_down'
 
-  resources :category_status_types
-  post '/category_status_types/:id/move_up', to: 'category_status_types#move_up'
-  post '/category_status_types/:id/move_down', to: 'category_status_types#move_down'
+  resources :suggested_change_status_types
+  post '/suggested_change_status_types/:id/move_up', to: 'suggested_change_status_types#move_up'
+  post '/suggested_change_status_types/:id/move_down', to: 'suggested_change_status_types#move_down'
 
   resources :comment_status_types
   post '/comment_status_types/:id/move_up', to: 'comment_status_types#move_up'
@@ -36,16 +36,16 @@ Rails.application.routes.draw do
   get '/profile/edit', to: 'users#edit_profile'
   patch '/profile/update_password', to: 'users#update_password'
 
-  get 'categories/renumber', to: 'categories#renumber'
-  put 'categories/renumber', to: 'categories#do_renumber', as: 'categories_do_renumber'
-  get 'categories/merge', to: 'categories#merge'
-  put 'categories/merge_preview', to: 'categories#merge_preview'
-  post 'categories/:id/merge/:from_category_id', to: 'categories#do_merge', as: 'categories_do_merge'
-  get 'categories/copy', to: 'categories#copy', as: 'category_copy'
-  put 'categories/copy', to: 'categories#do_copy', as: 'category_do_copy'
-  resources :categories
-  post '/categories/:id/move_up', to: 'categories#move_up'
-  post '/categories/:id/move_down', to: 'categories#move_down'
+  get 'suggested_changes/renumber', to: 'suggested_changes#renumber'
+  put 'suggested_changes/renumber', to: 'suggested_changes#do_renumber', as: 'suggested_changes_do_renumber'
+  get 'suggested_changes/merge', to: 'suggested_changes#merge'
+  put 'suggested_changes/merge_preview', to: 'suggested_changes#merge_preview'
+  post 'suggested_changes/:id/merge/:from_suggested_change_id', to: 'suggested_changes#do_merge', as: 'suggested_changes_do_merge'
+  get 'suggested_changes/copy', to: 'suggested_changes#copy', as: 'suggested_change_copy'
+  put 'suggested_changes/copy', to: 'suggested_changes#do_copy', as: 'suggested_change_do_copy'
+  resources :suggested_changes
+  post '/suggested_changes/:id/move_up', to: 'suggested_changes#move_up'
+  post '/suggested_changes/:id/move_down', to: 'suggested_changes#move_down'
 
   get 'comments/import', to: 'comments#import'
   put 'comments/import', to: 'comments#do_import', as: 'comments_do_import'
@@ -58,7 +58,7 @@ Rails.application.routes.draw do
   delete '/signout', to: "sessions#destroy"
 
   get '/stats/comments', to: "stats#comments"
-  get '/stats/categories', to: "stats#categories"
+  get '/stats/suggested_changes', to: "stats#suggested_changes"
 
   root 'static_pages#about'
 

@@ -10,64 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180720175236) do
+ActiveRecord::Schema.define(version: 20181208193432) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "categories", force: :cascade do |t|
-    t.text "category_name"
-    t.text "description"
-    t.text "response_text"
-    t.integer "assigned_to_id"
-    t.integer "category_status_type_id"
-    t.text "action_needed"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "order_in_list"
-    t.boolean "rule_change_made"
-    t.integer "category_response_type_id"
-    t.text "text_from_comments"
-    t.text "notes"
-    t.integer "rulemaking_id"
-    t.index "rulemaking_id, lower(category_name)", name: "index_categories_on_rulemaking_and_lowercase_category_name", unique: true
-    t.index ["rulemaking_id", "order_in_list"], name: "index_categories_on_rulemaking_id_and_order_in_list"
-  end
-
-  create_table "categories_comments", id: false, force: :cascade do |t|
-    t.bigint "comment_id", null: false
-    t.bigint "category_id", null: false
-  end
-
-  create_table "category_response_types", force: :cascade do |t|
-    t.string "response_text"
-    t.integer "order_in_list"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "rulemaking_id"
-  end
-
-  create_table "category_status_types", force: :cascade do |t|
-    t.string "status_text"
-    t.integer "order_in_list"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "rulemaking_id"
-  end
-
   create_table "change_log_entries", force: :cascade do |t|
     t.text "description"
     t.integer "comment_id"
-    t.integer "category_id"
+    t.integer "suggested_change_id"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "action_type"
     t.string "object_type"
     t.integer "rulemaking_id"
-    t.index ["rulemaking_id", "category_id", "created_at"], name: "index_cle_on_rulemaking_and_category_and_created_at"
     t.index ["rulemaking_id", "comment_id", "created_at"], name: "index_cle_on_rulemaking_and_comment_and_created_at"
     t.index ["rulemaking_id", "created_at"], name: "index_change_log_entries_on_rulemaking_id_and_created_at"
+    t.index ["rulemaking_id", "suggested_change_id", "created_at"], name: "index_cle_on_rulemaking_and_suggested_change_and_created_at"
     t.index ["rulemaking_id", "user_id"], name: "index_change_log_entries_on_rulemaking_id_and_user_id"
   end
 
@@ -113,11 +73,51 @@ ActiveRecord::Schema.define(version: 20180720175236) do
     t.index ["rulemaking_id", "order_in_list"], name: "index_comments_on_rulemaking_id_and_order_in_list"
   end
 
+  create_table "comments_suggested_changes", id: false, force: :cascade do |t|
+    t.bigint "comment_id", null: false
+    t.bigint "suggested_change_id", null: false
+  end
+
   create_table "rulemakings", force: :cascade do |t|
     t.string "rulemaking_name"
     t.string "agency"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "suggested_change_response_types", force: :cascade do |t|
+    t.string "response_text"
+    t.integer "order_in_list"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "rulemaking_id"
+  end
+
+  create_table "suggested_change_status_types", force: :cascade do |t|
+    t.string "status_text"
+    t.integer "order_in_list"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "rulemaking_id"
+  end
+
+  create_table "suggested_changes", force: :cascade do |t|
+    t.text "suggested_change_name"
+    t.text "description"
+    t.text "response_text"
+    t.integer "assigned_to_id"
+    t.integer "suggested_change_status_type_id"
+    t.text "action_needed"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "order_in_list"
+    t.boolean "rule_change_made"
+    t.integer "suggested_change_response_type_id"
+    t.text "text_from_comments"
+    t.text "notes"
+    t.integer "rulemaking_id"
+    t.index "rulemaking_id, lower(suggested_change_name)", name: "index_suggested_changes_on_rulemaking_and_suggested_change_name", unique: true
+    t.index ["rulemaking_id", "order_in_list"], name: "index_suggested_changes_on_rulemaking_id_and_order_in_list"
   end
 
   create_table "user_permissions", force: :cascade do |t|
@@ -143,21 +143,21 @@ ActiveRecord::Schema.define(version: 20180720175236) do
     t.datetime "password_reset_sent_at"
   end
 
-  add_foreign_key "categories", "category_response_types", on_delete: :nullify
-  add_foreign_key "categories", "category_status_types", on_delete: :restrict
-  add_foreign_key "categories", "rulemakings", on_delete: :cascade
-  add_foreign_key "categories", "users", column: "assigned_to_id", on_delete: :nullify
-  add_foreign_key "category_response_types", "rulemakings", on_delete: :cascade
-  add_foreign_key "category_status_types", "rulemakings", on_delete: :cascade
-  add_foreign_key "change_log_entries", "categories", on_delete: :nullify
   add_foreign_key "change_log_entries", "comments", on_delete: :nullify
   add_foreign_key "change_log_entries", "rulemakings", on_delete: :cascade
+  add_foreign_key "change_log_entries", "suggested_changes", on_delete: :nullify
   add_foreign_key "change_log_entries", "users", on_delete: :restrict
   add_foreign_key "comment_data_sources", "rulemakings", on_delete: :cascade
   add_foreign_key "comment_status_types", "rulemakings", on_delete: :cascade
   add_foreign_key "comments", "comment_data_sources", on_delete: :nullify
   add_foreign_key "comments", "comment_status_types", on_delete: :restrict
   add_foreign_key "comments", "rulemakings", on_delete: :cascade
+  add_foreign_key "suggested_change_response_types", "rulemakings", on_delete: :cascade
+  add_foreign_key "suggested_change_status_types", "rulemakings", on_delete: :cascade
+  add_foreign_key "suggested_changes", "rulemakings", on_delete: :cascade
+  add_foreign_key "suggested_changes", "suggested_change_response_types", on_delete: :nullify
+  add_foreign_key "suggested_changes", "suggested_change_status_types", on_delete: :restrict
+  add_foreign_key "suggested_changes", "users", column: "assigned_to_id", on_delete: :nullify
   add_foreign_key "user_permissions", "rulemakings", on_delete: :cascade
   add_foreign_key "user_permissions", "users", on_delete: :cascade
 end

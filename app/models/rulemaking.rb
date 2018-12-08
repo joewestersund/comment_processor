@@ -10,9 +10,9 @@
 #
 
 class Rulemaking < ApplicationRecord
-  has_many :categories, dependent: :destroy
-  has_many :category_response_types , dependent: :destroy
-  has_many :category_status_types, dependent: :destroy
+  has_many :suggested_changes, dependent: :destroy
+  has_many :suggested_change_response_types , dependent: :destroy
+  has_many :suggested_change_status_types, dependent: :destroy
   has_many :change_log_entries, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :comment_data_sources, dependent: :destroy

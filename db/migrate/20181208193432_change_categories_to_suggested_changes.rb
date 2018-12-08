@@ -32,7 +32,7 @@ class ChangeCategoriesToSuggestedChanges < ActiveRecord::Migration[5.1]
     #re-add indices
 
     add_index :suggested_changes, 'rulemaking_id, lower(suggested_change_name)',
-              name: "index_suggested_changes_on_rulemaking_and_lowercase_suggested_change_name",
+              name: "index_suggested_changes_on_rulemaking_and_suggested_change_name",
               unique: true
     add_index :suggested_changes, [:rulemaking_id, :order_in_list]
     add_index :change_log_entries, [:rulemaking_id,:suggested_change_id, :created_at], name: 'index_cle_on_rulemaking_and_suggested_change_and_created_at'

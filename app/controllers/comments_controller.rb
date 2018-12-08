@@ -19,7 +19,7 @@ class CommentsController < ApplicationController
       c = current_rulemaking.comments.all
     else
       #do left outer join in case there are no conditions on categories
-      c = current_rulemaking.comments.where("id IN (?)", current_rulemaking.comments.left_outer_joins(:categories).where(conditions).select(:id))
+      c = current_rulemaking.comments.where("id IN (?)", current_rulemaking.comments.left_outer_joins(:suggested_changes).where(conditions).select(:id))
     end
     c = c.order(:order_in_list)
 
@@ -163,7 +163,7 @@ class CommentsController < ApplicationController
         c = current_rulemaking.comments.all
       else
         #do left outer join in case there are no conditions on categories
-        c = current_rulemaking.comments.where("id IN (?)", current_rulemaking.comments.left_outer_joins(:categories).where(conditions).select(:id))
+        c = current_rulemaking.comments.where("id IN (?)", current_rulemaking.comments.left_outer_joins(:suggested_changes).where(conditions).select(:id))
       end
 
       @previous_comment = c.where("order_in_list < ?", current_comment_order_in_list).order(:order_in_list).last

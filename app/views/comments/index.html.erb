@@ -55,7 +55,7 @@
         <%= text_field_tag :summary, params[:summary] %>
       </div>
       <div class="field">
-        <%= label_tag :categories %>
+        <%= label_tag :suggested_changes %>
         <%= select_tag :category_id, options_from_collection_for_select(@categories,:id,:category_name,params[:category_id]), { :include_blank => true, class: "selectpicker", "data-live-search" => "true" } %>
       </div>
       <div class="field">

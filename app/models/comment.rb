@@ -26,7 +26,7 @@ include ApplicationHelper
 #
 
 class Comment < ApplicationRecord
-  has_and_belongs_to_many :categories
+  has_and_belongs_to_many :suggested_changes
   has_many :change_log_entries
   belongs_to :rulemaking
   belongs_to :comment_status_type

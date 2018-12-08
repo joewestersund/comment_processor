@@ -20,7 +20,7 @@ class User < ApplicationRecord
   has_secure_password #adds authenticate method, etc.
 
   has_many :user_permissions, dependent: :destroy
-  has_many :categories
+  has_many :suggested_changes
   has_many :change_log_entries
 
   before_save { |user| user.email.downcase! }

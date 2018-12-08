@@ -12,7 +12,7 @@
 
 class CategoryResponseType < ApplicationRecord
   belongs_to :rulemaking
-  has_many :categories
+  has_many :suggested_changes
 
   validates :response_text, presence: true, uniqueness: { case_sensitive: false, scope: :rulemaking_id }
   validates :order_in_list, numericality: { only_integer: true, greater_than: 0}, uniqueness: {scope: :rulemaking_id }

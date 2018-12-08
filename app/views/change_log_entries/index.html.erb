@@ -23,7 +23,7 @@
       </div>
       <div class="field">
         <%= label_tag :category_id, "Categories" %>
-        <%= select_tag :category_id, options_from_collection_for_select(@categories,:category_id,:category_name,params[:category_id]), { :include_blank => true, class: "selectpicker", "data-live-search" => "true" } %>
+        <%= select_tag :category_id, options_from_collection_for_select(@categories,:suggested_change_id,:suggested_change_name,params[:suggested_change_id]), { :include_blank => true, class: "selectpicker", "data-live-search" => "true" } %>
       </div>
       <div class="field">
         <%= label_tag :description  %>
