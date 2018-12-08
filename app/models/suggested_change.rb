@@ -27,11 +27,11 @@ class Category < ApplicationRecord
   belongs_to :suggested_change_response_type, optional: true
   belongs_to :user, foreign_key: 'assigned_to_id', optional: true
 
-  validates :category_name, presence: true, uniqueness: { case_sensitive: false, scope: :rulemaking_id }
+  validates :suggested_change_name, presence: true, uniqueness: { case_sensitive: false, scope: :rulemaking_id }
   validates :order_in_list, numericality: { only_integer: true, greater_than: 0}, uniqueness: {scope: :rulemaking_id }
 
   def self.csv_header
-    ['Order In List', 'Category Name', 'Description', 'Response Text', 'Response Type', 'Assigned To',
+    ['Order In List', 'Suggesed Change Name', 'Description', 'Response Text', 'Response Type', 'Assigned To',
      'Status', 'Action Needed', 'Rule Change Made', 'Comments (by their "order in list")', '# of Comments', '# of Commenters', 'ID', 'Text from Comments', 'Notes']
   end
 
@@ -74,7 +74,7 @@ class Category < ApplicationRecord
   end
 
   def to_csv
-    [self.order_in_list, self.category_name, self.description, self.response_text,
+    [self.order_in_list, self.suggested_change_name, self.description, self.response_text,
      self.category_response_type.present? ? self.category_response_type.response_text : '',
      self.assigned_to_id.present? ? self.assigned_to.name : '',
      self.category_status_type.present? ? self.category_status_type.status_text : '',

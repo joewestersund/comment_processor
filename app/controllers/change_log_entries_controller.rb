@@ -86,14 +86,14 @@ class ChangeLogEntriesController < ApplicationController
       @users = User.order(:name).all
       comment_select_str = "comment_id, '#' || order_in_list::text || ' ' || first_name || ' ' || last_name || ' (' || organization || ', ' || state || ')' AS key_info"
       @comments = ChangeLogEntry.joins(:comment).select(comment_select_str).group('comment_id, key_info').order('key_info')
-      @categories = ChangeLogEntry.joins(:category).select('category_id, category_name').group('category_id, category_name').order('category_name')
+      @categories = ChangeLogEntry.joins(:suggested_change).select('suggested_change_id, suggested_change_name').group('suggested_change_id, suggested_change_name').order('suggested_change_name')
       @object_types = ChangeLogEntry.select(:object_type).group(:object_type).order(:object_type)
       @action_types = ChangeLogEntry.select(:action_type).group(:action_type).order(:action_type)
 
     end
 
     def filter_params
-      params.permit(:user_id,  :object_type, :action_type, :comment_id, :category_id, :description)
+      params.permit(:user_id,  :object_type, :action_type, :comment_id, :suggested_change_id, :description)
     end
 
     def get_conditions
@@ -115,8 +115,8 @@ class ChangeLogEntriesController < ApplicationController
       conditions[:comment_id] = search_terms.comment_id if search_terms.comment_id.present?
       conditions_string << "comment_id = :comment_id" if search_terms.comment_id.present?
 
-      conditions[:category_id] = search_terms.category_id if search_terms.category_id.present?
-      conditions_string << "category_id = :category_id" if search_terms.category_id.present?
+      conditions[:suggested_change_id] = search_terms.suggested_change_id if search_terms.suggested_change_id.present?
+      conditions_string << "suggested_change_id = :suggested_change_id" if search_terms.suggested_change_id.present?
 
       conditions[:description] = "%#{search_terms.description}%" if search_terms.description.present?
       conditions_string << "description ILIKE :description" if search_terms.description.present?

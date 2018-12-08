@@ -2,6 +2,7 @@ class StatsController < ApplicationController
   before_action :signed_in_user
 
   def comments
+    #TODO need to edit to pull from current rulemaking only
     @total_comments = Comment.count
     @total_commenters = Comment.sum(:num_commenters)
 
@@ -18,11 +19,13 @@ class StatsController < ApplicationController
 
   end
 
-  def categories
-    @total_categories = Category.count
+  def suggested_changes
+    #TODO need to edit to pull from current rulemaking only
+    #TODO need to edit to change from categories to suggested changes
+    @total_suggested_changes = SuggestedChange.count
 
-    @categories_by_status_type = CategoryStatusType.select('category_status_types.*, COUNT(categories.id) as num_categories').joins('LEFT JOIN categories ON category_status_types.id = categories.category_status_type_id').group('category_status_types.id').order(:order_in_list)
-    @categories_with_no_status_type = Category.where(category_status_type_id: nil).count
+    @suggested_changes_by_status_type = SuggestedChangeStatusType.select('suggested_change_status_types.*, COUNT(suggested_changes.id) as num_suggested_changes').joins('LEFT JOIN suggested_changes ON suggested_change_status_types.id = suggested_changes.suggested_change_status_type_id').group('suggested_change_status_types.id').order(:order_in_list)
+    @suggested_changes_with_no_status_type = SuggestedChange.where(suggested_change_status_type_id: nil).count
 
     @categories_with_no_comments = Category.joins('LEFT JOIN categories_comments ON categories.id = categories_comments.category_id').where('categories_comments.category_id IS NULL').order(:category_name)
 
@@ -46,6 +49,7 @@ class StatsController < ApplicationController
   private
 
   def get_status_row_this_user(user_id, user_name, total_categories_this_user)
+    #TODO need to edit to pull from current rulemaking only
     row = {user_id: user_id, name: user_name, total_categories: total_categories_this_user}
     user_id_condition = user_id.nil? ? "categories.assigned_to_id IS NULL" : "categories.assigned_to_id = #{user_id}"
     status_types = CategoryStatusType.select('category_status_types.*, categories.assigned_to_id, COUNT(categories.id) as num_categories').joins('LEFT JOIN categories ON category_status_types.id = categories.category_status_type_id').where(user_id_condition).group('category_status_types.id, assigned_to_id')

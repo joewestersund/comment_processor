@@ -18,7 +18,7 @@ class ChangeLogEntry < ApplicationRecord
 
   belongs_to :rulemaking
   belongs_to :comment, optional: true
-  belongs_to :category, optional: true
+  belongs_to :suggested_change, optional: true
   belongs_to :user
 
 end
