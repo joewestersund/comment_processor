@@ -1,13 +1,13 @@
 <% help_file = 'https://docs.google.com/document/d/1D8PyA39FPCCvIPf_kt8fP3zBownkA9hqEjb5bhb2y4g/edit?usp=sharing'
   comments_help_bookmark = '#heading=h.xp72q332o3mo'
-  categories_help_bookmark = '#heading=h.wibwm3p0d5zz'
+   suggested_changes_help_bookmark = '#heading=h.wibwm3p0d5zz'
   tips_and_tricks_help_bookmark = '#heading=h.r497g1ushx9t'
 %>
 <%# add navigation links to this file %>
 <% if signed_in? %>
   <% if current_rulemaking.present?%>
   <li class="nav navbar-nav"><%= link_to glyphicon_link("glyphicon-th-list","Comments").html_safe, comments_path %></li>
-  <li class="nav navbar-nav"><%= link_to glyphicon_link("glyphicon-tags","Categories").html_safe, categories_path %></li>
+  <li class="nav navbar-nav"><%= link_to glyphicon_link("glyphicon-tags","Suggested Changes").html_safe, suggested_changes_path %></li>
 
   <li id="fat-menu" class="dropdown nav navbar-nav">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -15,7 +15,7 @@
     </a>
     <ul class="dropdown-menu">
       <li class="nav navbar-nav"><%= link_to "Comments", stats_comments_path %></li>
-      <li class="nav navbar-nav"><%= link_to "Categories", stats_categories_path %></li>
+      <li class="nav navbar-nav"><%= link_to "Suggested Changes", stats_suggested_changes_path %></li>
       <li class="nav navbar-nav"><%= link_to "Recent activity", change_log_entries_path %></li>
     </ul>
   </li>
@@ -40,11 +40,11 @@
       <ul class="dropdown-menu">
         <li class="nav navbar-nav"><%= link_to "Clean Up Comment Text", comments_cleanup_path %></li>
         <li class="nav navbar-nav"><%= link_to "Comment Status Types", comment_status_types_path %></li>
-        <li class="nav navbar-nav"><%= link_to "Category Status Types", category_status_types_path %></li>
-        <li class="nav navbar-nav"><%= link_to "Category Response Types", category_response_types_path %></li>
-        <li class="nav navbar-nav"><%= link_to "Renumber Categories", categories_renumber_path %></li>
-        <li class="nav navbar-nav"><%= link_to "Copy a Category", category_copy_path %></li>
-        <li class="nav navbar-nav"><%= link_to "Merge Categories", categories_merge_path %></li>
+        <li class="nav navbar-nav"><%= link_to "Suggested Change Status Types", suggested_change_status_types_path %></li>
+        <li class="nav navbar-nav"><%= link_to "Suggested Change Response Types", suggested_change_response_types_path %></li>
+        <li class="nav navbar-nav"><%= link_to "Renumber Suggested Changes", suggested_changes_renumber_path %></li>
+        <li class="nav navbar-nav"><%= link_to "Copy a Suggested Change", suggested_change_copy_path %></li>
+        <li class="nav navbar-nav"><%= link_to "Merge Suggested Changes", suggested_changes_merge_path %></li>
         <li class="nav navbar-nav"><%= link_to "User Permissions", user_permissions_path %></li>
         <li class="nav navbar-nav"><%= link_to "Comment Data Sources", comment_data_sources_path %></li>
       </ul>
@@ -66,7 +66,7 @@
     </a>
     <ul class="dropdown-menu">
       <li class="nav navbar-nav"><%= link_to "For reviewing comments", help_file + comments_help_bookmark, target: :_blank %></li>
-      <li class="nav navbar-nav"><%= link_to "For creating and responding to categories", help_file + categories_help_bookmark, target: :_blank %></li>
+      <li class="nav navbar-nav"><%= link_to "For creating and responding to suggested changes", help_file + suggested_changes_help_bookmark, target: :_blank %></li>
       <li class="nav navbar-nav"><%= link_to "Tips and tricks", help_file + tips_and_tricks_help_bookmark, target: :_blank %></li>
     </ul>
   </li>

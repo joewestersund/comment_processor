@@ -1,5 +1,5 @@
-<% content_for :title, 'Category Status Types' %>
-<h1>Category Status Types</h1>
+<% content_for :title, 'Suggested Change Status Types' %>
+<h1>Suggested Change Status Types</h1>
 
 <table>
   <thead>
@@ -11,14 +11,14 @@
   </thead>
 
   <tbody>
-    <% @category_status_types.each_with_index do |category_status_type,index| %>
+    <% @suggested_change_status_types.each_with_index do |suggested_change_status_type,index| %>
       <tr>
-        <td class="<%= status_css(category_status_type)%>" ><%= category_status_type.order_in_list %></td>
-        <td><%= category_status_type.status_text %></td>
-        <td><%= link_to 'Edit', edit_category_status_type_path(category_status_type) %></td>
-        <td><%= link_to 'Delete', category_status_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <td><%= (link_to 'Move Up', "/category_status_types/#{category_status_type.id}/move_up", method: :post) unless index == 0 %></td>
-        <td><%= (link_to 'Move Down', "/category_status_types/#{category_status_type.id}/move_down", method: :post) unless index == @category_status_types.count-1 %></td>
+        <td class="<%= status_css(suggested_change_status_type)%>" ><%= suggested_change_status_type.order_in_list %></td>
+        <td><%= suggested_change_status_type.status_text %></td>
+        <td><%= link_to 'Edit', edit_suggested_change_status_type_path(suggested_change_status_type) %></td>
+        <td><%= link_to 'Delete', suggested_change_status_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= (link_to 'Move Up', "/suggested_change_status_types/#{suggested_change_status_type.id}/move_up", method: :post) unless index == 0 %></td>
+        <td><%= (link_to 'Move Down', "/suggested_change_status_types/#{suggested_change_status_type.id}/move_down", method: :post) unless index == @suggested_change_status_types.count-1 %></td>
       </tr>
     <% end %>
   </tbody>
@@ -26,4 +26,4 @@
 
 <br>
 
-<%= link_to 'New Category Status Type', new_category_status_type_path %>
+<%= link_to 'New Suggested Change Status Type', new_suggested_change_status_type_path %>

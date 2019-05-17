@@ -114,7 +114,7 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
-    #any categories assigned to this user will be set to assigned_to_id = null automatically by the foreign key constraint.
+    #any suggested changes assigned to this user will be set to assigned_to_id = null automatically by the foreign key constraint.
     respond_to do |format|
       if @user.application_admin? && User.where(application_admin?: true).count == 1
         flash[:error] = "The last application admin user cannot be deleted."
@@ -122,7 +122,7 @@ class UsersController < ApplicationController
         format.json { render json: @user.errors, status: :unprocessable_entity }
       else
         @user.destroy
-        format.html { redirect_to users_url, notice: 'User was successfully destroyed. Any categories assigned to this user are now assigned to no one.' }
+        format.html { redirect_to users_url, notice: 'User was successfully destroyed. Any suggested changes assigned to this user are now assigned to no one.' }
         format.json { head :no_content }
       end
     end

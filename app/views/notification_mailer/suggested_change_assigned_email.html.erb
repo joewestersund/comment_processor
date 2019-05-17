@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+</head>
+<body>
+Dear <%= @assigned_to.name %>,
+<p>
+  A suggested_change called <%= link_to @suggested_change.suggested_change_name, @suggested_change_url%> has just been assigned to you in the comment processing database.
+</p>
+
+<div><strong>Suggested Change Name:</strong> <%= @suggested_change.suggested_change_name %></div>
+<div><strong>Description:</strong> <%= @suggested_change.description %></div>
+<div><strong>Response Type:</strong> <%= @suggested_change.suggested_change_response_type.response_text if @suggested_change.suggested_change_response_type.present? %></div>
+<div><strong>Response Text:</strong> <%= @suggested_change.response_text %></div>
+<div><strong>Action Needed:</strong> <%= @suggested_change.action_needed %></div>
+<div><strong>Suggested Change Status:</strong> <%= @suggested_change.suggested_change_status_type.status_text if @suggested_change.suggested_change_status_type.present? %></div>
+<div><strong>Assigned by:</strong> <%= mail_to @assigned_by.email, "#{@assigned_by.name}" %></div>
+</body>
+</html>

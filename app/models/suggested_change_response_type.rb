@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: category_response_types
+# Table name: suggested_change_response_types
 #
 #  id            :integer          not null, primary key
 #  response_text :string
@@ -10,7 +10,7 @@
 #  rulemaking_id :integer
 #
 
-class CategoryResponseType < ApplicationRecord
+class SuggestedChangeResponseType < ApplicationRecord
   belongs_to :rulemaking
   has_many :suggested_changes
 

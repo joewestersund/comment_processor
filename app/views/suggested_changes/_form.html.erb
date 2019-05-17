@@ -1,10 +1,10 @@
-<%= form_with(model: category, local: true, url: form_url) do |form| %>
-  <% if category.errors.any? %>
+<%= form_with(model: suggested_change, local: true, url: form_url) do |form| %>
+  <% if suggested_change.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(category.errors.count, "error") %> prohibited this category from being saved:</h2>
+      <h2><%= pluralize(suggested_change.errors.count, "error") %> prohibited this suggested_change from being saved:</h2>
 
       <ul>
-      <% category.errors.full_messages.each do |message| %>
+      <% suggested_change.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
@@ -13,10 +13,10 @@
 
 
   <div class="field">
-    <% if @category.comments.any? %>
-      <%= link_to("Comments associated with this category: #{comments_and_commenters_text(@category)}", comments_path({category_id: @category.id})) %>
+    <% if @suggested_change.comments.any? %>
+      <%= link_to("Comments associated with this suggested change: #{comments_and_commenters_text(@suggested_change)}", comments_path({suggested_change_id: @suggested_change.id})) %>
     <% else %>
-      Comments associated with this category: none
+      Comments associated with this suggested change: none
     <% end %>
   </div>
 
@@ -25,8 +25,8 @@
   </div>
 
   <div class="field">
-    <%= form.label :category_name %>
-    <%= form.text_field :category_name, id: :category_category_name, class:'long' %>
+    <%= form.label :suggested_change_name %>
+    <%= form.text_field :suggested_change_name, id: :suggested_change_suggested_change_name, class:'long' %>
   </div>
 
   <div class="text-from-comments-box">
@@ -34,49 +34,49 @@
     <div class="text-from-comments hidden %>">
       <div class="field">
         <%= form.label :text_from_comments %>
-        <%= form.trix_editor :text_from_comments, id: :category_text_from_comments %>
+        <%= form.trix_editor :text_from_comments, id: :suggested_change_text_from_comments %>
       </div>
     </div>
   </div>
 
   <div class="field">
-    <%= form.label :category_description %>
-    <%= form.text_area :description, id: :category_description, cols: 300, rows: 3, class: 'bigtextarea' %>
+    <%= form.label :suggested_change_description %>
+    <%= form.text_area :description, id: :suggested_change_description, cols: 300, rows: 3, class: 'bigtextarea' %>
   </div>
 
   <div class="field">
-    <%= form.label :category_response_type, "DEQ/OHA response type" %>
-    <%= form.collection_select :category_response_type_id, @category_response_types, :id, :response_text, :selected => @category.category_response_type_id, include_blank: true  %>
+    <%= form.label :suggested_change_response_type, "Agency response type" %>
+    <%= form.collection_select :suggested_change_response_type_id, @suggested_change_response_types, :id, :response_text, :selected => @suggested_change.suggested_change_response_type_id, include_blank: true  %>
   </div>
 
   <div class="field">
     <%= form.label :response_text %>
-    <%= form.text_area :response_text, id: :category_response_text, cols: 300, rows: 7, class: 'bigtextarea' %>
+    <%= form.text_area :response_text, id: :suggested_change_response_text, cols: 300, rows: 7, class: 'bigtextarea' %>
   </div>
 
   <div class="field">
     <%= form.label :assigned_to_id %>
-    <%= form.collection_select :assigned_to_id, @users, :id, :name, :selected => @category.assigned_to_id, include_blank: true  %>
+    <%= form.collection_select :assigned_to_id, @users, :id, :name, :selected => @suggested_change.assigned_to_id, include_blank: true  %>
   </div>
 
   <div class="field">
-    <%= form.label :category_review_status %>
-    <%= form.collection_select :category_status_type_id, @category_status_types, :id, :status_text, :selected => @category.category_status_type_id, prompt: true  %>
+    <%= form.label :suggested_change_review_status %>
+    <%= form.collection_select :suggested_change_status_type_id, @suggested_change_status_types, :id, :status_text, :selected => @suggested_change.suggested_change_status_type_id, prompt: true  %>
   </div>
 
   <div class="field">
     <%= form.label :rule_change_made, "Rule change made?", title: "Checked if the draft rule language has been updated to include the suggested change." %>
-    <%= form.check_box :rule_change_made, id: :category_rule_change_made %>
+    <%= form.check_box :rule_change_made, id: :suggested_change_rule_change_made %>
   </div>
 
   <div class="field">
     <%= form.label :action_needed %>
-    <%= form.text_field :action_needed, id: :category_action_needed, class:'long' %>
+    <%= form.text_field :action_needed, id: :suggested_change_action_needed, class:'long' %>
   </div>
 
   <div class="field">
     <%= form.label :notes %>
-    <%= form.trix_editor :notes, id: :category_notes %>
+    <%= form.trix_editor :notes, id: :suggested_change_notes %>
   </div>
 
   <div class="actions">

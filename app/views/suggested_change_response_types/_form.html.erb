@@ -1,10 +1,10 @@
-<%= form_with(model: category_response_type, local: true) do |form| %>
-  <% if category_response_type.errors.any? %>
+<%= form_with(model: suggested_change_response_type, local: true) do |form| %>
+  <% if suggested_change_response_type.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(category_response_type.errors.count, "error") %> prohibited this category_response_type from being saved:</h2>
+      <h2><%= pluralize(suggested_change_response_type.errors.count, "error") %> prohibited this suggested_change_response_type from being saved:</h2>
 
       <ul>
-      <% category_response_type.errors.full_messages.each do |message| %>
+      <% suggested_change_response_type.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= form.label :response_text %>
-    <%= form.text_field :response_text, id: :category_response_type_response_text %>
+    <%= form.text_field :response_text, id: :suggested_change_response_type_response_text %>
   </div>
 
   <div class="actions">

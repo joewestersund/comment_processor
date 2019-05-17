@@ -1,28 +1,28 @@
-<% content_for :title, 'Merge Categories' %>
+<% content_for :title, 'Merge suggested_changes' %>
 
-<h1>Merge Categories</h1>
+<h1>Merge Suggested Changes</h1>
 
-<p>If two categories overlap, use this feature to merge one into another.</p>
+<p>If two Suggested Changes overlap, use this feature to merge one into another.</p>
 <p>Here's what that will do:</p>
 <ul>
-  <li>Any comments tagged to the 'from' category will be moved to the 'to' category</li>
+  <li>Any comments tagged to the 'from' Suggested Change will be moved to the 'to' Suggested Change</li>
   <li>The text from comments, description, response text, action needed and notes
-    from the 'from' category will be appended to the 'to' category</li>
-  <li>The category name, response type, assigned to person, category review status and rule change made checkbox values
-    for the 'to' category will stay the same</li>
-  <li>The 'from' category will be deleted (but a record of the deletion will be kept)</li>
+    from the 'from' Suggested Change will be appended to the 'to' Suggested Change</li>
+  <li>The Suggested Change name, response type, assigned to person, review status and rule change made checkbox values
+    for the 'to' Suggested Change will stay the same</li>
+  <li>The 'from' Suggested Change will be deleted (but a record of the deletion will be kept)</li>
 </ul>
 <p>You'll get a chance to see the changes before they are saved.</p>
 
 
-<%= form_tag(categories_merge_preview_path, method: "put") do %>
+<%= form_tag(suggested_changes_merge_preview_path, method: "put") do %>
   <div class="field">
-    <%= label_tag :from_category, "Merge from" %>
-    <%= select_tag :from_category_id, options_from_collection_for_select(@categories,:id,:category_name,params[:from_category_id]), { :include_blank => true, class: "selectpicker", "data-live-search" => "true" } %>
+    <%= label_tag :from_suggested_change, "Merge from" %>
+    <%= select_tag :from_suggested_change_id, options_from_collection_for_select(@suggested_changes,:id,:suggested_change_name,params[:from_suggested_change_id]), { :include_blank => true, class: "selectpicker", "data-live-search" => "true" } %>
   </div>
   <div class="field">
-    <%= label_tag :to_category, "Merge into" %>
-    <%= select_tag :to_category_id, options_from_collection_for_select(@categories,:id,:category_name,params[:to_category_id]), { :include_blank => true, class: "selectpicker", "data-live-search" => "true" } %>
+    <%= label_tag :to_suggested_change, "Merge into" %>
+    <%= select_tag :to_suggested_change_id, options_from_collection_for_select(@suggested_changes,:id,:suggested_change_name,params[:to_suggested_change_id]), { :include_blank => true, class: "selectpicker", "data-live-search" => "true" } %>
   </div>
   <%= submit_tag('Preview Merge', { class: 'btn btn-large btn-primary'})%>
 <% end %>

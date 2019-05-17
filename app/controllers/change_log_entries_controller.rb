@@ -79,14 +79,14 @@ class ChangeLogEntriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def change_log_entry_params
-      params.require(:change_log_entry).permit(:description, :comment_id, :category_id, :user_id)
+      params.require(:change_log_entry).permit(:description, :comment_id, :suggested_change_id, :user_id)
     end
 
     def set_select_options
       @users = User.order(:name).all
       comment_select_str = "comment_id, '#' || order_in_list::text || ' ' || first_name || ' ' || last_name || ' (' || organization || ', ' || state || ')' AS key_info"
       @comments = ChangeLogEntry.joins(:comment).select(comment_select_str).group('comment_id, key_info').order('key_info')
-      @categories = ChangeLogEntry.joins(:suggested_change).select('suggested_change_id, suggested_change_name').group('suggested_change_id, suggested_change_name').order('suggested_change_name')
+      @suggested_changes = ChangeLogEntry.joins(:suggested_change).select('suggested_change_id, suggested_change_name').group('suggested_change_id, suggested_change_name').order('suggested_change_name')
       @object_types = ChangeLogEntry.select(:object_type).group(:object_type).order(:object_type)
       @action_types = ChangeLogEntry.select(:action_type).group(:action_type).order(:action_type)
 

@@ -1,1 +1,1 @@
-json.partial! "category_status_types/category_status_type", category_status_type: @category_status_type
+json.partial! "suggested_change_status_types/suggested_change_status_type", suggested_change_status_type: @suggested_change_status_type

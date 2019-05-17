@@ -1,41 +1,41 @@
-<% content_for :title, 'Show Category' %>
-<h1>Category Details</h1>
+<% content_for :title, 'Show Suggested Change' %>
+<h1>Suggested Change Details</h1>
 
 <div class="next-previous">
   <div>
     Filter: <%= @filtered ? @filter_querystring : 'none' %>
-    <%= link_to 'Edit', categories_path(@filter_querystring) %>
+    <%= link_to 'Edit', suggested_changes_path(@filter_querystring) %>
   </div>
 
   <div>
-    <%= link_to("Previous Category", category_path(@previous_category,@filter_querystring), class: "btn btn-large btn-primary") if @previous_category.present? %>
-    <%= link_to("Next Category", category_path(@next_category,@filter_querystring), class: "btn btn-large btn-primary") if @next_category.present? %>
+    <%= link_to("Previous Suggested Change", suggested_change_path(@previous_suggested_change,@filter_querystring), class: "btn btn-large btn-primary") if @previous_suggested_change.present? %>
+    <%= link_to("Next Suggested Change", suggested_change_path(@next_suggested_change,@filter_querystring), class: "btn btn-large btn-primary") if @next_suggested_change.present? %>
   </div>
 </div>
 
 <table class="show">
   <tbody>
-    <tr><td>Comments associated with this category</td>
-      <td><% if @category.comments.any? %>
-          <%= link_to comments_and_commenters_text(@category), comments_path({category_id: @category.id}) %>
+    <tr><td>Comments associated with this suggested change</td>
+      <td><% if @suggested_change.comments.any? %>
+          <%= link_to comments_and_commenters_text(@suggested_change), comments_path({suggested_change_id: @suggested_change.id}) %>
         <% else %>
           none
         <% end %>
       </td>
     </tr>
-    <tr><td>Category name</td><td><%= @category.category_name %></td></tr>
-    <tr><td>Text from comments</td><td><%= @category.text_from_comments %></td></tr>
-    <tr><td>Description</td><td><%= @category.description %></td></tr>
-    <tr><td>Category response type</td><td><%= @category.category_response_type.response_text if @category.category_response_type.present? %></td>
-    <tr><td>Response text</td><td><%= @category.response_text %></td>
-    <tr><td>Assigned to</td><td><%= @category.assigned_to_name if @category.assigned_to.present? %></td>
-    <tr><td>Category review status</td><td><%= @category.category_status_type.status_text if @category.category_status_type.present? %></td></tr>
-    <tr><td>Rule change made?</td><td><%= show_boolean_value(@category.rule_change_made) %></td></tr>
-    <tr><td>Action needed</td><td><%= @category.action_needed %></td>
+    <tr><td>Suggested Change name</td><td><%= @suggested_change.suggested_change_name %></td></tr>
+    <tr><td>Text from comments</td><td><%= @suggested_change.text_from_comments %></td></tr>
+    <tr><td>Description</td><td><%= @suggested_change.description %></td></tr>
+    <tr><td>Suggested Change response type</td><td><%= @suggested_change.suggested_change_response_type.response_text if @suggested_change.suggested_change_response_type.present? %></td>
+    <tr><td>Response text</td><td><%= @suggested_change.response_text %></td>
+    <tr><td>Assigned to</td><td><%= @suggested_change.assigned_to_name if @suggested_change.assigned_to.present? %></td>
+    <tr><td>Suggested Change review status</td><td><%= @suggested_change.suggested_change_status_type.status_text if @suggested_change.suggested_change_status_type.present? %></td></tr>
+    <tr><td>Rule change made?</td><td><%= show_boolean_value(@suggested_change.rule_change_made) %></td></tr>
+    <tr><td>Action needed</td><td><%= @suggested_change.action_needed %></td>
   </tbody>
 </table>
 
-<%= link_to 'Index', categories_path(@filter_querystring) %>
+<%= link_to 'Index', suggested_changes_path(@filter_querystring) %>
 
 <div class="change-log-entries-box">
   <button id="show_change_log_entries" class="change-log-entries-button">Show/Hide Previous Activity</button>

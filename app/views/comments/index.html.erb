@@ -56,7 +56,7 @@
       </div>
       <div class="field">
         <%= label_tag :suggested_changes %>
-        <%= select_tag :category_id, options_from_collection_for_select(@categories,:id,:category_name,params[:category_id]), { :include_blank => true, class: "selectpicker", "data-live-search" => "true" } %>
+        <%= select_tag :suggested_change_id, options_from_collection_for_select(@suggested_changes,:id,:suggested_change_name,params[:suggested_change_id]), { :include_blank => true, class: "selectpicker", "data-live-search" => "true" } %>
       </div>
       <div class="field">
         <%= label_tag :status %>
@@ -92,7 +92,7 @@
       <th>Summary</th>
       <th>Comment review status</th>
       <th>Notes</th>
-      <th>Categories</th>
+      <th>Suggested Changes</th>
       <th colspan="<%= current_user.can_edit?(current_rulemaking) ? 2 : 1 %>"></th>
     </tr>
   </thead>
@@ -109,11 +109,11 @@
         <td class="<%= highlight_empty_css(comment.summary)%>"><%= comment.summary.truncate(500) if comment.summary.present? %></td>
         <td class="<%= status_css(comment.comment_status_type)%>"><%= comment.comment_status_type.status_text if comment.comment_status_type.present? %></td>
         <td class="trix-content"><%= raw(comment.notes.truncate(300)) if comment.notes.present? %></td>
-        <td class="<%= highlight_empty_css(comment.categories)%>"><% comment.categories.order('LOWER(category_name)').each_with_index do |c,index|%>
+        <td class="<%= highlight_empty_css(comment.suggested_changes)%>"><% comment.suggested_changes.order('LOWER(suggested_change_name)').each_with_index do |c,index|%>
             <% if index != 0 %>
               <div class="separate">
             <% end %>
-            <%= link_to(c.category_name, current_user.can_edit?(current_rulemaking) ? edit_category_path(c) : category_path(c)) %>
+            <%= link_to(c.suggested_change_name, current_user.can_edit?(current_rulemaking) ? edit_suggested_change_path(c) : suggested_change_path(c)) %>
             <% if index != 0 %>
               </div>
             <% end %>

@@ -5,11 +5,11 @@ ready = ->
     maxHeight: 300,
     buttonText: (options, select) ->
       if options.length == 0
-        "No categories selected <b class='caret'></b>"
+        "No Suggested Changes selected <b class='caret'></b>"
       else if options.length > 20
-        options.length + " categories selected <b class='caret'></b>"
+        options.length + " Suggested Changes selected <b class='caret'></b>"
       else
-        firstRow = options.length + " categories selected <b class='caret'></b>"
+        firstRow = options.length + " Suggested Changes selected <b class='caret'></b>"
         labels = [firstRow]
         options.each ->
           if $(this).attr('label') != undefined

@@ -1,21 +1,21 @@
-<% content_for :title, 'Copy a Category' %>
+<% content_for :title, 'Copy a Suggested Change' %>
 
-<h1>Copy a Category</h1>
+<h1>Copy a Suggested Change</h1>
 
-<p>Use this feature if you need to split a category into two.</p>
+<p>Use this feature if you need to split a Suggested Change into two.</p>
 <p>Here's what that will do:</p>
 <ul>
-  <li>No changes will be made to the existing category.</li>
-  <li>A new category will be created, with a category name like 'Copy of X' where X is the existing category name</li>
-  <li>All fields of the existing category will be copied to the new one.</li>
-  <li>The new category will start out as assigned to you.</li>
-  <li>Any comments that point to the existing category will also be set to point to the new category</li>
+  <li>No changes will be made to the existing Suggested Change.</li>
+  <li>A new Suggested Change will be created, with a Suggested Change name like 'Copy of X' where X is the existing Suggested Change name</li>
+  <li>All fields of the existing Suggested Change will be copied to the new one.</li>
+  <li>The new Suggested Change will start out as assigned to you.</li>
+  <li>Any comments that point to the existing Suggested Change will also be set to point to the new Suggested Changev</li>
 </ul>
 
-<%= form_tag(category_do_copy_path, method: "put") do %>
+<%= form_tag(suggested_change_do_copy_path, method: "put") do %>
   <div class="field">
-    <%= label_tag :category_id, "Category to copy" %>
-    <%= select_tag :category_id, options_from_collection_for_select(@categories,:id,:category_name,params[:category_id]), { :include_blank => true, class: "selectpicker", "data-live-search" => "true" } %>
+    <%= label_tag :suggested_change_id, "Suggested Change to copy" %>
+    <%= select_tag :suggested_change_id, options_from_collection_for_select(@suggested_changes,:id,:suggested_change_name,params[:suggested_change_id]), { :include_blank => true, class: "selectpicker", "data-live-search" => "true" } %>
   </div>
-  <%= submit_tag('Create a copy of this category', data: { confirm: "Are you sure you want to create a copy of this category?", class: 'btn btn-large btn-primary'})%>
+  <%= submit_tag('Create a copy of this Suggested Change', data: { confirm: "Are you sure you want to create a copy of this Suggested Change?", class: 'btn btn-large btn-primary'})%>
 <% end %>

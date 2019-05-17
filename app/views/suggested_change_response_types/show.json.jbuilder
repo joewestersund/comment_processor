@@ -1,1 +1,1 @@
-json.partial! "category_response_types/category_response_type", category_response_type: @category_response_type
+json.partial! "suggested_change_response_types/suggested_change_response_type", suggested_change_response_type: @suggested_change_response_type

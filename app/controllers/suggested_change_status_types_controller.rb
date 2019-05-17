@@ -1,15 +1,15 @@
-class CategoryStatusTypesController < ApplicationController
+class SuggestedChangeStatusTypesController < ApplicationController
   include ChangeLogEntriesHelper
 
   before_action :signed_in_user
   before_action :admin_user
   before_action :not_read_only_user, only: [:new, :edit, :create, :update, :destroy, :move_up, :move_down]
-  before_action :set_category_status_type, only: [:show, :edit, :update, :destroy]
+  before_action :set_suggested_change_status_type, only: [:show, :edit, :update, :destroy]
 
-  # GET /category_status_types
-  # GET /category_status_types.json
+  # GET /suggested_change_status_types
+  # GET /suggested_change_status_types.json
   def index
-    @category_status_types = CategoryStatusType.all.order(:order_in_list)
+    @suggested_change_status_types = SuggestedChangeStatusType.all.order(:order_in_list)
   end
 
   def move_up
@@ -20,77 +20,77 @@ class CategoryStatusTypesController < ApplicationController
     move(false)
   end
 
-  # GET /category_status_types/1
-  # GET /category_status_types/1.json
+  # GET /suggested_change_status_types/1
+  # GET /suggested_change_status_types/1.json
   def show
   end
 
-  # GET /category_status_types/new
+  # GET /suggested_change_status_types/new
   def new
-    @category_status_type = CategoryStatusType.new
+    @suggested_change_status_type = SuggestedChangeStatusType.new
   end
 
-  # GET /category_status_types/1/edit
+  # GET /suggested_change_status_types/1/edit
   def edit
   end
 
-  # POST /category_status_types
-  # POST /category_status_types.json
+  # POST /suggested_change_status_types
+  # POST /suggested_change_status_types.json
   def create
-    @category_status_type = CategoryStatusType.new(category_status_type_params)
+    @suggested_change_status_type = SuggestedChangeStatusType.new(suggested_change_status_type_params)
 
     #set the order_in_list
-    cst_max = CategoryStatusType.maximum(:order_in_list)
-    @category_status_type.order_in_list = cst_max.nil? ? 1 : cst_max + 1
+    cst_max = SuggestedChangeStatusType.maximum(:order_in_list)
+    @suggested_change_status_type.order_in_list = cst_max.nil? ? 1 : cst_max + 1
 
     respond_to do |format|
-      if @category_status_type.save
-        save_change_log(current_user,{object_type: 'category status type', action_type: 'create', description: "created category status type ID ##{@category_status_type.id} '#{@category_status_type.status_text}'"})
-        format.html { redirect_to category_status_types_path, notice: 'Category status type was successfully created.' }
-        format.json { render :show, status: :created, location: @category_status_type }
+      if @suggested_change_status_type.save
+        save_change_log(current_user,{object_type: 'suggested change status type', action_type: 'create', description: "created suggested change status type ID ##{@suggested_change_status_type.id} '#{@suggested_change_status_type.status_text}'"})
+        format.html { redirect_to suggested_change_status_types_path, notice: 'Suggested change status type was successfully created.' }
+        format.json { render :show, status: :created, location: @suggested_change_status_type }
       else
         format.html { render :new }
-        format.json { render json: @category_status_type.errors, status: :unprocessable_entity }
+        format.json { render json: @suggested_change_status_type.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # PATCH/PUT /category_status_types/1
-  # PATCH/PUT /category_status_types/1.json
+  # PATCH/PUT /suggested_change_status_types/1
+  # PATCH/PUT /suggested_change_status_types/1.json
   def update
     respond_to do |format|
-      if @category_status_type.update(category_status_type_params)
-        if @category_status_type.previous_changes.any?
-          save_change_log(current_user,{object_type: 'category status type', action_type: 'edit', description: "edited category status type ID ##{@category_status_type.id} to '#{@category_status_type.status_text}'"})
+      if @suggested_change_status_type.update(suggested_change_status_type_params)
+        if @suggested_change_status_type.previous_changes.any?
+          save_change_log(current_user,{object_type: 'suggested change status type', action_type: 'edit', description: "edited suggested change status type ID ##{@suggested_change_status_type.id} to '#{@suggested_change_status_type.status_text}'"})
         end
-        format.html { redirect_to category_status_types_path, notice: 'Category status type was successfully updated.' }
-        format.json { render :show, status: :ok, location: @category_status_type }
+        format.html { redirect_to suggested_change_status_types_path, notice: 'Suggested change status type was successfully updated.' }
+        format.json { render :show, status: :ok, location: @suggested_change_status_type }
       else
         format.html { render :edit }
-        format.json { render json: @category_status_type.errors, status: :unprocessable_entity }
+        format.json { render json: @suggested_change_status_type.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # DELETE /category_status_types/1
-  # DELETE /category_status_types/1.json
+  # DELETE /suggested_change_status_types/1
+  # DELETE /suggested_change_status_types/1.json
   def destroy
-    if CategoryStatusType.count > 1
-      #reassign any categories of this type to the first remaining status type.
-      firstCST = CategoryStatusType.where.not(id: @category_status_type.id).order(:order_in_list).first
-      reassign_categories(@category_status_type,firstCST)
+    if SuggestedChangeStatusType.count > 1
+      #reassign any suggested changes of this type to the first remaining status type.
+      firstCST = SuggestedChangeStatusType.where.not(id: @suggested_change_status_type.id).order(:order_in_list).first
+      reassign_suggested_changes(@suggested_change_status_type,firstCST)
 
-      current_CST_num = @category_status_type.order_in_list
-      save_change_log(current_user,{object_type: 'category status type', action_type: 'delete', description: "deleted category status type ID ##{@category_status_type.id} '#{@category_status_type.status_text}'. Any corresponding categories were reassigned to ID ##{firstCST.id} '#{firstCST.status_text}'."})
-      @category_status_type.destroy
-      handle_delete_of_order_in_list(CategoryStatusType,current_CST_num)
+      current_CST_num = @suggested_change_status_type.order_in_list
+      save_change_log(current_user,{object_type: 'suggested change status type', action_type: 'delete', description: "deleted suggested change status type ID ##{@suggested_change_status_type.id} '#{@suggested_change_status_type.status_text}'. Any corresponding suggested changes were reassigned to ID ##{firstCST.id} '#{firstCST.status_text}'."})
+      @suggested_change_status_type.destroy
+      handle_delete_of_order_in_list(SuggestedChangeStatusType,current_CST_num)
       respond_to do |format|
-        format.html { redirect_to category_status_types_url, notice: "Category status type was successfully deleted. Any categories assigned to this status were reassigned to '#{firstCST.status_text}'." }
+        format.html { redirect_to suggested_change_status_types_url, notice: "Suggested change status type was successfully deleted. Any suggested changes assigned to this status were reassigned to '#{firstCST.status_text}'." }
         format.json { head :no_content }
       end
     else
       respond_to do |format|
-        format.html { redirect_to category_status_types_url, error: 'Cannot delete the last category status type.' }
+        format.html { redirect_to suggested_change_status_types_url, error: 'Cannot delete the last suggested change status type.' }
         format.json { head :no_content }
       end
     end
@@ -98,46 +98,46 @@ class CategoryStatusTypesController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_category_status_type
-      @category_status_type = CategoryStatusType.find(params[:id])
+    def set_suggested_change_status_type
+      @suggested_change_status_type = SuggestedChangeStatusType.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def category_status_type_params
-      params.require(:category_status_type).permit(:status_text, :order_in_list)
+    def suggested_change_status_type_params
+      params.require(:suggested_change_status_type).permit(:status_text, :order_in_list)
     end
 
     def move(up = true)
-      cst = CategoryStatusType.find(params[:id])
+      cst = SuggestedChangeStatusType.find(params[:id])
 
       if cst.present?
         cst2 = get_adjacent(cst,up)
         if cst2.present?
           swap_and_save(cst, cst2)
           respond_to do |format|
-            format.html { redirect_to category_status_types_path }
+            format.html { redirect_to suggested_change_status_types_path }
             format.json { head :no_content }
           end
           return
         end
       end
       respond_to do |format|
-        format.html { redirect_to category_status_types_path, notice: "could not move" }
-        format.json { render json: @category_status_type.errors, status: :unprocessable_entity }
+        format.html { redirect_to suggested_change_status_types_path, notice: "could not move" }
+        format.json { render json: @suggested_change_status_type.errors, status: :unprocessable_entity }
       end
     end
 
     def get_adjacent(current, get_previous = false)
       if get_previous
-        CategoryStatusType.where("order_in_list < ?",current.order_in_list).order("order_in_list DESC").first
+        SuggestedChangeStatusType.where("order_in_list < ?",current.order_in_list).order("order_in_list DESC").first
       else
-        CategoryStatusType.where("order_in_list > ?",current.order_in_list).order(:order_in_list).first
+        SuggestedChangeStatusType.where("order_in_list > ?",current.order_in_list).order(:order_in_list).first
       end
     end
 
-    def reassign_categories(reassign_from_cst, reassign_to_cst)
-      Category.where(category_status_type_id: reassign_from_cst.id).each do |cat|
-        cat.category_status_type_id = reassign_to_cst.id
+    def reassign_suggested_changes(reassign_from_cst, reassign_to_cst)
+      SuggestedChange.where(suggested_change_status_type_id: reassign_from_cst.id).each do |cat|
+        cat.suggested_change_status_type_id = reassign_to_cst.id
         cat.save
       end
     end

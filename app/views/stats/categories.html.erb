@@ -1,11 +1,11 @@
-<% content_for :title, 'Stats- Categories' %>
+<% content_for :title, 'Stats- Suggested Changes' %>
 
-<h1>Stats for Categories</h1>
+<h1>Stats for Suggested Changes</h1>
 <h3>Rulemaking: <%= current_rulemaking.rulemaking_name %></h3>
 
 <div class="stats">
   <div>
-    <%= @total_categories %> categories identified
+    <%= @total_suggested_changes %> suggested changes identified
   </div>
 
 
@@ -13,31 +13,31 @@
     <table>
       <thead>
         <tr>
-          <th colspan="3">Categories by Status</th>
+          <th colspan="3">Suggested Changes by Status</th>
         </tr>
         <tr>
-          <th>Category Status Type</th>
-          <th># of Categories</th>
+          <th>Suggested Change Status Type</th>
+          <th># of Suggested Changes</th>
           <th>%</th>
         </tr>
       </thead>
 
       <tbody>
-        <% @categories_by_status_type.each do |row| %>
+        <% @suggested_changes_by_status_type.each do |row| %>
           <tr>
-            <td><%= link_to row.status_text, categories_path({category_status_type_id: row.id}) %></td>
-            <td class="<%= css_order_in_list('status',row.order_in_list)%>"><%= link_to row.num_categories, categories_path({category_status_type_id: row.id}) %></td>
-            <td class="<%= css_order_in_list('status',row.order_in_list)%>"><%= format_percent(row.num_categories,@total_categories) %></td>
+            <td><%= link_to row.status_text, suggested_changes_path({suggested_change_status_type_id: row.id}) %></td>
+            <td class="<%= css_order_in_list('status',row.order_in_list)%>"><%= link_to row.num_suggested_changes, suggested_changes_path({suggested_change_status_type_id: row.id}) %></td>
+            <td class="<%= css_order_in_list('status',row.order_in_list)%>"><%= format_percent(row.num_suggested_changes,@total_suggested_changes) %></td>
           </tr>
         <% end %>
         <tr>
-          <td class="<%= assigned_to_css(nil) %>">No category status assigned</td>
-          <td class="<%= assigned_to_css(nil) %>"><%= @categories_with_no_status_type %></td>
-          <td class="<%= assigned_to_css(nil) %>"><%= format_percent(@categories_with_no_status_type,@total_categories) %></td>
+          <td class="<%= assigned_to_css(nil) %>">No suggested change status assigned</td>
+          <td class="<%= assigned_to_css(nil) %>"><%= @suggested_changes_with_no_status_type %></td>
+          <td class="<%= assigned_to_css(nil) %>"><%= format_percent(@suggested_changes_with_no_status_type,@total_suggested_changes) %></td>
         </tr>
         <tr>
-          <td><%= link_to "Total", categories_path %></td>
-          <td><%= link_to @total_categories, categories_path %></td>
+          <td><%= link_to "Total", suggested_changes_path %></td>
+          <td><%= link_to @total_suggested_changes, suggested_changes_path %></td>
           <td>100%</td>
         </tr>
       </tbody>
@@ -48,31 +48,31 @@
     <table>
       <thead>
       <tr>
-        <th colspan="3">Categories by Agency Response</th>
+        <th colspan="3">Suggested Changes by Agency Response</th>
       </tr>
       <tr>
         <th>Agency Response</th>
-        <th># of Categories</th>
+        <th># of Suggested Changes</th>
         <th>%</th>
       </tr>
       </thead>
 
       <tbody>
-        <% @categories_by_agency_response.each do |row| %>
+        <% @suggested_changes_by_agency_response.each do |row| %>
           <tr>
-            <td><%= link_to row.response_text, categories_path({category_response_type_id: row.id}) %></td>
-            <td class="<%= css_order_in_list('response',row.order_in_list)%>"><%= link_to row.num_categories, categories_path({category_response_type_id: row.id}) %></td>
-            <td class="<%= css_order_in_list('response',row.order_in_list)%>"><%= format_percent(row.num_categories,@total_categories) %></td>
+            <td><%= link_to row.response_text, suggested_changes_path({suggested_change_response_type_id: row.id}) %></td>
+            <td class="<%= css_order_in_list('response',row.order_in_list)%>"><%= link_to row.num_suggested_changes, suggested_changes_path({suggested_change_response_type_id: row.id}) %></td>
+            <td class="<%= css_order_in_list('response',row.order_in_list)%>"><%= format_percent(row.num_suggested_changes,@total_suggested_changes) %></td>
           </tr>
         <% end %>
         <tr>
           <td class="<%= assigned_to_css(nil) %>">No agency response assigned</td>
-          <td class="<%= assigned_to_css(nil) %>"><%= @categories_with_no_agency_response %></td>
-          <td class="<%= assigned_to_css(nil) %>"><%= format_percent(@categories_with_no_agency_response,@total_categories) %></td>
+          <td class="<%= assigned_to_css(nil) %>"><%= @suggested_changes_with_no_agency_response %></td>
+          <td class="<%= assigned_to_css(nil) %>"><%= format_percent(@suggested_changes_with_no_agency_response,@total_suggested_changes) %></td>
         </tr>
         <tr>
-          <td><%= link_to "Total", categories_path %></td>
-          <td><%= link_to @total_categories, categories_path %></td>
+          <td><%= link_to "Total", suggested_changes_path %></td>
+          <td><%= link_to @total_suggested_change, suggested_change_path %></td>
           <td>100%</td>
         </tr>
       </tbody>
@@ -83,21 +83,21 @@
     <table>
       <thead>
       <tr>
-        <th colspan="2">Categories with no Associated Comments</th>
+        <th colspan="2">Suggested Changes with no Associated Comments</th>
       </tr>
       <tr>
-        <th colspan="2">Comments should be added, or these categories should be deleted.</th>
+        <th colspan="2">Comments should be added, or these Suggested Change objects should be deleted.</th>
       </tr>
       <tr>
-        <th>Category Name</th>
+        <th>Suggested Change Name</th>
         <th>Assigned to</th>
       </tr>
       </thead>
 
       <tbody>
-      <% @categories_with_no_comments.each do |row| %>
+      <% @suggested_changes_with_no_comments.each do |row| %>
         <tr>
-          <td class="<%= assigned_to_css(row.assigned_to_id) %>"><%= link_to row.category_name, current_user.can_edit?(current_rulemaking) ? edit_category_path(row) : category_path(row) %></td>
+          <td class="<%= assigned_to_css(row.assigned_to_id) %>"><%= link_to row.suggested_change_name, current_user.can_edit?(current_rulemaking) ? edit_suggested_change_path(row) : suggested_change_path(row) %></td>
           <td class="<%= assigned_to_css(row.assigned_to_id) %>"><%= row.assigned_to.name if row.assigned_to.present? %></td>
         </tr>
       <% end %>
@@ -109,31 +109,31 @@
     <table>
       <thead>
       <tr>
-        <th colspan="3">Categories by who they're assigned to</th>
+        <th colspan="3">Suggested Changes by who they're assigned to</th>
       </tr>
       <tr>
         <th>User</th>
-        <th># of Categories Assigned to Them</th>
+        <th># of Suggested Changes Assigned to Them</th>
         <th>%</th>
       </tr>
       </thead>
 
       <tbody>
-      <% @categories_by_assigned_to.each do |row| %>
+      <% @suggested_changes_by_assigned_to.each do |row| %>
         <tr>
-          <td class="<%= assigned_to_css(row.id) %>"><%= link_to row.name, categories_path({assigned_to_id: row.id}) %></td>
-          <td class="<%= assigned_to_css(row.id) %>"><%= link_to row.num_categories, categories_path({assigned_to_id: row.id}) %></td>
-          <td class="<%= assigned_to_css(row.id) %>"><%= format_percent(row.num_categories,@total_categories) %></td>
+          <td class="<%= assigned_to_css(row.id) %>"><%= link_to row.name, suggested_changes_path({assigned_to_id: row.id}) %></td>
+          <td class="<%= assigned_to_css(row.id) %>"><%= link_to row.num_suggested_changes, suggested_changes_path({assigned_to_id: row.id}) %></td>
+          <td class="<%= assigned_to_css(row.id) %>"><%= format_percent(row.num_suggested_changes,@total_suggested_changes) %></td>
         </tr>
       <% end %>
       <tr>
         <td class="<%= assigned_to_css(nil) %>">Not assigned to anyone</td>
-        <td class="<%= assigned_to_css(nil) %>"><%= @categories_not_assigned %></td>
-        <td class="<%= assigned_to_css(nil) %>"><%= format_percent(@categories_not_assigned,@total_categories) %></td>
+        <td class="<%= assigned_to_css(nil) %>"><%= @suggested_changes_not_assigned %></td>
+        <td class="<%= assigned_to_css(nil) %>"><%= format_percent(@suggested_changes_not_assigned,@total_suggested_changes) %></td>
       </tr>
       <tr>
-        <td><%= link_to "Total", categories_path %></td>
-        <td><%= link_to @total_categories, categories_path %></td>
+        <td><%= link_to "Total", suggested_changes_path %></td>
+        <td><%= link_to @total_suggested_changes, suggested_changes_path %></td>
         <td>100%</td>
       </tr>
       </tbody>
@@ -144,12 +144,12 @@
     <table>
       <thead>
       <tr>
-        <th colspan="<%= "#{@category_status_types.count + 3}" %>">Categories by who they're assigned to and status</th>
+        <th colspan="<%= "#{@suggested_change_status_types.count + 3}" %>">Suggested Changes by who they're assigned to and status</th>
       </tr>
       <tr>
         <th>User</th>
-        <% @category_status_types.each do |cst| %>
-          <th class="<%= css_order_in_list('status',cst.order_in_list)%>"><%= link_to cst.status_text, categories_path(category_status_type_id: cst.id) %></th>
+        <% @suggested_change_status_types.each do |cst| %>
+          <th class="<%= css_order_in_list('status',cst.order_in_list)%>"><%= link_to cst.status_text, suggested_changes_path(suggested_change_status_type_id: cst.id) %></th>
         <% end %>
         <th>Total</th>
         <th>%</th>
@@ -157,33 +157,33 @@
       </thead>
 
       <tbody>
-      <% @categories_by_assigned_to_and_status.each do |row| %>
+      <% @suggested_changes_by_assigned_to_and_status.each do |row| %>
         <tr>
           <% if row[:user_id].present? %>
-            <td class="<%= assigned_to_css(row[:user_id]) %>"><%= link_to row[:name], categories_path({assigned_to_id: row[:user_id]}) %></td>
+            <td class="<%= assigned_to_css(row[:user_id]) %>"><%= link_to row[:name], suggested_changes_path({assigned_to_id: row[:user_id]}) %></td>
           <% else %>
             <td class="<%= assigned_to_css(nil) %>">Not assigned to anyone</td>
           <% end %>
 
-          <% @category_status_types.each do |cst| %>
+          <% @suggested_change_status_types.each do |cst| %>
             <% if row[cst.id].present? && row[:user_id].present? %>
-              <td class="<%= assigned_to_css(row[:user_id]) %>"><%= link_to row[cst.id], categories_path(assigned_to_id: row[:user_id],category_status_type_id: cst.id)%></td>
+              <td class="<%= assigned_to_css(row[:user_id]) %>"><%= link_to row[cst.id], suggested_changes_path(assigned_to_id: row[:user_id],suggested_change_status_type_id: cst.id)%></td>
             <% elsif row[cst.id].present? %>
               <td class="<%= assigned_to_css(row[:user_id]) %>"><%= row[cst.id] %></td>
             <% else %>
               <td class="<%= assigned_to_css(row[:user_id]) %>"></td>
             <% end %>
           <% end %>
-          <td class="<%= assigned_to_css(row[:user_id]) %>"><%= row[:total_categories] %></td>
-          <td class="<%= assigned_to_css(row[:user_id]) %>"><%= format_percent(row[:total_categories],@total_categories) %></td>
+          <td class="<%= assigned_to_css(row[:user_id]) %>"><%= row[:total_suggested_changes] %></td>
+          <td class="<%= assigned_to_css(row[:user_id]) %>"><%= format_percent(row[:total_suggested_changes],@total_suggested_changes) %></td>
         </tr>
       <% end %>
       <tr>
-        <td><%= link_to "Total", categories_path %></td>
-        <% @categories_by_status_type.each do |cst2| %>
-        <td class="<%= css_order_in_list('status',cst2.order_in_list)%>"><%= link_to cst2.num_categories, categories_path(category_status_type_id: cst2.id) %></td>
+        <td><%= link_to "Total", suggested_changes_path %></td>
+        <% @suggested_changes_by_status_type.each do |cst2| %>
+        <td class="<%= css_order_in_list('status',cst2.order_in_list)%>"><%= link_to cst2.num_suggested_changes, suggested_changes_path(suggested_change_status_type_id: cst2.id) %></td>
       <% end %>
-        <td><%= link_to @total_categories, categories_path %></td>
+        <td><%= link_to @total_suggested_changes, suggested_changes_path %></td>
         <td>100%</td>
       </tr>
       </tbody>

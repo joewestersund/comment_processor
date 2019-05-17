@@ -22,8 +22,8 @@
         <%= select_tag :comment_id, options_from_collection_for_select(@comments,:comment_id,:key_info,params[:comment_id]), { :include_blank => true, class: "selectpicker", "data-live-search" => "true" } %>
       </div>
       <div class="field">
-        <%= label_tag :category_id, "Categories" %>
-        <%= select_tag :category_id, options_from_collection_for_select(@categories,:suggested_change_id,:suggested_change_name,params[:suggested_change_id]), { :include_blank => true, class: "selectpicker", "data-live-search" => "true" } %>
+        <%= label_tag :suggested_change_id, "Suggested Changes" %>
+        <%= select_tag :suggested_change_id, options_from_collection_for_select(@suggested_changes,:suggested_change_id,:suggested_change_name,params[:suggested_change_id]), { :include_blank => true, class: "selectpicker", "data-live-search" => "true" } %>
       </div>
       <div class="field">
         <%= label_tag :description  %>
@@ -63,13 +63,13 @@
         <td>
           <% if current_user.admin?
                com_path = edit_comment_path(change_log_entry.comment) if change_log_entry.comment.present?
-               cat_path = edit_category_path(change_log_entry.category) if change_log_entry.category.present?
+               cat_path = edit_suggested_change_path(change_log_entry.suggested_change if change_log_entry.suggested_change.present?
              else
                com_path = comment_path(change_log_entry.comment) if change_log_entry.comment.present?
-               cat_path = category_path(change_log_entry.category) if change_log_entry.category.present?
+               cat_path = suggested_change_path(change_log_entry.suggested_change) if change_log_entry.suggested_change.present?
              end %>
           <%= link_to "Comment ID ##{change_log_entry.comment.id} (order in list #{change_log_entry.comment.order_in_list}) from #{change_log_entry.comment.first_name} #{change_log_entry.comment.last_name}", com_path if change_log_entry.comment.present? %>
-          <%= link_to "Category ID ##{change_log_entry.category.id} '#{change_log_entry.category.category_name}'", cat_path if change_log_entry.category.present? %>
+          <%= link_to "Suggested Change ID ##{change_log_entry.suggested_change.id} '#{change_log_entry.suggested_change.suggested_change_name}'", cat_path if change_log_entry.suggested_change.present? %>
         </td>
         <td><%= change_log_entry.description %></td>
         <td><%= change_log_entry.created_at.strftime("%Y/%m/%d %H:%M:%S") %></td>

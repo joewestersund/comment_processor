@@ -1,15 +1,15 @@
-<% content_for :title, 'Categories' %>
+<% content_for :title, 'Suggested Changes' %>
 
-<h1>Categories</h1>
+<h1>Suggested Changes</h1>
 
-<div class="links"><%= @total_categories %> categories identified</div>
+<div class="links"><%= @total_suggested_changes %> suggested changes identified</div>
 
 <div class="links">
   <% if current_user.can_edit?(current_rulemaking) %>
-    <%= link_to 'New Category', new_category_path %> |
+    <%= link_to 'New Suggested Change', new_suggested_change_path %> |
   <% end %>
-    Download as <%= link_to "CSV", categories_path(@filter_querystring.merge({format: "csv"})) %>
-    or <%= link_to "XLSX", categories_path(@filter_querystring,format: "xlsx") %>
+    Download as <%= link_to "CSV", suggested_changes_path(@filter_querystring.merge({format: "csv"})) %>
+    or <%= link_to "XLSX", suggested_changes_path(@filter_querystring,format: "xlsx") %>
 </div>
 
 <div class="filter-box">
@@ -17,8 +17,8 @@
   <div class="filter <%="hidden" unless @filtered %>">
     <%= form_tag request.path, method: 'get' do %>
       <div class="field">
-        <%= label_tag :category_name  %>
-        <%= text_field_tag :category_name, params[:category_name] %>
+        <%= label_tag :suggested_change_name  %>
+        <%= text_field_tag :suggested_change_name, params[:suggested_change_name] %>
       </div>
       <div class="field">
         <%= label_tag :text_from_comments  %>
@@ -30,11 +30,11 @@
       </div>
       <div class="field">
         <%= label_tag :status %>
-        <%= select_tag :category_status_type_id, options_from_collection_for_select(@category_status_types,:id,:status_text,params[:category_status_type_id]), { :include_blank => true, class: "selectpicker", "data-live-search" => "true" } %>
+        <%= select_tag :suggested_change_status_type_id, options_from_collection_for_select(@suggested_change_status_types,:id,:status_text,params[:suggested_change_status_type_id]), { :include_blank => true, class: "selectpicker", "data-live-search" => "true" } %>
       </div>
       <div class="field">
         <%= label_tag :response_type, 'Agency response type' %>
-        <%= select_tag :category_response_type_id, options_from_collection_for_select(@category_response_types,:id,:response_text,params[:category_response_type_id]), { :include_blank => true, class: "selectpicker", "data-live-search" => "true" } %>
+        <%= select_tag :suggested_change_response_type_id, options_from_collection_for_select(@suggested_change_response_types,:id,:response_text,params[:suggested_change_response_type_id]), { :include_blank => true, class: "selectpicker", "data-live-search" => "true" } %>
       </div>
       <div class="field">
         <%= label_tag :response_text  %>
@@ -64,13 +64,13 @@
   </div>
 </div>
 
-<%= will_paginate @categories %>
+<%= will_paginate @suggested_changes %>
 <table>
   <thead>
     <tr>
-      <th>Category name</th>
-      <th>Category description</th>
-      <th>Category review status</th>
+      <th>Suggested Change name</th>
+      <th>Suggested Change description</th>
+      <th>Suggested Change review status</th>
       <th>Agency response type</th>
       <th>Response text</th>
       <th>Assigned to</th>
@@ -81,28 +81,28 @@
   </thead>
 
   <tbody>
-    <% @categories.each_with_index do |category,index| %>
+    <% @suggested_changes.each_with_index do |suggested_change,index| %>
       <tr>
-        <td><%= category.category_name %></td>
-        <td><%= category.description.truncate(500) if category.description.present? %></td>
-        <td class="<%= status_css(category.category_status_type)%>"><%= category.category_status_type.status_text if category.category_status_type.present? %></td>
-        <td class="<%= response_css(category.category_response_type)%>"><%= category.category_response_type.response_text if category.category_response_type.present? %></td>
-        <td class="<%= highlight_empty_css(category.response_text)%>"><%= category.response_text.truncate(500) if category.response_text.present? %></td>
-        <td class="<%= assigned_to_css(category.assigned_to_id) %>"><%= category.assigned_to_name %></td>
-        <td class="<%= highlight_filled_css(category.action_needed)%>"><%= category.action_needed.truncate(300) if category.action_needed.present? %></td>
-        <td class="trix-content"><%= raw(category.notes.truncate(500)) if category.notes.present? %></td>
+        <td><%= suggested_change.suggested_change_name %></td>
+        <td><%= suggested_change.description.truncate(500) if suggested_change.description.present? %></td>
+        <td class="<%= status_css(suggested_change.suggested_change_status_type)%>"><%= suggested_change.suggested_change_status_type.status_text if suggested_change.suggested_change_status_type.present? %></td>
+        <td class="<%= response_css(suggested_change.suggested_change_response_type)%>"><%= suggested_change.suggested_change_response_type.response_text if suggested_change.suggested_change_response_type.present? %></td>
+        <td class="<%= highlight_empty_css(suggested_change.response_text)%>"><%= suggested_change.response_text.truncate(500) if suggested_change.response_text.present? %></td>
+        <td class="<%= assigned_to_css(suggested_change.assigned_to_id) %>"><%= suggested_change.assigned_to_name %></td>
+        <td class="<%= highlight_filled_css(suggested_change.action_needed)%>"><%= suggested_change.action_needed.truncate(300) if suggested_change.action_needed.present? %></td>
+        <td class="trix-content"><%= raw(suggested_change.notes.truncate(500)) if suggested_change.notes.present? %></td>
         <% if current_user.can_edit?(current_rulemaking) %>
-          <td><%= link_to 'Edit', edit_category_path(category,@filter_querystring) %></td>
-          <td><%= link_to 'Delete', category, method: :delete, data: { confirm: "Are you sure you want to delete '#{category.category_name}'?" } %></td>
+          <td><%= link_to 'Edit', edit_suggested_change_path(suggested_change,@filter_querystring) %></td>
+          <td><%= link_to 'Delete', suggested_change, method: :delete, data: { confirm: "Are you sure you want to delete '#{suggested_change.suggested_change_name}'?" } %></td>
         <% else %>
-          <td><%= link_to 'Show', category_path(category,@filter_querystring) %></td>
+          <td><%= link_to 'Show', suggested_change_path(suggested_change,@filter_querystring) %></td>
         <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
-<%= will_paginate @categories %>
+<%= will_paginate @suggested_changes %>
 <br>
 <div class="links">
-  <%= link_to 'New Category', new_category_path %>
+  <%= link_to 'New Suggested Change', new_suggested_change_path %>
 </div>

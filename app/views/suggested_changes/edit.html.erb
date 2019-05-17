@@ -1,25 +1,25 @@
-<% content_for :title, 'Edit Category' %>
-<h1>Edit Category</h1>
+<% content_for :title, 'Edit Suggested Change' %>
+<h1>Edit Suggested Change</h1>
 
 <div class="links">
-  <%= link_to 'New Category', new_category_path %>
+  <%= link_to 'New Suggested Change', new_suggested_change_path %>
 </div>
 
 <div class="next-previous">
   <div>
     Filter: <%= @filtered ? @filter_querystring : 'none' %>
-    | <%= link_to 'Back to Index', categories_path(@filter_querystring) %>
+    | <%= link_to 'Back to Index', suggested_changes_path(@filter_querystring) %>
   </div>
 
   <div>
-    <%= link_to("Previous Category", edit_category_path(@previous_category,@filter_querystring), class: "btn btn-large btn-primary") if @previous_category.present? %>
-    <%= link_to("Next Category", edit_category_path(@next_category,@filter_querystring), class: "btn btn-large btn-primary") if @next_category.present? %>
+    <%= link_to("Previous Suggested Change", edit_suggested_change_path(@previous_suggested_change,@filter_querystring), class: "btn btn-large btn-primary") if @previous_suggested_change.present? %>
+    <%= link_to("Next Suggested Change", edit_suggested_change_path(@next_suggested_change,@filter_querystring), class: "btn btn-large btn-primary") if @next_suggested_change.present? %>
   </div>
 </div>
 
-<%= render 'form', category: @category, form_url: category_path(@category,@filter_querystring) %>
+<%= render 'form', suggested_change: @suggested_change, form_url: suggested_change_path(@suggested_change,@filter_querystring) %>
 
-<%= link_to 'Index', categories_path %>
+<%= link_to 'Index', suggested_changes_path %>
 
 <div class="change-log-entries-box">
   <button id="show_change_log_entries" class="change-log-entries-button">Show/Hide Previous Activity</button>

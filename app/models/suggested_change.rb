@@ -1,25 +1,25 @@
 # == Schema Information
 #
-# Table name: categories
+# Table name: suggested_changes
 #
-#  id                        :integer          not null, primary key
-#  category_name             :text
-#  description               :text
-#  response_text             :text
-#  assigned_to_id            :integer
-#  category_status_type_id   :integer
-#  action_needed             :text
-#  created_at                :datetime         not null
-#  updated_at                :datetime         not null
-#  order_in_list             :integer
-#  rule_change_made          :boolean
-#  category_response_type_id :integer
-#  text_from_comments        :text
-#  notes                     :text
-#  rulemaking_id             :integer
+#  id                                :integer          not null, primary key
+#  suggested_change_name             :text
+#  description                       :text
+#  response_text                     :text
+#  assigned_to_id                    :integer
+#  suggested_change_status_type_id   :integer
+#  action_needed                     :text
+#  created_at                        :datetime         not null
+#  updated_at                        :datetime         not null
+#  order_in_list                     :integer
+#  rule_change_made                  :boolean
+#  suggested_change_response_type_id :integer
+#  text_from_comments                :text
+#  notes                             :text
+#  rulemaking_id                     :integer
 #
 
-class Category < ApplicationRecord
+class SuggestedChange < ApplicationRecord
   has_and_belongs_to_many :comments
   has_many :change_log_entries
   belongs_to :rulemaking
@@ -37,13 +37,13 @@ class Category < ApplicationRecord
 
   def self.excel_column_widths
     #create array of same length as csv_header, all containing the same initial value
-    column_widths = Array.new(Category.csv_header.length,:auto)
+    column_widths = Array.new(SuggestedChange.csv_header.length,:auto)
 
     #set column widths for some columns
-    column_widths[Category.csv_header.index('Description')] = 100
-    column_widths[Category.csv_header.index('Response Text')] = 100
-    column_widths[Category.csv_header.index('Text from Comments')] = 100
-    column_widths[Category.csv_header.index('Notes')] = 100
+    column_widths[SuggestedChange.csv_header.index('Description')] = 100
+    column_widths[SuggestedChange.csv_header.index('Response Text')] = 100
+    column_widths[SuggestedChange.csv_header.index('Text from Comments')] = 100
+    column_widths[SuggestedChange.csv_header.index('Notes')] = 100
 
     #return the array
     column_widths
@@ -75,15 +75,15 @@ class Category < ApplicationRecord
 
   def to_csv
     [self.order_in_list, self.suggested_change_name, self.description, self.response_text,
-     self.category_response_type.present? ? self.category_response_type.response_text : '',
+     self.suggested_change_response_type.present? ? self.suggested_change_response_type.response_text : '',
      self.assigned_to_id.present? ? self.assigned_to.name : '',
-     self.category_status_type.present? ? self.category_status_type.status_text : '',
+     self.suggested_change_status_type.present? ? self.suggested_change_status_type.status_text : '',
      self.action_needed, self.rule_change_made, self.comments.order(:source_id).collect{|com| com.order_in_list}.join(", "),
      self.num_comments, self.num_commenters, self.id, remove_html(self.text_from_comments).to_s.truncate(1000), remove_html(self.notes).to_s.truncate(1000)]
   end
 
-  def preview_merge(merge_from_category)
-    return merge_category_fields(merge_from_category,self.duplicate)
+  def preview_merge(merge_from_suggested_change)
+    return merge_suggested_change_fields(merge_from_suggested_change,self.duplicate)
   end
 
   def duplicate
@@ -110,20 +110,20 @@ class Category < ApplicationRecord
     end
   end
 
-  def merge_category_fields(from_category, to_category)
-    multiline_delimiter = "[merged from category '#{from_category.category_name}']"
+  def merge_suggested_change_fields(from_suggested_change, to_suggested_change)
+    multiline_delimiter = "[merged from suggested_change '#{from_suggested_change.suggested_change_name}']"
     short_delimiter = " | "
 
-    #copy over any new comments. Don't copy if a comment is already in to_category
-    to_category.comments << (from_category.comments - to_category.comments)
+    #copy over any new comments. Don't copy if a comment is already in to_suggested_change
+    to_suggested_change.comments << (from_suggested_change.comments - to_suggested_change.comments)
 
-    to_category.text_from_comments = get_merged_text(to_category.text_from_comments,from_category.text_from_comments,multiline_delimiter, {multiline:true, html:true})
-    to_category.description = get_merged_text(to_category.description,from_category.description,multiline_delimiter, {multiline:true})
-    to_category.response_text = get_merged_text(to_category.response_text,from_category.response_text,multiline_delimiter, {multiline:true})
-    to_category.action_needed = get_merged_text(to_category.action_needed,from_category.action_needed,short_delimiter)
-    to_category.notes = get_merged_text(to_category.notes,from_category.notes,multiline_delimiter, {multiline:true, html:true})
+    to_suggested_change.text_from_comments = get_merged_text(to_suggested_change.text_from_comments,from_suggested_change.text_from_comments,multiline_delimiter, {multiline:true, html:true})
+    to_suggested_change.description = get_merged_text(to_suggested_change.description,from_suggested_change.description,multiline_delimiter, {multiline:true})
+    to_suggested_change.response_text = get_merged_text(to_suggested_change.response_text,from_suggested_change.response_text,multiline_delimiter, {multiline:true})
+    to_suggested_change.action_needed = get_merged_text(to_suggested_change.action_needed,from_suggested_change.action_needed,short_delimiter)
+    to_suggested_change.notes = get_merged_text(to_suggested_change.notes,from_suggested_change.notes,multiline_delimiter, {multiline:true, html:true})
 
-    return to_category
+    return to_suggested_change
   end
 
 

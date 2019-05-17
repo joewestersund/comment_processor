@@ -47,7 +47,7 @@
     <table>
       <thead>
         <tr>
-          <th colspan="3">Comments by whether Categories have been assigned</th>
+          <th colspan="3">Comments by whether Suggested Changes have been assigned</th>
         </tr>
         <tr>
           <th></th>
@@ -58,14 +58,14 @@
 
       <tbody>
         <tr>
-          <td><%= "One or more categories have been assigned" %></td>
-          <td><%= @comments_with_categories %></td>
-          <td><%= format_percent(@comments_with_categories,@total_comments) %></td>
+          <td><%= "One or more suggested changes have been assigned" %></td>
+          <td><%= @comments_with_suggested_changes %></td>
+          <td><%= format_percent(@comments_with_suggested_changes,@total_comments) %></td>
         </tr>
         <tr>
-          <td class="<%= assigned_to_css(nil) %>"><%= "No categories have been assigned" %></td>
-          <td class="<%= assigned_to_css(nil) %>"><%= @comments_without_categories %></td>
-          <td class="<%= assigned_to_css(nil) %>"><%= format_percent(@comments_without_categories,@total_comments) %></td>
+          <td class="<%= assigned_to_css(nil) %>"><%= "No suggested changee have been assigned" %></td>
+          <td class="<%= assigned_to_css(nil) %>"><%= @comments_without_suggested_changes %></td>
+          <td class="<%= assigned_to_css(nil) %>"><%= format_percent(@comments_without_suggested_changes,@total_comments) %></td>
         </tr>
         <tr>
           <td><%= link_to "Total", comments_path %></td>

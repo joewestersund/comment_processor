@@ -1,1 +1,1 @@
-json.array! @category_status_types, partial: 'category_status_types/category_status_type', as: :category_status_type
+json.array! @suggested_change_status_types, partial: 'suggested_change_status_types/suggested_change_status_type', as: :suggested_change_status_type

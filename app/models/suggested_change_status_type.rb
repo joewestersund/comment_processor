@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: category_status_types
+# Table name: suggested_change_status_types
 #
 #  id            :integer          not null, primary key
 #  status_text   :string
@@ -10,7 +10,7 @@
 #  rulemaking_id :integer
 #
 
-class CategoryStatusType < ApplicationRecord
+class SuggestedChangeStatusType < ApplicationRecord
   belongs_to :rulemaking
   has_many :suggested_changes
 

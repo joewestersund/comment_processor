@@ -1,0 +1,13 @@
+Dear <%= @assigned_to.name %>,
+
+A suggested change called '<%= @suggested_change.suggested_change_name %>' has just been assigned to you in the comment processing database.
+
+link: <%= @suggested_change_url %>
+
+Suggested Change Name: <%= @suggested_change.suggested_change_name %>
+Description: <%= @suggested_change.description %>
+Response Type: <%= @suggested_change.suggested_change_response_type.response_text if @suggested_change.suggested_change_response_type.present? %>
+Response Text: <%= @suggested_change.response_text %>
+Action Needed: <%= @suggested_change.action_needed %>
+Suggested Change Status: <%= @suggested_change.suggested_change_status_type.status_text if @suggested_change.suggested_change_status_type.present? %>
+Assigned by: <%= "#{@suggested_change.name} <#{@assigned_by.email}>" %>

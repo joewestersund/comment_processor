@@ -3,12 +3,12 @@ class NotificationMailer < ActionMailer::Base
   default from: 'Comment Processor <westersund.joe@deq.state.or.us>'
   #layout 'mailer'
 
-  def category_assigned_email(category, assigned_by, cc_assigner)
+  def suggested_change_assigned_email(suggested_change, assigned_by, cc_assigner)
 
-    @category = category
-    @category_url  = edit_category_url(@category)
+    @suggested_change = suggested_change
+    @suggested_change_url  = edit_suggested_change_url(@suggested_change)
     @assigned_by = assigned_by
-    @assigned_to = @category.assigned_to
+    @assigned_to = @suggested_change.assigned_to
 
     if cc_assigner && (@assigned_to.email != @assigned_by.email)
       cc = @assigned_by.email_address_with_name
@@ -16,7 +16,7 @@ class NotificationMailer < ActionMailer::Base
 
     to = @assigned_to.email_address_with_name
 
-    mail(to: to, cc: cc, subject: "a CAO comment response category has been assigned to you: '#{@category.category_name}'")
+    mail(to: to, cc: cc, subject: "a suggested_change has been assigned to you: '#{@suggested_change.suggested_change_name}'")
   end
 
   def password_reset_email(user)

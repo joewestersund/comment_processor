@@ -1,8 +1,8 @@
 module CommentsHelper
 
-  def comments_and_commenters_text(category)
-    comments = category.num_comments
-    commenters = category.num_commenters
+  def comments_and_commenters_text(suggested_change)
+    comments = suggested_change.num_comments
+    commenters = suggested_change.num_commenters
 
     if commenters > comments
       "#{comments} (#{commenters} commenters)"

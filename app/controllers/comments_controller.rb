@@ -18,7 +18,7 @@ class CommentsController < ApplicationController
     if conditions[0].empty?
       c = current_rulemaking.comments.all
     else
-      #do left outer join in case there are no conditions on categories
+      #do left outer join in case there are no conditions on suggested_changes
       c = current_rulemaking.comments.where("id IN (?)", current_rulemaking.comments.left_outer_joins(:suggested_changes).where(conditions).select(:id))
     end
     c = c.order(:order_in_list)
@@ -111,8 +111,8 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.save
-        category_change_hash = save_comment_categories
-        save_change_log(current_user,{comment: @comment, category_changes: category_change_hash, action_type: 'create'})
+        suggested_change_change_hash = save_suggested_changes
+        save_change_log(current_user,{comment: @comment, suggested_change_changes: suggested_change_change_hash, action_type: 'create'})
         format.html { redirect_to edit_comment_path(@comment), notice: 'Comment was successfully created.' }
         format.json { render :show, status: :created, location: @comment }
       else
@@ -129,8 +129,8 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.update(comment_params)
-        category_change_hash = save_comment_categories
-        save_change_log(current_user,{comment: @comment, category_changes: category_change_hash, action_type: 'edit'})
+        suggested_change_change_hash = save_suggested_changes
+        save_change_log(current_user,{comment: @comment, suggested_change_changes: suggested_change_change_hash, action_type: 'edit'})
         @filter_querystring = remove_empty_elements(filter_params_all)
         format.html { redirect_to edit_comment_path(@comment,@filter_querystring), notice: 'Comment was successfully updated.' }
         format.json { render :show, status: :ok, location: @comment }
@@ -162,7 +162,7 @@ class CommentsController < ApplicationController
       if conditions[0].empty?
         c = current_rulemaking.comments.all
       else
-        #do left outer join in case there are no conditions on categories
+        #do left outer join in case there are no conditions on suggested_changes
         c = current_rulemaking.comments.where("id IN (?)", current_rulemaking.comments.left_outer_joins(:suggested_changes).where(conditions).select(:id))
       end
 
@@ -173,19 +173,19 @@ class CommentsController < ApplicationController
       @filter_querystring = remove_empty_elements(filter_params_all)
     end
 
-    def save_comment_categories
-      previous_categories = @comment.categories.map { |cat| get_category_description(cat)}
-      @categories = current_rulemaking.categories.where(:id => params[:comment_categories])
-      @comment.categories.destroy_all
-      @comment.categories << @categories
-      #subtract out any category IDs that were there before and still are after
-      new_categories = @categories.map { |cat| get_category_description(cat)}
-      in_both = new_categories & previous_categories
-      {removed: (previous_categories - in_both).sort!, added: (new_categories - in_both).sort! }
+    def save_suggested_changes
+      previous_suggested_changes = @comment.suggested_changes.map { |cat| get_suggested_change_description(cat)}
+      @suggested_changes = current_rulemaking.suggested_changes.where(:id => params[:comment_suggested_changes])
+      @comment.suggested_changes.destroy_all
+      @comment.suggested_changes << @suggested_changes
+      #subtract out any suggested_change IDs that were there before and still are after
+      new_suggested_changes = @suggested_changes.map { |cat| get_suggested_change_description(cat)}
+      in_both = new_suggested_changes & previous_suggested_changes
+      {removed: (previous_suggested_changes - in_both).sort!, added: (new_suggested_changes - in_both).sort! }
     end
 
-    def get_category_description(category)
-      "##{category.id} '#{category.category_name.truncate(100)}'"
+    def get_suggested_change_description(suggested_change)
+      "##{suggested_change.id} '#{suggested_change.suggested_change_name.truncate(100)}'"
     end
 
     # Use callbacks to share common setup or constraints between actions.
@@ -210,7 +210,7 @@ class CommentsController < ApplicationController
     end
 
     def set_select_options
-      @categories = current_rulemaking.categories.order('LOWER(category_name)').all
+      @suggested_changes = current_rulemaking.suggested_changes.order('LOWER(suggested_change_name)').all
       @comment_status_types = current_rulemaking.comment_status_types.order(:order_in_list).all
       @comment_data_sources = current_rulemaking.comment_data_sources.order(:id).all
     end
@@ -220,7 +220,7 @@ class CommentsController < ApplicationController
     end
 
     def filter_params_all
-      params.permit(:first_name, :last_name, :email, :organization, :state, :comment_text, :summary, :comment_status_type_id, :notes, :manually_entered, :comment_data_source_id, :has_attachment, :category_id, )
+      params.permit(:first_name, :last_name, :email, :organization, :state, :comment_text, :summary, :comment_status_type_id, :notes, :manually_entered, :comment_data_source_id, :has_attachment, :suggested_change_id, )
     end
 
     def get_conditions
@@ -258,8 +258,8 @@ class CommentsController < ApplicationController
       conditions_string << "comments.summary ILIKE :summary" if search_terms.summary.present?
 
       #treating specially because of many to many relation
-      conditions[:category_id] = params[:category_id] if params[:category_id].present?
-      conditions_string << "categories_comments.category_id = :category_id" if params[:category_id].present?
+      conditions[:suggested_change_id] = params[:suggested_change_id] if params[:suggested_change_id].present?
+      conditions_string << "suggested_changes_comments.suggested_change_id = :suggested_change_id" if params[:suggested_change_id].present?
 
       conditions[:comment_status_type_id] = search_terms.comment_status_type_id if search_terms.comment_status_type_id.present?
       conditions_string << "comment_status_type_id = :comment_status_type_id" if search_terms.comment_status_type_id.present?
