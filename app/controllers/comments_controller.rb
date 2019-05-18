@@ -259,7 +259,7 @@ class CommentsController < ApplicationController
 
       #treating specially because of many to many relation
       conditions[:suggested_change_id] = params[:suggested_change_id] if params[:suggested_change_id].present?
-      conditions_string << "suggested_changes_comments.suggested_change_id = :suggested_change_id" if params[:suggested_change_id].present?
+      conditions_string << "comments_suggested_changes.suggested_change_id = :suggested_change_id" if params[:suggested_change_id].present?
 
       conditions[:comment_status_type_id] = search_terms.comment_status_type_id if search_terms.comment_status_type_id.present?
       conditions_string << "comment_status_type_id = :comment_status_type_id" if search_terms.comment_status_type_id.present?

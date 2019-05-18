@@ -12,7 +12,7 @@ class StatsController < ApplicationController
     @comments_by_status_type = CommentStatusType.select('comment_status_types.*, COUNT(comments.id) as num_comments').joins("LEFT JOIN comments ON comment_status_types.id = comments.comment_status_type_id").group('comment_status_types.id').order(:order_in_list)
     @comments_with_no_status_type = Comment.where(comment_status_type_id: nil).count
 
-    @comments_without_suggested_changes = Comment.joins('LEFT JOIN suggested_changes_comments ON comments.id = suggested_changes_comments.comment_id').where('suggested_changes_comments.comment_id IS NULL').count
+    @comments_without_suggested_changes = Comment.joins('LEFT JOIN comments_suggested_changes ON comments.id = comments_suggested_changes.comment_id').where('comments_suggested_changes.comment_id IS NULL').count
     @comments_with_suggested_changes = @total_comments - @comments_without_suggested_changes
 
     @comments_with_multiple_commenters = Comment.where('num_commenters > 1').order(num_commenters: :desc)
@@ -26,7 +26,7 @@ class StatsController < ApplicationController
     @suggested_changes_by_status_type = SuggestedChangeStatusType.select('suggested_change_status_types.*, COUNT(suggested_changes.id) as num_suggested_changes').joins('LEFT JOIN suggested_changes ON suggested_change_status_types.id = suggested_changes.suggested_change_status_type_id').group('suggested_change_status_types.id').order(:order_in_list)
     @suggested_changes_with_no_status_type = SuggestedChange.where(suggested_change_status_type_id: nil).count
 
-    @suggested_changes_with_no_comments = SuggestedChange.joins('LEFT JOIN suggested_changes_comments ON suggested_changes.id = suggested_changes_comments.suggested_change_id').where('suggested_changes_comments.suggested_change_id IS NULL').order(:suggested_change_name)
+    @suggested_changes_with_no_comments = SuggestedChange.joins('LEFT JOIN comments_suggested_changes ON suggested_changes.id = comments_suggested_changes.suggested_change_id').where('comments_suggested_changes.suggested_change_id IS NULL').order(:suggested_change_name)
 
     @suggested_changes_by_agency_response = SuggestedChangeResponseType.select('suggested_change_response_types.*, COUNT(suggested_changes.id) as num_suggested_changes').joins('LEFT JOIN suggested_changes ON suggested_change_response_types.id = suggested_changes.suggested_change_response_type_id').group('suggested_change_response_types.id').order(:order_in_list)
     @suggested_changes_with_no_agency_response = SuggestedChange.where(suggested_change_response_type_id: nil).count
