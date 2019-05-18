@@ -6,19 +6,34 @@
 <%# add navigation links to this file %>
 <% if signed_in? %>
   <% if current_rulemaking.present?%>
-  <li class="nav navbar-nav"><%= link_to glyphicon_link("glyphicon-th-list","Comments").html_safe, comments_path %></li>
-  <li class="nav navbar-nav"><%= link_to glyphicon_link("glyphicon-tags","Suggested Changes").html_safe, suggested_changes_path %></li>
+    <% if current_user.user_permissions.count == 1 %>
+      <li class="nav navbar-nav"><%= link_to "Viewing: #{current_rulemaking.rulemaking_name}", comments_path %></li>
+    <% else %>
+      <li id="fat-menu" class="dropdown nav navbar-nav">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          <%= current_rulemaking.rulemaking_name %> <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <% current_user.user_permissions.each do |up|  %>
+            <li class="nav navbar-nav"><%= link_to up.rulemaking.rulemaking_name, stats_comments_path %></li>
+          <% end %>
+        </ul>
+      </li>
+     <% end %>
 
-  <li id="fat-menu" class="dropdown nav navbar-nav">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-      <%= glyphicon_link("glyphicon-signal","Stats").html_safe%> <b class="caret"></b>
-    </a>
-    <ul class="dropdown-menu">
-      <li class="nav navbar-nav"><%= link_to "Comments", stats_comments_path %></li>
-      <li class="nav navbar-nav"><%= link_to "Suggested Changes", stats_suggested_changes_path %></li>
-      <li class="nav navbar-nav"><%= link_to "Recent activity", change_log_entries_path %></li>
-    </ul>
-  </li>
+    <li class="nav navbar-nav"><%= link_to glyphicon_link("glyphicon-th-list","Comments").html_safe, comments_path %></li>
+    <li class="nav navbar-nav"><%= link_to glyphicon_link("glyphicon-tags","Suggested Changes").html_safe, suggested_changes_path %></li>
+
+    <li id="fat-menu" class="dropdown nav navbar-nav">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <%= glyphicon_link("glyphicon-signal","Stats").html_safe%> <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li class="nav navbar-nav"><%= link_to "Comments", stats_comments_path %></li>
+        <li class="nav navbar-nav"><%= link_to "Suggested Changes", stats_suggested_changes_path %></li>
+        <li class="nav navbar-nav"><%= link_to "Recent activity", change_log_entries_path %></li>
+      </ul>
+    </li>
   <% end %>
   <% if current_user.application_admin? %>
     <li id="fat-menu" class="dropdown nav navbar-nav">
@@ -35,7 +50,7 @@
   <% if current_user.admin_for?(current_rulemaking) %>
     <li id="fat-menu" class="dropdown nav navbar-nav">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-        <%= glyphicon_link("glyphicon-wrench","Setup").html_safe%> <b class="caret"></b>
+        <%= glyphicon_link("glyphicon-cog","Setup").html_safe%> <b class="caret"></b>
       </a>
       <ul class="dropdown-menu">
         <li class="nav navbar-nav"><%= link_to "Clean Up Comment Text", comments_cleanup_path %></li>
@@ -57,6 +72,7 @@
     <ul class="dropdown-menu">
       <li class="nav navbar-nav"><%= link_to "Edit Profile", profile_edit_path %></li>
       <li class="nav navbar-nav"><%= link_to "Change Password", profile_edit_password_path %></li>
+      <li class="nav navbar-nav"><%= link_to glyphicon_link("glyphicon-log-out","Log Out").html_safe, signout_path, method: :delete %></li>
     </ul>
   </li>
 
@@ -70,6 +86,4 @@
       <li class="nav navbar-nav"><%= link_to "Tips and tricks", help_file + tips_and_tricks_help_bookmark, target: :_blank %></li>
     </ul>
   </li>
-
-  <li class="nav navbar-nav"><%= link_to glyphicon_link("glyphicon-log-out","Log Out").html_safe, signout_path, method: :delete %></li>
 <% end %>
