@@ -8,7 +8,7 @@ class CommentDataSourcesController < ApplicationController
   # GET /comment_data_sources
   # GET /comment_data_sources.json
   def index
-    @comment_data_sources = CommentDataSource.order(:data_source_name).all
+    @comment_data_sources = current_rulemaking.comment_data_sources.order(:data_source_name).all
   end
 
   # GET /comment_data_sources/1
@@ -19,6 +19,7 @@ class CommentDataSourcesController < ApplicationController
   # GET /comment_data_sources/new
   def new
     @comment_data_source = CommentDataSource.new
+    @comment_data_source.rulemaking = current_rulemaking
   end
 
   # GET /comment_data_sources/1/edit
@@ -29,6 +30,7 @@ class CommentDataSourcesController < ApplicationController
   # POST /comment_data_sources.json
   def create
     @comment_data_source = CommentDataSource.new(comment_data_source_params)
+    @comment_data_source.rulemaking = current_rulemaking
 
     respond_to do |format|
       if @comment_data_source.save
@@ -73,7 +75,7 @@ class CommentDataSourcesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_comment_data_source
-      @comment_data_source = CommentDataSource.find(params[:id])
+      @comment_data_source = current_rulemaking.comment_data_sources.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

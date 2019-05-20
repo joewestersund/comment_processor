@@ -64,7 +64,7 @@ class CommentsController < ApplicationController
 
   def do_cleanup
     #actually do the cleanup
-    Comment.all.each do |c|
+    current_rulemaking.comments.each do |c|
       c.comment_text = clean_text(c.comment_text)
       c.organization = clean_text(c.organization)
       c.save

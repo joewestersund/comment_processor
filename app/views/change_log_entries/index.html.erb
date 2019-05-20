@@ -48,7 +48,7 @@
       <th>Object changed</th>
       <th>Description</th>
       <th>Date</th>
-      <% if current_user.admin? %>
+      <% if current_user.admin_for?(@current_rulemaking) %>
         <th colspan="2"></th>
       <% end %>
     </tr>
@@ -61,9 +61,9 @@
         <td><%= change_log_entry.object_type %></td>
         <td><%= change_log_entry.action_type %></td>
         <td>
-          <% if current_user.admin?
+          <% if current_user.admin_for?(@current_rulemaking)
                com_path = edit_comment_path(change_log_entry.comment) if change_log_entry.comment.present?
-               cat_path = edit_suggested_change_path(change_log_entry.suggested_change if change_log_entry.suggested_change.present?
+               cat_path = edit_suggested_change_path(change_log_entry.suggested_change) if change_log_entry.suggested_change.present?
              else
                com_path = comment_path(change_log_entry.comment) if change_log_entry.comment.present?
                cat_path = suggested_change_path(change_log_entry.suggested_change) if change_log_entry.suggested_change.present?
@@ -73,7 +73,7 @@
         </td>
         <td><%= change_log_entry.description %></td>
         <td><%= change_log_entry.created_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
-        <% if current_user.admin? %>
+        <% if current_user.admin_for?(@current_rulemaking) %>
           <td><%= link_to 'Edit', edit_change_log_entry_path(change_log_entry) %></td>
           <td><%= link_to 'Delete', change_log_entry, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% end %>

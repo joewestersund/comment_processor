@@ -58,7 +58,7 @@ module SessionsHelper
     if @current_rulemaking.present?
       @current_rulemaking
     else
-      up = @current_user.user_permissions.find_by(rulemaking: @current_user.last_rulemaking_viewed)
+      up = current_user.user_permissions.find_by(rulemaking: current_user.last_rulemaking_viewed)
       if up.present?
         @current_rulemaking = up.rulemaking
       elsif @current_user.user_permissions.first

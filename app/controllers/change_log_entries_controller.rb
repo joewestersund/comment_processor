@@ -10,9 +10,9 @@ class ChangeLogEntriesController < ApplicationController
     conditions = get_conditions
     @filtered = !conditions[0].empty?
     if conditions[0].empty?
-      cle = ChangeLogEntry.all
+      cle = current_rulemaking.change_log_entries.all
     else
-      cle = ChangeLogEntry.where(conditions)
+      cle = current_rulemaking.change_log_entries.where(conditions)
     end
     @change_log_entries = cle.order(created_at: :desc).page(params[:page]).per_page(10)
   end
@@ -25,6 +25,7 @@ class ChangeLogEntriesController < ApplicationController
   # GET /change_log_entries/new
   def new
     @change_log_entry = ChangeLogEntry.new
+    @change_log_entry.rulemaking = current_rulemaking
   end
 
   # GET /change_log_entries/1/edit
@@ -35,6 +36,7 @@ class ChangeLogEntriesController < ApplicationController
   # POST /change_log_entries.json
   def create
     @change_log_entry = ChangeLogEntry.new(change_log_entry_params)
+    @change_log_entry.rulemaking = current_rulemaking
 
     respond_to do |format|
       if @change_log_entry.save
@@ -74,7 +76,7 @@ class ChangeLogEntriesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_change_log_entry
-      @change_log_entry = ChangeLogEntry.find(params[:id])
+      @change_log_entry = current_rulemaking.change_log_entries.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -83,12 +85,12 @@ class ChangeLogEntriesController < ApplicationController
     end
 
     def set_select_options
-      @users = User.order(:name).all
+      @users = User.joins(:user_permissions).where("user_permissions.rulemaking_id = #{current_rulemaking.id}").order('name').all
       comment_select_str = "comment_id, '#' || order_in_list::text || ' ' || first_name || ' ' || last_name || ' (' || organization || ', ' || state || ')' AS key_info"
-      @comments = ChangeLogEntry.joins(:comment).select(comment_select_str).group('comment_id, key_info').order('key_info')
-      @suggested_changes = ChangeLogEntry.joins(:suggested_change).select('suggested_change_id, suggested_change_name').group('suggested_change_id, suggested_change_name').order('suggested_change_name')
-      @object_types = ChangeLogEntry.select(:object_type).group(:object_type).order(:object_type)
-      @action_types = ChangeLogEntry.select(:action_type).group(:action_type).order(:action_type)
+      @comments = current_rulemaking.change_log_entries.joins(:comment).select(comment_select_str).group('comment_id, key_info').order('key_info')
+      @suggested_changes = current_rulemaking.change_log_entries.joins(:suggested_change).select('suggested_change_id, suggested_change_name').group('suggested_change_id, suggested_change_name').order('suggested_change_name')
+      @object_types = current_rulemaking.change_log_entries.select(:object_type).group(:object_type).order(:object_type)
+      @action_types = current_rulemaking.change_log_entries.select(:action_type).group(:action_type).order(:action_type)
 
     end
 

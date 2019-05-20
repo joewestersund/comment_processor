@@ -5,7 +5,11 @@ class UserPermissionsController < ApplicationController
   # GET /user_permissions
   # GET /user_permissions.json
   def index
-    @user_permissions = UserPermission.where(rulemaking: current_rulemaking).includes(:user).order("users.name")
+    if current_user.application_admin?
+      @user_permissions = UserPermission.includes(:user, :rulemaking).order("rulemakings.rulemaking_name, users.name")
+    else
+      @user_permissions = UserPermission.where(rulemaking: current_rulemaking).includes(:user).order("users.name")
+    end
   end
 
   # GET /user_permissions/1

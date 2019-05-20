@@ -9,6 +9,7 @@ class SuggestedChangeStatusTypesController < ApplicationController
   # GET /suggested_change_status_types
   # GET /suggested_change_status_types.json
   def index
+    #TODO need to update to only pull from current rulemaking
     @suggested_change_status_types = SuggestedChangeStatusType.all.order(:order_in_list)
   end
 

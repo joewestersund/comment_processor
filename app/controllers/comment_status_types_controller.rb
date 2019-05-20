@@ -9,7 +9,7 @@ class CommentStatusTypesController < ApplicationController
   # GET /comment_status_types
   # GET /comment_status_types.json
   def index
-    @comment_status_types = CommentStatusType.all.order(:order_in_list)
+    @comment_status_types = current_rulemaking.comment_status_types.order(:order_in_list)
   end
 
   def move_up
@@ -28,6 +28,7 @@ class CommentStatusTypesController < ApplicationController
   # GET /comment_status_types/new
   def new
     @comment_status_type = CommentStatusType.new
+    @comment_status_type.rulemaking = current_rulemaking
   end
 
   # GET /comment_status_types/1/edit
@@ -38,9 +39,10 @@ class CommentStatusTypesController < ApplicationController
   # POST /comment_status_types.json
   def create
     @comment_status_type = CommentStatusType.new(comment_status_type_params)
+    @comment_status_type = current_rulemaking
 
     #set the order_in_list
-    cst_max = CommentStatusType.maximum(:order_in_list)
+    cst_max = current_rulemaking.comment_status_types.maximum(:order_in_list)
     @comment_status_type.order_in_list = cst_max.nil? ? 1 : cst_max + 1
 
     respond_to do |format|
@@ -77,13 +79,13 @@ class CommentStatusTypesController < ApplicationController
   def destroy
     if CommentStatusType.count > 1
       #reassign any comments of this type to the first remaining status type.
-      firstCST = CommentStatusType.where.not(id: @comment_status_type.id).order(:order_in_list).first
+      firstCST = current_rulemaking.comment_status_types.where.not(id: @comment_status_type.id).order(:order_in_list).first
       reassign_comments(@comment_status_type,firstCST)
 
       current_CST_num = @comment_status_type.order_in_list
       save_change_log(current_user,{object_type: 'comment status type', action_type: 'delete', description: "deleted comment status type ID ##{@comment_status_type.id} '#{@comment_status_type.status_text}'. Any corresponding comments were reassigned to ID #{firstCST.id}, '#{firstCST.status_text}'."})
       @comment_status_type.destroy
-      handle_delete_of_order_in_list(CommentStatusType,current_CST_num)
+      handle_delete_of_order_in_list(current_rulemaking.comment_status_types,current_CST_num)
       respond_to do |format|
         format.html { redirect_to comment_status_types_url, notice: "Comment status type was successfully deleted. Any comments assigned to this status were reassigned to '#{firstCST.status_text}'." }
         format.json { head :no_content }
@@ -99,7 +101,7 @@ class CommentStatusTypesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_comment_status_type
-      @comment_status_type = CommentStatusType.find(params[:id])
+      @comment_status_type = current_rulemaking.comment_status_types.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -108,7 +110,7 @@ class CommentStatusTypesController < ApplicationController
     end
 
     def move(up = true)
-      cst = CommentStatusType.find(params[:id])
+      cst = current_rulemaking.comment_status_types.find(params[:id])
 
       if cst.present?
         cst2 = get_adjacent(cst,up)
@@ -129,14 +131,14 @@ class CommentStatusTypesController < ApplicationController
 
     def get_adjacent(current, get_previous = false)
       if get_previous
-        CommentStatusType.where("order_in_list < ?",current.order_in_list).order("order_in_list DESC").first
+        current_rulemaking.comment_status_types.where("order_in_list < ?",current.order_in_list).order("order_in_list DESC").first
       else
-        CommentStatusType.where("order_in_list > ?",current.order_in_list).order(:order_in_list).first
+        current_rulemaking.comment_status_types.where("order_in_list > ?",current.order_in_list).order(:order_in_list).first
       end
     end
 
     def reassign_comments(reassign_from_cst, reassign_to_cst)
-      Comment.where(comment_status_type_id: reassign_from_cst.id).each do |com|
+      current_rulemaking.comments.where(comment_status_type_id: reassign_from_cst.id).each do |com|
         com.comment_status_type_id = reassign_to_cst.id
         com.save
       end

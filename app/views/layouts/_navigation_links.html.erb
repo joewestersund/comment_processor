@@ -7,9 +7,9 @@
 <% if signed_in? %>
   <% if current_rulemaking.present?%>
     <% if current_user.user_permissions.count == 1 %>
-      <li class="nav navbar-nav"><%= link_to "Viewing: #{current_rulemaking.rulemaking_name}", comments_path %></li>
+      <li class="nav navbar-nav rulemaking-name"><%= link_to current_rulemaking.rulemaking_name, comments_path %></li>
     <% else %>
-      <li id="fat-menu" class="dropdown nav navbar-nav">
+      <li id="fat-menu" class="dropdown nav navbar-nav rulemaking-name">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           <%= current_rulemaking.rulemaking_name %> <b class="caret"></b>
         </a>
