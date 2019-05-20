@@ -1,7 +1,8 @@
 class RulemakingsController < ApplicationController
+
   before_action :signed_in_user
-  before_action :application_admin_user
-  before_action :set_rulemaking, only: [:edit, :update, :destroy]
+  before_action :application_admin_user, except: [:switch]
+  before_action :set_rulemaking, only: [:edit, :update, :destroy, :switch]
 
   # GET /rulemakings
   # GET /rulemakings.json
@@ -16,6 +17,12 @@ class RulemakingsController < ApplicationController
 
   # GET /rulemakings/1/edit
   def edit
+  end
+
+  # POST /rulemakings/switch/:id
+  def switch
+    set_current_rulemaking(@rulemaking)
+    redirect_to comments_path
   end
 
   # POST /rulemakings

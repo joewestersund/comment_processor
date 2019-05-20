@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
   resources :rulemakings
+  post 'rulemakings/switch/:id', to: 'rulemakings#switch', as: 'rulemakings_switch'
+
   resources :user_permissions
   resources :comment_data_sources
   resources :change_log_entries

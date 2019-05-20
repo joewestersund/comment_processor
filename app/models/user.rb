@@ -2,18 +2,18 @@
 #
 # Table name: users
 #
-#  id                     :integer          not null, primary key
-#  name                   :string
-#  email                  :string
-#  password_digest        :string
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  remember_token         :string
-#  application_admin      :boolean
-#  active                 :boolean
-#  last_rulemaking_viewed :integer
-#  reset_password_token   :string
-#  password_reset_sent_at :datetime
+#  id                        :integer          not null, primary key
+#  name                      :string
+#  email                     :string
+#  password_digest           :string
+#  created_at                :datetime         not null
+#  updated_at                :datetime         not null
+#  remember_token            :string
+#  application_admin         :boolean
+#  active                    :boolean
+#  last_rulemaking_viewed_id :integer
+#  reset_password_token      :string
+#  password_reset_sent_at    :datetime
 #
 
 class User < ApplicationRecord
@@ -22,6 +22,7 @@ class User < ApplicationRecord
   has_many :user_permissions, dependent: :destroy
   has_many :suggested_changes
   has_many :change_log_entries
+  belongs_to :last_rulemaking_viewed, class_name: 'Rulemaking', foreign_key: 'last_rulemaking_viewed_id'
 
   before_save { |user| user.email.downcase! }
   before_create :create_remember_token

@@ -18,6 +18,7 @@ class Rulemaking < ApplicationRecord
   has_many :comment_data_sources, dependent: :destroy
   has_many :comment_status_types, dependent: :destroy
   has_many :user_permissions, dependent: :destroy
+  has_many :users, foreign_key: :last_rulemaking_viewed_id
 
   validates :rulemaking_name, presence: true, length: { maximum: 50}, uniqueness: {case_sensitive: false}
   validates :agency, presence: true, length: { maximum: 50}

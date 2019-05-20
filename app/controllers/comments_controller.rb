@@ -13,20 +13,20 @@ class CommentsController < ApplicationController
   # GET /comments
   # GET /comments.json
   def index
-
+    cr = current_rulemaking
     conditions = get_conditions
     if conditions[0].empty?
-      c = current_rulemaking.comments.all
+      c = cr.comments.all
     else
       #do left outer join in case there are no conditions on suggested_changes
-      c = current_rulemaking.comments.where("id IN (?)", current_rulemaking.comments.left_outer_joins(:suggested_changes).where(conditions).select(:id))
+      c = cr.comments.where("id IN (?)", cr.comments.left_outer_joins(:suggested_changes).where(conditions).select(:id))
     end
     c = c.order(:order_in_list)
 
     respond_to do |format|
       format.html {
-        @total_comments = current_rulemaking.comments.count
-        @total_commenters = current_rulemaking.comments.sum(:num_commenters)
+        @total_comments = cr.comments.count
+        @total_commenters = cr.comments.sum(:num_commenters)
         @filtered = !conditions[0].empty?
         @filter_querystring = remove_empty_elements(filter_params_all)
         @comments = c.page(params[:page]).per_page(10)
@@ -210,9 +210,10 @@ class CommentsController < ApplicationController
     end
 
     def set_select_options
-      @suggested_changes = current_rulemaking.suggested_changes.order('LOWER(suggested_change_name)').all
-      @comment_status_types = current_rulemaking.comment_status_types.order(:order_in_list).all
-      @comment_data_sources = current_rulemaking.comment_data_sources.order(:id).all
+      cr = current_rulemaking
+      @suggested_changes = cr.suggested_changes.order('LOWER(suggested_change_name)').all
+      @comment_status_types = cr.comment_status_types.order(:order_in_list).all
+      @comment_data_sources = cr.comment_data_sources.order(:id).all
     end
 
     def filter_params_in_obj

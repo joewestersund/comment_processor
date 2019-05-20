@@ -15,7 +15,7 @@
         </a>
         <ul class="dropdown-menu">
           <% current_user.user_permissions.each do |up|  %>
-            <li class="nav navbar-nav"><%= link_to up.rulemaking.rulemaking_name, stats_comments_path %></li>
+            <li class="nav navbar-nav"><%= link_to up.rulemaking.rulemaking_name, rulemakings_switch_path(up.rulemaking), method: :post %></li>
           <% end %>
         </ul>
       </li>

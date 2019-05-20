@@ -42,10 +42,14 @@ module SessionsHelper
 
   end
 
-  def current_rulemaking=(rulemaking)
-    if rulemaking.present? && @current_user.user_permissions.find_by(rulemaking_id: rulemaking) then
+  def set_current_rulemaking(rulemaking)
+    if rulemaking.present? && @current_user.user_permissions.find_by(rulemaking: rulemaking) then
       @current_rulemaking = rulemaking
-      @current_user.last_rulemaking_viewed = rulemaking
+      @current_user.last_rulemaking_viewed_id = rulemaking.id
+      @current_user.save! #save this to the db
+      @current_rulemaking #return this value
+    else
+      nil #return this value
     end
 
   end
@@ -54,10 +58,13 @@ module SessionsHelper
     if @current_rulemaking.present?
       @current_rulemaking
     else
-      up = UserPermission.find_by(user: current_user, rulemaking: current_user.last_rulemaking_viewed) ||
-          UserPermission.find_by(user: current_user)
+      up = @current_user.user_permissions.find_by(rulemaking: @current_user.last_rulemaking_viewed)
       if up.present?
         @current_rulemaking = up.rulemaking
+      elsif @current_user.user_permissions.first
+        #last_rulemaking_viewed is blank, so just pick the first one they have permissions to
+        set_current_rulemaking(@current_user.user_permissions.first.rulemaking)
+        @current_rulemaking #return this value
       else
         nil
       end
