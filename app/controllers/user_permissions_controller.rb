@@ -5,6 +5,7 @@ class UserPermissionsController < ApplicationController
   # GET /user_permissions
   # GET /user_permissions.json
   def index
+    #TODO make it so only admin has edit delete links
     if current_user.application_admin?
       @user_permissions = UserPermission.includes(:user, :rulemaking).order("rulemakings.rulemaking_name, users.name")
     else
