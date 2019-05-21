@@ -12,23 +12,18 @@
   <% end %>
 
   <div class="field">
+    <%= form.label :assigned_to_id %>
+    <%= form.collection_select :user_id, @users, :id, :name, :selected => @user_permission.user_id, include_blank: true  %>
+  </div>
+
+  <div class="field">
     <%= form.label :admin %>
-    <%= form.text_field :admin, id: :user_permission_admin %>
+    <%= form.check_box :admin, id: :user_permission_admin %>
   </div>
 
   <div class="field">
     <%= form.label :read_only %>
-    <%= form.text_field :read_only, id: :user_permission_read_only %>
-  </div>
-
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id, id: :user_permission_user_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :rulemaking_id %>
-    <%= form.number_field :rulemaking_id, id: :user_permission_rulemaking_id %>
+    <%= form.check_box :read_only, id: :user_permission_read_only %>
   </div>
 
   <div class="actions">
