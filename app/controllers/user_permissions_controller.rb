@@ -9,7 +9,7 @@ class UserPermissionsController < ApplicationController
     if current_user.application_admin?
       @user_permissions = UserPermission.includes(:user, :rulemaking).order("rulemakings.rulemaking_name, users.name")
     else
-      @user_permissions = UserPermission.where(rulemaking: current_rulemaking).includes(:user).order("users.name")
+      @user_permissions = current_rulemaking.user_permissions.includes(:user).order("users.name")
     end
   end
 
@@ -21,6 +21,8 @@ class UserPermissionsController < ApplicationController
   # GET /user_permissions/new
   def new
     @user_permission = UserPermission.new
+    @user_permission.rulemaking = current_rulemaking
+    #TODO show rulemaking as dropdown in view
   end
 
   # GET /user_permissions/1/edit
@@ -31,6 +33,8 @@ class UserPermissionsController < ApplicationController
   # POST /user_permissions.json
   def create
     @user_permission = UserPermission.new(user_permission_params)
+
+    @user_permission.rulemaking = current_rulemaking unless current_user.application_admin?
 
     respond_to do |format|
       if @user_permission.save
@@ -47,7 +51,8 @@ class UserPermissionsController < ApplicationController
   # PATCH/PUT /user_permissions/1.json
   def update
     respond_to do |format|
-      if @user_permission.update(user_permission_params)
+      param_obj = current_user.application_admin? ? user_permission_params : user_permission_params_no_rulemaking
+      if @user_permission.update(param_obj)
         format.html { redirect_to @user_permission, notice: 'User permission was successfully updated.' }
         format.json { render :show, status: :ok, location: @user_permission }
       else
@@ -76,5 +81,9 @@ class UserPermissionsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_permission_params
       params.require(:user_permission).permit(:admin, :read_only, :user_id, :rulemaking_id)
+    end
+
+    def user_permission_params_no_rulemaking
+      params.require(:user_permission).permit(:admin, :read_only, :user_id)
     end
 end

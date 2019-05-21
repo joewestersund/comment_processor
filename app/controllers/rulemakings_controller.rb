@@ -12,6 +12,7 @@ class RulemakingsController < ApplicationController
 
   # GET /rulemakings/new
   def new
+    #TODO: set up response types and status types when new rulemaking created
     @rulemaking = Rulemaking.new
   end
 

@@ -35,18 +35,6 @@
       </ul>
     </li>
   <% end %>
-  <% if current_user.application_admin? %>
-    <li id="fat-menu" class="dropdown nav navbar-nav">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-        <%= glyphicon_link("glyphicon-wrench","Admin").html_safe%> <b class="caret"></b>
-      </a>
-      <ul class="dropdown-menu">
-        <li class="nav navbar-nav"><%= link_to "Rulemakings", rulemakings_path %></li>
-        <li class="nav navbar-nav"><%= link_to "Users", users_path %></li>
-        <li class="nav navbar-nav"><%= link_to "User Permissions", user_permissions_path %></li>
-      </ul>
-    </li>
-  <% end %>
   <% if current_user.admin_for?(current_rulemaking) %>
     <li id="fat-menu" class="dropdown nav navbar-nav">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -60,8 +48,12 @@
         <li class="nav navbar-nav"><%= link_to "Renumber Suggested Changes", suggested_changes_renumber_path %></li>
         <li class="nav navbar-nav"><%= link_to "Copy a Suggested Change", suggested_change_copy_path %></li>
         <li class="nav navbar-nav"><%= link_to "Merge Suggested Changes", suggested_changes_merge_path %></li>
+        <li class="nav navbar-nav"><%= link_to "Users", users_path %></li>
         <li class="nav navbar-nav"><%= link_to "User Permissions", user_permissions_path %></li>
         <li class="nav navbar-nav"><%= link_to "Comment Data Sources", comment_data_sources_path %></li>
+        <% if current_user.application_admin? %>
+          <li class="nav navbar-nav"><%= link_to "Rulemakings", rulemakings_path %></li>
+        <% end %>
       </ul>
     </li>
   <% end %>

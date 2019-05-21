@@ -9,8 +9,7 @@ class SuggestedChangeStatusTypesController < ApplicationController
   # GET /suggested_change_status_types
   # GET /suggested_change_status_types.json
   def index
-    #TODO need to update to only pull from current rulemaking
-    @suggested_change_status_types = SuggestedChangeStatusType.all.order(:order_in_list)
+    @suggested_change_status_types = current_rulemaking.suggested_change_status_types.order(:order_in_list)
   end
 
   def move_up
@@ -29,6 +28,7 @@ class SuggestedChangeStatusTypesController < ApplicationController
   # GET /suggested_change_status_types/new
   def new
     @suggested_change_status_type = SuggestedChangeStatusType.new
+    @suggested_change_status_type.rulemaking = current_rulemaking
   end
 
   # GET /suggested_change_status_types/1/edit
@@ -39,9 +39,10 @@ class SuggestedChangeStatusTypesController < ApplicationController
   # POST /suggested_change_status_types.json
   def create
     @suggested_change_status_type = SuggestedChangeStatusType.new(suggested_change_status_type_params)
+    @suggested_change_status_type.rulemaking = current_rulemaking
 
     #set the order_in_list
-    cst_max = SuggestedChangeStatusType.maximum(:order_in_list)
+    cst_max = current_rulemaking.suggested_change_status_types.maximum(:order_in_list)
     @suggested_change_status_type.order_in_list = cst_max.nil? ? 1 : cst_max + 1
 
     respond_to do |format|
@@ -76,15 +77,15 @@ class SuggestedChangeStatusTypesController < ApplicationController
   # DELETE /suggested_change_status_types/1
   # DELETE /suggested_change_status_types/1.json
   def destroy
-    if SuggestedChangeStatusType.count > 1
+    if current_rulemaking.suggested_change_status_types.count > 1
       #reassign any suggested changes of this type to the first remaining status type.
-      firstCST = SuggestedChangeStatusType.where.not(id: @suggested_change_status_type.id).order(:order_in_list).first
+      firstCST = current_rulemaking.suggested_change_status_types.where.not(id: @suggested_change_status_type.id).order(:order_in_list).first
       reassign_suggested_changes(@suggested_change_status_type,firstCST)
 
       current_CST_num = @suggested_change_status_type.order_in_list
       save_change_log(current_user,{object_type: 'suggested change status type', action_type: 'delete', description: "deleted suggested change status type ID ##{@suggested_change_status_type.id} '#{@suggested_change_status_type.status_text}'. Any corresponding suggested changes were reassigned to ID ##{firstCST.id} '#{firstCST.status_text}'."})
       @suggested_change_status_type.destroy
-      handle_delete_of_order_in_list(SuggestedChangeStatusType,current_CST_num)
+      handle_delete_of_order_in_list(current_rulemaking.suggested_change_status_types,current_CST_num)
       respond_to do |format|
         format.html { redirect_to suggested_change_status_types_url, notice: "Suggested change status type was successfully deleted. Any suggested changes assigned to this status were reassigned to '#{firstCST.status_text}'." }
         format.json { head :no_content }
@@ -100,7 +101,7 @@ class SuggestedChangeStatusTypesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_suggested_change_status_type
-      @suggested_change_status_type = SuggestedChangeStatusType.find(params[:id])
+      @suggested_change_status_type = current_rulemaking.suggested_change_status_types.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -109,7 +110,7 @@ class SuggestedChangeStatusTypesController < ApplicationController
     end
 
     def move(up = true)
-      cst = SuggestedChangeStatusType.find(params[:id])
+      cst = current_rulemaking.suggested_change_status_types.find(params[:id])
 
       if cst.present?
         cst2 = get_adjacent(cst,up)
@@ -130,14 +131,14 @@ class SuggestedChangeStatusTypesController < ApplicationController
 
     def get_adjacent(current, get_previous = false)
       if get_previous
-        SuggestedChangeStatusType.where("order_in_list < ?",current.order_in_list).order("order_in_list DESC").first
+        current_rulemaking.suggested_change_status_types.where("order_in_list < ?",current.order_in_list).order("order_in_list DESC").first
       else
-        SuggestedChangeStatusType.where("order_in_list > ?",current.order_in_list).order(:order_in_list).first
+        current_rulemaking.suggested_change_status_types.where("order_in_list > ?",current.order_in_list).order(:order_in_list).first
       end
     end
 
     def reassign_suggested_changes(reassign_from_cst, reassign_to_cst)
-      SuggestedChange.where(suggested_change_status_type_id: reassign_from_cst.id).each do |cat|
+      current_rulemaking.suggested_changes.where(suggested_change_status_type_id: reassign_from_cst.id).each do |cat|
         cat.suggested_change_status_type_id = reassign_to_cst.id
         cat.save
       end

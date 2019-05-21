@@ -9,7 +9,6 @@ class SuggestedChangeResponseTypesController < ApplicationController
   # GET /suggested_change_response_types
   # GET /suggested_change_response_types.json
   def index
-    #TODO need to update to only pull from current rulemaking
     @suggested_change_response_types = current_rulemaking.suggested_change_response_types.order(:order_in_list).all
   end
 
