@@ -11,6 +11,8 @@
     </div>
   <% end %>
 
+  <div class="field"> <%= @current_rulemaking.rulemaking_name %></div>
+
   <div class="field">
     <%= form.label :assigned_to_id %>
     <%= form.collection_select :user_id, @users, :id, :name, :selected => @user_permission.user_id, include_blank: true  %>

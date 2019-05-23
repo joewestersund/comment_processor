@@ -80,7 +80,7 @@ class UserPermissionsController < ApplicationController
 
     def set_select_options
       cr = current_rulemaking
-      @users = User.joins(:user_permissions).where("user_permissions.rulemaking_id = #{cr.id}").order(:name).all
+      @users = User.order(:name).all
     end
 
 
