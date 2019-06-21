@@ -12,7 +12,6 @@ class RulemakingsController < ApplicationController
 
   # GET /rulemakings/new
   def new
-    #TODO: set up response types and status types when new rulemaking created
     @rulemaking = Rulemaking.new
   end
 
@@ -30,11 +29,13 @@ class RulemakingsController < ApplicationController
   # POST /rulemakings.json
   def create
     @rulemaking = Rulemaking.new(rulemaking_params)
+    add_defaults(@rulemaking)  #add default status types, etc
 
     respond_to do |format|
       if @rulemaking.save
         up = UserPermission.new(rulemaking: @rulemaking, user: current_user, admin: true)
         up.save
+        set_current_rulemaking(@rulemaking)
         format.html { redirect_to rulemakings_path, notice: 'Rulemaking was successfully created.' }
       else
         format.html { render :new }
@@ -72,5 +73,21 @@ class RulemakingsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def rulemaking_params
       params.require(:rulemaking).permit(:rulemaking_name, :agency)
+    end
+
+    def add_defaults(rulemaking)
+      add_default_objects(rulemaking,CommentStatusType, 'status_text')
+      add_default_objects(rulemaking,SuggestedChangeStatusType, 'status_text')
+      add_default_objects(rulemaking,SuggestedChangeResponseType, 'response_text')
+    end
+
+    def add_default_objects(rulemaking, klass, name_of_field)
+      order_in_list = 1
+      klass.default_list.each do |list_item|
+        obj = klass.new({rulemaking: rulemaking, order_in_list: order_in_list})
+        obj[name_of_field] = list_item
+        obj.save
+        order_in_list += 1
+      end
     end
 end

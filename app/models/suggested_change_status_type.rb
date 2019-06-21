@@ -17,4 +17,15 @@ class SuggestedChangeStatusType < ApplicationRecord
   validates :status_text, presence: true, uniqueness: { case_sensitive: false, scope: :rulemaking_id }
   validates :order_in_list, numericality: { only_integer: true, greater_than: 0}, uniqueness: {scope: :rulemaking_id }
 
+  def self.default_list
+    ['needs review',
+     'under review',
+     'team discussion needed',
+     'decision made, need to write draft summary and response',
+     'draft summary and response written, assigned to second reviewer',
+     'second review complete',
+     'final review complete, has been proofread for tone',
+     'other, see action needed']
+  end
+
 end

@@ -37,7 +37,7 @@
         <tr>
           <td><%= link_to "Total", comments_path %></td>
           <td><%= link_to @total_comments, comments_path %></td>
-          <td>100%</td>
+          <td><%= format_percent(@total_comments,@total_comments) %></td>
         </tr>
       </tbody>
     </table>
@@ -70,7 +70,7 @@
         <tr>
           <td><%= link_to "Total", comments_path %></td>
           <td><%= link_to @total_comments, comments_path %></td>
-          <td>100%</td>
+          <td><%= format_percent(@total_comments,@total_comments) %></td>
         </tr>
       </tbody>
     </table>
@@ -103,7 +103,7 @@
         <tr>
           <td><%= link_to "Total", comments_path %></td>
           <td><%= link_to @total_comments, comments_path %></td>
-          <td>100%</td>
+          <td><%= format_percent(@total_comments,@total_comments) %></td>
         </tr>
       </tbody>
     </table>

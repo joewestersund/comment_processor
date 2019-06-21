@@ -25,9 +25,13 @@ module UiHelper
     "#{prefix}-#{order_in_list}"
   end
 
-  def format_percent(numerator,denominator,decimal_digits = 0)
+  def format_percent(numerator,denominator,decimal_digits: 0, if_zero_denominator: "-")
     #convert to float in case both arguments are integers. Integer division truncates to an integer.
-    "#{(100 * numerator.to_f/denominator).round(decimal_digits)}%"
+    if (denominator == 0 or denominator.nil?)
+      if_zero_denominator
+    else
+      "#{(100 * numerator.to_f/denominator).round(decimal_digits)}%"
+    end
   end
 
   def highlight_empty_css(text)

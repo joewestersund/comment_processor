@@ -38,7 +38,7 @@
         <tr>
           <td><%= link_to "Total", suggested_changes_path %></td>
           <td><%= link_to @total_suggested_changes, suggested_changes_path %></td>
-          <td>100%</td>
+          <td><%= format_percent(@total_suggested_changes,@total_suggested_changes) %></td>
         </tr>
       </tbody>
     </table>
@@ -73,7 +73,7 @@
         <tr>
           <td><%= link_to "Total", suggested_changes_path %></td>
           <td><%= link_to @total_suggested_changes, suggested_changes_path %></td>
-          <td>100%</td>
+          <td><%= format_percent(@total_suggested_changes,@total_suggested_changes) %></td>
         </tr>
       </tbody>
     </table>
@@ -134,7 +134,7 @@
       <tr>
         <td><%= link_to "Total", suggested_changes_path %></td>
         <td><%= link_to @total_suggested_changes, suggested_changes_path %></td>
-        <td>100%</td>
+        <td><%= format_percent(@total_suggested_changes,@total_suggested_changes) %></td>
       </tr>
       </tbody>
     </table>
@@ -184,7 +184,7 @@
         <td class="<%= css_order_in_list('status',cst2.order_in_list)%>"><%= link_to cst2.num_suggested_changes, suggested_changes_path(suggested_change_status_type_id: cst2.id) %></td>
       <% end %>
         <td><%= link_to @total_suggested_changes, suggested_changes_path %></td>
-        <td>100%</td>
+        <td><%= format_percent(@total_suggested_changes,@total_suggested_changes) %></td>
       </tr>
       </tbody>
     </table>
