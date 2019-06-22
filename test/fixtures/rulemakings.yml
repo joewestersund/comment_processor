@@ -12,9 +12,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  id: 1
   rulemaking_name: Rulemaking 1
   agency: DEQ
 
 two:
+  id: 2
   rulemaking_name: Rulemaking 2
   agency: OHA

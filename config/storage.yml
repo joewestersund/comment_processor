@@ -8,7 +8,7 @@ test:
 
 amazon:
   service: S3
-  access_key_id: "AKIATWEDMWND4NXIAQDP"
-  secret_access_key: "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"
+  access_key_id: ""
+  secret_access_key: ""
   region: ""
   bucket: "comment-processor"
