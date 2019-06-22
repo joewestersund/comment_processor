@@ -8,7 +8,7 @@ end
 ruby '2.4.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.4'
+gem 'rails', '~> 5.1.7'
 
 gem 'rails-html-sanitizer', '~> 1.0.4'
 
@@ -56,6 +56,10 @@ gem 'ruby_odata'
 gem 'will_paginate', '~> 3.1.0'
 
 gem 'trix'
+
+gem 'rack', '~> 2.0.6' #specified due to security vulnerability mentioned by github
+gem 'loofah', '~> 2.2.3' #specified due to security vulnerability mentioned by github
+
 
 #for export to excel
 gem 'rubyzip', '>= 1.2.1'
