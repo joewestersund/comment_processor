@@ -57,12 +57,12 @@ gem 'will_paginate', '~> 3.1.0'
 
 gem 'trix'
 
-gem 'rack', '~> 2.0.6' #specified due to security vulnerability mentioned by github
-gem 'loofah', '~> 2.2.3' #specified due to security vulnerability mentioned by github
-
+gem 'rack', '>= 2.0.6' #specified due to security vulnerability mentioned by github
+gem 'loofah', '>= 2.2.3' #specified due to security vulnerability mentioned by github
+gem 'ffi', '>= 1.9.24' #specified due to security vulnerability mentioned by github
 
 #for export to excel
-gem 'rubyzip', '>= 1.2.1'
+gem 'rubyzip', '>= 1.2.2'
 gem 'axlsx', git: 'https://github.com/randym/axlsx.git', ref: '776037c0fc799bb09da8c9ea47980bd3bf296874'
 gem 'axlsx_rails'
 
