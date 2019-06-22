@@ -20,7 +20,7 @@ gem 'pg' #'0.18.4' # upgraded from '0.17.1' #PostgreSQL
 gem 'puma'
 
 # Use SCSS for stylesheets
-gem 'bootstrap-sass', '~> 3.3.6'
+gem 'bootstrap-sass', ">= 3.4.1"
 gem 'sass-rails', '~> 5.0'
 
 # Use jquery as the JavaScript library
