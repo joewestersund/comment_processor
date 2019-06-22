@@ -17,6 +17,10 @@ class CommentDataSource < ApplicationRecord
   has_many :comments
 
   validates :data_source_name, presence: true, uniqueness: { case_sensitive: false, scope: :rulemaking_id }
-  validates :comment_download_url, presence: true, uniqueness: { case_sensitive: false, scope: :rulemaking_id }
+  validates :comment_download_url, uniqueness: { case_sensitive: false, scope: :rulemaking_id }
+
+  def self.default_list
+    ['Comment Period #1']
+  end
 
 end

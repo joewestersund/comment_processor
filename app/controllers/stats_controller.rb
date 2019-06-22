@@ -20,7 +20,6 @@ class StatsController < ApplicationController
   end
 
   def suggested_changes
-    #TODO need to edit to pull from current rulemaking only
     cr = current_rulemaking
     @total_suggested_changes = cr.suggested_changes.count
 
@@ -49,7 +48,6 @@ class StatsController < ApplicationController
   private
 
   def get_status_row_this_user(user_id, user_name, total_suggested_changes_this_user)
-    #TODO need to edit to pull from current rulemaking only
     row = {user_id: user_id, name: user_name, total_suggested_changes: total_suggested_changes_this_user}
     user_id_condition = user_id.nil? ? "suggested_changes.assigned_to_id IS NULL" : "suggested_changes.assigned_to_id = #{user_id}"
     status_types = current_rulemaking.suggested_change_status_types.select('suggested_change_status_types.*, suggested_changes.assigned_to_id, COUNT(suggested_changes.id) as num_suggested_changes').joins('LEFT JOIN suggested_changes ON suggested_change_status_types.id = suggested_changes.suggested_change_status_type_id').where(user_id_condition).group('suggested_change_status_types.id, assigned_to_id')

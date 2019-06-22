@@ -1,18 +1,14 @@
 class UserPermissionsController < ApplicationController
-  before_action :admin_user, except: [:show, :index]
-  before_action :set_user_permission, only: [:show, :edit, :update, :destroy]
+
+  before_action :signed_in_user
+  before_action :admin_user, except: [:index]
+  before_action :set_user_permission, only: [:edit, :update, :destroy]
   before_action :set_select_options, only: [:new, :edit ]
 
   # GET /user_permissions
   # GET /user_permissions.json
   def index
-    #TODO make it so only admin has edit delete links
     @user_permissions = current_rulemaking.user_permissions.includes(:user).order("users.name")
-  end
-
-  # GET /user_permissions/1
-  # GET /user_permissions/1.json
-  def show
   end
 
   # GET /user_permissions/new

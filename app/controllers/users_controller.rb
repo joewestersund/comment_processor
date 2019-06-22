@@ -1,23 +1,17 @@
 class UsersController < ApplicationController
   require 'securerandom'
 
-  before_action :signed_in_user, only: [:new, :edit, :edit_profile, :edit_password, :update, :update_password, :show, :destroy, :index]
-  before_action :application_admin_user, only: [:edit, :update, :destroy]
-  before_action :admin_user, only: [:new, :create]
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :signed_in_user
+  before_action :application_admin_user, only: [:edit, :update, :destroy] #only application admin can edit or delete another user
+  before_action :admin_user, only: [:new, :create]  #regular admin can create a new user
+  before_action :set_user, only: [:edit, :update, :destroy]
   before_action :set_self_as_user, only: [:edit_profile, :edit_password, :update_password]
 
 
   # GET /users
   # GET /users.json
   def index
-    #TODO make it so only application admin has edit delete links
     @users = User.order(:name)
-  end
-
-  # GET /users/1
-  # GET /users/1.json
-  def show
   end
 
   # GET /users/new
@@ -48,12 +42,6 @@ class UsersController < ApplicationController
       render 'new'
     end
   end
-
-
-  #TODO make it so only application admin can edit a profile other than one's own
-  #TODO regular admin can add a new user.
-  #TODO application admin can also edit and delete users.
-  #TODO check the before_action to make sure correct security
 
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json

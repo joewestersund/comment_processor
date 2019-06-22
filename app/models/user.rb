@@ -22,7 +22,7 @@ class User < ApplicationRecord
   has_many :user_permissions, dependent: :destroy
   has_many :suggested_changes
   has_many :change_log_entries
-  belongs_to :last_rulemaking_viewed, class_name: 'Rulemaking', foreign_key: 'last_rulemaking_viewed_id'
+  belongs_to :last_rulemaking_viewed, class_name: 'Rulemaking', foreign_key: 'last_rulemaking_viewed_id', optional: true
 
   before_save { |user| user.email.downcase! }
   before_create :create_remember_token

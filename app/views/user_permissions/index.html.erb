@@ -9,7 +9,9 @@
       <th>User</th>
       <th>Admin</th>
       <th>Read only</th>
-      <th colspan="2"></th>
+      <% if current_user.admin_for?(current_rulemaking) %>
+        <th colspan="2"></th>
+      <% end %>
     </tr>
   </thead>
 
@@ -20,8 +22,10 @@
         <td><%= user_permission.user.name %></td>
         <td class="<%="#{highlight_true(user_permission.admin?)}"%>"><%= show_boolean_value(user_permission.admin?) %></td>
         <td class="<%="#{highlight_true(user_permission.read_only?)}"%>"><%= show_boolean_value(user_permission.read_only?) %></td>
-        <td><%= link_to 'Edit', edit_user_permission_path(user_permission) %></td>
-        <td><%= link_to 'Delete', user_permission, method: :delete, data: { confirm: "Are you sure you want to delete permissions for #{user_permission.user.name} for #{user_permission.rulemaking.rulemaking_name}?" } %></td>
+        <% if current_user.admin_for?(current_rulemaking) %>
+          <td><%= link_to 'Edit', edit_user_permission_path(user_permission) %></td>
+          <td><%= link_to 'Delete', user_permission, method: :delete, data: { confirm: "Are you sure you want to delete permissions for #{user_permission.user.name} for #{user_permission.rulemaking.rulemaking_name}?" } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

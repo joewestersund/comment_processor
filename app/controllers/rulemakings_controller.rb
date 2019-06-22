@@ -79,6 +79,7 @@ class RulemakingsController < ApplicationController
       add_default_objects(rulemaking,CommentStatusType, 'status_text')
       add_default_objects(rulemaking,SuggestedChangeStatusType, 'status_text')
       add_default_objects(rulemaking,SuggestedChangeResponseType, 'response_text')
+      add_default_objects(rulemaking,CommentDataSource, 'data_source_name')
     end
 
     def add_default_objects(rulemaking, klass, name_of_field)
