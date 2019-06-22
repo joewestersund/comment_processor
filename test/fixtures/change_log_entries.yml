@@ -22,23 +22,26 @@ change_to_comment:
   object_type: comment
   action_type: create
   comment_id: 1
-  category_id:
+  suggested_change_id:
   description: MyString
+  rulemaking_id: 1
 
-change_to_category:
+change_to_suggested_change:
   id: 2
   user_id: 1
-  object_type: category
+  object_type: suggested change
   action_type: create
   comment_id:
-  category_id: 1
+  suggested_change_id: 1
   description: MyString
+  rulemaking_id: 1
 
 change_to_other_object:
   id: 3
   user_id: 1
-  object_type: category response type
+  object_type: suggested change response type
   action_type: create
   comment_id:
-  category_id:
+  suggested_change_id:
   description: MyString
+  rulemaking_id: 1

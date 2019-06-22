@@ -42,7 +42,8 @@ one:
   notes: MyString
   order_in_list: 1
   num_commenters: 1
-  categories: one,two,three
+  suggested_changes: one,two,three
+  rulemaking_id: 1
 
 two:
   id: 2
@@ -60,7 +61,8 @@ two:
   notes: MyString
   order_in_list: 2
   num_commenters: 1
-  categories: one,two
+  suggested_changes: one,two
+  rulemaking_id: 1
 
 three:
   id: 3
@@ -78,7 +80,8 @@ three:
   notes: MyString
   order_in_list: 3
   num_commenters: 1
-  categories: two
+  suggested_changes: two
+  rulemaking_id: 1
 
 needs_cleaning:
   id: 4
@@ -96,4 +99,5 @@ needs_cleaning:
   notes: MyString
   order_in_list: 4
   num_commenters: 1
-  categories: two
+  suggested_changes: two
+  rulemaking_id: 1

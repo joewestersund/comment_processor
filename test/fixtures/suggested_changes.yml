@@ -1,19 +1,19 @@
 # == Schema Information
 #
-# Table name: categories
+# Table name: suggested_changes
 #
 #  id                        :integer          not null, primary key
-#  category_name             :text
+#  suggested_change_name     :text
 #  description               :text
 #  response_text             :text
 #  assigned_to_id            :integer
-#  category_status_type_id   :integer
+#  suggested_change_status_type_id   :integer
 #  action_needed             :text
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null
 #  order_in_list             :integer
 #  rule_change_made          :boolean
-#  category_response_type_id :integer
+#  suggested_change_response_type_id :integer
 #  text_from_comments        :text
 #  notes                     :text
 #  rulemaking_id             :integer
@@ -23,42 +23,46 @@
 
 one:
   id: 1
-  category_name: This is category 1 name
+  suggested_change_name: This is suggested change 1 name
   description: MyString1
   response_text: MyString1
-  category_status_type_id: 1
+  suggested_change_status_type_id: 1
   action_needed: MyString1
   rule_change_made: true
-  category_response_type_id: 1
+  suggested_change_response_type_id: 1
   assigned_to_id: 1
   order_in_list: 1
+  rulemaking_id: 1
 
 two:
   id: 2
-  category_name: Category 2 name
+  suggested_change_name: Suggested change 2 name
   description: MyString2
   response_text: MyString2
-  category_status_type_id: 1
+  suggested_change_status_type_id: 1
   action_needed: MyString2
   rule_change_made: false
   order_in_list: 2
+  rulemaking_id: 1
 
 three:
   id: 3
-  category_name: A name of another category
+  suggested_change_name: A name of another suggested change
   description: MyString3
   response_text: MyString3
-  category_status_type_id: 1
+  suggested_change_status_type_id: 1
   action_needed: MyString3
   rule_change_made: false
   order_in_list: 3
+  rulemaking_id: 1
 
 four:
   id: 4
-  category_name: Name number 4
+  suggested_change_name: Name number 4
   description: MyString4
   response_text: MyString4
-  category_status_type_id: 1
+  suggested_change_status_type_id: 1
   action_needed: MyString4
   rule_change_made: false
   order_in_list: 4
+  rulemaking_id: 1

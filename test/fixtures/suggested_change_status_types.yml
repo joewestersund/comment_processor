@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: category_status_types
+# Table name: suggested_change_status_types
 #
 #  id            :integer          not null, primary key
 #  status_text   :string
@@ -16,13 +16,16 @@ one:
   id: 1
   status_text: one
   order_in_list: 1
+  rulemaking_id: 1
 
 two:
   id: 2
   status_text: two
   order_in_list: 2
+  rulemaking_id: 1
 
 three:
   id: 3
   status_text: three
   order_in_list: 3
+  rulemaking_id: 1

@@ -20,6 +20,7 @@ one:
   description: MyString
   comment_download_url: MyString1
   active: false
+  rulemaking_id: 1
 
 two:
   id: 2
@@ -27,3 +28,4 @@ two:
   description: MyString
   comment_download_url: MyString2
   active: false
+  rulemaking_id: 1
