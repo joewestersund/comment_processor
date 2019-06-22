@@ -32,6 +32,22 @@ admin_user_2:
   password_digest: <%= User.digest('password') %>
   active: true
 
+application_admin_user_1:
+  id: 6
+  name: MyString6
+  email: test6@test.com
+  application_admin: true
+  password_digest: <%= User.digest('password') %>
+  active: true
+
+application_admin_user_2:
+  id: 7
+  name: MyString7
+  email: test7@test.com
+  application_admin: true
+  password_digest: <%= User.digest('password') %>
+  active: true
+
 regular_user:
   id: 3
   name: MyString3

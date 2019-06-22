@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   require 'securerandom'
 
-  before_action :signed_in_user
+  before_action :signed_in_user, except: [:forgot_password, :send_password_reset_email, :reset_password]
   before_action :application_admin_user, only: [:edit, :update, :destroy] #only application admin can edit or delete another user
   before_action :admin_user, only: [:new, :create]  #regular admin can create a new user
   before_action :set_user, only: [:edit, :update, :destroy]
@@ -70,8 +70,8 @@ class UsersController < ApplicationController
   end
 
   def send_password_reset_email
+    @user = User.find_by(email: params[:email])
     respond_to do |format|
-      @user = User.find_by(email: params[:email])
       if @user.present? && @user.active?
         @user.generate_password_token!
         NotificationMailer.password_reset_email(@user).deliver

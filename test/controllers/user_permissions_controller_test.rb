@@ -5,6 +5,7 @@ class UserPermissionsControllerTest < ActionDispatch::IntegrationTest
     @user = users(:admin_user_1)
     sign_in_as users(:admin_user_1)
     @user_permission = user_permissions(:regular_user_permission)
+    @rulemaking2 = rulemakings(:two)
   end
 
   test "should get index" do
@@ -19,15 +20,11 @@ class UserPermissionsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create user_permission" do
     assert_difference('UserPermission.count') do
-      post user_permissions_url, params: { user_permission: { admin: @user_permission.admin, read_only: @user_permission.read_only, rulemaking_id: @user_permission.rulemaking_id, user_id: @user_permission.user_id } }
+      #add permission for this user to rulemaking 2, since that user doesn't already have that permission
+      post user_permissions_url, params: { user_permission: { admin: @user_permission.admin, read_only: @user_permission.read_only, rulemaking_id: @rulemaking2.id, user_id: @user_permission.user_id } }
     end
 
     assert_redirected_to user_permission_url(UserPermission.last)
-  end
-
-  test "should show user_permission" do
-    get user_permission_url(@user_permission)
-    assert_response :success
   end
 
   test "should get edit" do
@@ -48,17 +45,4 @@ class UserPermissionsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to user_permissions_url
   end
 
-  test "should not update user permissions to remove last admin for this rulemaking" do
-    assert_difference('UserPermission.where(admin: true).count',-1) do
-      @other_admin_user_permissions = user_permissions(:admin_user_2_permission)
-      patch user_permissions_url(@other_admin_user_permissions), params: { admin: false }
-    end
-
-    assert_no_difference('User.where(admin: true).count') do
-      @last_admin_user_permissions = user_permissions(:admin_user_1_permission)
-      patch user_permissions_url(@last_admin_user_permissions), params: { admin: false }
-    end
-
-    assert_redirected_to users_url
-  end
 end

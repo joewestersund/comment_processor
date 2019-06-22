@@ -79,14 +79,15 @@ class RulemakingsController < ApplicationController
       add_default_objects(rulemaking,CommentStatusType, 'status_text')
       add_default_objects(rulemaking,SuggestedChangeStatusType, 'status_text')
       add_default_objects(rulemaking,SuggestedChangeResponseType, 'response_text')
-      add_default_objects(rulemaking,CommentDataSource, 'data_source_name')
+      add_default_objects(rulemaking,CommentDataSource, 'data_source_name', false)
     end
 
-    def add_default_objects(rulemaking, klass, name_of_field)
+    def add_default_objects(rulemaking, klass, name_of_field, include_order_in_list = true)
       order_in_list = 1
       klass.default_list.each do |list_item|
-        obj = klass.new({rulemaking: rulemaking, order_in_list: order_in_list})
+        obj = klass.new({rulemaking: rulemaking})
         obj[name_of_field] = list_item
+        obj.order_in_list = order_in_list if include_order_in_list
         obj.save
         order_in_list += 1
       end

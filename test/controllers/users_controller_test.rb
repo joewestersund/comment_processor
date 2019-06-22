@@ -24,11 +24,6 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to users_url
   end
 
-  test "should show user" do
-    get user_url(@user)
-    assert_response :success
-  end
-
   test "should get edit" do
     get edit_user_url(@user)
     assert_response :success
@@ -48,7 +43,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test "should update user" do
     @user2 = users(:regular_user)
-    patch user_url(@user2), params: { user: { name: @user2.name, email: @user2.email, admin: @user2.admin } }
+    patch user_url(@user2), params: { user: { name: @user2.name, email: @user2.email, application_admin: @user2.application_admin } }
 
     assert_redirected_to users_url
   end
@@ -65,8 +60,24 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   end
 
+  test "regular admin should not be able to destroy user " do
+    assert_difference('User.count', 0) do
+      @user.change_log_entries.delete_all
+      delete user_url(@user)
+    end
 
-  test "should destroy user without change log entries" do
+    assert_redirected_to users_url
+  end
+
+  test "application admin user should be able to destroy user without change log entries" do
+    sign_user_out
+
+    get comments_url
+    assert_redirected_to signin_url
+
+    sign_in_as users(:application_admin_user_1)
+
+
     assert_difference('User.count', -1) do
       @user.change_log_entries.delete_all
       delete user_url(@user)
@@ -74,4 +85,31 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to users_url
   end
+
+  test "should get forgot password screen" do
+    get password_forgot_url
+    assert_response :success
+  end
+
+  test "should send password reset email" do
+    post password_send_reset_email_url, params: { user: { email: @user.email } }
+    assert_response :success
+  end
+
+  test "should not remove last application admin" do
+    assert_difference('User.where({application_admin: true, active: true}).count',-1) do
+      @other_app_admin = users(:application_admin_user_2)
+      patch user_url(@other_app_admin), params: { admin: false }
+    end
+
+    assert_redirected_to users_url
+
+    assert_difference('User.where({application_admin: true, active: true}).count', 0) do
+      @last_app_admin = user_permissions(:application_admin_user_1)
+      patch user_url(@last_app_admin), params: { admin: false }
+    end
+
+    assert_redirected_to edit_user_url(@last_app_admin)
+  end
+
 end

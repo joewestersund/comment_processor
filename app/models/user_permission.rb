@@ -22,4 +22,5 @@ class UserPermission < ApplicationRecord
   end
 
   validates :user_id, uniqueness: { scope: :rulemaking }
+
 end

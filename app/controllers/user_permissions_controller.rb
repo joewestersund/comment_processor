@@ -30,9 +30,10 @@ class UserPermissionsController < ApplicationController
 
     respond_to do |format|
       if @user_permission.save
-        format.html { redirect_to @user_permission, notice: 'User permission was successfully created.' }
+        format.html { redirect_to user_permissions_url, notice: 'User permission was successfully created.' }
         format.json { render :show, status: :created, location: @user_permission }
       else
+        set_select_options
         format.html { render :new }
         format.json { render json: @user_permission.errors, status: :unprocessable_entity }
       end
@@ -44,9 +45,10 @@ class UserPermissionsController < ApplicationController
   def update
     respond_to do |format|
       if @user_permission.update(user_permission_params)
-        format.html { redirect_to @user_permission, notice: 'User permission was successfully updated.' }
+        format.html { redirect_to user_permissions_url, notice: 'User permission was successfully updated.' }
         format.json { render :show, status: :ok, location: @user_permission }
       else
+        set_select_options
         format.html { render :edit }
         format.json { render json: @user_permission.errors, status: :unprocessable_entity }
       end
@@ -75,7 +77,7 @@ class UserPermissionsController < ApplicationController
     end
 
     def set_select_options
-      cr = current_rulemaking
+      #need to include all users, not just those that already have permissions for this rulemaking.
       @users = User.order(:name).all
     end
 

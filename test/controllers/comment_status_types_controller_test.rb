@@ -17,7 +17,7 @@ class CommentStatusTypesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create comment_status_type" do
-    assert_difference('CommentStatusType.count') do
+    assert_difference('CommentStatusType.count', 1) do
       assert_difference('ChangeLogEntry.count', 1) do #should write to log
         post comment_status_types_url, params: { comment_status_type: { status_text: "new status text not used elsewhere" } }
       end

@@ -39,7 +39,6 @@ class CommentStatusTypesController < ApplicationController
   # POST /comment_status_types.json
   def create
     @comment_status_type = CommentStatusType.new(comment_status_type_params)
-    @comment_status_type = current_rulemaking
 
     #set the order_in_list
     cst_max = current_rulemaking.comment_status_types.maximum(:order_in_list)

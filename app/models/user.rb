@@ -71,7 +71,7 @@ class User < ApplicationRecord
     if self.application_admin?
       return true
     else
-      up = self.user_permissions.where(rulemaking: rulemaking)
+      up = self.user_permissions.find_by(rulemaking: rulemaking)
       return up.present? && up.admin?
     end
   end
@@ -81,7 +81,7 @@ class User < ApplicationRecord
     if self.application_admin?
       return true
     else
-      up = self.user_permissions.where(rulemaking: rulemaking)
+      up = self.user_permissions.find_by(rulemaking: rulemaking)
       return up.present? && !up.read_only?
     end
   end
@@ -91,7 +91,7 @@ class User < ApplicationRecord
     if self.application_admin?
       return true
     else
-      up = self.user_permissions.where(rulemaking: rulemaking)
+      up = self.user_permissions.find_by(rulemaking: rulemaking)
       return up.present?
     end
   end

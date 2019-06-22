@@ -18,7 +18,7 @@ class ChangeLogEntriesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create change log entry" do
     assert_difference('ChangeLogEntry.count') do
-      post change_log_entries_url, params: { change_log_entry: { category_id: @change_log_entry.category_id, comment_id: @change_log_entry.comment_id, description: @change_log_entry.description, user_id: @change_log_entry.user_id } }
+      post change_log_entries_url, params: { change_log_entry: { suggested_change_id: @change_log_entry.suggested_change_id, comment_id: @change_log_entry.comment_id, description: @change_log_entry.description, user_id: @change_log_entry.user_id } }
     end
 
     assert_redirected_to change_log_entries_url
@@ -35,7 +35,7 @@ class ChangeLogEntriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update change log entry" do
-    patch change_log_entry_url(@change_log_entry), params: { change_log_entry: { category_id: @change_log_entry.category_id, comment_id: @change_log_entry.comment_id, description: @change_log_entry.description, user_id: @change_log_entry.user_id } }
+    patch change_log_entry_url(@change_log_entry), params: { change_log_entry: { suggested_change_id: @change_log_entry.suggested_change_id, comment_id: @change_log_entry.comment_id, description: @change_log_entry.description, user_id: @change_log_entry.user_id } }
     assert_redirected_to change_log_entries_url
   end
 

@@ -3,6 +3,7 @@ require 'test_helper'
 class RulemakingsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @rulemaking = rulemakings(:one)
+    sign_in_as users(:application_admin_user_1)
   end
 
   test "should get index" do
@@ -21,11 +22,6 @@ class RulemakingsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to rulemaking_url(Rulemaking.last)
-  end
-
-  test "should show rulemaking" do
-    get rulemaking_url(@rulemaking)
-    assert_response :success
   end
 
   test "should get edit" do
