@@ -95,4 +95,6 @@ Rails.application.configure do
 
   # Store files on Amazon S3.
   config.active_storage.service = :amazon
+
+  Rails.application.routes.default_url_options[:host]= 'https://comment-processor.herokuapp.com'
 end

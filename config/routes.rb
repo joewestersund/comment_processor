@@ -55,6 +55,7 @@ Rails.application.routes.draw do
   get 'comments/cleanup', to: 'comments#cleanup'
   put 'comments/cleanup', to: 'comments#do_cleanup', as: 'comments_do_cleanup'
   delete 'comments/:id/attached_file/:attached_file_id', :to => 'comments#delete_attachment', as: 'comments_delete_attachment'
+  get 'comments/:id/attached_file/:attached_file_id', :to => 'comments#show_attachment', as: 'comments_show_attachment'
   resources :comments
 
   resources :sessions, only: [:new, :create, :destroy]
