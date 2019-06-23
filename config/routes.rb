@@ -37,6 +37,7 @@ Rails.application.routes.draw do
   get '/profile/edit_password', to: 'users#edit_password'
   get '/profile/edit', to: 'users#edit_profile'
   patch '/profile/update_password', to: 'users#update_password'
+  patch '/profile/update', to: 'users#update_profile'
 
   get 'suggested_changes/renumber', to: 'suggested_changes#renumber'
   put 'suggested_changes/renumber', to: 'suggested_changes#do_renumber', as: 'suggested_changes_do_renumber'

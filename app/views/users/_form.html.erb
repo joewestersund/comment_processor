@@ -28,17 +28,6 @@
     <%= f.check_box :application_admin, disabled: locals[:edit_profile] %>
   </div>
 
-  <% if locals[:first_user] %>
-    <div class="field">
-      <%= f.label :password %>
-      <%= f.password_field :password %>
-    </div>
-    <div class="field">
-      <%= f.label :password_confirmation %>
-      <%= f.password_field :password_confirmation %>
-    </div>
-  <% end %>
-
   <div class="actions">
     <%= f.submit locals[:new_user] ? "Add User" : "Submit", class: "btn btn-large btn-primary" %>
   </div>

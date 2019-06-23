@@ -59,5 +59,6 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   # Store files locally.
-  config.active_storage.service = :local
+  #TODO finish configuring this
+  #config.active_storage.service = :local
 end

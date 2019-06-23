@@ -5,7 +5,6 @@ class UserPermissionsControllerTest < ActionDispatch::IntegrationTest
     @user = users(:admin_user_1)
     sign_in_as users(:admin_user_1)
     @user_permission = user_permissions(:regular_user_permission)
-    @rulemaking2 = rulemakings(:two)
   end
 
   test "should get index" do
@@ -19,12 +18,12 @@ class UserPermissionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create user_permission" do
-    assert_difference('UserPermission.count') do
-      #add permission for this user to rulemaking 2, since that user doesn't already have that permission
-      post user_permissions_url, params: { user_permission: { admin: @user_permission.admin, read_only: @user_permission.read_only, rulemaking_id: @rulemaking2.id, user_id: @user_permission.user_id } }
+    new_user = users(:user_with_no_permissions_yet)
+    assert_difference('UserPermission.count',1) do
+      post user_permissions_url, params: { user_permission: { admin: false, read_only: false, user_id: new_user.id } }
     end
 
-    assert_redirected_to user_permission_url(UserPermission.last)
+    assert_redirected_to user_permissions_url
   end
 
   test "should get edit" do
@@ -34,7 +33,7 @@ class UserPermissionsControllerTest < ActionDispatch::IntegrationTest
 
   test "should update user_permission" do
     patch user_permission_url(@user_permission), params: { user_permission: { admin: @user_permission.admin, read_only: @user_permission.read_only, rulemaking_id: @user_permission.rulemaking_id, user_id: @user_permission.user_id } }
-    assert_redirected_to user_permission_url(@user_permission)
+    assert_redirected_to user_permissions_url
   end
 
   test "should destroy user_permission" do

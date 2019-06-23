@@ -33,4 +33,6 @@
 
 <br>
 
-<%= link_to 'New User Permission', new_user_permission_path %>
+<% if current_user.admin_for?(current_rulemaking) %>
+  <%= link_to 'New User Permission', new_user_permission_path %>
+<% end %>

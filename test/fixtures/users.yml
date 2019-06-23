@@ -68,3 +68,10 @@ inactive_user:
   email: test5@test.com
   password_digest: <%= User.digest('password') %>
   active: false
+
+user_with_no_permissions_yet:
+  id: 8
+  name: MyString8
+  email: test8@test.com
+  password_digest: <%= User.digest('password') %>
+  active: false

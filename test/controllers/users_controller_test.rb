@@ -24,7 +24,15 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to users_url
   end
 
-  test "should get edit" do
+  test "non- app admin shouldn't get edit" do
+    get edit_user_url(@user)
+    assert_redirected_to welcome_url
+  end
+
+  test "app admin should get edit" do
+    sign_user_out
+    sign_in_as users(:application_admin_user_1)
+
     get edit_user_url(@user)
     assert_response :success
   end
@@ -41,20 +49,40 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to signin_url
   end
 
-  test "should update user" do
+  test "regular admin shouldn't be able to update user" do
     @user2 = users(:regular_user)
-    patch user_url(@user2), params: { user: { name: @user2.name, email: @user2.email, application_admin: @user2.application_admin } }
+    patch user_url(@user2), params: { user: { name: "a changed name", email: @user2.email, application_admin: @user2.application_admin } }
+
+    assert_redirected_to welcome_url
+
+    user2_name = User.find_by(email: @user2.email).name
+
+    assert_equal(user2_name, @user2.name)
+
+  end
+
+  test "app admin should be able to update user" do
+    sign_user_out
+    sign_in_as users(:application_admin_user_1)
+
+    @user2 = users(:regular_user)
+    patch user_url(@user2), params: { user: { name: "a changed name", email: @user2.email, application_admin: @user2.application_admin } }
 
     assert_redirected_to users_url
+
+    user2_name = User.find_by(email: @user2.email).name
+
+    assert_not_equal(user2_name, @user2.name)
+
   end
 
   test "should update profile" do
-    patch user_url(@user), params: { user: { email: @user.email, name: @user.name } }
+    patch profile_update_url(@user), params: { user: { name: @user.name, email: @user.email } }
     assert_redirected_to profile_edit_url
   end
 
   test "should not destroy user with change log entries" do
-    assert_raises(Exception) do
+    assert_difference('User.count', 0) do
       delete user_url(@user)
     end
 
@@ -66,7 +94,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       delete user_url(@user)
     end
 
-    assert_redirected_to users_url
+    assert_redirected_to welcome_url #since this user should get rejected before control action is triggered
   end
 
   test "application admin user should be able to destroy user without change log entries" do
@@ -87,29 +115,36 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get forgot password screen" do
+    sign_user_out
     get password_forgot_url
     assert_response :success
   end
 
   test "should send password reset email" do
+    sign_user_out
     post password_send_reset_email_url, params: { user: { email: @user.email } }
-    assert_response :success
+
+    assert_redirected_to password_forgot_url
   end
 
   test "should not remove last application admin" do
+    sign_user_out
+
+    sign_in_as users(:application_admin_user_1)
+
     assert_difference('User.where({application_admin: true, active: true}).count',-1) do
       @other_app_admin = users(:application_admin_user_2)
-      patch user_url(@other_app_admin), params: { admin: false }
+      patch user_url(@other_app_admin), params: { user: { application_admin: false }}
     end
 
     assert_redirected_to users_url
 
     assert_difference('User.where({application_admin: true, active: true}).count', 0) do
-      @last_app_admin = user_permissions(:application_admin_user_1)
-      patch user_url(@last_app_admin), params: { admin: false }
+      @last_app_admin = users(:application_admin_user_1)
+      patch user_url(@last_app_admin), params: { user: { application_admin: false }}
     end
 
-    assert_redirected_to edit_user_url(@last_app_admin)
+    assert_redirected_to users_url
   end
 
 end

@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   before_action :application_admin_user, only: [:edit, :update, :destroy] #only application admin can edit or delete another user
   before_action :admin_user, only: [:new, :create]  #regular admin can create a new user
   before_action :set_user, only: [:edit, :update, :destroy]
-  before_action :set_self_as_user, only: [:edit_profile, :edit_password, :update_password]
+  before_action :set_self_as_user, only: [:edit_profile, :update_profile, :edit_password, :update_password]
 
 
   # GET /users
@@ -27,6 +27,17 @@ class UsersController < ApplicationController
   def edit_profile
   end
 
+  def update_profile
+    respond_to do |format|
+      @user.update(update_profile_params)
+      if @user.save
+        format.html { redirect_to profile_edit_path, notice: 'Your profile was successfully updated.' }
+      else
+        format.html { render :edit_profile }
+      end
+    end
+  end
+
   # POST /users
   # POST /users.json
   def create
@@ -39,7 +50,7 @@ class UsersController < ApplicationController
       flash[:notice] = "An account for #{@user.name} was successfully created. A new, random password has been emailed to them."
       redirect_to users_path
     else
-      render 'new'
+      render :edit
     end
   end
 
@@ -138,8 +149,8 @@ class UsersController < ApplicationController
       params.require(:user).permit(:name, :email, :application_admin, :active)
     end
 
-    def user_params_first_user
-      params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    def update_profile_params
+      params.require(:user).permit(:name, :email)
     end
 
     def user_params_change_password()

@@ -81,9 +81,9 @@ class SuggestedChangesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to suggested_changes_path
 
     assert_equal(4, SuggestedChange.find(1).order_in_list)
-    assert_equal(2, SuggestedChange.find(2).order_in_list)
+    assert_equal(3, SuggestedChange.find(2).order_in_list)
     assert_equal(1, SuggestedChange.find(3).order_in_list)
-    assert_equal(3, SuggestedChange.find(4).order_in_list)
+    assert_equal(2, SuggestedChange.find(4).order_in_list)
 
   end
 
