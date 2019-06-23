@@ -9,7 +9,7 @@ class ChangeCategoriesToSuggestedChanges < ActiveRecord::Migration[5.2]
     #remove foreign keys
     remove_foreign_key :categories, :category_status_types
     remove_foreign_key :categories, :category_response_types
-    remove_foreign_key :categories, :users, column: :assigned_to_id
+    remove_foreign_key :categories, column: :assigned_to_id
     remove_foreign_key :categories, :rulemakings
     remove_foreign_key :category_response_types, :rulemakings
     remove_foreign_key :category_status_types, :rulemakings
