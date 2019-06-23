@@ -12,7 +12,7 @@ namespace :initialize_rulemakings do
 
       puts 'connecting existing objects to that record'
 
-      object_groups = [Category, CategoryResponseType, CategoryStatusType, ChangeLogEntry, Comment, CommentStatusType]
+      object_groups = [SuggestedChange, SuggestedChangeResponseType, SuggestedChangeStatusType, ChangeLogEntry, Comment, CommentStatusType]
 
       object_groups.each do |object_type|
         object_type.in_batches.each do |relation|
