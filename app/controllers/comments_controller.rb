@@ -7,7 +7,7 @@ class CommentsController < ApplicationController
   before_action :signed_in_user, except: [:show_attachment]
   before_action :admin_user, only: [:new, :create, :import, :destroy, :delete_attachment, :do_import, :cleanup, :do_cleanup]
   before_action :not_read_only_user, only: [:edit, :update]
-  before_action :set_comment, only: [:show, :edit, :update, :destroy, :show_attachment, :delete_attachment]
+  before_action :set_comment, only: [:show, :edit, :update, :destroy, :delete_attachment]
   before_action :set_select_options, only: [:new, :edit, :index, :delete_attachment ]
 
   # GET /comments
@@ -141,6 +141,8 @@ class CommentsController < ApplicationController
   end
 
   def show_attachment
+    #anyone can do this, without logging in to app
+    @comment = Comment.find(params[:id])
     redirect_to url_for(@comment.attached_files.find(params[:attached_file_id]))
   end
 
