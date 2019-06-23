@@ -7,9 +7,9 @@
 
 <div class="links">
   <% if current_user.can_edit?(current_rulemaking) %>
-    <%= link_to 'Import comments', comments_import_path %> |
     <%= link_to 'Manually enter a comment', new_comment_path %> |
-  <% end %>
+    <%= link_to 'Import comments', comments_import_path %> |
+<% end %>
   Download as <%= link_to "CSV", comments_path(@filter_querystring.merge({format: "csv"})) %>
   or <%= link_to "XLSX", comments_path(@filter_querystring,format: "xlsx") %>
 </div>
@@ -88,7 +88,7 @@
       <th>Name & Email</th>
       <th>Organization & State</th>
       <th>Comment text</th>
-      <th>Attachment</th>
+      <th>Attachments</th>
       <th>Summary</th>
       <th>Comment review status</th>
       <th>Notes</th>
@@ -105,7 +105,12 @@
         <td><%= comment.name_and_email%></td>
         <td><%= "#{comment.organization + ", " if comment.organization.present?}#{comment.state}" %></td>
         <td><%= comment.comment_text.truncate(1000) if comment.comment_text.present?%></td>
-        <td><%= (link_to comment.attachment_name.truncate(10), comment.attachment_url) if comment.attachment_name.present? %></td>
+        <td>
+          <%= (link_to comment.attachment_name.truncate(10), comment.attachment_url) if comment.attachment_name.present? %>
+          <% comment.attached_files.each do |af| %>
+            <div><%= link_to af.filename, af %></div>
+          <% end %>
+        </td>
         <td class="<%= highlight_empty_css(comment.summary)%>"><%= comment.summary.truncate(500) if comment.summary.present? %></td>
         <td class="<%= status_css(comment.comment_status_type)%>"><%= comment.comment_status_type.status_text if comment.comment_status_type.present? %></td>
         <td class="trix-content"><%= raw(comment.notes.truncate(300)) if comment.notes.present? %></td>
@@ -121,7 +126,7 @@
         <% if current_user.can_edit?(current_rulemaking) %>
           <td><%= link_to 'Edit', edit_comment_path(comment,@filter_querystring) %></td>
           <td>
-            <% if comment.manually_entered && current_user.admin? %>
+            <% if comment.manually_entered && current_user.admin_for?(current_rulemaking) %>
               <%= link_to 'Delete', comment, method: :delete, data: { confirm: "Are you sure you want to delete comment ##{comment.order_in_list}?" } %>
             <% end %>
           </td>

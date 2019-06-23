@@ -1,8 +1,6 @@
 <% content_for :title, 'New Comment' %>
 
-<h1>New (Manually Entered) Comment</h1>
-<p>This is for manually entering comments that are not in the DAS database.
-  Do not use this for comments that can be posted to and downloaded from the DAS database.</p>
+<h1>New Comment</h1>
 
 <%= render 'form', comment: @comment, form_url: comments_path %>
 

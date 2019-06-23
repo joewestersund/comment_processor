@@ -26,11 +26,14 @@ include ApplicationHelper
 #
 
 class Comment < ApplicationRecord
+  has_many_attached :attached_files
+
   has_and_belongs_to_many :suggested_changes
   has_many :change_log_entries
   belongs_to :rulemaking
   belongs_to :comment_status_type
   belongs_to :comment_data_source, optional: true
+
 
   validates :num_commenters, presence: true, numericality: { only_integer: true, greater_than: 0}
 

@@ -94,6 +94,5 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # Store files on Amazon S3.
-  #TODO finish configuring this
-  #config.active_storage.service = :amazon
+  config.active_storage.service = :amazon
 end

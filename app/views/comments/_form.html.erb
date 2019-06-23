@@ -11,7 +11,7 @@
     </div>
   <% end %>
 
-  <% if comment.manually_entered && current_user.admin_for?(current_rulemaking) %>
+  <% if comment.manually_entered && current_user.admin_for?(current_rulemaking)%>
 
     <div class="actions">
       <%= form.submit "Save", class: "btn btn-large btn-primary" %>
@@ -52,8 +52,27 @@
       <%= form.text_area :comment_text, id: :comment_comment_text, cols: 300, rows: 5, class: 'bigtextarea' %>
     </div>
 
+    <div class="field">
+      <div> Already uploaded files:
+        <% if comment.attached_files.count == 0 %>
+          None
+        <% else %>
+          <% comment.attached_files.each do |af| %>
+            <div>
+              <%= link_to af.filename, af %>
+              <%= link_to 'Delete', comments_delete_attachment_path(comment, af), method: :delete, data: { confirm: 'Are you sure you want to delete this attachment?' } %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="field">
+      <%= form.file_field :attached_files, multiple: true %>
+    </div>
+
     <div>
-      To manually enter an attachment, you must put the file on a folder all users can view, such as on Google drive.
+      If a file is already uploaded to a folder all users can view, such as on Google drive, you can enter it here.
 
       <% if comment.attachment_name.present? %>
         <div class="field">

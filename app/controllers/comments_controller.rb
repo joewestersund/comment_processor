@@ -5,10 +5,10 @@ class CommentsController < ApplicationController
   require 'csv'
 
   before_action :signed_in_user
-  before_action :admin_user, only: [:new, :create, :import, :destroy, :do_import, :cleanup, :do_cleanup]
+  before_action :admin_user, only: [:new, :create, :import, :destroy, :delete_attachment, :do_import, :cleanup, :do_cleanup]
   before_action :not_read_only_user, only: [:edit, :update]
-  before_action :set_comment, only: [:show, :edit, :update, :destroy]
-  before_action :set_select_options, only: [:new, :edit, :index ]
+  before_action :set_comment, only: [:show, :edit, :update, :destroy, :delete_attachment]
+  before_action :set_select_options, only: [:new, :edit, :index, :delete_attachment ]
 
   # GET /comments
   # GET /comments.json
@@ -39,8 +39,6 @@ class CommentsController < ApplicationController
         stream_csv(c)
       }
     end
-
-
   end
 
   def import
@@ -142,6 +140,11 @@ class CommentsController < ApplicationController
     end
   end
 
+  def delete_attachment
+    @comment.attached_files.find(params[:attached_file_id]).purge
+    redirect_to edit_comment_path(@comment), notice: 'Attachment was successfully deleted.'
+  end
+
   def destroy
     current_comment_num = @comment.order_in_list
     #note: can't associate this change log entry with the comment object, because the comment is about to be destroyed.
@@ -202,7 +205,7 @@ class CommentsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
 
     def comment_params
-      params.require(:comment).permit(:source_id, :first_name, :last_name, :email, :organization, :state, :comment_text, :attachment_name, :attachment_url, :num_commenters, :summary, :comment_status_type_id, :notes, :manually_entered, :comment_data_source_id)
+      params.require(:comment).permit(:source_id, :first_name, :last_name, :email, :organization, :state, :comment_text, :attachment_name, :attachment_url, :num_commenters, :summary, :comment_status_type_id, :notes, :manually_entered, :comment_data_source_id, attached_files: [])
     end
 
     def comment_import_params

@@ -54,6 +54,7 @@ Rails.application.routes.draw do
   put 'comments/import', to: 'comments#do_import', as: 'comments_do_import'
   get 'comments/cleanup', to: 'comments#cleanup'
   put 'comments/cleanup', to: 'comments#do_cleanup', as: 'comments_do_cleanup'
+  delete 'comments/:id/attached_file/:attached_file_id', :to => 'comments#delete_attachment', as: 'comments_delete_attachment'
   resources :comments
 
   resources :sessions, only: [:new, :create, :destroy]
