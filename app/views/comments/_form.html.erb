@@ -59,7 +59,7 @@
         <% else %>
           <% comment.attached_files.each do |af| %>
             <div>
-              <%= link_to af.filename, af %>
+              <%= link_to af.filename, url_for(af) %>
               <%= link_to 'Delete', comments_delete_attachment_path(comment, af), method: :delete, data: { confirm: 'Are you sure you want to delete this attachment?' } %>
             </div>
           <% end %>

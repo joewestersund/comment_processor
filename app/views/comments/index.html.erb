@@ -108,7 +108,7 @@
         <td>
           <%= (link_to comment.attachment_name.truncate(10), comment.attachment_url) if comment.attachment_name.present? %>
           <% comment.attached_files.each do |af| %>
-            <div><%= link_to af.filename, af %></div>
+            <div><%= link_to af.filename, url_for(af) %></div>
           <% end %>
         </td>
         <td class="<%= highlight_empty_css(comment.summary)%>"><%= comment.summary.truncate(500) if comment.summary.present? %></td>

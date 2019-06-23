@@ -149,6 +149,9 @@ class CommentsController < ApplicationController
     current_comment_num = @comment.order_in_list
     #note: can't associate this change log entry with the comment object, because the comment is about to be destroyed.
     save_change_log(current_user,{object_type: 'comment', action_type: 'delete', description: "deleted comment ID ##{@comment.id} from #{@comment.first_name} #{@comment.last_name}, '#{@comment.comment_text.truncate(1000) if @comment.comment_text.present?}'"})
+
+    @comment.attached_files.purge #delete any attachments from S3
+
     @comment.destroy
     handle_delete_of_order_in_list(current_rulemaking.comments,current_comment_num)
     respond_to do |format|
