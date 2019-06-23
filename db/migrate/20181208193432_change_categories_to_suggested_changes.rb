@@ -22,7 +22,7 @@ class ChangeCategoriesToSuggestedChanges < ActiveRecord::Migration[5.2]
 
     rename_column :suggested_changes, :category_name, :suggested_change_name
     rename_column :suggested_changes, :category_response_type_id, :suggested_change_response_type_id
-    rename_column :suggested_change, :category_status_type_id, :suggested_change_status_type_id
+    rename_column :suggested_changes, :category_status_type_id, :suggested_change_status_type_id
 
     rename_column :change_log_entries, :category_id, :suggested_change_id
 
