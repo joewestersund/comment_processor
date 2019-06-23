@@ -24,7 +24,7 @@
     <tr><td>Attachment</td><td><%= if @comment.attachment_name.present? then link_to @comment.attachment_name.to_s, @comment.attachment_url end %></td>
     <tr><td>Number of commenters</td><td><%= @comment.num_commenters %></td></tr>
     <tr><td>Summary</td><td><%= @comment.summary %></td></tr>
-    <tr><td>Suggested Changes</td><td><% @comment.suggested_changes.order('LOWER(suggested_change_name)').each do |sc| %>
+    <tr><td>Suggested Changes</td><td><% @comment.suggested_changes.order(Arel.sql('LOWER(suggested_change_name)')).each do |sc| %>
         <li><%=link_to sc.suggested_change_name, suggested_change_path(sc) %></li>
       <% end %></td></tr>
     <tr><td>Comment review status</td><td><%= @comment.comment_status_type.status_text if @comment.comment_status_type.present? %></td></tr>

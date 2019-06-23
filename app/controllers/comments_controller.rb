@@ -211,7 +211,7 @@ class CommentsController < ApplicationController
 
     def set_select_options
       cr = current_rulemaking
-      @suggested_changes = cr.suggested_changes.order('LOWER(suggested_change_name)').all
+      @suggested_changes = cr.suggested_changes.order(Arel.sql('LOWER(suggested_change_name)')).all
       @comment_status_types = cr.comment_status_types.order(:order_in_list).all
       @comment_data_sources = cr.comment_data_sources.order(:id).all
     end

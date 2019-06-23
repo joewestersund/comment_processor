@@ -25,7 +25,7 @@ class SuggestedChangesController < ApplicationController
         @filtered = !conditions[0].empty?
         @filter_querystring = remove_empty_elements(filter_params)
 
-        c = c.order('LOWER(suggested_change_name)')
+        c = c.order(Arel.sql('LOWER(suggested_change_name)'))
         @suggested_changes = c.page(params[:page]).per_page(10)
       }
       format.xlsx {
@@ -63,7 +63,7 @@ class SuggestedChangesController < ApplicationController
 
     #now renumber them starting from 1
     order_number = 1
-    current_rulemaking.suggested_changes.order('LOWER(suggested_change_name)').each do |cat|
+    current_rulemaking.suggested_changes.order(Arel.sql('LOWER(suggested_change_name)')).each do |cat|
       cat.order_in_list = order_number
       cat.save
       order_number += 1
@@ -74,7 +74,7 @@ class SuggestedChangesController < ApplicationController
   end
 
   def copy
-    @suggested_changes = current_rulemaking.suggested_changes.order('LOWER(suggested_change_name)').all
+    @suggested_changes = current_rulemaking.suggested_changes.order(Arel.sql('LOWER(suggested_change_name)')).all
   end
 
   def do_copy
@@ -96,14 +96,14 @@ class SuggestedChangesController < ApplicationController
       save_change_log(current_user,{suggested_change: @suggested_change, action_type: 'create copy'})
       redirect_to edit_suggested_change_path(@suggested_change), notice: "Suggested change was successfully copied"
     else
-      @suggested_changes = current_rulemaking.suggested_changes.order('LOWER(suggested_change_name)').all
+      @suggested_changes = current_rulemaking.suggested_changes.order(Arel.sql('LOWER(suggested_change_name)')).all
       render :copy
     end
 
   end
 
   def merge
-    @suggested_changes = current_rulemaking.suggested_changes.order('LOWER(suggested_change_name)').all
+    @suggested_changes = current_rulemaking.suggested_changes.order(Arel.sql('LOWER(suggested_change_name)')).all
   end
 
   def merge_preview
@@ -242,8 +242,8 @@ class SuggestedChangesController < ApplicationController
         c = current_rulemaking.suggested_changes.where(conditions)
       end
 
-      @previous_suggested_change = c.where("LOWER(suggested_change_name) < ?", current_suggested_change_suggested_change_name).order("LOWER(suggested_change_name)").last
-      @next_suggested_change = c.where("LOWER(suggested_change_name) > ?", current_suggested_change_suggested_change_name).order("LOWER(suggested_change_name)").first
+      @previous_suggested_change = c.where("LOWER(suggested_change_name) < ?", current_suggested_change_suggested_change_name).order(Arel.sql("LOWER(suggested_change_name)")).last
+      @next_suggested_change = c.where("LOWER(suggested_change_name) > ?", current_suggested_change_suggested_change_name).order(Arel.sql("LOWER(suggested_change_name)")).first
 
       @filtered = !conditions[0].empty?
       @filter_querystring = remove_empty_elements(filter_params)
