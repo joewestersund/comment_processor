@@ -55,10 +55,7 @@ gem 'ruby_odata'
 
 gem 'will_paginate'
 
-#gem 'trix'
-# didn't work gem 'trix-gem' #changed for compatibility with Rails 5.2
 gem 'trix-rails', require: 'trix'
-
 
 gem 'rack', '>= 2.0.6' #specified due to security vulnerability mentioned by github
 gem 'loofah', '>= 2.2.3' #specified due to security vulnerability mentioned by github
