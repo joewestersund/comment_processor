@@ -77,8 +77,11 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update profile" do
-    patch profile_update_url(@user), params: { user: { name: @user.name, email: @user.email } }
+    new_name = "some other name"
+    patch profile_update_url(@user), params: { user: { name: new_name, email: @user.email } }
     assert_redirected_to profile_edit_url
+
+    assert_equal(User.find_by(email: @user.email).name, new_name)
   end
 
   test "should not destroy user with change log entries" do

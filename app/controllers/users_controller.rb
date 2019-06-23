@@ -28,13 +28,13 @@ class UsersController < ApplicationController
   end
 
   def update_profile
-    respond_to do |format|
-      @user.update(update_profile_params)
-      if @user.save
-        format.html { redirect_to profile_edit_path, notice: 'Your profile was successfully updated.' }
-      else
-        format.html { render :edit_profile }
-      end
+    #
+    @user.update(update_profile_params)
+    if @user.save
+      flash[:notice] = 'Your profile was successfully updated.'
+      redirect_to profile_edit_path
+    else
+      render :edit_profile
     end
   end
 
