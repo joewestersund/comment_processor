@@ -112,7 +112,7 @@ class UsersController < ApplicationController
   def update_password
     respond_to do |format|
       if params[:user][:password].present? and @user.update(user_params_change_password)
-        format.html { redirect_to profile_edit_password_path, notice: 'Your password was successfully updated.' }
+        format.html { redirect_to comments_path, notice: 'Your password was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit_password' }
