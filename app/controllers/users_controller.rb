@@ -126,9 +126,13 @@ class UsersController < ApplicationController
         flash[:error] = "The last application admin user cannot be deleted."
         format.html { redirect_to users_path }
         format.json { render json: @user.errors, status: :unprocessable_entity }
+      elsif ChangeLogEntry.where(user: @user).count > 0
+        flash[:error] = "This user can't be deleted, because there are one or more change log entries for actions they took. If this user no longer uses the application, try setting them to inactive instead."
+        format.html { redirect_to users_path }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
       else
         @user.destroy
-        format.html { redirect_to users_url, notice: 'User was successfully destroyed. Any suggested changes assigned to this user are now assigned to no one.' }
+        format.html { redirect_to users_url, notice: 'User was successfully deleted. Any suggested changes assigned to this user are now assigned to no one.' }
         format.json { head :no_content }
       end
     end
