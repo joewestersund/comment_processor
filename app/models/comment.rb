@@ -37,7 +37,7 @@ class Comment < ApplicationRecord
 
 
   validates :num_commenters, presence: true, numericality: { only_integer: true, greater_than: 0}
-
+  validates :order_in_list, numericality: { only_integer: true, greater_than: 0}, uniqueness: {scope: :rulemaking_id }
 
   def self.csv_header
     ['Order In List', 'Comment Data Source', 'DAS ID', 'First Name', 'Last Name', 'Email',

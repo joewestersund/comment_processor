@@ -21,6 +21,16 @@
     <%= form.text_field :agency, id: :rulemaking_agency %>
   </div>
 
+  <div class="field">
+    <%= form.label :open_for_public_to_submit_comments %>
+    <%= form.check_box :open_for_public_to_submit_comments %>
+  </div>
+
+  <div class="field">
+    <%= form.label :open_for_public_to_view_comments %>
+    <%= form.check_box :open_for_public_to_view_comments %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

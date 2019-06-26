@@ -4,7 +4,7 @@ class CommentsController < ApplicationController
   include ActionController::Live
   require 'csv'
 
-  before_action :signed_in_user, except: [:get_submit_comment_form, :submit_comment, :show_attachment]
+  before_action :signed_in_user, except: [:submit_comment, :do_submit_comment, :show_attachment]
   before_action :admin_user, only: [:new, :create, :import, :destroy, :delete_attachment, :do_import, :cleanup, :do_cleanup]
   before_action :not_read_only_user, only: [:edit, :update]
   before_action :set_comment, only: [:show, :edit, :update, :destroy, :delete_attachment]
@@ -41,45 +41,49 @@ class CommentsController < ApplicationController
     end
   end
 
-  def get_submit_comment_form
-    rulemaking_found_and_open_for_comment = false
+  def submit_comment
     @rulemaking = Rulemaking.where(id: params[:rulemaking_id]).first
-    if @rulemaking.present?
-      @comment_data_source = @rulemaking.comment_data_sources.where(id: params[:comment_data_source_id]).first
-      if @comment_data_source.present? && @comment_data_source.active?
-        rulemaking_found_and_open_for_comment = true
-      end
-    end
-
-    if not rulemaking_found_and_open_for_comment
+    if @rulemaking.present? && @rulemaking.open_for_public_to_submit_comments?
+      @comment = Comment.new(rulemaking: @rulemaking)
+      render layout: false #show comments/submit_comment.html.erb, but with no layout
+    else
       redirect_to welcome_path, notice: 'That public comment period was not found, or is no longer open.'
     end
   end
 
-  def submit_comment
+  def do_submit_comment
+    comment_saved = false
     @rulemaking = Rulemaking.where(id: params[:rulemaking_id]).first
-    if @rulemaking.present?
-      @comment_data_source = @rulemaking.comment_data_sources.where(id:  params[:comment_data_source_id]).first
-      if @comment_data_source.present? && @comment_data_source.active?
-        #this comment was submitted for a recognized rulemaking, and the public comment period is open.
-        c = Comment.new(submit_comment_params)
-        c.rulemaking = @rulemaking
-        c.comment_data_source = cds
-        c.num_commenters = 1
-        c.comment_status_type = @rulemaking.comment_status_types.order(:order_in_list).first
+    if @rulemaking.present? && @rulemaking.open_for_public_to_submit_comments?
+      #this comment was submitted for a recognized rulemaking, and the public comment period is open.
+      c = Comment.new(submit_comment_params)
+      c.rulemaking = @rulemaking
+      c.num_commenters = 1
+      c.comment_status_type = @rulemaking.comment_status_types.order(:order_in_list).first
+      c_max = Comment.maximum(:order_in_list)
+      next_order_in_list = (c_max.nil? ? 0 : c_max) + 1
+      c.order_in_list = next_order_in_list
 
-        if c.save
-          respond_to do |format|
-            format.html { redirect_to comments_get_submit_comment_form_path(@rulemaking,cds), notice: 'Thank you for submitting your comment.' }
-            format.json { render :show, status: :created, location: @comment }
-            #TODO fix the json version
-          end
-        end
+      if c.save
+        comment_saved = true
       end
+    end
+
+    @comment = Comment.new(rulemaking: @rulemaking) #supply a new, blank comment
+
+    if comment_saved
+      respond_to do |format|
+        @notice = 'Thank you for submitting your comment.'
+        format.html { render :submit_comment, layout: false }
+        format.json { render :submit_comment, status: :ok }
+        #TODO fix the json version
+      end
+    else
       # if we got here, there was something wrong
       respond_to do |format|
-        format.html { redirect_to comments_get_submit_comment_form_path(@rulemaking,cds), notice: 'Error: your comment could not be saved.' }
-        format.json { render :show, status: :created, location: @comment }
+        @notice = 'Error: your comment could not be saved.'
+        format.html { render :submit_comment, layout: false }
+        format.json { render json: @comment.errors, status: :unprocessable_entity }
         #TODO fix the json version
       end
     end

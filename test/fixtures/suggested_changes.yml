@@ -2,21 +2,21 @@
 #
 # Table name: suggested_changes
 #
-#  id                        :integer          not null, primary key
-#  suggested_change_name     :text
-#  description               :text
-#  response_text             :text
-#  assigned_to_id            :integer
+#  id                                :integer          not null, primary key
+#  suggested_change_name             :text
+#  description                       :text
+#  response_text                     :text
+#  assigned_to_id                    :integer
 #  suggested_change_status_type_id   :integer
-#  action_needed             :text
-#  created_at                :datetime         not null
-#  updated_at                :datetime         not null
-#  order_in_list             :integer
-#  rule_change_made          :boolean
+#  action_needed                     :text
+#  created_at                        :datetime         not null
+#  updated_at                        :datetime         not null
+#  order_in_list                     :integer
+#  rule_change_made                  :boolean
 #  suggested_change_response_type_id :integer
-#  text_from_comments        :text
-#  notes                     :text
-#  rulemaking_id             :integer
+#  text_from_comments                :text
+#  notes                             :text
+#  rulemaking_id                     :integer
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
