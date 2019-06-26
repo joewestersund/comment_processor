@@ -47,7 +47,11 @@ class UsersController < ApplicationController
     @user.password_confirmation = random_pw
     if @user.save
       NotificationMailer.new_user_email(@user,current_user,random_pw).deliver
-      flash[:notice] = "An account for #{@user.name} was successfully created. A new, random password has been emailed to them."
+
+      up = UserPermission.new(rulemaking: current_rulemaking, user: @user)
+      up.save
+
+      flash[:notice] = "An account for #{@user.name} was successfully created. They have been given permissions to this rulemaking, and a new, random password has been emailed to them."
       redirect_to users_path
     else
       render :edit
