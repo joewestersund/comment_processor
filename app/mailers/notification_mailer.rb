@@ -37,8 +37,9 @@ class NotificationMailer < ActionMailer::Base
 
     cc = @added_by.email_address_with_name
     to = @new_user.email_address_with_name
+    bcc = APPLICATION_EMAIL_ADDRESS
 
-    mail(to: to, cc: cc, subject: "A login for the #{APPLICATION_NAME} website has been created for you")
+    mail(to: to, cc: cc, bcc: bcc, subject: "A login for the #{APPLICATION_NAME} website has been created for you")
 
   end
 
