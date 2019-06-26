@@ -85,7 +85,11 @@ class ChangeLogEntriesController < ApplicationController
     end
 
     def set_select_options
-      @users = User.joins(:user_permissions).where("user_permissions.rulemaking_id = #{current_rulemaking.id}").order('name').all
+      user_ids_with_current_cle = current_rulemaking.change_log_entries.select(:user_id).map{|m| m.user_id}
+      user_id_with_permissions = current_rulemaking.user_permissions.select(:user_id).map{|m| m.user_id}
+      combined_user_id_list = user_ids_with_current_cle + user_id_with_permissions
+      @users = User.where(id: combined_user_id_list.uniq)
+      #@users = User.joins(:user_permissions).where("user_permissions.rulemaking_id = #{current_rulemaking.id}").order('name').all
       comment_select_str = "comment_id, '#' || order_in_list::text || ' ' || first_name || ' ' || last_name || ' (' || organization || ', ' || state || ')' AS key_info"
       @comments = current_rulemaking.change_log_entries.joins(:comment).select(comment_select_str).group('comment_id, key_info').order('key_info')
       @suggested_changes = current_rulemaking.change_log_entries.joins(:suggested_change).select('suggested_change_id, suggested_change_name').group('suggested_change_id, suggested_change_name').order('suggested_change_name')

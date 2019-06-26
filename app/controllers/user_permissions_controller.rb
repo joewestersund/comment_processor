@@ -58,9 +58,14 @@ class UserPermissionsController < ApplicationController
   # DELETE /user_permissions/1
   # DELETE /user_permissions/1.json
   def destroy
+    current_rulemaking.suggested_changes.where(user: @user_permission.user).each do |sc|
+      sc.assigned_to_id = nil
+      sc.save
+    end
+
     @user_permission.destroy
     respond_to do |format|
-      format.html { redirect_to user_permissions_url, notice: 'User permission was successfully destroyed.' }
+      format.html { redirect_to user_permissions_url, notice: 'This user permission was successfully deleted. All suggested changes for this rulemaking that were assigned to this user are now assigned to no one.' }
       format.json { head :no_content }
     end
   end
