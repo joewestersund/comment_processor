@@ -57,15 +57,18 @@ class CommentsController < ApplicationController
     if @rulemaking.present? && @rulemaking.open_for_public_to_submit_comments?
       #this comment was submitted for a recognized rulemaking, and the public comment period is open.
       c = Comment.new(submit_comment_params)
-      c.rulemaking = @rulemaking
-      c.num_commenters = 1
-      c.comment_status_type = @rulemaking.comment_status_types.order(:order_in_list).first
-      c_max = Comment.maximum(:order_in_list)
-      next_order_in_list = (c_max.nil? ? 0 : c_max) + 1
-      c.order_in_list = next_order_in_list
 
-      if c.save
-        comment_saved = true
+      if verify_recaptcha(model: c)
+        c.rulemaking = @rulemaking
+        c.num_commenters = 1
+        c.comment_status_type = @rulemaking.comment_status_types.order(:order_in_list).first
+        c_max = Comment.maximum(:order_in_list)
+        next_order_in_list = (c_max.nil? ? 0 : c_max) + 1
+        c.order_in_list = next_order_in_list
+
+        if c.save
+          comment_saved = true
+        end
       end
     end
 

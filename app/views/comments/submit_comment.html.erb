@@ -1,3 +1,7 @@
+<h1>
+  Submit a comment for '<%= @rulemaking.rulemaking_name%>'
+</h1>
+
 <p>
 <div><b><%= @notice %></b></div>
 </p>
@@ -48,6 +52,8 @@
   <div class="field">
     <%= form.file_field :attached_files, multiple: true %>
   </div>
+
+  <%= recaptcha_tags %>
 
   <div class="actions">
     <%= form.submit "Save", class: "btn btn-large btn-primary" %>
