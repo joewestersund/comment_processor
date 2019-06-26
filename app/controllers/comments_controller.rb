@@ -4,7 +4,7 @@ class CommentsController < ApplicationController
   include ActionController::Live
   require 'csv'
 
-  before_action :signed_in_user, except: [:show_attachment]
+  before_action :signed_in_user, except: [:get_submit_comment_form, :submit_comment, :show_attachment]
   before_action :admin_user, only: [:new, :create, :import, :destroy, :delete_attachment, :do_import, :cleanup, :do_cleanup]
   before_action :not_read_only_user, only: [:edit, :update]
   before_action :set_comment, only: [:show, :edit, :update, :destroy, :delete_attachment]
@@ -38,6 +38,50 @@ class CommentsController < ApplicationController
       format.csv {
         stream_csv(c)
       }
+    end
+  end
+
+  def get_submit_comment_form
+    rulemaking_found_and_open_for_comment = false
+    @rulemaking = Rulemaking.where(id: params[:rulemaking_id]).first
+    if @rulemaking.present?
+      @comment_data_source = @rulemaking.comment_data_sources.where(id: params[:comment_data_source_id]).first
+      if @comment_data_source.present? && @comment_data_source.active?
+        rulemaking_found_and_open_for_comment = true
+      end
+    end
+
+    if not rulemaking_found_and_open_for_comment
+      redirect_to welcome_path, notice: 'That public comment period was not found, or is no longer open.'
+    end
+  end
+
+  def submit_comment
+    @rulemaking = Rulemaking.where(id: params[:rulemaking_id]).first
+    if @rulemaking.present?
+      @comment_data_source = @rulemaking.comment_data_sources.where(id:  params[:comment_data_source_id]).first
+      if @comment_data_source.present? && @comment_data_source.active?
+        #this comment was submitted for a recognized rulemaking, and the public comment period is open.
+        c = Comment.new(submit_comment_params)
+        c.rulemaking = @rulemaking
+        c.comment_data_source = cds
+        c.num_commenters = 1
+        c.comment_status_type = @rulemaking.comment_status_types.order(:order_in_list).first
+
+        if c.save
+          respond_to do |format|
+            format.html { redirect_to comments_get_submit_comment_form_path(@rulemaking,cds), notice: 'Thank you for submitting your comment.' }
+            format.json { render :show, status: :created, location: @comment }
+            #TODO fix the json version
+          end
+        end
+      end
+      # if we got here, there was something wrong
+      respond_to do |format|
+        format.html { redirect_to comments_get_submit_comment_form_path(@rulemaking,cds), notice: 'Error: your comment could not be saved.' }
+        format.json { render :show, status: :created, location: @comment }
+        #TODO fix the json version
+      end
     end
   end
 
@@ -79,6 +123,7 @@ class CommentsController < ApplicationController
     @comment.rulemaking = current_rulemaking
     @comment.manually_entered = true
     @comment.num_commenters = 1
+    @comment.comment_status_type = current_rulemaking.comment_status_types.order(:order_in_list).first
   end
 
   # GET /comments/1
@@ -215,6 +260,10 @@ class CommentsController < ApplicationController
 
     def comment_params
       params.require(:comment).permit(:source_id, :first_name, :last_name, :email, :organization, :state, :comment_text, :attachment_name, :attachment_url, :num_commenters, :summary, :comment_status_type_id, :notes, :manually_entered, :comment_data_source_id, attached_files: [])
+    end
+
+    def submit_comment_params
+      params.require(:comment).permit(:first_name, :last_name, :email, :organization, :state, :comment_text, attached_files: [])
     end
 
     def comment_import_params

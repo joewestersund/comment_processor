@@ -69,6 +69,8 @@ gem 'axlsx_rails'
 #for storing files on Amazon S3
 gem "aws-sdk-s3", require: false
 
+gem "recaptcha"
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

@@ -83,7 +83,7 @@ class UsersController < ApplicationController
   def send_password_reset_email
     @user = User.find_by(email: params[:email])
     respond_to do |format|
-      if @user.present? && @user.active?
+      if @user.present? && @user.active? && verify_recaptcha(model: @user)
         @user.generate_password_token!
         NotificationMailer.password_reset_email(@user).deliver
         format.html { redirect_to signin_path, notice: "A password reset email has been sent to #{@user.name} at #{@user.email}. Please use the link in that email to reset your password in the next #{User.hours_to_reset_password} hours." }

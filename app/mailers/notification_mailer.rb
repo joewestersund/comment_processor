@@ -1,6 +1,6 @@
 class NotificationMailer < ActionMailer::Base
 
-  default from: 'Comment Processor <westersund.joe@deq.state.or.us>'
+  default from: 'Comment Processor <comment-processor@joewestersund.net>'
   #layout 'mailer'
 
   def suggested_change_assigned_email(suggested_change, assigned_by, cc_assigner)
