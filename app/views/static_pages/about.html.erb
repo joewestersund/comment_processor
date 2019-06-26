@@ -4,7 +4,7 @@
     A tool for reviewing comments submitted through data.oregon.gov online public comment system.
   </p>
   <p>
-    Please <%= mail_to 'westersund.joe@deq.state.or.us', 'contact me' %> if you have questions, suggestions, or have trouble logging in.
+    Please <%= mail_to APPLICATION_HOST_EMAIL_ADDRESS, 'contact me' %> if you have questions, suggestions, or have trouble logging in.
   </p>
 
   <% unless signed_in? %>

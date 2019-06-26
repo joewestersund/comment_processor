@@ -1,6 +1,6 @@
 class NotificationMailer < ActionMailer::Base
 
-  default from: 'Comment Processor <comment-processor@joewestersund.net>'
+  default from: "#{APPLICATION_NAME} <#{APPLICATION_EMAIL_ADDRESS}>"
   #layout 'mailer'
 
   def suggested_change_assigned_email(suggested_change, assigned_by, cc_assigner)
@@ -25,7 +25,7 @@ class NotificationMailer < ActionMailer::Base
 
     to = @user.email_address_with_name
     cc = nil
-    mail(to: to, cc: cc, subject: 'Link to reset your password for comment response')
+    mail(to: to, cc: cc, subject: "Link to reset your password for the #{APPLICATION_NAME} website")
 
   end
 
@@ -38,7 +38,7 @@ class NotificationMailer < ActionMailer::Base
     cc = @added_by.email_address_with_name
     to = @new_user.email_address_with_name
 
-    mail(to: to, cc: cc, subject: 'A login for the comment response website has been created for you')
+    mail(to: to, cc: cc, subject: "A login for the #{APPLICATION_NAME} website has been created for you")
 
   end
 
