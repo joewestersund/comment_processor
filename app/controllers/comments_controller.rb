@@ -62,7 +62,7 @@ class CommentsController < ApplicationController
         c.rulemaking = @rulemaking
         c.num_commenters = 1
         c.comment_status_type = @rulemaking.comment_status_types.order(:order_in_list).first
-        c_max = Comment.maximum(:order_in_list)
+        c_max = current_rulemaking.comments.maximum(:order_in_list)
         next_order_in_list = (c_max.nil? ? 0 : c_max) + 1
         c.order_in_list = next_order_in_list
 
@@ -152,7 +152,7 @@ class CommentsController < ApplicationController
     # we only get here if this comment is being manually entered.
     @comment = Comment.new(comment_params)
 
-    c_max = Comment.maximum(:order_in_list)
+    c_max = current_rulemaking.comments.maximum(:order_in_list)
     next_order_in_list = (c_max.nil? ? 0 : c_max) + 1
     @comment.order_in_list = next_order_in_list
 

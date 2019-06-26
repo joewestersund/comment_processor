@@ -39,9 +39,8 @@ module CommentsHelper
 
     default_comment_status_type = CommentStatusType.order(:order_in_list).first #by default, assign new comments to the first status in the list
 
-    c_max = Comment.maximum(:order_in_list)
+    c_max = current_rulemaking.comments.maximum(:order_in_list)
     current_max_order_in_list = c_max.nil? ? 0 : c_max
-
 
     entries.each do |entry|
       id = entry.string_between_markers('<d:__id m:type="Edm.Int64">','</d:__id>')
