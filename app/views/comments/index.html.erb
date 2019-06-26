@@ -6,7 +6,7 @@
 
 
 <div class="links">
-  <% if current_user.can_edit?(current_rulemaking) %>
+  <% if current_user.admin_for?(current_rulemaking) %>
     <%= link_to 'Manually enter a comment', new_comment_path %> |
     <%= link_to 'Import comments', comments_import_path %> |
 <% end %>

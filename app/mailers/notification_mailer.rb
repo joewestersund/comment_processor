@@ -38,7 +38,7 @@ class NotificationMailer < ActionMailer::Base
     cc = @added_by.email_address_with_name
     to = @new_user.email_address_with_name
 
-    mail(to: to, cc: cc, subject: 'A login for the CAO comment response website has been created for you')
+    mail(to: to, cc: cc, subject: 'A login for the comment response website has been created for you')
 
   end
 
