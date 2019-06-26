@@ -6,7 +6,7 @@
 <body>
 Dear <%= @assigned_to.name %>,
 <p>
-  A suggested_change called <%= link_to @suggested_change.suggested_change_name, @suggested_change_url%> has just been assigned to you in the <%= APPLICATION_NAME %> website.
+  A suggested_change called <%= link_to @suggested_change.suggested_change_name, @suggested_change_url%> for the '<%= @suggested_change.rulemaking.rulemaking_name%>' project has just been assigned to you in the <%= APPLICATION_NAME %> website.
 </p>
 
 <div><strong>Suggested Change Name:</strong> <%= @suggested_change.suggested_change_name %></div>

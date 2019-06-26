@@ -97,10 +97,17 @@
         <tr><td>Order in List</td><td><%= comment.order_in_list%></td></tr>
         <tr><td>Comment Data Source</td><td><%= comment.comment_data_source.data_source_name if comment.comment_data_source.present? %></td></tr>
         <tr><td>Manually Entered?</td><td><%= comment.manually_entered %></td></tr>
-        <tr><td>Name & Email</td><td><%= "#{comment.first_name + ' ' if comment.first_name.present?}#{comment.last_name}#{' <' + comment.email + '>' if comment.email.present?}"%></td>
-        <tr><td>Organization and State</td><td><%= "#{comment.organization + ", " if comment.organization.present?}#{comment.state}" %></td>
-        <tr><td>Comment</td><td><%= comment.comment_text%></td>
-        <tr><td>Attachment</td><td><%= if comment.attachment_name.present? then link_to comment.attachment_name.to_s, comment.attachment_url end %></td>
+        <tr><td>Name & Email</td><td><%= "#{comment.first_name + ' ' if comment.first_name.present?}#{comment.last_name}#{' <' + comment.email + '>' if comment.email.present?}"%></td></tr>
+        <tr><td>Organization and State</td><td><%= "#{comment.organization + ", " if comment.organization.present?}#{comment.state}" %></td></tr>
+        <tr><td>Comment</td><td><%= comment.comment_text%></td></tr>
+        <tr><td>Attachments</td>
+          <td>
+            <div><%= if comment.attachment_name.present? then link_to comment.attachment_name.to_s, comment.attachment_url end %></div>
+            <% comment.attached_files.each do |af| %>
+              <div><%= link_to af.filename, url_for(af) %></div>
+            <% end %>
+          </td>
+        </tr>
       </tbody>
     </table>
 
