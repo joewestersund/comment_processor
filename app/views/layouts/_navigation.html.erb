@@ -1,19 +1,12 @@
 <%# edited for Bootstrap 4.0 %>
-<nav class="navbar navbar-expand-lg navbar-light navbar-inverse navbar-fixed-top bg-dark">
+<nav class="navbar navbar-expand-xl navbar-fixed-top bg-dark">
   <div class="container">
-    <div class="navbar-header">
-      <% if signed_in? %>
-        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-      <% end %>
-      <div class="navbar-brand"><%= APPLICATION_NAME %></div>
-    </div>
-    <div class="collapse navbar-collapse">
-      <ul class="nav navbar-nav navbar-right">
+    <a class="navbar-brand"><%= APPLICATION_NAME %></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
         <%= render 'layouts/navigation_links' %>
       </ul>
     </div>
