@@ -36,16 +36,24 @@ pre {
   font-size: 11px;
 }
 
-a {
-  color: #000;
+.btn-primary {
+  color: white;
+}
 
-  &:visited {
-    color: #666;
-  }
+main {
+  a {
+    //color: #000;
+    color: darkblue;
 
-  &:hover {
-    color: #fff;
-    background-color: #000;
+    &:visited :not(btn) {
+      //color: #666;
+      color: darkblue;
+    }
+
+    &:hover {
+      color: #fff;
+      background-color: #000;
+    }
   }
 }
 
