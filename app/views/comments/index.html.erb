@@ -8,7 +8,9 @@
 <div class="links">
   <% if current_user.admin_for?(current_rulemaking) %>
     <%= link_to 'Manually enter a comment', new_comment_path %> |
-    <%= link_to 'Import comments', comments_import_path %> |
+    <% if false # nothing to import from currently%>
+      <%= link_to 'Import comments', comments_import_path %> |
+    <% end %>
 <% end %>
   Download as <%= link_to "CSV", comments_path(@filter_querystring.merge({format: "csv"})) %>
   or <%= link_to "XLSX", comments_path(@filter_querystring,format: "xlsx") %>

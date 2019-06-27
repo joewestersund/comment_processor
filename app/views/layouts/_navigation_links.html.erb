@@ -11,11 +11,11 @@
         <%= link_to current_rulemaking.rulemaking_name, comments_path %>
       </li>
     <% else %>
-      <li id="fat-menu" class="nav-item dropdown rulemaking-name">
+      <li class="nav-item dropdown rulemaking-name">
         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="navbarDropdownRulemakings">
           <%= current_rulemaking.rulemaking_name %> <b class="caret"></b>
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownRulemakings">
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownRulemakings">
           <% current_user.user_permissions.each do |up|  %>
             <%= link_to up.rulemaking.rulemaking_name, rulemakings_switch_path(up.rulemaking), method: :post, class: "dropdown-item" %>
           <% end %>
@@ -23,63 +23,69 @@
       </li>
      <% end %>
 
-    <li class="nav-item"><%= link_to glyphicon_link("glyphicon-th-list","Comments").html_safe, comments_path, class: "nav-link" %></li>
-    <li class="nav-item"><%= link_to glyphicon_link("glyphicon-tags","Suggested Changes").html_safe, suggested_changes_path, class: "nav-link" %></li>
+    <li class="nav-item"><%= link_to font_awesome_icon("comments","Comments").html_safe, comments_path, class: "nav-link" %></li>
+    <li class="nav-item"><%= link_to font_awesome_icon("tags","Suggested Changes").html_safe, suggested_changes_path, class: "nav-link" %></li>
 
-    <li id="fat-menu" class="nav-item dropdown">
+    <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="navbarDropdownStats">
-        <%= glyphicon_link("glyphicon-signal","Stats").html_safe%> <b class="caret"></b>
+        <%= font_awesome_icon("signal","Stats").html_safe%> <b class="caret"></b>
       </a>
-      <div class="dropdown-menu" aria-labelledby="navbarDropdownStats">
-        <%= link_to "Comments", stats_comments_path, class: "nav-link" %>
-        <%= link_to "Suggested Changes", stats_suggested_changes_path, class: "nav-link" %>
-        <%= link_to "Recent activity", change_log_entries_path, class: "nav-link" %>
+      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownStats">
+        <%= link_to "Comments", stats_comments_path, class: "dropdown-item" %>
+        <%= link_to "Suggested Changes", stats_suggested_changes_path, class: "dropdown-item" %>
+        <%= link_to "Recent activity", change_log_entries_path, class: "dropdown-item" %>
       </div>
     </li>
   <% end %>
   <% if current_user.admin_for?(current_rulemaking) %>
     <li id="fat-menu" class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="navbarDropdownSetup">
-        <%= glyphicon_link("glyphicon-cog","Setup").html_safe%> <b class="caret"></b>
+        <%= font_awesome_icon("cog","Setup").html_safe%> <b class="caret"></b>
       </a>
-      <div class="dropdown-menu" aria-labelledby="navbarDropdownSetup">
-        <%= link_to "Comment Status Types", comment_status_types_path, class: "nav-link" %>
-        <%= link_to "Suggested Change Status Types", suggested_change_status_types_path, class: "nav-link" %>
-        <%= link_to "Suggested Change Response Types", suggested_change_response_types_path, class: "nav-link" %>
-        <%= link_to "Clean Up Comment Text", comments_cleanup_path, class: "nav-link" %>
-        <%= link_to "Renumber Suggested Changes", suggested_changes_renumber_path, class: "nav-link" %>
-        <%= link_to "Copy a Suggested Change", suggested_change_copy_path, class: "nav-link" %>
-        <%= link_to "Merge Suggested Changes", suggested_changes_merge_path, class: "nav-link" %>
+      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownSetup">
+        <%= link_to "Comment Status Types", comment_status_types_path, class: "dropdown-item" %>
+        <%= link_to "Suggested Change Status Types", suggested_change_status_types_path, class: "dropdown-item" %>
+        <%= link_to "Suggested Change Response Types", suggested_change_response_types_path, class: "dropdown-item" %>
+        <div class="dropdown-divider"></div>
+        <%= link_to "Clean Up Comment Text", comments_cleanup_path, class: "dropdown-item" %>
+        <%= link_to "Renumber Suggested Changes", suggested_changes_renumber_path, class: "dropdown-item" %>
+        <%= link_to "Copy a Suggested Change", suggested_change_copy_path, class: "dropdown-item" %>
+        <%= link_to "Merge Suggested Changes", suggested_changes_merge_path, class: "dropdown-item" %>
+        <div class="dropdown-divider"></div>
         <% if current_user.admin_for?(current_rulemaking) %>
-          <%= link_to "Users", users_path, class: "nav-link" %>
+          <%= link_to font_awesome_icon("users","Users").html_safe, users_path, class: "dropdown-item" %>
         <% end %>
-        <%= link_to "User Permissions", user_permissions_path, class: "nav-link" %>
-        <%= link_to "Comment Data Sources", comment_data_sources_path, class: "nav-link" %>
+        <%= link_to "User Permissions", user_permissions_path, class: "dropdown-item" %>
+        <div class="dropdown-divider"></div>
         <% if current_user.application_admin? %>
-          <%= link_to "Rulemakings", rulemakings_path, class: "nav-link" %>
+          <%= link_to "Rulemakings", rulemakings_path, class: "dropdown-item" %>
         <% end %>
+        <%= link_to "Comment Data Sources", comment_data_sources_path, class: "dropdown-item" %>
+
       </div>
     </li>
   <% end %>
-  <li id="fat-menu" class="dropdown nav navbar-nav">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-      <%= glyphicon_link("glyphicon-user","Account").html_safe%> <b class="caret"></b>
+  <li id="fat-menu" class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="navbarDropdownAccount">
+      <%= font_awesome_icon("user-circle","Account").html_safe%> <b class="caret"></b>
     </a>
-    <ul class="dropdown-menu">
-      <li class="nav navbar-nav"><%= link_to "Edit Profile", profile_edit_path %></li>
-      <li class="nav navbar-nav"><%= link_to "Change Password", profile_edit_password_path %></li>
-      <li class="nav navbar-nav"><%= link_to glyphicon_link("glyphicon-log-out","Log Out").html_safe, signout_path, method: :delete %></li>
-    </ul>
+    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownAccount">
+      <%= link_to "Edit Profile", profile_edit_path, class: "dropdown-item" %>
+      <%= link_to "Change Password", profile_edit_password_path, class: "dropdown-item" %>
+      <%= link_to font_awesome_icon("sign-out","Log Out").html_safe, signout_path, method: :delete, class: "dropdown-item" %>
+    </div>
   </li>
 
-  <li id="fat-menu" class="dropdown nav navbar-nav">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-      <%= glyphicon_link("glyphicon glyphicon-info-sign","Help").html_safe%> <b class="caret"></b>
+  <% if false  #no helpfiles created yet%>
+  <li id="fat-menu" class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="navbarDropdownHelp">
+      <%= font_awesome_icon("question-circle","Help","").html_safe%> <b class="caret"></b>
     </a>
-    <ul class="dropdown-menu">
-      <li class="nav navbar-nav"><%= link_to "For reviewing comments", help_file + comments_help_bookmark, target: :_blank %></li>
-      <li class="nav navbar-nav"><%= link_to "For creating and responding to suggested changes", help_file + suggested_changes_help_bookmark, target: :_blank %></li>
-      <li class="nav navbar-nav"><%= link_to "Tips and tricks", help_file + tips_and_tricks_help_bookmark, target: :_blank %></li>
+    <ul class="dropdown-menu" aria-labelledby="navbarDropdownHelp">
+      <%= link_to "For reviewing comments", help_file + comments_help_bookmark, target: :_blank, class: "dropdown-item" %></li>
+      <%= link_to "For creating and responding to suggested changes", help_file + suggested_changes_help_bookmark, target: :_blank, class: "dropdown-item" %></li>
+      <%= link_to "Tips and tricks", help_file + tips_and_tricks_help_bookmark, target: :_blank, class: "dropdown-item" %></li>
     </ul>
   </li>
+  <% end %>
 <% end %>
