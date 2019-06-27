@@ -26,7 +26,7 @@ gem 'puma'
 gem 'bootstrap', '~> 4.3.1'
 
 # Use jquery as the JavaScript library
-gem 'jquery-rails', '~>4.3'
+gem 'jquery-rails'
 
 gem 'jquery-ui-rails'
 
