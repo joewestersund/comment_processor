@@ -8,7 +8,7 @@ class UserPermissionsController < ApplicationController
   # GET /user_permissions
   # GET /user_permissions.json
   def index
-    @user_permissions = current_rulemaking.user_permissions.includes(:user).order("users.name")
+    @user_permissions = current_rulemaking.user_permissions.includes(:user).order("users.name").page(params[:page]).per_page(20)
   end
 
   # GET /user_permissions/new
