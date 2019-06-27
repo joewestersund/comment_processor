@@ -54,6 +54,14 @@ module ApplicationHelper
     '<i class="glyphicon ' + glyphicon_name + '" title="' + alt_text + '" aria-hidden="true"></i><span class="visible-xs-inline visible-lg-inline nav-text">' + alt_text + '</span><span class="sr-only">' + alt_text + '</span>'
   end
 
+  def font_awesome_icon(icon_name, alt_text, text = -1)
+    html = '<i class="fa fa-' + icon_name + '" title="' + alt_text + '" aria-hidden="true"></i>'
+    text_to_insert = (text == -1 ? alt_text : text)
+    html += '<span class="d-lg-none d-xl-inline nav-text">' + text_to_insert + '</span>'
+    #for screen readers
+    html += '<span class="sr-only">' + alt_text + '</span>'
+  end
+
   def set_csv_file_headers(file_name)
     headers["Content-Type"] = "text/csv"
     headers["Content-disposition"] = "attachment; filename=#{file_name}"

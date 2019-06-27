@@ -1,19 +1,14 @@
-// import the CSS framework
-@import "bootstrap-sprockets";
-@import "bootstrap";
-
-// make all images responsive by default
-img {
-  @extend .img-responsive;
-  margin: 0 auto;
-  }
-
 // override for the 'Home' navigation link
-.navbar-brand {
-  //font-size: inherit;
-  font-size: 32px;
-  color: white;
+
+#navbar-brand {
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.5);
   }
+
+.rulemaking-name a {
+  margin-top: 10px; //to center vertically with other navbar links
+}
+
 
 // THESE ARE EXAMPLES YOU CAN MODIFY
 // create your own classes
@@ -42,13 +37,13 @@ main {
   //background-color: #eee;
   padding-bottom: 80px;
   width: 100%;  //960px;
-  margin-top: 51px; // accommodate the navbar
+  margin-top: 10px;
   //border: 1px black solid
-  }
+}
 
 .container {
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: 30px;
+  margin-right: 30px;
   width: 98%;
 }
 
@@ -61,6 +56,7 @@ section {
   background-color: black;
   width: 100%
 }
+
 .navbar-nav {
   margin-left: 1px;
   //font-size: 20px;
@@ -68,19 +64,27 @@ section {
   //margin-left: auto;
   //margin-right: auto;
 }
-.navbar-toggle {
-  float:left;
-  margin-left:15px;
-  margin-right: 5px;
-}
+
+//.navbar-toggler {
+//  float:left;
+//  margin-left:15px;
+//  margin-right: 5px;
+//}
 
 .rulemaking-name {
   font-weight: bold;
 }
 
-.glyphicon {
-  font-size: 18px;
+//font-awesome icons
+i.fa {
+  font-size: 30px;
 }
+
+//font-awesome icons in a dropdown list
+.dropdown-item i.fa {
+  font-size: 15px;
+}
+
 
 .nav-text {
   margin-left: 10px;
@@ -88,4 +92,8 @@ section {
 
 .dropdown-menu li {
   clear: both;
+}
+
+.hidden {
+  display: none;
 }
