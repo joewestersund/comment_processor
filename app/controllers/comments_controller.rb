@@ -43,11 +43,16 @@ class CommentsController < ApplicationController
 
   def submit_comment
     @rulemaking = Rulemaking.where(id: params[:rulemaking_id]).first
-    if @rulemaking.present? && @rulemaking.open_for_public_to_submit_comments?
-      @comment = Comment.new(rulemaking: @rulemaking)
-      render layout: false #show comments/submit_comment.html.erb, but with no layout
+    if @rulemaking.present?
+      if @rulemaking.open_for_public_to_submit_comments?
+        @comment = Comment.new(rulemaking: @rulemaking)
+        render layout: false #show comments/submit_comment.html.erb, but with no layout
+      else
+        @comment = nil
+        render layout: false #show comments/submit_comment.html.erb, but with no layout
+      end
     else
-      redirect_to welcome_path, notice: 'That public comment period was not found, or is no longer open.'
+      redirect_to welcome_path, notice: 'That rulemaking was not found.'
     end
   end
 

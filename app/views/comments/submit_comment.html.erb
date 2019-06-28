@@ -1,61 +1,69 @@
-<h1>
-  Submit a comment for '<%= @rulemaking.rulemaking_name%>'
-</h1>
+<% if @comment.nil? %>
+  <h3>
+    The public comment period for '<%= @rulemaking.rulemaking_name%>' is not currently open.
+  </h3>
 
-<p>
-<div><b><%= @notice %></b></div>
-</p>
+<% else %>
+  <h1>
+    Submit a comment for '<%= @rulemaking.rulemaking_name%>'
+  </h1>
 
-<%= form_with(model: @comment, local: true, url: comments_do_submit_comment_url(@rulemaking)) do |form| %>
-  <% if @comment.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+  <p>
+  <div><b><%= @notice %></b></div>
+  </p>
 
-      <ul>
-        <% @comment.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+  <%= form_with(model: @comment, local: true, url: comments_do_submit_comment_url(@rulemaking)) do |form| %>
+    <% if @comment.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+
+        <ul>
+          <% @comment.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= form.label :first_name %>
+      <%= form.text_field :first_name, id: :comment_first_name %>
+    </div>
+
+    <div class="field">
+      <%= form.label :last_name %>
+      <%= form.text_field :last_name, id: :comment_last_name %>
+    </div>
+
+    <div class="field">
+      <%= form.label :email %>
+      <%= form.text_field :email, id: :comment_email %>
+    </div>
+
+    <div class="field">
+      <%= form.label :organization %>
+      <%= form.text_field :organization, id: :comment_organization %>
+    </div>
+
+    <div class="field">
+      <%= form.label :state %>
+      <%= form.text_field :state, id: :comment_state %>
+    </div>
+
+    <div class="field">
+      <%= form.label :comment_text %>
+      <%= form.text_area :comment_text, id: :comment_comment_text, cols: 300, rows: 5, class: 'bigtextarea' %>
+    </div>
+
+    <div class="field">
+      <%= form.file_field :attached_files, multiple: true %>
+    </div>
+
+    <%= recaptcha_tags %>
+
+    <div class="actions">
+      <%= form.submit "Save", class: "btn btn-large btn-primary" %>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :first_name %>
-    <%= form.text_field :first_name, id: :comment_first_name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :last_name %>
-    <%= form.text_field :last_name, id: :comment_last_name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.text_field :email, id: :comment_email %>
-  </div>
-
-  <div class="field">
-    <%= form.label :organization %>
-    <%= form.text_field :organization, id: :comment_organization %>
-  </div>
-
-  <div class="field">
-    <%= form.label :state %>
-    <%= form.text_field :state, id: :comment_state %>
-  </div>
-
-  <div class="field">
-    <%= form.label :comment_text %>
-    <%= form.text_area :comment_text, id: :comment_comment_text, cols: 300, rows: 5, class: 'bigtextarea' %>
-  </div>
-
-  <div class="field">
-    <%= form.file_field :attached_files, multiple: true %>
-  </div>
-
-  <%= recaptcha_tags %>
-
-  <div class="actions">
-    <%= form.submit "Save", class: "btn btn-large btn-primary" %>
-  </div>
 <% end %>
