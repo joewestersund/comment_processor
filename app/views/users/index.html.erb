@@ -1,6 +1,12 @@
 <% content_for :title, 'Users' %>
 <h1>Users</h1>
 
+<div class="links">
+  <% if current_user.admin_for?(current_rulemaking) %>
+    <%= link_to 'New User', new_user_path %>
+  <% end %>
+</div>
+
 <%= will_paginate @users %>
 <table>
   <thead>
@@ -32,8 +38,3 @@
   </tbody>
 </table>
 <%= will_paginate @users %>
-<br>
-
-<% if current_user.admin_for?(current_rulemaking) %>
-  <%= link_to 'New User', new_user_path %>
-<% end %>
