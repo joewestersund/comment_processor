@@ -3,6 +3,14 @@
     The public comment period for '<%= @rulemaking.rulemaking_name%>' is not currently open.
   </h3>
 
+
+<% elsif @comment_saved %>
+  <h1>
+    Your comment for '<%= @rulemaking.rulemaking_name%>' was successfully submitted.
+  </h1>
+
+  <%= link_to "Submit another comment", comments_submit_comment_path(@rulemaking) %>
+
 <% else %>
   <h1>
     Submit a comment for '<%= @rulemaking.rulemaking_name%>'

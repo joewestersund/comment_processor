@@ -42,6 +42,7 @@ class CommentsController < ApplicationController
   end
 
   def submit_comment
+    @comment_saved = false
     @rulemaking = Rulemaking.where(id: params[:rulemaking_id]).first
     if @rulemaking.present?
       if @rulemaking.open_for_public_to_submit_comments?
@@ -78,10 +79,12 @@ class CommentsController < ApplicationController
     end
 
     @comment = Comment.new(rulemaking: @rulemaking) #supply a new, blank comment
+    @comment_saved = false
 
     if comment_saved
       respond_to do |format|
         @notice = 'Thank you for submitting your comment.'
+        @comment_saved = true
         format.html { render :submit_comment, layout: false }
         format.json { render :submit_comment, status: :ok }
         #TODO fix the json version
