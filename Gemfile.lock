@@ -89,7 +89,7 @@ GEM
       sassc-rails (>= 2.0.0)
     bootstrap-multiselect-rails (0.9.9)
       rails (>= 4.0.0)
-    bootstrap-select-rails (1.12.4)
+    bootstrap-select-rails (1.13.8)
     builder (3.2.3)
     byebug (9.1.0)
     capybara (2.15.4)

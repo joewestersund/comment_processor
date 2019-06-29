@@ -42,6 +42,10 @@
   margin-left: 5px;
 }
 
+.navbar-text.rulemaking-name {
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 12px; //it's navbar-text if there is only 1 rulemaking for this user. In this case it's text, not a link
+}
 .rulemaking-name {
   font-weight: bold;
   a {

@@ -181,9 +181,9 @@ class SuggestedChangesController < ApplicationController
         save_change_log(current_user,{suggested_change: @suggested_change, action_type: 'create'})
         if @suggested_change.assigned_to_id.present? && @suggested_change.assigned_to_id != current_user.id
           NotificationMailer.suggested_change_assigned_email(@suggested_change,current_user,false).deliver
-          email_sent_text = " An email was sent to #{@suggested_change.assigned_to.name} to let them know this suggested_change is assigned to them."
+          email_sent_text = " An email was sent to #{@suggested_change.assigned_to.name} to let them know this Suggested Change is assigned to them."
         end
-        format.html { redirect_to edit_suggested_change_path(@suggested_change), notice: "Suggested change was successfully created.#{email_sent_text}" }
+        format.html { redirect_to edit_suggested_change_path(@suggested_change), notice: "Suggested Change was successfully created.#{email_sent_text}" }
       else
         set_select_options
         format.html { render :new }
@@ -201,10 +201,10 @@ class SuggestedChangesController < ApplicationController
         save_change_log(current_user,{suggested_change: @suggested_change, action_type: 'edit'})
         if @suggested_change.assigned_to_id.present? && @suggested_change.assigned_to_id != current_user.id && @suggested_change.assigned_to_id != previous_assigned_to_id
           NotificationMailer.suggested_change_assigned_email(@suggested_change,current_user,false).deliver
-          email_sent_text = " An email was sent to #{@suggested_change.assigned_to.name} to let them know this suggested_change is assigned to them."
+          email_sent_text = " An email was sent to #{@suggested_change.assigned_to.name} to let them know this Suggested Change is assigned to them."
         end
         @filter_querystring = remove_empty_elements(filter_params)
-        format.html { redirect_to edit_suggested_change_path(@suggested_change,@filter_querystring), notice: "Suggested change was successfully updated.#{email_sent_text}" }
+        format.html { redirect_to edit_suggested_change_path(@suggested_change,@filter_querystring), notice: "Suggested Change was successfully updated.#{email_sent_text}" }
       else
         set_select_options
         format.html { render :edit }

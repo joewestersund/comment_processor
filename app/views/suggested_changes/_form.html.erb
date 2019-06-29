@@ -56,12 +56,12 @@
 
   <div class="field">
     <%= form.label :assigned_to_id %>
-    <%= form.collection_select :assigned_to_id, @users, :id, :name, :selected => @suggested_change.assigned_to_id, include_blank: true  %>
+    <%= form.collection_select :assigned_to_id, @users, :id, :name, {include_blank: true}, {class: "selectpicker", "data-live-search" => "true"}  %>
   </div>
 
   <div class="field">
     <%= form.label :suggested_change_review_status %>
-    <%= form.collection_select :suggested_change_status_type_id, @suggested_change_status_types, :id, :status_text, :selected => @suggested_change.suggested_change_status_type_id, prompt: true  %>
+    <%= form.collection_select :suggested_change_status_type_id, @suggested_change_status_types, :id, :status_text, {prompt: true} %>
   </div>
 
   <div class="field">

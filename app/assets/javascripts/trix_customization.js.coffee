@@ -20,5 +20,4 @@ ready = ->
       event.target.toolbarElement.querySelector('.trix-button-group--text-tools').insertAdjacentHTML 'beforeend', buttonHTML
     return
 
-# don't do on turbolinks:load, otherwise multiple copies of the buttons get added.
-$(document).on('ready', ready)
+$(document).on('turbolinks:load', ready)

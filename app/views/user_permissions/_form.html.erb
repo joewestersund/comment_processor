@@ -15,7 +15,7 @@
 
   <div class="field">
     <%= form.label :assigned_to_id %>
-    <%= form.collection_select :user_id, @users, :id, :name, :selected => @user_permission.user_id, include_blank: true  %>
+    <%= form.collection_select :user_id, @users, :id, :name, {}, {class: "selectpicker", "data-live-search" => "true"} %>
   </div>
 
   <div class="field">
