@@ -21,9 +21,8 @@ class SuggestedChangeStatusType < ApplicationRecord
     ['needs review',
      'under review',
      'team discussion needed',
-     'decision made, need to write draft summary and response',
-     'draft summary and response written, assigned to second reviewer',
-     'second review complete',
+     'decision made, need to write draft response',
+     'draft response written, assigned to final reviewer',
      'final review complete, has been proofread for tone',
      'other, see action needed']
   end

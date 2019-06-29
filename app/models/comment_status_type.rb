@@ -18,7 +18,7 @@ class CommentStatusType < ApplicationRecord
   validates :order_in_list, numericality: { only_integer: true, greater_than: 0}, uniqueness: {scope: :rulemaking_id }
 
   def self.default_list
-    ['needs initial review', 'initial review complete', 'review complete (summarized and categorized)', 'other (see notes)']
+    ['needs review', 'first review complete', 'second review complete']
   end
 
 end

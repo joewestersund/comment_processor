@@ -18,12 +18,9 @@ class SuggestedChangeResponseType < ApplicationRecord
   validates :order_in_list, numericality: { only_integer: true, greater_than: 0}, uniqueness: {scope: :rulemaking_id }
 
   def self.default_list
-    ['we agree with comment. However, no changes to proposal are needed to implement this suggestion',
-     'yes, we will make changes to address this comment',
-     'tentative yes, needs discussion',
-     'tentative no, needs discussion',
-     'no, we won''t make changes to address this comment',
-     'category for tracking only, no agency response required']
+    ['yes, we made changes to address this comment',
+     'no, we did not make changes to address this comment',
+     'no agency response required']
   end
 
 end
