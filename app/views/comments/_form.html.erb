@@ -71,25 +71,27 @@
       <%= form.file_field :attached_files, multiple: true %>
     </div>
 
-    <div>
-      If a file is already uploaded to a folder all users can view, such as on Google drive, you can enter it here.
+    <% if false #this part is not needed, now that data.oregon.gov is down %>
+      <div>
+        If a file is already uploaded to a folder all users can view, such as on Google drive, you can enter it here.
 
-      <% if comment.attachment_name.present? %>
+        <% if comment.attachment_name.present? %>
+          <div class="field">
+            <b>Current link:</b> <%= (link_to comment.attachment_name, comment.attachment_url) %>
+          </div>
+        <% end %>
+
         <div class="field">
-          <b>Current link:</b> <%= (link_to comment.attachment_name, comment.attachment_url) %>
+          <%= form.label :attachment_name %>
+          <%= form.text_field :attachment_name, id: :comment_attachment_name %>
         </div>
-      <% end %>
 
-      <div class="field">
-        <%= form.label :attachment_name %>
-        <%= form.text_field :attachment_name, id: :comment_attachment_name %>
+        <div class="field">
+          <%= form.label :attachment_url %>
+          <%= form.text_field :attachment_url, id: :comment_attachment_url %>
+        </div>
       </div>
-
-      <div class="field">
-        <%= form.label :attachment_url %>
-        <%= form.text_field :attachment_url, id: :comment_attachment_url %>
-      </div>
-    </div>
+    <% end %>
 
   <% else  %>
     <table class="read_only_parameters">

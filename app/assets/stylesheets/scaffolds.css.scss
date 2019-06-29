@@ -1,31 +1,9 @@
 body {
-  //background-color: #fff;
   background-color: #eee;
   color: #333;
   font-family: verdana, arial, helvetica, sans-serif;
   font-size: 13px;
   line-height: 18px;
-}
-
-
-.pagination {
-  a, .disabled {
-    font-size: 15px;
-    color: #666;
-    padding-left: 4px;
-    padding-right: 4px;
-  }
-
-  em.current {
-    font-size: 18px;
-    background-color: #333;
-    color: #eee;
-    padding-left: 4px;
-    padding-right: 4px;
-  }
-
-  margin-top: 10px;
-  margin-bottom: 10px;
 }
 
 p, ol, ul, td {

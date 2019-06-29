@@ -50,14 +50,12 @@ module ApplicationHelper
     currency_string.gsub(/[^\d\.-]/, '') if !currency_string.blank?
   end
 
-  def glyphicon_link(glyphicon_name, alt_text)
-    '<i class="glyphicon ' + glyphicon_name + '" title="' + alt_text + '" aria-hidden="true"></i><span class="visible-xs-inline visible-lg-inline nav-text">' + alt_text + '</span><span class="sr-only">' + alt_text + '</span>'
-  end
-
-  def font_awesome_icon(icon_name, alt_text, text = -1)
+  def font_awesome_icon(icon_name, alt_text, params = {})
     html = '<i class="fa fa-' + icon_name + '" title="' + alt_text + '" aria-hidden="true"></i>'
-    text_to_insert = (text == -1 ? alt_text : text)
-    html += '<span class="d-lg-none d-xl-inline nav-text">' + text_to_insert + '</span>'
+    if not params[:alt_text_only]
+      hide_text_classes = 'class="d-lg-none d-xl-inline nav-text"' unless params[:never_hide]
+      html += "<span #{hide_text_classes}>" + alt_text + '</span>'
+    end
     #for screen readers
     html += '<span class="sr-only">' + alt_text + '</span>'
   end

@@ -1,15 +1,5 @@
 // override for the 'Home' navigation link
 
-#navbar-brand {
-  font-size: 24px;
-  color: rgba(255, 255, 255, 0.5);
-  }
-
-.rulemaking-name a {
-  margin-top: 10px; //to center vertically with other navbar links
-}
-
-
 // THESE ARE EXAMPLES YOU CAN MODIFY
 // create your own classes
 // to make views framework-neutral
@@ -52,49 +42,3 @@ section {
   @extend .row;
   margin-top: 20px;
   }
-
-.header {
-  background-color: black;
-  width: 100%
-}
-
-.navbar-nav {
-  margin-left: 1px;
-  //font-size: 20px;
-  //width: 960px;
-  //margin-left: auto;
-  //margin-right: auto;
-}
-
-//.navbar-toggler {
-//  float:left;
-//  margin-left:15px;
-//  margin-right: 5px;
-//}
-
-.rulemaking-name {
-  font-weight: bold;
-}
-
-//font-awesome icons
-i.fa {
-  font-size: 30px;
-}
-
-//font-awesome icons in a dropdown list
-.dropdown-item i.fa {
-  font-size: 15px;
-}
-
-
-.nav-text {
-  margin-left: 10px;
-}
-
-.dropdown-menu li {
-  clear: both;
-}
-
-.hidden {
-  display: none;
-}

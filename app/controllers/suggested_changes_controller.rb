@@ -148,6 +148,7 @@ class SuggestedChangesController < ApplicationController
     #by default, assign to whoever created it
     @suggested_change.assigned_to_id = current_user.id
     @suggested_change.rulemaking = current_rulemaking
+    @suggested_change.suggested_change_status_type = current_rulemaking.suggested_change_status_types.first
   end
 
   # GET /suggested_changes/1
