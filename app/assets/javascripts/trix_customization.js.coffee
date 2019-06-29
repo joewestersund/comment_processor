@@ -21,3 +21,5 @@ ready = ->
     return
 
 $(document).on('turbolinks:load', ready)
+
+$(document).on('turbolinks:render', ready) #needed so that buttons are added when user hits save and page redirects to self
