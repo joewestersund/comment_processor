@@ -18,7 +18,7 @@
 
   <div class="field">
     <%= form.label :color_name %>
-    <%= select_tag("color_id", options_from_collection_for_select(@color_category_and_names_list, :first, :last, get_color_id(suggested_change_status_type.color_name)), {include_blank: true, class: "selectpicker", "data-live-search" => "true"})  %>
+    <%= form.select("color_id", options_from_collection_for_select(@color_category_and_names_list, :first, :last, get_color_id(suggested_change_status_type.color_name)), {include_blank: true}, {class: "selectpicker", "data-live-search" => "true"} )  %>
   </div>
 
   <div class="actions">

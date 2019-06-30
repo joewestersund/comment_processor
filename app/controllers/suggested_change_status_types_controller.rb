@@ -111,7 +111,8 @@ class SuggestedChangeStatusTypesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def suggested_change_status_type_params
       p = params.require(:suggested_change_status_type).permit(:status_text, :order_in_list)
-      p.merge(color_name: get_color_name(params[:color_id]))
+      p2 = params.require(:suggested_change_status_type).permit(:color_id)
+      return p.merge(color_name: get_color_name(p2[:color_id]))
     end
 
     def move(up = true)
