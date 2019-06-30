@@ -164,6 +164,7 @@ module ColorHelper
 
   def get_color_id(color_name)
     if color_name.present?
+      #note: color_id is zero based, like the array indices. So first color (indianred) has color_id = 0
       colors_available.map{ |subarray| subarray[1]}.index(color_name)
     else
       nil

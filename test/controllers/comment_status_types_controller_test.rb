@@ -38,7 +38,8 @@ class CommentStatusTypesControllerTest < ActionDispatch::IntegrationTest
 
   test "shouldn't write to log if no change" do
     assert_difference('ChangeLogEntry.count', 0) do
-      patch comment_status_type_url(@comment_status_type), params: { comment_status_type: { status_text: @comment_status_type.status_text, order_in_list: @comment_status_type.order_in_list, color_id: 1 } }
+      #color_id = 0 for indianred, which is the starting color for this fixture
+      patch comment_status_type_url(@comment_status_type), params: { comment_status_type: { status_text: @comment_status_type.status_text, order_in_list: @comment_status_type.order_in_list, color_id: 0 } }
     end
     assert_redirected_to comment_status_types_url
   end

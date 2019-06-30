@@ -38,7 +38,8 @@ class SuggestedChangeResponseTypesControllerTest < ActionDispatch::IntegrationTe
 
   test "should not write to log if no change" do
     assert_difference('ChangeLogEntry.count', 0) do
-      patch suggested_change_response_type_url(@suggested_change_response_type), params: { suggested_change_response_type: { response_text: @suggested_change_response_type.response_text, order_in_list: @suggested_change_response_type.order_in_list, color_id: 1  } }
+      #color_id = 0 for indianred, which is the starting color for this fixture
+      patch suggested_change_response_type_url(@suggested_change_response_type), params: { suggested_change_response_type: { response_text: @suggested_change_response_type.response_text, order_in_list: @suggested_change_response_type.order_in_list, color_id: 0  } }
     end
     assert_redirected_to suggested_change_response_types_url
   end
