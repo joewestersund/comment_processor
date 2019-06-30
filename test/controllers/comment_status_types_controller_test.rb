@@ -38,7 +38,7 @@ class CommentStatusTypesControllerTest < ActionDispatch::IntegrationTest
 
   test "shouldn't write to log if no change" do
     assert_difference('ChangeLogEntry.count', 0) do
-      patch comment_status_type_url(@comment_status_type), params: { comment_status_type: { status_text: @comment_status_type.status_text } }
+      patch comment_status_type_url(@comment_status_type), params: { comment_status_type: { status_text: @comment_status_type.status_text, order_in_list: @comment_status_type.status_text, color_id: 1 } }
     end
     assert_redirected_to comment_status_types_url
   end

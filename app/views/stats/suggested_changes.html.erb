@@ -26,8 +26,8 @@
         <% @suggested_changes_by_status_type.each do |row| %>
           <tr>
             <td><%= link_to row.status_text, suggested_changes_path({suggested_change_status_type_id: row.id}) %></td>
-            <td class="<%= css_order_in_list('status',row.order_in_list)%>"><%= link_to row.num_suggested_changes, suggested_changes_path({suggested_change_status_type_id: row.id}) %></td>
-            <td class="<%= css_order_in_list('status',row.order_in_list)%>"><%= format_percent(row.num_suggested_changes,@total_suggested_changes) %></td>
+            <td class="<%= color_class(row)%>"><%= link_to row.num_suggested_changes, suggested_changes_path({suggested_change_status_type_id: row.id}) %></td>
+            <td class="<%= color_class(row)%>"><%= format_percent(row.num_suggested_changes,@total_suggested_changes) %></td>
           </tr>
         <% end %>
         <tr>
@@ -61,8 +61,8 @@
         <% @suggested_changes_by_agency_response.each do |row| %>
           <tr>
             <td><%= link_to row.response_text, suggested_changes_path({suggested_change_response_type_id: row.id}) %></td>
-            <td class="<%= css_order_in_list('response',row.order_in_list)%>"><%= link_to row.num_suggested_changes, suggested_changes_path({suggested_change_response_type_id: row.id}) %></td>
-            <td class="<%= css_order_in_list('response',row.order_in_list)%>"><%= format_percent(row.num_suggested_changes,@total_suggested_changes) %></td>
+            <td class="<%= color_class(row)%>"><%= link_to row.num_suggested_changes, suggested_changes_path({suggested_change_response_type_id: row.id}) %></td>
+            <td class="<%= color_class(row)%>"><%= format_percent(row.num_suggested_changes,@total_suggested_changes) %></td>
           </tr>
         <% end %>
         <tr>
@@ -149,7 +149,7 @@
       <tr>
         <th>User</th>
         <% @suggested_change_status_types.each do |cst| %>
-          <th class="<%= css_order_in_list('status',cst.order_in_list)%>"><%= link_to cst.status_text, suggested_changes_path(suggested_change_status_type_id: cst.id) %></th>
+          <th class="<%= color_class(cst)%>"><%= link_to cst.status_text, suggested_changes_path(suggested_change_status_type_id: cst.id) %></th>
         <% end %>
         <th>Total</th>
         <th>%</th>
@@ -181,7 +181,7 @@
       <tr>
         <td><%= link_to "Total", suggested_changes_path %></td>
         <% @suggested_changes_by_status_type.each do |cst2| %>
-        <td class="<%= css_order_in_list('status',cst2.order_in_list)%>"><%= link_to cst2.num_suggested_changes, suggested_changes_path(suggested_change_status_type_id: cst2.id) %></td>
+        <td class="<%= color_class(cst2)%>"><%= link_to cst2.num_suggested_changes, suggested_changes_path(suggested_change_status_type_id: cst2.id) %></td>
       <% end %>
         <td><%= link_to @total_suggested_changes, suggested_changes_path %></td>
         <td><%= format_percent(@total_suggested_changes,@total_suggested_changes) %></td>

@@ -85,8 +85,8 @@
       <tr>
         <td><%= suggested_change.suggested_change_name %></td>
         <td><%= suggested_change.description.truncate(500) if suggested_change.description.present? %></td>
-        <td class="<%= status_css(suggested_change.suggested_change_status_type)%>"><%= suggested_change.suggested_change_status_type.status_text if suggested_change.suggested_change_status_type.present? %></td>
-        <td class="<%= response_css(suggested_change.suggested_change_response_type)%>"><%= suggested_change.suggested_change_response_type.response_text if suggested_change.suggested_change_response_type.present? %></td>
+        <td class="<%= color_class(suggested_change.suggested_change_status_type)%>"><%= suggested_change.suggested_change_status_type.status_text if suggested_change.suggested_change_status_type.present? %></td>
+        <td class="<%= color_class(suggested_change.suggested_change_response_type)%>"><%= suggested_change.suggested_change_response_type.response_text if suggested_change.suggested_change_response_type.present? %></td>
         <td class="<%= highlight_empty_css(suggested_change.response_text)%>"><%= suggested_change.response_text.truncate(500) if suggested_change.response_text.present? %></td>
         <td class="<%= assigned_to_css(suggested_change.assigned_to_id) %>"><%= suggested_change.assigned_to_name %></td>
         <td class="<%= highlight_filled_css(suggested_change.action_needed)%>"><%= suggested_change.action_needed.truncate(300) if suggested_change.action_needed.present? %></td>

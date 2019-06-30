@@ -1,10 +1,12 @@
 class CommentStatusTypesController < ApplicationController
   include ChangeLogEntriesHelper
+  include ColorHelper
 
   before_action :signed_in_user
   before_action :admin_user
   before_action :not_read_only_user, only: [:new, :edit, :create, :update, :destroy, :move_up, :move_down]
   before_action :set_comment_status_type, only: [:show, :edit, :update, :destroy]
+  before_action :set_select_options, only: [:new, :edit]
 
   # GET /comment_status_types
   # GET /comment_status_types.json
@@ -47,10 +49,11 @@ class CommentStatusTypesController < ApplicationController
 
     respond_to do |format|
       if @comment_status_type.save
-        save_change_log(current_user,{object_type: 'comment status type', action_type: 'create', description: "created comment status type ID ##{@comment_status_type.id} '#{@comment_status_type.status_text}'"})
+        save_change_log(current_user,{object_type: 'comment status type', action_type: 'create', description: "created comment status type ID ##{@comment_status_type.id} '#{@comment_status_type.status_text}', '#{@comment_status_type.color_name}'"})
         format.html { redirect_to comment_status_types_path, notice: 'Comment status type was successfully created.' }
         format.json { render :show, status: :created, location: @comment_status_type }
       else
+        set_select_options
         format.html { render :new }
         format.json { render json: @comment_status_type.errors, status: :unprocessable_entity }
       end
@@ -63,11 +66,12 @@ class CommentStatusTypesController < ApplicationController
     respond_to do |format|
       if @comment_status_type.update(comment_status_type_params)
         if @comment_status_type.previous_changes.any?
-          save_change_log(current_user,{object_type: 'comment status type', action_type: 'edit', description: "edited comment status type ID ##{@comment_status_type.id} to '#{@comment_status_type.status_text}'"})
+          save_change_log(current_user,{object_type: 'comment status type', action_type: 'edit', description: "edited comment status type ID ##{@comment_status_type.id} to '#{@comment_status_type.status_text}', '#{@comment_status_type.color_name}'"})
         end
         format.html { redirect_to comment_status_types_path, notice: 'Comment status type was successfully updated.' }
         format.json { render :show, status: :ok, location: @comment_status_type }
       else
+        set_select_options
         format.html { render :edit }
         format.json { render json: @comment_status_type.errors, status: :unprocessable_entity }
       end
@@ -106,7 +110,8 @@ class CommentStatusTypesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_status_type_params
-      params.require(:comment_status_type).permit(:status_text, :order_in_list)
+      p = params.require(:comment_status_type).permit(:status_text, :order_in_list)
+      p.merge(color_name: get_color_name(params[:color_id]))
     end
 
     def move(up = true)
@@ -142,5 +147,9 @@ class CommentStatusTypesController < ApplicationController
         com.comment_status_type_id = reassign_to_cst.id
         com.save
       end
+    end
+
+    def set_select_options
+      @color_category_and_names_list = color_category_and_names_list
     end
 end

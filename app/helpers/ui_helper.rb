@@ -9,22 +9,6 @@ module UiHelper
     end
   end
 
-  def status_css(status_type)
-    if status_type.present?
-      css_order_in_list('status',status_type.order_in_list)
-    end
-  end
-
-  def response_css(response_type)
-    if response_type.present?
-      css_order_in_list('response',response_type.order_in_list)
-    end
-  end
-
-  def css_order_in_list(prefix,order_in_list)
-    "#{prefix}-#{order_in_list}"
-  end
-
   def format_percent(numerator,denominator,decimal_digits: 0, if_zero_denominator: "-")
     #convert to float in case both arguments are integers. Integer division truncates to an integer.
     if (denominator == 0 or denominator.nil?)

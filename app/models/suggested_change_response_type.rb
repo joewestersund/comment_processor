@@ -8,6 +8,7 @@
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  rulemaking_id :integer
+#  color_name    :string
 #
 
 class SuggestedChangeResponseType < ApplicationRecord
@@ -18,9 +19,11 @@ class SuggestedChangeResponseType < ApplicationRecord
   validates :order_in_list, numericality: { only_integer: true, greater_than: 0}, uniqueness: {scope: :rulemaking_id }
 
   def self.default_list
-    ['yes, we made changes to address this comment',
-     'no, we did not make changes to address this comment',
-     'no agency response required']
+    [
+        ['yes, we made changes to address this comment', 'yellowgreen'],
+        ['no, we did not make changes to address this comment','yellowgreen'],
+        ['no agency response required','dodgerblue']
+    ]
   end
 
 end

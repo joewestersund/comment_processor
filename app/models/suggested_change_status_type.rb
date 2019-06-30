@@ -8,6 +8,7 @@
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  rulemaking_id :integer
+#  color_name    :string
 #
 
 class SuggestedChangeStatusType < ApplicationRecord
@@ -18,13 +19,15 @@ class SuggestedChangeStatusType < ApplicationRecord
   validates :order_in_list, numericality: { only_integer: true, greater_than: 0}, uniqueness: {scope: :rulemaking_id }
 
   def self.default_list
-    ['needs review',
-     'under review',
-     'team discussion needed',
-     'decision made, need to write draft response',
-     'draft response written, assigned to final reviewer',
-     'final review complete, has been proofread for tone',
-     'other, see action needed']
+    [
+        ['needs review','indianred'],
+        ['under review','yellow'],
+        ['team discussion needed','cyan'],
+        ['decision made, need to write draft response','dodgerblue'],
+        ['draft response written, assigned to final reviewer','yellowgreen'],
+        ['final review complete, has been proofread for tone','forestgreen'],
+        ['other, see action needed','darkorange'],
+    ]
   end
 
 end

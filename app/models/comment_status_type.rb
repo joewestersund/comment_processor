@@ -8,6 +8,7 @@
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  rulemaking_id :integer
+#  color_name    :string
 #
 
 class CommentStatusType < ApplicationRecord
@@ -18,7 +19,12 @@ class CommentStatusType < ApplicationRecord
   validates :order_in_list, numericality: { only_integer: true, greater_than: 0}, uniqueness: {scope: :rulemaking_id }
 
   def self.default_list
-    ['needs review', 'first review complete', 'second review complete']
+    #default status_text and color_name
+    [
+        ['needs review', 'indianred'],
+        ['first review complete', 'yellow'],
+        ['second review complete','forestgreen']
+    ]
   end
 
 end

@@ -1,10 +1,12 @@
 class SuggestedChangeResponseTypesController < ApplicationController
   include ChangeLogEntriesHelper
+  include ColorHelper
 
   before_action :signed_in_user
   before_action :admin_user
   before_action :not_read_only_user, only: [:new, :edit, :create, :update, :destroy, :move_up, :move_down]
   before_action :set_suggested_change_response_type, only: [:show, :edit, :update, :destroy]
+  before_action :set_select_options, only: [:new, :edit]
 
   # GET /suggested_change_response_types
   # GET /suggested_change_response_types.json
@@ -47,10 +49,11 @@ class SuggestedChangeResponseTypesController < ApplicationController
 
     respond_to do |format|
       if @suggested_change_response_type.save
-        save_change_log(current_user,{object_type: 'suggested change response type', action_type: 'create', description: "added suggested change response type ID ##{@suggested_change_response_type.id} '#{@suggested_change_response_type.response_text}'"})
+        save_change_log(current_user,{object_type: 'suggested change response type', action_type: 'create', description: "added suggested change response type ID ##{@suggested_change_response_type.id} '#{@suggested_change_response_type.response_text}', '#{@suggested_change_response_type.color_name}'"})
         format.html { redirect_to suggested_change_response_types_path, notice: 'Suggested change response type was successfully created.' }
         format.json { render :show, status: :created, location: @suggested_change_response_type }
       else
+        set_select_options
         format.html { render :new }
         format.json { render json: @suggested_change_response_type.errors, status: :unprocessable_entity }
       end
@@ -63,11 +66,12 @@ class SuggestedChangeResponseTypesController < ApplicationController
     respond_to do |format|
       if @suggested_change_response_type.update(suggested_change_response_type_params)
         if @suggested_change_response_type.previous_changes.any?
-          save_change_log(current_user,{object_type: 'suggested change response type', action_type: 'edit', description: "edited suggested change response type ID ##{@suggested_change_response_type.id} to '#{@suggested_change_response_type.response_text}'"})
+          save_change_log(current_user,{object_type: 'suggested change response type', action_type: 'edit', description: "edited suggested change response type ID ##{@suggested_change_response_type.id} to '#{@suggested_change_response_type.response_text}', '#{@suggested_change_response_type.color_name}'"})
         end
         format.html { redirect_to suggested_change_response_types_path, notice: 'Suggested change response type was successfully updated.' }
         format.json { render :show, status: :ok, location: @suggested_change_response_type }
       else
+        set_select_options
         format.html { render :edit }
         format.json { render json: @suggested_change_response_type.errors, status: :unprocessable_entity }
       end
@@ -96,7 +100,8 @@ class SuggestedChangeResponseTypesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def suggested_change_response_type_params
-      params.require(:suggested_change_response_type).permit(:response_text, :order_in_list)
+      p = params.require(:suggested_change_response_type).permit(:response_text, :order_in_list)
+      p.merge(color_name: get_color_name(params[:color_id]))
     end
 
     def move(up = true)
@@ -127,4 +132,7 @@ class SuggestedChangeResponseTypesController < ApplicationController
       end
     end
 
+    def set_select_options
+      @color_category_and_names_list = color_category_and_names_list
+    end
 end

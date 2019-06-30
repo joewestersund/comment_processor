@@ -84,10 +84,15 @@ class RulemakingsController < ApplicationController
 
     def add_default_objects(rulemaking, klass, name_of_field, include_order_in_list = true)
       order_in_list = 1
-      klass.default_list.each do |list_item|
+      klass.default_list.each do |subarray|
         obj = klass.new({rulemaking: rulemaking})
-        obj[name_of_field] = list_item
-        obj.order_in_list = order_in_list if include_order_in_list
+        if include_order_in_list
+          obj[name_of_field] = subarray[0]
+          obj.color_name = subarray[1]
+          obj.order_in_list = order_in_list
+        else
+          obj[name_of_field] = subarray #in this case, it's not a subarray
+        end
         obj.save
         order_in_list += 1
       end

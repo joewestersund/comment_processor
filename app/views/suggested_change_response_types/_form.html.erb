@@ -16,6 +16,11 @@
     <%= form.text_field :response_text, id: :suggested_change_response_type_response_text %>
   </div>
 
+  <div class="field">
+    <%= form.label :color_name %>
+    <%= select_tag("color_id", options_from_collection_for_select(@color_category_and_names_list, :first, :last, get_color_id(suggested_change_response_type.color_name)), include_blank: true)  %>
+  </div>
+
   <div class="actions">
     <%= form.submit "Save", class: "btn btn-large btn-primary" %>
   </div>

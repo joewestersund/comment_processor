@@ -8,6 +8,7 @@
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  rulemaking_id :integer
+#  color_name    :string
 #
 
 require 'test_helper'

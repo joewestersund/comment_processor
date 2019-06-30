@@ -25,8 +25,8 @@
         <% @comments_by_status_type.each do |row| %>
           <tr>
             <td><%= link_to row.status_text, comments_path({comment_status_type_id: row.id}) %></td>
-            <td class="<%= css_order_in_list('status',row.order_in_list)%>"><%= link_to row.num_comments, comments_path({comment_status_type_id: row.id}) %></td>
-            <td class="<%= css_order_in_list('status',row.order_in_list)%>"><%= format_percent(row.num_comments,@total_comments) %></td>
+            <td class="<%= color_class(row)%>"><%= link_to row.num_comments, comments_path({comment_status_type_id: row.id}) %></td>
+            <td class="<%= color_class(row)%>"><%= format_percent(row.num_comments,@total_comments) %></td>
           </tr>
         <% end %>
         <tr>

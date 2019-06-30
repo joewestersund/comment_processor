@@ -38,7 +38,7 @@ class SuggestedChangeStatusTypesControllerTest < ActionDispatch::IntegrationTest
 
   test "shouldn't write to log if no change" do
     assert_difference('ChangeLogEntry.count', 0) do
-      patch suggested_change_status_type_url(@suggested_change_status_type), params: { suggested_change_status_type: { status_text: @suggested_change_status_type.status_text } }
+      patch suggested_change_status_type_url(@suggested_change_status_type), params: { suggested_change_status_type: { status_text: @suggested_change_status_type.status_text, order_in_list: @suggested_change_status_type.order_in_list, color_id: 1  } }
     end
     assert_redirected_to suggested_change_status_types_url
   end
