@@ -24,9 +24,10 @@ Rails.application.routes.draw do
 
   get 'static_pages/welcome'
 
+  get '/help/excel_download_instructions/', to: 'help#excel_download_instructions', as: 'help_excel_download_instructions'
+
   get '/about', to: 'static_pages#about' # creates named path 'about'
   get '/welcome', to: 'static_pages#welcome' # creates named path 'welcome'
-  get '/addusers', to: 'users#new' # creates named path 'addusers'
 
   resources :users
 

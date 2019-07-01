@@ -31,7 +31,7 @@ class SuggestedChange < ApplicationRecord
   validates :order_in_list, numericality: { only_integer: true, greater_than: 0}, uniqueness: {scope: :rulemaking_id }
 
   def self.csv_header
-    ['Order In List', 'Suggesed Change Name', 'Description', 'Response Text', 'Response Type', 'Assigned To',
+    ['Order In List', 'Suggested Change Name', 'Description', 'Response Text', 'Response Type', 'Assigned To',
      'Status', 'Action Needed', 'Rule Change Made', 'Comments (by their "order in list")', '# of Comments', '# of Commenters', 'ID', 'Text from Comments', 'Notes']
   end
 

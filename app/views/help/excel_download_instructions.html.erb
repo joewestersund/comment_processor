@@ -1,0 +1,28 @@
+<% content_for :title, 'Downloading data to Excel' %>
+
+<div class="links">Once you've done the steps below, you can <%= link_to "download your #{@download_content_type} here", @download_url %>.</div>
+
+<h1>Downloading data to Excel</h1>
+
+<p>Some Microsoft Windows systems are set by default to block Excel files that are downloaded from the internet.</p>
+
+<p>If you see this error:</p>
+
+<%= image_tag("excel_error_message.png", :alt => "Excel error message: Excel cannot open or save any more documents...") %>
+
+<p>then take these steps:</p>
+
+<ol>
+  <li><p>Find the file in your downloads folder,
+    right-click on it, and open Properties</p>
+    <%= image_tag("click_on_properties.png", :alt => "Right-click on the file and open the Properties window") %>
+  </li>
+  <li>
+    <p>Then, click "Unblock" and click "OK" to save that change.</p>
+    <%= image_tag("select_unblock.png", :alt => "Check 'Unblock' and then 'OK'") %>
+  </li>
+</ol>
+
+
+<p>Now, you should be able to open the Excel file normally. If this doesn't work and you still have problems,
+  please contact <%=mail_to APPLICATION_HOST_EMAIL_ADDRESS, APPLICATION_HOST_NAME %>.</p>
