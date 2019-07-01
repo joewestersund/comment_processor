@@ -5,6 +5,7 @@ class CommentsController < ApplicationController
   require 'csv'
 
   before_action :signed_in_user, except: [:submit_comment, :do_submit_comment, :show_attachment]
+  before_action :user_with_permissions_to_a_rulemaking, except: [:submit_comment, :do_submit_comment, :show_attachment]
   before_action :admin_user, only: [:new, :create, :import, :destroy, :delete_attachment, :do_import, :cleanup, :do_cleanup]
   before_action :not_read_only_user, only: [:edit, :update]
   before_action :set_comment, only: [:show, :edit, :update, :destroy, :delete_attachment]

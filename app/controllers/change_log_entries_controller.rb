@@ -1,5 +1,6 @@
 class ChangeLogEntriesController < ApplicationController
   before_action :signed_in_user
+  before_action :user_with_permissions_to_a_rulemaking
   before_action :admin_user, only: [:new, :edit, :create, :update, :destroy]
   before_action :set_change_log_entry, only: [:show, :edit, :update, :destroy]
   before_action :set_select_options, only: [:new, :edit, :index]

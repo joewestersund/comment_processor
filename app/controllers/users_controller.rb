@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   require 'securerandom'
 
   before_action :signed_in_user, except: [:forgot_password, :send_password_reset_email, :reset_password]
+  #note: does not require user to have a current rulemaking. That way, app admin user can create the first one.
   before_action :application_admin_user, only: [:edit, :update, :destroy] #only application admin can edit or delete another user
   before_action :admin_user, only: [:new, :create]  #regular admin can create a new user
   before_action :set_user, only: [:edit, :update, :destroy]

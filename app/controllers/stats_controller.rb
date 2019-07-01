@@ -1,5 +1,6 @@
 class StatsController < ApplicationController
   before_action :signed_in_user
+  before_action :user_with_permissions_to_a_rulemaking
 
   def comments
     cr = current_rulemaking

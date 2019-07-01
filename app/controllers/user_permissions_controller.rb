@@ -1,6 +1,7 @@
 class UserPermissionsController < ApplicationController
 
   before_action :signed_in_user
+  before_action :user_with_permissions_to_a_rulemaking
   before_action :admin_user, except: [:index]
   before_action :set_user_permission, only: [:edit, :update, :destroy]
   before_action :set_select_options, only: [:new, :edit ]

@@ -3,6 +3,7 @@ class SuggestedChangeStatusTypesController < ApplicationController
   include ColorHelper
 
   before_action :signed_in_user
+  before_action :user_with_permissions_to_a_rulemaking
   before_action :admin_user
   before_action :not_read_only_user, only: [:new, :edit, :create, :update, :destroy, :move_up, :move_down]
   before_action :set_suggested_change_status_type, only: [:show, :edit, :update, :destroy]

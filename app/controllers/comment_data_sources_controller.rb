@@ -2,6 +2,7 @@ class CommentDataSourcesController < ApplicationController
   include ChangeLogEntriesHelper
 
   before_action :signed_in_user, only: [:new, :edit, :update, :destroy, :index]
+  before_action :user_with_permissions_to_a_rulemaking
   before_action :admin_user, only: [:new, :edit, :update, :destroy]
   before_action :set_comment_data_source, only: [:show, :edit, :update, :destroy]
 

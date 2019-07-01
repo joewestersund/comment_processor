@@ -65,7 +65,9 @@ class Comment < ApplicationRecord
     host_str = Rails.application.routes.default_url_options[:host]
     attachment_list_string = self.attached_files.map{ |af| "#{host_str}/comments/#{self.id}/attached_file/#{af.id}" }.join(', ')
 
-    [self.order_in_list, self.comment_data_source.data_source_name, self.source_id, self.first_name, self.last_name, self.email,
+    data_source_name = self.comment_data_source.data_source_name if self.comment_data_source.present?
+
+    [self.order_in_list, data_source_name, self.source_id, self.first_name, self.last_name, self.email,
      self.organization, self.state, self.comment_text, self.attachment_name, self.attachment_url, attachment_list_string, self.manually_entered, self.num_commenters,
      self.summary, status, remove_html(self.notes).to_s.truncate(1000), suggested_changes, self.id]
   end

@@ -19,6 +19,10 @@ module SessionsHelper
     redirect_to signin_path, notice: "Please sign in." unless signed_in?
   end
 
+  def user_with_permissions_to_a_rulemaking
+    redirect_to welcome_path, notice: "This username does not currently have permissions to access any projects." unless current_rulemaking.present?
+  end
+
   def application_admin_user
     redirect_to welcome_path, notice: "That feature is only available to application admins." unless current_user.application_admin?
   end
@@ -65,7 +69,11 @@ module SessionsHelper
         #last_rulemaking_viewed is blank, so just pick the first one they have permissions to
         set_current_rulemaking(@current_user.user_permissions.first.rulemaking)
         @current_rulemaking #return this value
+      elsif @current_user.application_admin? && Rulemaking.count > 0 #application admin user that has no permissions, can still see all rulemakings
+        set_current_rulemaking(Rulemaking.first)
+        @current_rulemaking #return this value
       else
+        #this user does not have permissions to any rulemakings
         nil
       end
     end

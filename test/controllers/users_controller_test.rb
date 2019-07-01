@@ -150,4 +150,21 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to users_url
   end
 
+  test "user with no permissions should be redirected to welcome screen" do
+    sign_user_out
+
+    sign_in_as users(:user_with_no_permissions_yet)
+
+    assert_redirected_to welcome_url
+
+    get comments_url
+
+    assert_redirected_to welcome_url
+
+    get suggested_changes_url
+
+    assert_redirected_to welcome_url
+
+  end
+
 end

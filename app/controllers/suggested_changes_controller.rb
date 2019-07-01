@@ -4,6 +4,7 @@ class SuggestedChangesController < ApplicationController
   require 'csv'
 
   before_action :signed_in_user
+  before_action :user_with_permissions_to_a_rulemaking
   before_action :not_read_only_user, only: [:new, :edit, :create, :update, :destroy, :move_up, :move_down]
   before_action :admin_user, only: [:renumber, :do_renumber, :merge, :merge_preview, :do_merge, :copy, :do_copy]
   before_action :set_suggested_change, only: [:show, :edit, :update, :destroy, :do_merge]
