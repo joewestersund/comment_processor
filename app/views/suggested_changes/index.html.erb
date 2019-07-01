@@ -9,7 +9,7 @@
     <%= link_to 'New Suggested Change', new_suggested_change_path %> |
   <% end %>
     Download as <%= link_to "CSV", suggested_changes_path(@filter_querystring.merge({format: "csv"})) %>
-    or <%= link_to "XLSX", excel_download_instructions_link("Suggested Changes", suggested_changes_path(@filter_querystring,format: "xlsx")) %>
+    or <%= link_to "XLSX", excel_download_instructions_link(SuggestedChange,@filter_querystring) %>
 </div>
 
 <div class="filter-box">

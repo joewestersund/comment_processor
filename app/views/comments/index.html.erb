@@ -13,7 +13,7 @@
     <% end %>
 <% end %>
   Download as <%= link_to "CSV", comments_path(@filter_querystring.merge({format: "csv"})) %>
-  or <%= link_to "XLSX", excel_download_instructions_link("Comments",comments_path(@filter_querystring,format: "xlsx")) %>
+  or <%= link_to "XLSX", excel_download_instructions_link(Comment,@filter_querystring) %>
 </div>
 
 <div class="filter-box">

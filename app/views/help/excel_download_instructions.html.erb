@@ -1,6 +1,6 @@
 <% content_for :title, 'Downloading data to Excel' %>
 
-<div class="links">Once you've done the steps below, you can <%= link_to "download your #{@download_content_type} here", @download_url %>.</div>
+<div class="links">Once you've done the steps below, you can <%= link_to "download your #{@download_content_type} here", excel_download_path(@object_type,@filter_querystring) %>.</div>
 
 <h1>Downloading data to Excel</h1>
 
