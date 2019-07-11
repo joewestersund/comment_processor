@@ -108,7 +108,7 @@ class UsersController < ApplicationController
         NotificationMailer.password_reset_email(@user).deliver
         format.html { redirect_to signin_path, notice: "A password reset email has been sent to #{@user.name} at #{@user.email}. Please use the link in that email to reset your password in the next #{pluralize(User.hours_to_reset_password,"hour")}." }
       else
-        format.html { redirect_to password_forgot_path, alert: "That email address was not recognized." }
+        format.html { redirect_to password_forgot_path, alert: "That email address was not recognized, or the recaptcha was not recognized." }
       end
     end
   end
@@ -125,7 +125,7 @@ class UsersController < ApplicationController
 
         format.html {redirect_to profile_edit_password_path, notice: "Please enter a new password"}
       else
-        format.html {redirect_to password_forgot_path, alert: "That email address was not recognized, or its password reset time has expired."}
+        format.html {redirect_to password_forgot_path, alert: "That email address was not recognized, or its password reset link has expired."}
       end
     end
   end
