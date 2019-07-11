@@ -14,7 +14,7 @@ Dear <%= @new_user.name %>,
 <div><strong>Username:</strong> <%= @new_user.email %></div>
 
 <p>
-  You can log in and set up your password by going to <%= link_to @password_reset_url, @password_reset_url %> in the next <%= @hours_to_log_in %> hours.
+  You can log in and set up your password by going to <%= link_to @password_reset_url, @password_reset_url %> in the next <%= pluralize(@hours_to_log_in,"hour") %>.
 </p>
 
 <p>

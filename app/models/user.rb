@@ -49,7 +49,7 @@ class User < ApplicationRecord
   end
 
   def User.hours_to_reset_password
-    4
+    1
   end
 
   def User.hours_to_do_first_login

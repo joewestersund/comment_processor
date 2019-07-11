@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   require 'securerandom'
 
+  include ActionView::Helpers::TextHelper #for the pluralize method
+
   before_action :signed_in_user, except: [:forgot_password, :send_password_reset_email, :reset_password]
   #note: does not require user to have a current rulemaking. That way, app admin user can create the first one.
   before_action :application_admin_user, only: [:edit, :update, :destroy] #only application admin can edit or delete another user
@@ -60,7 +62,7 @@ class UsersController < ApplicationController
         up = UserPermission.new(rulemaking: current_rulemaking, user: @user)
         up.save
 
-        flash[:notice] = "An account for #{@user.name} was successfully created. They have been given permissions to this rulemaking, and a link to log in and reset their password has been emailed to them."
+        flash[:notice] = "An account for #{@user.name} was successfully created. They have been given permissions to this rulemaking, and a link to log in and set up their password has been emailed to them."
         redirect_to users_path
       else
         render :edit
@@ -104,7 +106,7 @@ class UsersController < ApplicationController
       if @user.present? && @user.active? && (verify_recaptcha(model: @user) || Rails.env == "development")
         @user.generate_password_token!
         NotificationMailer.password_reset_email(@user).deliver
-        format.html { redirect_to signin_path, notice: "A password reset email has been sent to #{@user.name} at #{@user.email}. Please use the link in that email to reset your password in the next #{User.hours_to_reset_password} hours." }
+        format.html { redirect_to signin_path, notice: "A password reset email has been sent to #{@user.name} at #{@user.email}. Please use the link in that email to reset your password in the next #{pluralize(User.hours_to_reset_password,"hour")}." }
       else
         format.html { redirect_to password_forgot_path, alert: "That email address was not recognized." }
       end
