@@ -96,6 +96,14 @@ class User < ApplicationRecord
     end
   end
 
+  def rulemakings
+    if self.application_admin?
+      Rulemaking.all
+    else
+      Rulemaking.where(id: self.user_permissions.select(:rulemaking_id))
+    end
+  end
+
   private
   def create_remember_token
     self.remember_token = User.encrypt(User.new_remember_token)

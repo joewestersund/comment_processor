@@ -43,19 +43,25 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-    random_pw = SecureRandom.hex(8)
-    @user.password = random_pw
-    @user.password_confirmation = random_pw
-    if @user.save
-      NotificationMailer.new_user_email(@user,current_user,random_pw).deliver
 
-      up = UserPermission.new(rulemaking: current_rulemaking, user: @user)
-      up.save
-
-      flash[:notice] = "An account for #{@user.name} was successfully created. They have been given permissions to this rulemaking, and a new, random password has been emailed to them."
-      redirect_to users_path
-    else
+    if @user.application_admin? && !current_user.application_admin?
+      flash[:error] = "Error: since you are not logged in as an application admin user, you can't create a new application admin user."
       render :edit
+    else
+      random_pw = SecureRandom.hex(8)
+      @user.password = random_pw
+      @user.password_confirmation = random_pw
+      if @user.save
+        NotificationMailer.new_user_email(@user,current_user,random_pw).deliver
+
+        up = UserPermission.new(rulemaking: current_rulemaking, user: @user)
+        up.save
+
+        flash[:notice] = "An account for #{@user.name} was successfully created. They have been given permissions to this rulemaking, and a new, random password has been emailed to them."
+        redirect_to users_path
+      else
+        render :edit
+      end
     end
   end
 
@@ -67,6 +73,10 @@ class UsersController < ApplicationController
         flash[:error] = "There must be at least one application admin user."
         format.html { redirect_to users_path }
         format.json { render json: @user.errors, status: "Error: there must be at least one application admin user." }
+      elsif !@user.application_admin? && user_params[:application_admin] == '1' && !current_user.application_admin?
+        flash[:error] = "Error: since you are not logged in as an application admin user, you can't edit a user to make them an application admin."
+        format.html { render :edit }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
       elsif @user.update(user_params)
         if @user == current_user
           format.html { redirect_to profile_edit_path, notice: 'Your profile was successfully updated.' }

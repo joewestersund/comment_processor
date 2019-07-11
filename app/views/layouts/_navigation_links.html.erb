@@ -6,7 +6,7 @@
 <%# add navigation links to this file %>
 <% if signed_in? %>
   <% if current_rulemaking.present?%>
-    <% if current_user.user_permissions.count == 1 %>
+    <% if current_user.rulemakings.count == 1 %>
       <li class="navbar-text rulemaking-name">
         <%= current_rulemaking.rulemaking_name %>
       </li>
@@ -16,8 +16,8 @@
           <%= current_rulemaking.rulemaking_name %> <b class="caret"></b>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownRulemakings">
-          <% current_user.user_permissions.each do |up|  %>
-            <%= link_to up.rulemaking.rulemaking_name, rulemakings_switch_path(up.rulemaking), method: :post, class: "dropdown-item" %>
+          <% current_user.rulemakings.each do |r|  %>
+            <%= link_to r.rulemaking_name, rulemakings_switch_path(r), method: :post, class: "dropdown-item" %>
           <% end %>
         </div>
       </li>

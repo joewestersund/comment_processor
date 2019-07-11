@@ -47,7 +47,7 @@ module SessionsHelper
   end
 
   def set_current_rulemaking(rulemaking)
-    if rulemaking.present? && @current_user.user_permissions.find_by(rulemaking: rulemaking) then
+    if rulemaking.present? && (@current_user.user_permissions.find_by(rulemaking: rulemaking) || @current_user.application_admin?) then
       @current_rulemaking = rulemaking
       @current_user.last_rulemaking_viewed_id = rulemaking.id
       @current_user.save! #save this to the db
@@ -70,7 +70,9 @@ module SessionsHelper
         set_current_rulemaking(@current_user.user_permissions.first.rulemaking)
         @current_rulemaking #return this value
       elsif @current_user.application_admin? && Rulemaking.count > 0 #application admin user that has no permissions, can still see all rulemakings
-        set_current_rulemaking(Rulemaking.first)
+        r = Rulemaking.find(current_user.last_rulemaking_viewed_id) if current_user.last_rulemaking_viewed_id.present?
+        r = Rulemaking.first unless r.present?
+        set_current_rulemaking(r)
         @current_rulemaking #return this value
       else
         #this user does not have permissions to any rulemakings

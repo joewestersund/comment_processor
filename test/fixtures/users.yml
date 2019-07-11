@@ -39,6 +39,7 @@ application_admin_user_1:
   application_admin: true
   password_digest: <%= User.digest('password') %>
   active: true
+  last_rulemaking_viewed_id: 1
 
 application_admin_user_2:
   id: 7
@@ -47,6 +48,7 @@ application_admin_user_2:
   application_admin: true
   password_digest: <%= User.digest('password') %>
   active: true
+  last_rulemaking_viewed_id: 1
 
 regular_user:
   id: 3
