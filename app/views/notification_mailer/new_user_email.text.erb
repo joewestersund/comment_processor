@@ -3,10 +3,10 @@ Dear <%= @new_user.name %>,
 A login to the <%= APPLICATION_NAME %> website has been set up for you by <%= "#{@added_by.name} <#{@added_by.email}>" %>.
 Here is your new login information:
 
-Web address: <%= @url %>
+Web address: <%= @main_app_url %>
 Username: <%= @new_user.email %>
 
-You can log in and reset your password by going to <%= link_to @url, @url %> in the next <% @hours_to_log_in %> hours.
+You can log in and set up your password by going to <%= @password_reset_url %> in the next <%= @hours_to_log_in %> hours.
 
-If you don't log in in the next <% @hours_to_log_in %> hours, no worries. You can reset your password by going to <%= link_to 'Account | Reset Password', profile_edit_password_url %>
+If you don't log in and set up your password in the next <%= @hours_to_log_in %> hours, no worries. You can reset your password anytime by going to 'Account | Reset Password' at <%= password_forgot_url %>
 
