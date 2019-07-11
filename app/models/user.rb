@@ -52,6 +52,10 @@ class User < ApplicationRecord
     4
   end
 
+  def User.hours_to_do_first_login
+    24
+  end
+
   def email_address_with_name
     "#{self.name} <#{self.email}>"
   end
@@ -63,7 +67,13 @@ class User < ApplicationRecord
   end
 
   def password_token_valid?
-    (self.password_reset_sent_at + User.hours_to_reset_password.hours) > Time.now.utc
+    if (self.created_at + User.hours_to_do_first_login.hours) > Time.now.utc
+      #new user gets hours_to_do_first_login to do their password reset
+      true
+    else
+      #established user gets hours_to_reset_password
+      (self.password_reset_sent_at + User.hours_to_reset_password.hours) > Time.now.utc
+    end
   end
 
   def admin_for?(rulemaking)

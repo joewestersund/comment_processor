@@ -12,9 +12,10 @@ Dear <%= @new_user.name %>,
 
 <div><strong>Web address:</strong> <%= link_to @url, @url %></div>
 <div><strong>Username:</strong> <%= @new_user.email %></div>
-<div><strong>Temporary password:</strong> <%= @new_password %></div>
 
-<p>You can reset your password by going to <%= link_to 'Account | Reset Password', profile_edit_password_url %> </p>
+You can log in and reset your password by going to <%= link_to @url, @url %> in the next <% @hours_to_log_in %> hours.
+
+If you don't log in in the next <% @hours_to_log_in %> hours, no worries. You can reset your password by going to <%= link_to 'Account | Reset Password', profile_edit_password_url %> </p>
 
 </body>
 </html>

@@ -48,16 +48,19 @@ class UsersController < ApplicationController
       flash[:error] = "Error: since you are not logged in as an application admin user, you can't create a new application admin user."
       render :edit
     else
+      #set a random password, but don't tell the user. They'll need to use the token to reset the password.
       random_pw = SecureRandom.hex(8)
       @user.password = random_pw
       @user.password_confirmation = random_pw
       if @user.save
-        NotificationMailer.new_user_email(@user,current_user,random_pw).deliver
+        @user.generate_password_token!
+
+        NotificationMailer.new_user_email(@user,current_user).deliver
 
         up = UserPermission.new(rulemaking: current_rulemaking, user: @user)
         up.save
 
-        flash[:notice] = "An account for #{@user.name} was successfully created. They have been given permissions to this rulemaking, and a new, random password has been emailed to them."
+        flash[:notice] = "An account for #{@user.name} was successfully created. They have been given permissions to this rulemaking, and a link to log in and reset their password has been emailed to them."
         redirect_to users_path
       else
         render :edit
@@ -98,7 +101,7 @@ class UsersController < ApplicationController
   def send_password_reset_email
     @user = User.find_by(email: params[:email])
     respond_to do |format|
-      if @user.present? && @user.active? && verify_recaptcha(model: @user)
+      if @user.present? && @user.active? && (verify_recaptcha(model: @user) || Rails.env == "development")
         @user.generate_password_token!
         NotificationMailer.password_reset_email(@user).deliver
         format.html { redirect_to signin_path, notice: "A password reset email has been sent to #{@user.name} at #{@user.email}. Please use the link in that email to reset your password in the next #{User.hours_to_reset_password} hours." }
@@ -110,12 +113,17 @@ class UsersController < ApplicationController
 
   def reset_password
     respond_to do |format|
-      user = User.find_by(reset_password_token: params[:token])
+      user = User.find_by(reset_password_token: params[:token]) if !params[:token].blank?
       if user.present? && user.password_token_valid? then
         sign_in user
+
+        #erase the password reset token, so they can't reset it again with that same link
+        user.reset_password_token = nil
+        user.save
+
         format.html {redirect_to profile_edit_password_path, notice: "Please enter a new password"}
       else
-        format.html {redirect_to password_forgot_path, alert: "That email address was not recognized."}
+        format.html {redirect_to password_forgot_path, alert: "That email address was not recognized, or its password reset time has expired."}
       end
     end
   end
