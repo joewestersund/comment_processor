@@ -80,7 +80,9 @@ class Comment < ApplicationRecord
 
   def key_info
     name_str = join_without_blanks([self.first_name,self.last_name], ' ')
-    org_str = join_without_blanks([self.organization,self.state], ', ')
+    #org_str = join_without_blanks([self.organization,self.state], ', ')
+    # don't include state
+    org_str = join_without_blanks([self.organization], ', ')
 
     "##{self.order_in_list} #{name_str} (#{org_str})"
   end

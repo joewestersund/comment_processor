@@ -29,6 +29,10 @@
         <%= text_field_tag :description, params[:description] %>
       </div>
       <div class="field">
+        <%= label_tag :commenter, 'Commenter' %>
+        <%= select_tag :comment_id, options_from_collection_for_select(@comments,:id,:key_info,params[:comment_id]), { :include_blank => true, class: "selectpicker", "data-live-search" => "true" } %>
+      </div>
+      <div class="field">
         <%= label_tag :status %>
         <%= select_tag :suggested_change_status_type_id, options_from_collection_for_select(@suggested_change_status_types,:id,:status_text,params[:suggested_change_status_type_id]), { :include_blank => true, class: "selectpicker", "data-live-search" => "true" } %>
       </div>
@@ -70,6 +74,7 @@
     <tr>
       <th>Suggested Change name</th>
       <th>Suggested Change description</th>
+      <th>Commenters</th>
       <th>Suggested Change review status</th>
       <th>Agency response type</th>
       <th>Response text</th>
@@ -85,6 +90,13 @@
       <tr>
         <td><%= suggested_change.suggested_change_name %></td>
         <td><%= suggested_change.description.truncate(500) if suggested_change.description.present? %></td>
+        <td>
+          <% suggested_change.comments.each_with_index do |c, index| %>
+            <div class="<%= index == 0 ? "" : 'separate' %>">
+              <%= link_to(c.key_info, current_user.can_edit?(current_rulemaking) ? edit_comment_path(c) : comment_path(c)) %>
+            </div>
+          <% end %>
+        </td>
         <td class="<%= color_class(suggested_change.suggested_change_status_type)%>"><%= suggested_change.suggested_change_status_type.status_text if suggested_change.suggested_change_status_type.present? %></td>
         <td class="<%= color_class(suggested_change.suggested_change_response_type)%>"><%= suggested_change.suggested_change_response_type.response_text if suggested_change.suggested_change_response_type.present? %></td>
         <td class="<%= highlight_empty_css(suggested_change.response_text)%>"><%= suggested_change.response_text.truncate(500) if suggested_change.response_text.present? %></td>

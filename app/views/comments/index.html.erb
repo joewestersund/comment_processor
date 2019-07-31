@@ -116,14 +116,11 @@
         <td class="<%= highlight_empty_css(comment.summary)%>"><%= comment.summary.truncate(500) if comment.summary.present? %></td>
         <td class="<%= color_class(comment.comment_status_type)%>"><%= comment.comment_status_type.status_text if comment.comment_status_type.present? %></td>
         <td class="trix-content"><%= raw(comment.notes.truncate(300)) if comment.notes.present? %></td>
-        <td class="<%= highlight_empty_css(comment.suggested_changes)%>"><% comment.suggested_changes.order(Arel.sql('LOWER(suggested_change_name)')).each_with_index do |c,index|%>
-            <% if index != 0 %>
-              <div class="separate">
-            <% end %>
-            <%= link_to(c.suggested_change_name, current_user.can_edit?(current_rulemaking) ? edit_suggested_change_path(c) : suggested_change_path(c)) %>
-            <% if index != 0 %>
-              </div>
-            <% end %>
+        <td class="<%= highlight_empty_css(comment.suggested_changes)%>">
+          <% comment.suggested_changes.order(Arel.sql('LOWER(suggested_change_name)')).each_with_index do |c,index|%>
+            <div class="<%= index == 0 ? "" : 'separate' %>" title="%> <%=c.suggested_change_name%>">
+            <%= link_to(c.suggested_change_name.truncate(50, separator: ' '), current_user.can_edit?(current_rulemaking) ? edit_suggested_change_path(c) : suggested_change_path(c)) %>
+            </div>
         <% end %></td>
         <% if current_user.can_edit?(current_rulemaking) %>
           <td><%= link_to 'Edit', edit_comment_path(comment,@filter_querystring) %></td>

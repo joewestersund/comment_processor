@@ -17,14 +17,15 @@ class SuggestedChangesController < ApplicationController
     if conditions[0].empty?
       c = current_rulemaking.suggested_changes.all
     else
-      c = current_rulemaking.suggested_changes.where(conditions)
+      #do left outer join in case there are no conditions on comments
+      c = current_rulemaking.suggested_changes.where("id IN (?)", current_rulemaking.suggested_changes.left_outer_joins(:comments).where(conditions).select(:id))
     end
 
     respond_to do |format|
       format.html {
         @total_suggested_changes = current_rulemaking.suggested_changes.all.count
         @filtered = !conditions[0].empty?
-        @filter_querystring = remove_empty_elements(filter_params)
+        @filter_querystring = remove_empty_elements(filter_params_all)
 
         c = c.order(Arel.sql('LOWER(suggested_change_name)'))
         @suggested_changes = c.page(params[:page]).per_page(10)
@@ -204,7 +205,7 @@ class SuggestedChangesController < ApplicationController
           NotificationMailer.suggested_change_assigned_email(@suggested_change,current_user,false).deliver
           email_sent_text = " An email was sent to #{@suggested_change.assigned_to.name} to let them know this Suggested Change is assigned to them."
         end
-        @filter_querystring = remove_empty_elements(filter_params)
+        @filter_querystring = remove_empty_elements(filter_params_all)
         format.html { redirect_to edit_suggested_change_path(@suggested_change,@filter_querystring), notice: "Suggested Change was successfully updated.#{email_sent_text}" }
       else
         set_select_options
@@ -248,7 +249,7 @@ class SuggestedChangesController < ApplicationController
       @next_suggested_change = c.where("LOWER(suggested_change_name) > ?", current_suggested_change_suggested_change_name).order(Arel.sql("LOWER(suggested_change_name)")).first
 
       @filtered = !conditions[0].empty?
-      @filter_querystring = remove_empty_elements(filter_params)
+      @filter_querystring = remove_empty_elements(filter_params_all)
     end
 
     def set_suggested_change
@@ -265,6 +266,7 @@ class SuggestedChangesController < ApplicationController
       @users = User.includes(:user_permissions).where('user_permissions.rulemaking_id' => current_rulemaking.id).order(:name).all
       @suggested_change_status_types = current_rulemaking.suggested_change_status_types.order(:order_in_list).all
       @suggested_change_response_types = current_rulemaking.suggested_change_response_types.order(:order_in_list).all
+      @comments = current_rulemaking.comments.order(:order_in_list).all
     end
 
   # Never trust parameters from the scary internet, only allow the white list through.
@@ -272,13 +274,17 @@ class SuggestedChangesController < ApplicationController
       params.require(:suggested_change).permit(:suggested_change_name, :description, :response_text, :assigned_to_id, :suggested_change_status_type_id, :suggested_change_response_type_id ,:action_needed, :rule_change_made, :order_in_list, :notes, :text_from_comments)
     end
 
-    def filter_params
+    def filter_params_in_obj
       params.permit(:suggested_change_name, :description, :response_text, :assigned_to_id, :suggested_change_status_type_id, :suggested_change_response_type_id, :action_needed, :rule_change_made, :notes, :text_from_comments)
+    end
+
+    def filter_params_all
+      params.permit(:suggested_change_name, :description, :comment_id, :response_text, :assigned_to_id, :suggested_change_status_type_id, :suggested_change_response_type_id, :action_needed, :rule_change_made, :notes, :text_from_comments)
     end
 
     def get_conditions
 
-        search_terms = SuggestedChange.new(filter_params)
+        search_terms = SuggestedChange.new(filter_params_in_obj)
 
         conditions = {}
         conditions_string = []
@@ -291,6 +297,10 @@ class SuggestedChangesController < ApplicationController
 
         conditions[:description] = "%#{search_terms.description}%" if search_terms.description.present?
         conditions_string << "description ILIKE :description" if search_terms.description.present?
+
+        #treating specially because of many to many relation
+        conditions[:comment_id] = params[:comment_id] if params[:comment_id].present?
+        conditions_string << "comments_suggested_changes.comment_id = :comment_id" if params[:comment_id].present?
 
         conditions[:response_text] = "%#{search_terms.response_text}%" if search_terms.response_text.present?
         conditions_string << "response_text ILIKE :response_text" if search_terms.response_text.present?
