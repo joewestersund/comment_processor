@@ -45,6 +45,10 @@
   </div>
 
   <div class="field">
+    <%= select_tag "comment_suggested_changes", options_from_collection_for_select(@comments, 'id', 'key_info', @suggested_change.comments.map{ |j| j.id }), multiple: true, class: "bootstrap-multiselect" %>
+  </div>
+
+  <div class="field">
     <%= form.label :suggested_change_response_type, "Agency response type" %>
     <%= form.collection_select :suggested_change_response_type_id, @suggested_change_response_types, :id, :response_text, :selected => @suggested_change.suggested_change_response_type_id, include_blank: true  %>
   </div>

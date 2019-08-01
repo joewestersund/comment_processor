@@ -225,6 +225,19 @@ class SuggestedChangesController < ApplicationController
   end
 
   private
+    def save_comments
+      #TODO change to save comments. copied from comments_controller.
+      #TODO also need to add references to this to create and update, with save to change log
+      previous_suggested_changes = @comment.suggested_changes.map { |cat| get_suggested_change_description(cat)}
+      @suggested_changes = current_rulemaking.suggested_changes.where(:id => params[:comment_suggested_changes])
+      @comment.suggested_changes.destroy_all
+      @comment.suggested_changes << @suggested_changes
+      #subtract out any suggested_change IDs that were there before and still are after
+      new_suggested_changes = @suggested_changes.map { |cat| get_suggested_change_description(cat)}
+      in_both = new_suggested_changes & previous_suggested_changes
+      {removed: (previous_suggested_changes - in_both).sort!, added: (new_suggested_changes - in_both).sort! }
+    end
+
     def destroy_suggested_change(suggested_change, options = {})
       current_cat_num = suggested_change.order_in_list
       #note: can't associate this change log entry with the suggested_change object, because the suggested_change is about to be destroyed.
