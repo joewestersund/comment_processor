@@ -60,11 +60,12 @@ module ChangeLogEntriesHelper
     end
     string_array.delete(nil) #don't want skipped items in the description.
 
-    removed = comment_change_hash[:removed]
-    string_array.push("removed #{'comment'.pluralize(removed.count)} #{removed.join(", ")}") if removed.any?
-    added = comment_change_hash[:added]
-    string_array.push("added #{'comment'.pluralize(added.count)} #{added.join(", ")}") if added.any?
-
+    if comment_change_hash.present?
+      removed = comment_change_hash[:removed]
+      string_array.push("removed #{'comment'.pluralize(removed.count)} #{removed.join(", ")}") if removed.any?
+      added = comment_change_hash[:added]
+      string_array.push("added #{'comment'.pluralize(added.count)} #{added.join(", ")}") if added.any?
+    end
 
     return "" if string_array.empty? #no changes
     return string_array.join(', ')
