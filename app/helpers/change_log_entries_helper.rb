@@ -13,7 +13,7 @@ module ChangeLogEntriesHelper
       cle.suggested_change_id = parameters[:suggested_change].id
       cle.object_type = 'suggested change'
       if parameters[:description].blank?
-        cle.description = get_suggested_change_change_description(parameters[:suggested_change].previous_changes)
+        cle.description = get_suggested_change_change_description(parameters[:suggested_change].previous_changes, parameters[:comment_changes])
       end
     end
     cle.action_type = parameters[:action_type]
@@ -41,7 +41,7 @@ module ChangeLogEntriesHelper
     return string_array.join(', ')
   end
 
-  def get_suggested_change_change_description(suggested_change_change_hash)
+  def get_suggested_change_change_description(suggested_change_change_hash, comment_change_hash)
 
     string_array = suggested_change_change_hash.map do |change_item|
       if change_item[0] == 'suggested_change_status_type_id'
@@ -59,6 +59,12 @@ module ChangeLogEntriesHelper
       end
     end
     string_array.delete(nil) #don't want skipped items in the description.
+
+    removed = comment_change_hash[:removed]
+    string_array.push("removed #{'comment'.pluralize(removed.count)} #{removed.join(", ")}") if removed.any?
+    added = comment_change_hash[:added]
+    string_array.push("added #{'comment'.pluralize(added.count)} #{added.join(", ")}") if added.any?
+
 
     return "" if string_array.empty? #no changes
     return string_array.join(', ')
