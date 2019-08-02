@@ -45,7 +45,7 @@
   </div>
 
   <div class="field">
-    <%= select_tag "comment_suggested_changes", options_from_collection_for_select(@comments, 'id', 'key_info', @suggested_change.comments.map{ |j| j.id }), multiple: true, class: "bootstrap-multiselect" %>
+    <%= select_tag "comment_suggested_changes", options_from_collection_for_select(@comments, 'id', 'key_info', @suggested_change.comments.map{ |j| j.id }), multiple: true, class: "bootstrap-multiselect", "data-entityname" => "comment"  %>
   </div>
 
   <div class="field">

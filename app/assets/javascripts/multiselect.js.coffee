@@ -4,12 +4,14 @@ ready = ->
     delimiterText: '\n',
     maxHeight: 300,
     buttonText: (options, select) ->
+      entity_name = $('.bootstrap-multiselect').data()
       if options.length == 0
-        "No Suggested Changes selected <b class='caret'></b>"
+        "No " + entity_name.entityname + "s selected <b class='caret'></b>"
       else if options.length > 20
-        options.length + " Suggested Changes selected <b class='caret'></b>"
+        options.length + " " + entity_name.entityname + "s selected <b class='caret'></b>"
       else
-        firstRow = options.length + " Suggested Changes selected <b class='caret'></b>"
+        pluralize = if options.length == 1 then "" else "s"
+        firstRow = options.length + " " + entity_name.entityname + pluralize + " selected <b class='caret'></b>"
         labels = [firstRow]
         options.each ->
           if $(this).attr('label') != undefined

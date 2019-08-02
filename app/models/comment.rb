@@ -79,12 +79,18 @@ class Comment < ApplicationRecord
   end
 
   def key_info
+    info = "##{self.order_in_list}"
     name_str = join_without_blanks([self.first_name,self.last_name], ' ')
-    #org_str = join_without_blanks([self.organization,self.state], ', ')
-    # don't include state
     org_str = join_without_blanks([self.organization], ', ')
 
-    "##{self.order_in_list} #{name_str} (#{org_str})"
+    if name_str.blank?
+      info += " #{org_str}" if !org_str.blank?  #no parentheses around org
+    else
+      info += " #{name_str}"
+      info += " (#{org_str})" if !org_str.blank? #parentheses around org
+    end
+
+    info
   end
 
 end

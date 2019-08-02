@@ -134,7 +134,7 @@
       <%= link_to 'Add', new_suggested_change_path, target: :_blank %> |
       <%= link_to 'Save and Refresh', "#", :onclick => "$(this).closest('form').submit()" %>
     </div>
-    <%= select_tag "comment_suggested_changes", options_from_collection_for_select(@suggested_changes, 'id', 'suggested_change_name', @comment.suggested_changes.map{ |j| j.id }), multiple: true, class: "bootstrap-multiselect" %>
+    <%= select_tag "comment_suggested_changes", options_from_collection_for_select(@suggested_changes, 'id', 'suggested_change_name', @comment.suggested_changes.map{ |j| j.id }), multiple: true, class: "bootstrap-multiselect", "data-entityname" => "suggested change" %>
   </div>
 
   <div class="field">

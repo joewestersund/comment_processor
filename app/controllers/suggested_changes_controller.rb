@@ -180,7 +180,8 @@ class SuggestedChangesController < ApplicationController
 
     respond_to do |format|
       if @suggested_change.save
-        save_change_log(current_user,{suggested_change: @suggested_change, action_type: 'create'})
+        comment_change_hash = save_comments
+        save_change_log(current_user,{suggested_change: @suggested_change, comment_changes: comment_change_hash, action_type: 'create'})
         if @suggested_change.assigned_to_id.present? && @suggested_change.assigned_to_id != current_user.id
           NotificationMailer.suggested_change_assigned_email(@suggested_change,current_user,false).deliver
           email_sent_text = " An email was sent to #{@suggested_change.assigned_to.name} to let them know this Suggested Change is assigned to them."
@@ -200,7 +201,8 @@ class SuggestedChangesController < ApplicationController
     previous_assigned_to_id = @suggested_change.assigned_to_id
     respond_to do |format|
       if @suggested_change.update(suggested_change_params)
-        save_change_log(current_user,{suggested_change: @suggested_change, action_type: 'edit'})
+        comment_change_hash = save_comments
+        save_change_log(current_user,{suggested_change: @suggested_change, comment_changes: comment_change_hash, action_type: 'edit'})
         if @suggested_change.assigned_to_id.present? && @suggested_change.assigned_to_id != current_user.id && @suggested_change.assigned_to_id != previous_assigned_to_id
           NotificationMailer.suggested_change_assigned_email(@suggested_change,current_user,false).deliver
           email_sent_text = " An email was sent to #{@suggested_change.assigned_to.name} to let them know this Suggested Change is assigned to them."
@@ -226,16 +228,14 @@ class SuggestedChangesController < ApplicationController
 
   private
     def save_comments
-      #TODO change to save comments. copied from comments_controller.
-      #TODO also need to add references to this to create and update, with save to change log
-      previous_suggested_changes = @comment.suggested_changes.map { |cat| get_suggested_change_description(cat)}
-      @suggested_changes = current_rulemaking.suggested_changes.where(:id => params[:comment_suggested_changes])
-      @comment.suggested_changes.destroy_all
-      @comment.suggested_changes << @suggested_changes
+      previous_comments = @suggested_change.comments.map { |c| c.key_info}
+      @comments = current_rulemaking.comments.where(:id => params[:comment_suggested_changes])
+      @suggested_change.comments.destroy_all
+      @suggested_change.comments << @comments
       #subtract out any suggested_change IDs that were there before and still are after
-      new_suggested_changes = @suggested_changes.map { |cat| get_suggested_change_description(cat)}
-      in_both = new_suggested_changes & previous_suggested_changes
-      {removed: (previous_suggested_changes - in_both).sort!, added: (new_suggested_changes - in_both).sort! }
+      new_comments = @comments.map { |c| c.key_info}
+      in_both = new_comments & previous_comments
+      {removed: (previous_comments - in_both).sort!, added: (new_comments - in_both).sort! }
     end
 
     def destroy_suggested_change(suggested_change, options = {})
