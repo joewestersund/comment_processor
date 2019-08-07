@@ -15,8 +15,9 @@
     <tr>
       <th>Rulemaking</th>
       <th>User</th>
-      <th>Admin</th>
-      <th>Read only</th>
+      <th>Admin User</th>
+      <th>Regular User</th>
+      <th>Read Only User</th>
       <% if current_user.admin_for?(current_rulemaking) %>
         <th colspan="2"></th>
       <% end %>
@@ -29,6 +30,7 @@
         <td><%= user_permission.rulemaking.rulemaking_name %></td>
         <td><%= user_permission.user.name %></td>
         <td class="<%="#{highlight_true(user_permission.admin?)}"%>"><%= show_boolean_value(user_permission.admin?) %></td>
+        <td class="<%="#{highlight_true(!user_permission.admin? && !user_permission.read_only?)}"%>"><%= show_boolean_value(!user_permission.admin? && !user_permission.read_only?) %></td>
         <td class="<%="#{highlight_true(user_permission.read_only?)}"%>"><%= show_boolean_value(user_permission.read_only?) %></td>
         <% if current_user.admin_for?(current_rulemaking) %>
           <td><%= link_to 'Edit', edit_user_permission_path(user_permission) %></td>

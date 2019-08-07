@@ -18,6 +18,7 @@
     <%= form.collection_select :user_id, @users, :id, :name, {}, {class: "selectpicker", "data-live-search" => "true"} %>
   </div>
 
+  <% if false #DEBUG%>
   <div class="field">
     <%= form.label :admin %>
     <%= form.check_box :admin, id: :user_permission_admin %>
@@ -27,6 +28,19 @@
     <%= form.label :read_only %>
     <%= form.check_box :read_only, id: :user_permission_read_only %>
   </div>
+  <% end %>
+
+
+  <div class="field">
+    <%= form.label :permission_type %><br />
+    <%= form.label :permission_type, "Admin" %>
+    <%= form.radio_button :permission_type, "admin", checked: user_permission.admin?  %>
+    <%= form.label :permission_type, "Regular" %>
+    <%= form.radio_button :permission_type, "regular", checked: (!user_permission.admin? && !user_permission.read_only?) %>
+    <%= form.label :permission_type, "Read Only" %>
+    <%= form.radio_button :permission_type, "read only", checked: (user_permission.read_only?) %>
+  </div>
+
 
   <div class="actions">
     <%= form.submit %>

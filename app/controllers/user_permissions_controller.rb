@@ -26,7 +26,6 @@ class UserPermissionsController < ApplicationController
   # POST /user_permissions.json
   def create
     @user_permission = UserPermission.new(user_permission_params)
-
     @user_permission.rulemaking = current_rulemaking
 
     respond_to do |format|
@@ -45,7 +44,8 @@ class UserPermissionsController < ApplicationController
   # PATCH/PUT /user_permissions/1.json
   def update
     respond_to do |format|
-      if @user_permission.update(user_permission_params)
+      result = @user_permission.update(user_permission_params)
+      if result
         format.html { redirect_to user_permissions_url, notice: 'User permission was successfully updated.' }
         format.json { render :show, status: :ok, location: @user_permission }
       else
@@ -79,13 +79,19 @@ class UserPermissionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_permission_params
-      params.require(:user_permission).permit(:admin, :read_only, :user_id)
+      p = params.require(:user_permission).permit(:user_id)
+      p = p.merge(admin: (permission_type_param[:permission_type] == "admin"))
+      p = p.merge(read_only: (permission_type_param[:permission_type] == "read only"))
+      p
+    end
+
+    def permission_type_param
+      params.require(:user_permission).permit(:permission_type)
     end
 
     def set_select_options
       #need to include all users, not just those that already have permissions for this rulemaking.
       @users = User.order(:name).all
     end
-
 
 end
