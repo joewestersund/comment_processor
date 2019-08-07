@@ -47,7 +47,7 @@ module SessionsHelper
   end
 
   def set_current_rulemaking(rulemaking)
-    if rulemaking.present? && (@current_user.user_permissions.find_by(rulemaking: rulemaking) || @current_user.application_admin?) then
+    if rulemaking.present? && (@current_user.user_permissions.find_by(rulemaking: rulemaking) || @current_user.application_admin?)
       @current_rulemaking = rulemaking
       @current_user.last_rulemaking_viewed_id = rulemaking.id
       @current_user.save! #save this to the db
@@ -65,6 +65,9 @@ module SessionsHelper
       up = current_user.user_permissions.find_by(rulemaking: current_user.last_rulemaking_viewed)
       if up.present?
         @current_rulemaking = up.rulemaking
+      elsif current_user.last_rulemaking_viewed.present? && current_user.application_admin?
+        #in case the user is an application admin, but doesn't have a permission for this rulemaking
+        @current_rulemaking = current_user.last_rulemaking_viewed
       elsif @current_user.user_permissions.first
         #last_rulemaking_viewed is blank, so just pick the first one they have permissions to
         set_current_rulemaking(@current_user.user_permissions.first.rulemaking)
