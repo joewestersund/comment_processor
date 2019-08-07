@@ -74,7 +74,7 @@
     <tr>
       <th>Suggested Change name</th>
       <th>Suggested Change description</th>
-      <th>Commenters</th>
+      <th>Comments</th>
       <th>Suggested Change review status</th>
       <th>Agency response type</th>
       <th>Response text</th>
@@ -91,10 +91,16 @@
         <td><%= suggested_change.suggested_change_name %></td>
         <td><%= suggested_change.description.truncate(500) if suggested_change.description.present? %></td>
         <td>
-          <% suggested_change.comments.each_with_index do |c, index| %>
-            <div class="<%= index == 0 ? "" : 'separate' %>">
-              <%= link_to(c.key_info, current_user.can_edit?(current_rulemaking) ? edit_comment_path(c) : comment_path(c)) %>
+          <% if suggested_change.comments.count > 10 %>
+            <div >
+              <%= link_to("#{suggested_change.comments.count} comments", comments_path(suggested_change_id: suggested_change.id)) %>
             </div>
+          <% else %>
+            <% suggested_change.comments.each_with_index do |c, index| %>
+              <div class="<%= index == 0 ? "" : 'separate' %>">
+                <%= link_to(c.key_info, current_user.can_edit?(current_rulemaking) ? edit_comment_path(c) : comment_path(c)) %>
+              </div>
+            <% end %>
           <% end %>
         </td>
         <td class="<%= color_class(suggested_change.suggested_change_status_type)%>"><%= suggested_change.suggested_change_status_type.status_text if suggested_change.suggested_change_status_type.present? %></td>
