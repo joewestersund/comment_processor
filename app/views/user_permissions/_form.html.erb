@@ -18,19 +18,6 @@
     <%= form.collection_select :user_id, @users, :id, :name, {}, {class: "selectpicker", "data-live-search" => "true"} %>
   </div>
 
-  <% if false #DEBUG%>
-  <div class="field">
-    <%= form.label :admin %>
-    <%= form.check_box :admin, id: :user_permission_admin %>
-  </div>
-
-  <div class="field">
-    <%= form.label :read_only %>
-    <%= form.check_box :read_only, id: :user_permission_read_only %>
-  </div>
-  <% end %>
-
-
   <div class="field">
     <%= form.label :permission_type %><br />
     <%= form.label :permission_type, "Admin" %>
@@ -43,6 +30,10 @@
 
 
   <div class="actions">
-    <%= form.submit %>
+    <% if !current_user.application_admin? && current_user.admin_for?(current_rulemaking) && user_permission.user == current_user %>
+      <%= form.submit data: { confirm: 'Are you sure you want to remove your admin permissions?' } %>
+    <% else %>
+      <%= form.submit %>
+    <% end %>
   </div>
 <% end %>
