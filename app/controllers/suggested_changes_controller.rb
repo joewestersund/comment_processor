@@ -255,7 +255,8 @@ class SuggestedChangesController < ApplicationController
       if conditions[0].empty?
         c = current_rulemaking.suggested_changes.all
       else
-        c = current_rulemaking.suggested_changes.where(conditions)
+        #do left outer join in case there are no conditions on comments
+        c = current_rulemaking.suggested_changes.where("id IN (?)", current_rulemaking.suggested_changes.left_outer_joins(:comments).where(conditions).select(:id))
       end
 
       @previous_suggested_change = c.where("LOWER(suggested_change_name) < ?", current_suggested_change_suggested_change_name).order(Arel.sql("LOWER(suggested_change_name)")).last
