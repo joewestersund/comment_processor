@@ -240,6 +240,7 @@ GEM
     tilt (2.0.8)
     trix-rails (2.0.0)
       rails (> 4.1, < 6.0)
+    truncate_html (0.9.3)
     turbolinks (5.2.0)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
@@ -300,6 +301,7 @@ DEPENDENCIES
   spring-watcher-listen (~> 2.0.0)
   sprockets-rails
   trix-rails
+  truncate_html
   turbolinks (~> 5.2.0)
   tzinfo-data
   uglifier (>= 1.3.0)

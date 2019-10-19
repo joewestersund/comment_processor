@@ -108,7 +108,7 @@
         <td class="<%= highlight_empty_css(suggested_change.response_text)%>"><%= suggested_change.response_text.truncate(500) if suggested_change.response_text.present? %></td>
         <td class="<%= assigned_to_css(suggested_change.assigned_to_id) %>"><%= suggested_change.assigned_to_name %></td>
         <td class="<%= highlight_filled_css(suggested_change.action_needed)%>"><%= suggested_change.action_needed.truncate(300) if suggested_change.action_needed.present? %></td>
-        <td class="trix-content"><%= raw(suggested_change.notes.truncate(500)) if suggested_change.notes.present? %></td>
+        <td class="trix-content"><%= raw(truncate_html(suggested_change.notes, length:500)) if suggested_change.notes.present? %></td>
         <% if current_user.can_edit?(current_rulemaking) %>
           <td><%= link_to 'Edit', edit_suggested_change_path(suggested_change,@filter_querystring) %></td>
           <td><%= link_to 'Delete', suggested_change, method: :delete, data: { confirm: "Are you sure you want to delete '#{suggested_change.suggested_change_name}'?" } %></td>

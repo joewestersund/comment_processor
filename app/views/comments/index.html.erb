@@ -115,7 +115,7 @@
         </td>
         <td class="<%= highlight_empty_css(comment.summary)%>"><%= comment.summary.truncate(500) if comment.summary.present? %></td>
         <td class="<%= color_class(comment.comment_status_type)%>"><%= comment.comment_status_type.status_text if comment.comment_status_type.present? %></td>
-        <td class="trix-content"><%= raw(comment.notes.truncate(300)) if comment.notes.present? %></td>
+        <td class="trix-content"><%= raw(truncate_html(comment.notes,length:300)) if comment.notes.present? %></td>
         <td class="<%= highlight_empty_css(comment.suggested_changes)%>">
           <% if comment.suggested_changes.count > 10 %>
             <div>
