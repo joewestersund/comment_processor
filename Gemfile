@@ -5,7 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby '2.4.2'
+ruby '2.5.7' #2.4.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2'
@@ -66,7 +66,7 @@ gem 'nokogiri', '~> 1.10.4' #specified due to security vulnerability mentioned b
 gem 'truncate_html' #from https://github.com/hgmnz/truncate_html
 
 #for export to excel
-gem 'rubyzip', '>= 1.2.2'
+gem 'rubyzip', '~> 1.3.0' #was '>= 1.2.2'
 gem 'axlsx', git: 'https://github.com/randym/axlsx.git', ref: '776037c0fc799bb09da8c9ea47980bd3bf296874'
 gem 'axlsx_rails'
 
