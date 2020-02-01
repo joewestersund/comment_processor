@@ -65,7 +65,8 @@ class CommentsController < ApplicationController
       #this comment was submitted for a recognized rulemaking, and the public comment period is open.
       c = Comment.new(submit_comment_params)
 
-      if verify_recaptcha(model: c)
+      #for now, don't require the recaptcha.
+      #if verify_recaptcha(model: c)
         c.rulemaking = @rulemaking
         c.num_commenters = 1
         c.comment_status_type = @rulemaking.comment_status_types.order(:order_in_list).first
@@ -76,7 +77,7 @@ class CommentsController < ApplicationController
         if c.save
           comment_saved = true
         end
-      end
+      #end
     end
 
     @comment = Comment.new(rulemaking: @rulemaking) #supply a new, blank comment
