@@ -5,6 +5,8 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+gem 'dotenv-rails', groups: [:development, :test] #used to load environment variables from the .env file
+
 ruby '2.5.7' #2.4.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

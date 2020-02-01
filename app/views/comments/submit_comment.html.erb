@@ -3,7 +3,6 @@
     The public comment period for '<%= @rulemaking.rulemaking_name%>' is not currently open.
   </h3>
 
-
 <% elsif @comment_saved %>
   <h1>
     Your comment for '<%= @rulemaking.rulemaking_name%>' was successfully submitted.
@@ -67,7 +66,7 @@
       <%= form.file_field :attached_files, multiple: true %>
     </div>
 
-    <%# = #recaptcha_tags %>
+    <%= recaptcha_tags %>
 
     <div class="actions">
       <%= form.submit "Save", class: "btn btn-large btn-primary" %>

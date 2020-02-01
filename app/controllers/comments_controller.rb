@@ -4,8 +4,10 @@ class CommentsController < ApplicationController
   include ActionController::Live
   require 'csv'
 
-  before_action :signed_in_user, except: [:submit_comment, :do_submit_comment, :show_attachment]
-  before_action :user_with_permissions_to_a_rulemaking, except: [:submit_comment, :do_submit_comment, :show_attachment]
+  skip_before_action :verify_authenticity_token, only: :do_submit_comment
+
+  before_action :signed_in_user, except: [:submit_comment, :do_submit_comment, :comment_saved, :show_attachment]
+  before_action :user_with_permissions_to_a_rulemaking, except: [:submit_comment, :do_submit_comment, :comment_saved, :show_attachment]
   before_action :admin_user, only: [:new, :create, :import, :destroy, :delete_attachment, :do_import, :cleanup, :do_cleanup]
   before_action :not_read_only_user, only: [:edit, :update]
   before_action :set_comment, only: [:show, :edit, :update, :destroy, :delete_attachment]
@@ -43,61 +45,67 @@ class CommentsController < ApplicationController
   end
 
   def submit_comment
-    @comment_saved = false
+    #note: no layout for html formats. We don't want the menus, etc because this page should be accessible without logging in@comment_saved = false
     @rulemaking = Rulemaking.where(id: params[:rulemaking_id]).first
     if @rulemaking.present?
       if @rulemaking.open_for_public_to_submit_comments?
         @comment = Comment.new(rulemaking: @rulemaking)
-        render layout: false #show comments/submit_comment.html.erb, but with no layout
+        respond_to do |format|
+          format.html { render :submit_comment, layout: false }
+          format.json { render :submit_comment, status: :ok }
+        end
       else
-        @comment = nil
-        render layout: false #show comments/submit_comment.html.erb, but with no layout
+        respond_to do |format|
+          format.html { redirect_to welcome_path, notice: 'That rulemaking is not open for comment.', layout: false}
+          format.json { render json: 'That rulemaking is not open for comment.', status: :unprocessable_entity }
+        end
       end
     else
-      redirect_to welcome_path, notice: 'That rulemaking was not found.'
+      respond_to do |format|
+        format.html { redirect_to welcome_path, notice: 'That rulemaking was not found.', layout: false}
+        format.json { render json: 'That rulemaking was not found.', status: :unprocessable_entity }
+      end
     end
   end
 
   def do_submit_comment
-    comment_saved = false
+    @comment_saved = false
     @rulemaking = Rulemaking.where(id: params[:rulemaking_id]).first
     if @rulemaking.present? && @rulemaking.open_for_public_to_submit_comments?
       #this comment was submitted for a recognized rulemaking, and the public comment period is open.
-      c = Comment.new(submit_comment_params)
+      @comment = Comment.new(submit_comment_params)
 
-      #for now, don't require the recaptcha.
-      #if verify_recaptcha(model: c)
-        c.rulemaking = @rulemaking
-        c.num_commenters = 1
-        c.comment_status_type = @rulemaking.comment_status_types.order(:order_in_list).first
-        c_max = current_rulemaking.comments.maximum(:order_in_list)
+      if request.format.json? || verify_recaptcha(model: @comment)  #don't require recaptcha if in json format
+        @comment.rulemaking = @rulemaking
+        @comment.num_commenters = 1
+        @comment.comment_status_type = @rulemaking.comment_status_types.order(:order_in_list).first
+        @comment.manually_entered = true
+        c_max = @rulemaking.comments.maximum(:order_in_list)
         next_order_in_list = (c_max.nil? ? 0 : c_max) + 1
-        c.order_in_list = next_order_in_list
+        @comment.order_in_list = next_order_in_list
 
-        if c.save
-          comment_saved = true
+        if @comment.save
+          @comment_saved = true
         end
-      #end
+      end
     end
 
-    @comment = Comment.new(rulemaking: @rulemaking) #supply a new, blank comment
-    @comment_saved = false
-
-    if comment_saved
+    if @comment_saved
       respond_to do |format|
-        @notice = 'Thank you for submitting your comment.'
-        @comment_saved = true
         format.html { render :submit_comment, layout: false }
-        format.json { render :submit_comment, status: :ok }
-        #TODO fix the json version
+        format.json { render :comment_saved, status: :ok }
       end
     else
       # if we got here, there was something wrong
       respond_to do |format|
-        @notice = 'Error: your comment could not be saved.'
         format.html { render :submit_comment, layout: false }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
-        #TODO fix the json version
+        format.json {
+          if @comment.nil?
+            render json: 'rulemaking does not exist or is not open for public comment', status: :unprocessable_entity
+          else
+            render json: @comment.errors, status: :unprocessable_entity
+          end
+        }
       end
     end
   end
