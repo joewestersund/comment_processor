@@ -75,7 +75,7 @@ class CommentsController < ApplicationController
       #this comment was submitted for a recognized rulemaking, and the public comment period is open.
       @comment = Comment.new(submit_comment_params)
 
-      if request.format.json? || verify_recaptcha(model: @comment)  #don't require recaptcha if in json format
+      if allow_submit_comment(@comment, @rulemaking)
         @comment.rulemaking = @rulemaking
         @comment.num_commenters = 1
         @comment.comment_status_type = @rulemaking.comment_status_types.order(:order_in_list).first
@@ -237,6 +237,28 @@ class CommentsController < ApplicationController
   end
 
   private
+    def allow_submit_comment(comment, rulemaking)
+      if request.headers["email"].present? #don't require recaptcha if headers include email username and pw
+        # this is a post that contains a user's email and password
+        # uploading comments from a macro, etc
+        # if that login info gives them permissions to this rulemaking, let them submit
+        email = request.headers["email"]
+        pw = request.headers["password"]
+        user = User.find_by(email: email.downcase)
+
+        if user && user.authenticate(pw) && user.active?
+          if user.admin_for?(rulemaking) #allow to submit comment (with http or json format) without recaptcha if email and pw are for a user that is admin for this rulemaking.
+            return true
+          end
+        end
+        @comment.errors.add :base, message: "valid email address and password in http header are required if not submitting a comment through the website."
+      elsif verify_recaptcha(model: comment)
+        return true
+      end
+      false #if we get here, return false.
+    end
+
+
     def get_filtering_and_next_and_previous
       current_comment_order_in_list = @comment.order_in_list
 
