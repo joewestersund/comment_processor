@@ -86,8 +86,14 @@ class CommentsController < ApplicationController
 
         if @comment.save
           @comment_saved = true
+        else
+          error_code = 400 #Bad Request
         end
+      else
+        error_code = 403 #Forbidden the client does not have access rights to the content;
       end
+    else
+      error_code = 403 #Forbidden the client does not have access rights to the content;
     end
 
     if @comment_saved
@@ -98,7 +104,7 @@ class CommentsController < ApplicationController
     else
       # if we got here, there was something wrong
       respond_to do |format|
-        format.html { render :submit_comment, layout: false }
+        format.html { render :submit_comment, status: error_code, layout: false }
         format.json {
           if @comment.nil?
             render json: 'rulemaking does not exist or is not open for public comment', status: :unprocessable_entity

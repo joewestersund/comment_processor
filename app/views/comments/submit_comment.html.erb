@@ -1,5 +1,8 @@
 <% if @comment.nil? %>
   <h3>
+    Error code <%= response.status %>
+  </h3>
+  <h3>
     That rulemaking was not found, or is no longer open for public comment.
   </h3>
 
