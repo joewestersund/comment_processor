@@ -4,7 +4,7 @@ class CommentsController < ApplicationController
   include ActionController::Live
   require 'csv'
 
-  skip_before_action :verify_authenticity_token, only: :do_submit_comment
+  skip_before_action :verify_authenticity_token, only: :do_push_import
 
   before_action :signed_in_user, except: [:do_push_import, :show_attachment]
   before_action :user_with_permissions_to_a_rulemaking, except: [:do_push_import, :show_attachment]
@@ -47,7 +47,7 @@ class CommentsController < ApplicationController
   def do_push_import
     @comment_saved = false
     @rulemaking = Rulemaking.where(id: params[:rulemaking_id]).first
-    if @rulemaking.present? && @rulemaking.allow_push_update?
+    if @rulemaking.present? && @rulemaking.allow_push_import?
       #this comment was submitted for a recognized rulemaking, and the rulemaking allows push importing of comments from a macro.
       @comment = Comment.new(submit_comment_params)
 
@@ -75,8 +75,8 @@ class CommentsController < ApplicationController
     if @comment_saved
       message = "comment import succeeded"
       respond_to do |format|
-        format.html { render text: message, status: :ok }
-        format.json { render text: message.to_json, status: :ok }
+        format.html { render plain: message, status: :ok }
+        format.json { render plain: message.to_json, status: :ok }
       end
     else
       # if we got here, there was something wrong
@@ -85,12 +85,12 @@ class CommentsController < ApplicationController
         'The username and password may not be recognized, '\
         'or may not be for a user that has admin permissions for that rulemaking. '\
         'Or, the comment data itself may not be correct.'
-      if @comment.errors
+      if @comment.present? && @comment.errors.count > 0
         message += " Errors: #{@comment.errors.to_str}"
       end
       respond_to do |format|
-        format.html { render text: message, status: error_code }
-        format.json { render json: message.to_json, status: :unprocessable_entity }
+        format.html { render plain: message, status: error_code }
+        format.json { render plain: message.to_json, status: :unprocessable_entity }
       end
     end
   end
