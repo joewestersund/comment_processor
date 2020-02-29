@@ -51,7 +51,9 @@ class CommentsController < ApplicationController
       #this comment was submitted for a recognized rulemaking, and the rulemaking allows push importing of comments from a macro.
       @comment = Comment.new(submit_comment_params)
 
-      if allow_submit_comment(@comment, @rulemaking)
+      user = get_user_from_header(@comment)
+
+      if user.present? && allow_submit_comment(user, @rulemaking)
         @comment.rulemaking = @rulemaking
         @comment.num_commenters = 1
         @comment.comment_status_type = @rulemaking.comment_status_types.order(:order_in_list).first
@@ -74,6 +76,7 @@ class CommentsController < ApplicationController
 
     if @comment_saved
       message = "comment import succeeded"
+      save_change_log(user,{object_type: 'comment', action_type: 'push import', description: "push imported comment from #{@comment.first_name} #{@comment.last_name}#{' (' + @comment.organization + ')' if @comment.organization.present?}."})
       respond_to do |format|
         format.html { render plain: message, status: :ok }
         format.json { render plain: message.to_json, status: :ok }
@@ -222,23 +225,27 @@ class CommentsController < ApplicationController
   end
 
   private
-    def allow_submit_comment(comment, rulemaking)
-      if request.headers["email"].present? #don't require recaptcha if headers include email username and pw
-        # this is a post that contains a user's email and password
-        # uploading comments from a macro, etc
-        # if that login info gives them permissions to this rulemaking, let them submit
+    def get_user_from_header(comment)
+      result = nil
+      # this is a post that contains a user's email and password
+      # uploading comments from a macro, etc
+      # if that login info gives them permissions to this rulemaking, let them submit
+      if request.headers["email"].present?
         email = request.headers["email"]
         pw = request.headers["password"]
         user = User.find_by(email: email.downcase)
 
         if user && user.authenticate(pw) && user.active?
-          if user.admin_for?(rulemaking) #allow to submit comment (with http or json format) if email and pw are for a user that is admin for this rulemaking.
-            return true
-          end
+          sign_in user
+          result = user
         end
-        @comment.errors.add :base, message: "valid email address and password in http header are required to push update a comment."
       end
-      false #if we get here, return false.
+      return result
+    end
+
+    def allow_submit_comment(user, rulemaking)
+      #allow to submit comment (with http or json format) user is an admin for this rulemaking.
+      return (user.present? && user.admin_for?(rulemaking))
     end
 
 
