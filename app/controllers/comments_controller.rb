@@ -76,7 +76,7 @@ class CommentsController < ApplicationController
 
     if @comment_saved
       message = "comment import succeeded"
-      save_change_log(user,{object_type: 'comment', action_type: 'push import', description: "push imported comment from #{@comment.first_name} #{@comment.last_name}#{' (' + @comment.organization + ')' if @comment.organization.present?}."})
+      save_change_log(user,{object_type: 'comment', action_type: 'push import', description: "push imported comment from #{@comment.first_name} #{@comment.last_name}#{' (' + @comment.organization + ')' if @comment.organization.present?}.", rulemaking: @rulemaking})
       respond_to do |format|
         format.html { render plain: message, status: :ok }
         format.json { render plain: message.to_json, status: :ok }
@@ -236,7 +236,6 @@ class CommentsController < ApplicationController
         user = User.find_by(email: email.downcase)
 
         if user && user.authenticate(pw) && user.active?
-          sign_in user
           result = user
         end
       end

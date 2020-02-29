@@ -2,7 +2,11 @@ module ChangeLogEntriesHelper
 
   def save_change_log(user,parameters = {})
     cle = ChangeLogEntry.new(user_id: user.id, object_type: parameters[:object_type], action_type: parameters[:action_type], description: parameters[:description])
-    cle.rulemaking = current_rulemaking
+    if parameters[:rulemaking].present?
+      cle.rulemaking = parameters[:rulemaking]
+    else
+      cle.rulemaking = current_rulemaking
+    end
     if parameters[:comment].present?
       cle.comment_id = parameters[:comment].id
       cle.object_type = 'comment'
