@@ -7,8 +7,7 @@
     <tr>
       <th>Rulemaking name</th>
       <th>Agency</th>
-      <th>Open for public to submit comments</th>
-      <th>Open for public to view comments</th>
+      <th>Allow comments to be push imported from Outlook</th>
       <th colspan="2"></th>
     </tr>
   </thead>
@@ -18,8 +17,7 @@
       <tr>
         <td><%= rulemaking.rulemaking_name %></td>
         <td><%= rulemaking.agency %></td>
-        <td class="<%="#{highlight_true(rulemaking.open_for_public_to_submit_comments)}"%>"><%= show_boolean_value(rulemaking.open_for_public_to_submit_comments) %></td>
-        <td class="<%="#{highlight_true(rulemaking.open_for_public_to_view_comments)}"%>"><%= show_boolean_value(rulemaking.open_for_public_to_view_comments) %></td>
+        <td class="<%="#{highlight_true(rulemaking.allow_push_import)}"%>"><%= show_boolean_value(rulemaking.allow_push_import) %></td>
         <td><%= link_to 'Edit', edit_rulemaking_path(rulemaking) %></td>
         <td><%= link_to 'Delete', rulemaking, method: :delete, data: { confirm: 'Are you sure you want to delete this rulemaking?' } %></td>
       </tr>

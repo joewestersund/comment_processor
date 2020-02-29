@@ -44,35 +44,11 @@ class CommentsController < ApplicationController
     end
   end
 
-  def submit_comment
-    #note: no layout for html formats. We don't want the menus, etc because this page should be accessible without logging in@comment_saved = false
-    @rulemaking = Rulemaking.where(id: params[:rulemaking_id]).first
-    if @rulemaking.present?
-      if @rulemaking.open_for_public_to_submit_comments?
-        @comment = Comment.new(rulemaking: @rulemaking)
-        respond_to do |format|
-          format.html { render :submit_comment, layout: false }
-          format.json { render :submit_comment, status: :ok }
-        end
-      else
-        respond_to do |format|
-          format.html { redirect_to welcome_path, notice: 'That rulemaking is not open for comment.', layout: false}
-          format.json { render json: 'That rulemaking is not open for comment.', status: :unprocessable_entity }
-        end
-      end
-    else
-      respond_to do |format|
-        format.html { redirect_to welcome_path, notice: 'That rulemaking was not found.', layout: false}
-        format.json { render json: 'That rulemaking was not found.', status: :unprocessable_entity }
-      end
-    end
-  end
-
-  def do_submit_comment
+  def do_push_import
     @comment_saved = false
     @rulemaking = Rulemaking.where(id: params[:rulemaking_id]).first
-    if @rulemaking.present? && @rulemaking.open_for_public_to_submit_comments?
-      #this comment was submitted for a recognized rulemaking, and the public comment period is open.
+    if @rulemaking.present? && @rulemaking.allow_push_update?
+      #this comment was submitted for a recognized rulemaking, and the rulemaking allows push importing of comments from a macro.
       @comment = Comment.new(submit_comment_params)
 
       if allow_submit_comment(@comment, @rulemaking)
@@ -97,21 +73,24 @@ class CommentsController < ApplicationController
     end
 
     if @comment_saved
+      message = "comment import succeeded"
       respond_to do |format|
-        format.html { render :submit_comment, layout: false }
-        format.json { render :comment_saved, status: :ok }
+        format.html { render text: message, status: :ok }
+        format.json { render text: message.to_json, status: :ok }
       end
     else
       # if we got here, there was something wrong
+      message = 'Comment import failed. The rulemaking may not exist, '\
+        'or may not be open for push import. '\
+        'The username and password may not be recognized, '\
+        'or may not be for a user that has admin permissions for that rulemaking. '\
+        'Or, the comment data itself may not be correct.'
+      if @comment.errors
+        message += " Errors: #{@comment.errors.to_str}"
+      end
       respond_to do |format|
-        format.html { render :submit_comment, status: error_code, layout: false }
-        format.json {
-          if @comment.nil?
-            render json: 'rulemaking does not exist or is not open for public comment', status: :unprocessable_entity
-          else
-            render json: @comment.errors, status: :unprocessable_entity
-          end
-        }
+        format.html { render text: message, status: error_code }
+        format.json { render json: message.to_json, status: :unprocessable_entity }
       end
     end
   end
@@ -253,13 +232,11 @@ class CommentsController < ApplicationController
         user = User.find_by(email: email.downcase)
 
         if user && user.authenticate(pw) && user.active?
-          if user.admin_for?(rulemaking) #allow to submit comment (with http or json format) without recaptcha if email and pw are for a user that is admin for this rulemaking.
+          if user.admin_for?(rulemaking) #allow to submit comment (with http or json format) if email and pw are for a user that is admin for this rulemaking.
             return true
           end
         end
-        @comment.errors.add :base, message: "valid email address and password in http header are required if not submitting a comment through the website."
-      elsif verify_recaptcha(model: comment)
-        return true
+        @comment.errors.add :base, message: "valid email address and password in http header are required to push update a comment."
       end
       false #if we get here, return false.
     end

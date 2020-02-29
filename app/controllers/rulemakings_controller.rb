@@ -72,7 +72,7 @@ class RulemakingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def rulemaking_params
-      params.require(:rulemaking).permit(:rulemaking_name, :agency, :open_for_public_to_submit_comments, :open_for_public_to_view_comments)
+      params.require(:rulemaking).permit(:rulemaking_name, :agency, :allow_push_import)
     end
 
     def add_defaults(rulemaking)

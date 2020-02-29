@@ -59,7 +59,6 @@
         <div class="dropdown-divider"></div>
         <% if current_user.application_admin? %>
           <%= link_to "Rulemakings", rulemakings_path, class: "dropdown-item" %>
-          <%= link_to "Public Comment Form", comments_submit_comment_path(current_rulemaking), class: "dropdown-item" %>
         <% end %>
         <%= link_to "Comment Data Sources", comment_data_sources_path, class: "dropdown-item" %>
       </div>

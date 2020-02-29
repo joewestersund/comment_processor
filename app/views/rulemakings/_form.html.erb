@@ -22,13 +22,8 @@
   </div>
 
   <div class="field">
-    <%= form.label :open_for_public_to_submit_comments %>
-    <%= form.check_box :open_for_public_to_submit_comments %>
-  </div>
-
-  <div class="field">
-    <%= form.label :open_for_public_to_view_comments %>
-    <%= form.check_box :open_for_public_to_view_comments %>
+    <%= form.label :allow_push_import, 'Allow comments to be push imported from Outlook' %>
+    <%= form.check_box :allow_push_import %>
   </div>
 
   <div class="actions">

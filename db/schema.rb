@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_29_212218) do
+ActiveRecord::Schema.define(version: 2020_02_29_002722) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -105,8 +105,7 @@ ActiveRecord::Schema.define(version: 2019_06_29_212218) do
     t.string "agency"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "open_for_public_to_submit_comments"
-    t.boolean "open_for_public_to_view_comments"
+    t.boolean "allow_push_import"
   end
 
   create_table "suggested_change_response_types", force: :cascade do |t|
