@@ -66,6 +66,7 @@ gem 'rack', '>= 2.0.6' #specified due to security vulnerability mentioned by git
 gem 'loofah', '>= 2.2.3' #specified due to security vulnerability mentioned by github
 gem 'ffi', '>= 1.9.24' #specified due to security vulnerability mentioned by github
 gem 'nokogiri', '~> 1.10.8' #specified due to security vulnerability mentioned by github
+gem "websocket-extensions", ">= 0.1.5"  #specified due to security vulnerability mentioned by github
 
 gem 'truncate_html' #from https://github.com/hgmnz/truncate_html
 
