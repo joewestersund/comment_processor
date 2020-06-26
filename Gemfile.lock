@@ -165,7 +165,7 @@ GEM
     popper_js (1.14.5)
     public_suffix (3.0.1)
     puma (3.12.6)
-    rack (2.2.2)
+    rack (2.2.3)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (5.2.4.3)
@@ -288,7 +288,7 @@ DEPENDENCIES
   nokogiri (~> 1.10.8)
   pg
   puma (~> 3.12.6)
-  rack (>= 2.0.6)
+  rack (>= 2.2.3)
   rails (~> 5.2.4)
   rails-html-sanitizer (~> 1.0.4)
   rake (~> 12.3.3)
