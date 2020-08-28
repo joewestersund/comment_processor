@@ -29,10 +29,11 @@ class RulemakingsController < ApplicationController
   # POST /rulemakings.json
   def create
     @rulemaking = Rulemaking.new(rulemaking_params)
-    add_defaults(@rulemaking)  #add default status types, etc
 
     respond_to do |format|
       if @rulemaking.save
+        add_defaults(@rulemaking)  #add default status types, etc. Need to save before doing this, so there's a rulemaking id.
+
         up = UserPermission.new(rulemaking: @rulemaking, user: current_user, admin: true)
         up.save
         set_current_rulemaking(@rulemaking)
