@@ -38,4 +38,12 @@ module UiHelper
     boolean_value ? "Y" : "N"
   end
 
+  def concat_with_delimiter(text1, text2, delimiter)
+    if text1.present? && text2.present?
+        [text1, text2].join(delimiter)
+    else
+      [text1, text2].join("") #one or both is nil. just add them together and return, no delimiter
+    end
+  end
+
 end
