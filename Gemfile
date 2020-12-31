@@ -10,7 +10,7 @@ gem 'dotenv-rails', groups: [:development, :test] #used to load environment vari
 ruby '2.6.6'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.4' #5.2'
+gem 'rails', '~> 5.2.4.4'
 
 gem 'rake', '~> 12.3.3'
 
@@ -65,7 +65,10 @@ gem 'trix-rails', require: 'trix'
 gem 'rack', '>= 2.2.3' #specified due to security vulnerability mentioned by github
 gem 'loofah', '>= 2.2.3' #specified due to security vulnerability mentioned by github
 gem 'ffi', '>= 1.9.24' #specified due to security vulnerability mentioned by github
-gem 'nokogiri', '~> 1.10.8' #specified due to security vulnerability mentioned by github
+
+#gem 'nokogiri', '~> 1.10.8' #specified due to security vulnerability mentioned by github
+gem "nokogiri", ">= 1.11.0.rc4"
+
 gem "websocket-extensions", ">= 0.1.5"  #specified due to security vulnerability mentioned by github
 gem "json", '>=2.3.1' #specified due to security vulnerability mentioned by github
 
