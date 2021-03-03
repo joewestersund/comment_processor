@@ -7,10 +7,10 @@ end
 
 gem 'dotenv-rails', groups: [:development, :test] #used to load environment variables from the .env file
 
-ruby '2.6.6'
+ruby '2.7.2'  #'2.6.6'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.4.4'
+gem 'rails', '~> 5.2.4.5'
 
 gem 'rake', '~> 12.3.3'
 
