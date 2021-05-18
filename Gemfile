@@ -21,7 +21,7 @@ gem 'sprockets-rails' #-> this will add the latest version
 gem 'pg' #'0.18.4' # upgraded from '0.17.1' #PostgreSQL
 
 # Use puma as the app server
-gem 'puma', '~> 3.12.6'
+gem 'puma', '~> 4.3.8'
 
 gem 'bootstrap', '~> 4.3.1'
 
