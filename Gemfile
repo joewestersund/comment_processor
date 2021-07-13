@@ -73,6 +73,7 @@ gem "nokogiri", ">= 1.11.4"
 
 gem "websocket-extensions", ">= 0.1.5"  #specified due to security vulnerability mentioned by github
 gem "json", '>=2.3.1' #specified due to security vulnerability mentioned by github
+gem "addressable", ">= 2.8.0"
 
 gem 'truncate_html' #from https://github.com/hgmnz/truncate_html
 
