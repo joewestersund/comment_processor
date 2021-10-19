@@ -11,17 +11,19 @@ gem 'dotenv-rails', groups: [:development, :test] #used to load environment vari
 #ruby '2.7.3'
 ruby '2.7.4'
 
-gem 'rails', '~> 5.2.4.6'
-#gem 'rails', '~> 6.1.4.1'
+#gem 'rails', '~> 5.2.4.6'
+gem 'rails', '~> 6.1.4.1'
 
 
-gem 'rake', '~> 12.3.3'
+#gem 'rake', '~> 12.3.3'
+gem 'rake'
 
-gem 'rails-html-sanitizer', '~> 1.0.4'
+#gem 'rails-html-sanitizer', '~> 1.0.4'
+gem 'rails-html-sanitizer', '~> 1.4.2'
 
 gem 'sprockets-rails' #-> this will add the latest version
 
-gem 'pg' #'0.18.4' # upgraded from '0.17.1' #PostgreSQL
+gem 'pg' #PostgreSQL
 
 # Use puma as the app server
 #gem 'puma', '~> 3.12.6'
@@ -48,6 +50,7 @@ gem 'uglifier', '>= 1.3.0'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
+
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5.2.0'
 
@@ -68,7 +71,8 @@ gem 'will_paginate'
 
 gem 'trix-rails', require: 'trix'
 
-gem 'rack', '>= 2.2.3' #specified due to security vulnerability mentioned by github
+#gem 'rack', '>= 2.2.3'
+gem 'rack', '>= 2.2.3'
 gem 'loofah', '>= 2.2.3' #specified due to security vulnerability mentioned by github
 gem 'ffi', '>= 1.9.24' #specified due to security vulnerability mentioned by github
 
