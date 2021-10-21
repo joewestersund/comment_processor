@@ -49,11 +49,11 @@ class CommentsController < ApplicationController
     @rulemaking = Rulemaking.where(id: params[:rulemaking_id]).first
     if @rulemaking.present? && @rulemaking.allow_push_import?
       #this comment was submitted for a recognized rulemaking, and the rulemaking allows push importing of comments from a macro.
-      @comment = Comment.new(submit_comment_params)
-
-      user = get_user_from_header(@comment)
+      user = get_user_from_header
 
       if user.present? && allow_submit_comment(user, @rulemaking)
+        @comment = Comment.new(submit_comment_params)
+
         @comment.rulemaking = @rulemaking
         @comment.num_commenters = 1
         @comment.comment_status_type = @rulemaking.comment_status_types.order(:order_in_list).first
@@ -103,15 +103,16 @@ class CommentsController < ApplicationController
     @rulemaking = Rulemaking.where(id: params[:rulemaking_id]).first
     if @rulemaking.present? && @rulemaking.allow_push_import?
       #the rulemaking id was recognized, and the rulemaking allows push importing of comments from a macro.
-      user = get_user_from_header(@comment)
+      user = get_user_from_header
       if user.present? && allow_submit_comment(user, @rulemaking)
         #this user has permissions to push import to this rulemaking
-        @comment = Comment.where(id: params[:comment_id], rulemaking: @rulemaking)
+        @comment_data = Comment.new(add_attachment_params)
+        @comment = Comment.where(id: @comment_data.id, rulemaking: @rulemaking)
         if @comment.present?
           #the comment id that they want to add an attachment to was recognized
 
-          # add the attachment to the comment
-          @comment.attached_files.attach(params[:attached_files])
+          # add the attachment(s) to the existing comment
+          @comment.attached_files.attach(@comment_data.attachments)
 
           if @comment.save
             @attachment_saved = true
@@ -277,7 +278,7 @@ class CommentsController < ApplicationController
   end
 
   private
-    def get_user_from_header(comment)
+    def get_user_from_header
       result = nil
       # this is a post that contains a user's email and password
       # uploading comments from a macro, etc
@@ -352,6 +353,10 @@ class CommentsController < ApplicationController
 
     def submit_comment_params
       params.require(:comment).permit(:first_name, :last_name, :email, :organization, :state, :comment_text, attached_files: [])
+    end
+
+    def add_attachment_params
+      params.require(:comment).permit(:id, attached_files: [])
     end
 
     def comment_import_params
