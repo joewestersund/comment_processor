@@ -37,7 +37,7 @@ Rails.application.configure do
 
   #for development only, pop up the email in the browser for testing.
   config.action_mailer.delivery_method = :letter_opener
-  config.action_mailer.default_url_options = {:host => "http://0.0.0.0:5000"}
+  config.action_mailer.default_url_options = {:host => "http://0.0.0.0:3000"}
   config.action_mailer.perform_deliveries = true
 
   # Print deprecation notices to the Rails logger.
@@ -82,5 +82,5 @@ Rails.application.configure do
   # Store files on amazon.
   config.active_storage.service = :amazon_dev
 
-  Rails.application.routes.default_url_options[:host]= "http://0.0.0.0:5000"
+  Rails.application.routes.default_url_options[:host]= "http://0.0.0.0:3000"
 end
