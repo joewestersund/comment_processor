@@ -4,7 +4,6 @@ class CommentsController < ApplicationController
   include ActionController::Live
   require 'csv'
 
-  #skip_before_action :verify_authenticity_token, only: [:do_push_import, :do_push_import_add_attachment]
   skip_forgery_protection only: [:do_push_import, :do_push_import_add_attachment]
 
   before_action :signed_in_user, except: [:do_push_import, :do_push_import_add_attachment, :show_attachment]
@@ -113,8 +112,8 @@ class CommentsController < ApplicationController
         comment_id = params[:comment][:id]
 
         puts "comment_id = #{comment_id}"
-        @comment = Comment.where(id: comment_id, rulemaking: @rulemaking)
-        if @comment.present?
+        @comment = Comment.find(comment_id)
+        if @comment.present? and @comment.rulemaking_id = @rulemaking.id
           #the comment id that they want to add an attachment to was recognized
 
           # add the attachment(s) to the existing comment
@@ -128,6 +127,8 @@ class CommentsController < ApplicationController
             files.each do |f|
 
               puts "attaching file #{f}"
+
+              puts "comment = #{@comment}"
 
               @comment.attached_files.attach(f)
 
