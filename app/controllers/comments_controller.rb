@@ -75,7 +75,7 @@ class CommentsController < ApplicationController
     end
 
     if @comment_saved
-      message = "comment import succeeded"
+      message = "comment import succeeded. Comment id:#{@comment.id}"
       save_change_log(user,{object_type: 'comment', action_type: 'push import', description: "push imported comment from #{@comment.first_name} #{@comment.last_name}#{' (' + @comment.organization + ')' if @comment.organization.present?}.", rulemaking: @rulemaking})
       respond_to do |format|
         format.html { render plain: message, status: :ok }
