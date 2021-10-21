@@ -114,21 +114,11 @@ class CommentsController < ApplicationController
           #the comment id that they want to add an attachment to was recognized
 
           # add the attachment(s) to the existing comment
-          #@comment.attached_files.attach(@comment_data.attachments)
-          #@comment.attached_files.attach(@comment_data.attached_files.attachments)
           files = @comment_data.attached_files
-          #files = params[:comment][:attached_files]
-
-          puts "files = #{files}"
 
           if files.present?
             files.each do |f|
-
-              puts "attaching file #{f}"
-
-              @comment.attached_files.attach(f.blob)
-
-              puts "attached file #{f}"
+              @comment.attached_files.attach(f.blob) # have to convert to blob before attaching.
             end
             if @comment.save
               @attachment_saved = true
@@ -136,7 +126,7 @@ class CommentsController < ApplicationController
               error_code = 400 #Bad Request
             end
           else
-            error_code = 400 #Bad Request
+            error_code = 400 #Bad Request. There should be at least one attachment.
           end
         end
       else
