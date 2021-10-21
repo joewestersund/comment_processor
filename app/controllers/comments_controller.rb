@@ -126,7 +126,7 @@ class CommentsController < ApplicationController
 
               puts "attaching file #{f}"
 
-              @comment.attached_files.attach(f)
+              @comment.attached_files.attach(f.blob)
 
               puts "attached file #{f}"
             end
