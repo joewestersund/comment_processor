@@ -107,20 +107,37 @@ class CommentsController < ApplicationController
       user = get_user_from_header
       if user.present? && allow_submit_comment(user, @rulemaking)
         #this user has permissions to push import to this rulemaking
-        @comment_data = Comment.new(add_attachment_params)
-        @comment = Comment.where(id: @comment_data.id, rulemaking: @rulemaking)
+
+        #@comment_data = Comment.new(add_attachment_params)
+
+        comment_id = params[:comment][:id]
+
+        puts "comment_id = #{comment_id}"
+        @comment = Comment.where(id: comment_id, rulemaking: @rulemaking)
         if @comment.present?
           #the comment id that they want to add an attachment to was recognized
 
           # add the attachment(s) to the existing comment
           #@comment.attached_files.attach(@comment_data.attachments)
           #@comment.attached_files.attach(@comment_data.attached_files.attachments)
-          @comment_data.attached_files.attachments.each do |a|
-            @comment.attached_files.attach(a.blob)
-          end
+          files = params[:comment][:attached_files]
 
-          if @comment.save
-            @attachment_saved = true
+          puts "files = #{files}"
+
+          if files.present?
+            files.each do |f|
+
+              puts "attaching file #{f}"
+
+              @comment.attached_files.attach(f)
+
+              puts "attached file #{f}"
+            end
+            if @comment.save
+              @attachment_saved = true
+            else
+              error_code = 400 #Bad Request
+            end
           else
             error_code = 400 #Bad Request
           end
