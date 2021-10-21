@@ -4,7 +4,8 @@ class CommentsController < ApplicationController
   include ActionController::Live
   require 'csv'
 
-  skip_before_action :verify_authenticity_token, only: [:do_push_import, :do_push_import_add_attachment]
+  #skip_before_action :verify_authenticity_token, only: [:do_push_import, :do_push_import_add_attachment]
+  skip_forgery_protection only: [:do_push_import, :do_push_import_add_attachment]
 
   before_action :signed_in_user, except: [:do_push_import, :do_push_import_add_attachment, :show_attachment]
   before_action :user_with_permissions_to_a_rulemaking, except: [:do_push_import, :do_push_import_add_attachment, :show_attachment]
@@ -113,7 +114,8 @@ class CommentsController < ApplicationController
 
           # add the attachment(s) to the existing comment
           #@comment.attached_files.attach(@comment_data.attachments)
-          @comment.attached_files.attach(@comment_data.attached_files.attachments)
+          #@comment.attached_files.attach(@comment_data.attached_files.attachments)
+          @comment.attach(@comment_data.attachments)
 
           if @comment.save
             @attachment_saved = true
