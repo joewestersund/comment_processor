@@ -112,7 +112,8 @@ class CommentsController < ApplicationController
           #the comment id that they want to add an attachment to was recognized
 
           # add the attachment(s) to the existing comment
-          @comment.attached_files.attach(@comment_data.attachments)
+          #@comment.attached_files.attach(@comment_data.attachments)
+          @comment.attached_files.attach(@comment_data.attached_files.attachments)
 
           if @comment.save
             @attachment_saved = true
