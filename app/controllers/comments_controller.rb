@@ -115,7 +115,9 @@ class CommentsController < ApplicationController
           # add the attachment(s) to the existing comment
           #@comment.attached_files.attach(@comment_data.attachments)
           #@comment.attached_files.attach(@comment_data.attached_files.attachments)
-          @comment.attach(@comment_data.attachments)
+          @comment_data.attached_files.attachments.each do |a|
+            @comment.attached_files.attach(a.blob)
+          end
 
           if @comment.save
             @attachment_saved = true
