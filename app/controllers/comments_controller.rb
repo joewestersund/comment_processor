@@ -107,19 +107,17 @@ class CommentsController < ApplicationController
       if user.present? && allow_submit_comment(user, @rulemaking)
         #this user has permissions to push import to this rulemaking
 
-        #@comment_data = Comment.new(add_attachment_params)
+        @comment_data = Comment.new(add_attachment_params)
 
-        comment_id = params[:comment][:id]
-
-        puts "comment_id = #{comment_id}"
-        @comment = Comment.find(comment_id)
+        @comment = Comment.find(@comment_data.id)
         if @comment.present? and @comment.rulemaking_id = @rulemaking.id
           #the comment id that they want to add an attachment to was recognized
 
           # add the attachment(s) to the existing comment
           #@comment.attached_files.attach(@comment_data.attachments)
           #@comment.attached_files.attach(@comment_data.attached_files.attachments)
-          files = params[:comment][:attached_files]
+          files = @comment_data.attached_files
+          #files = params[:comment][:attached_files]
 
           puts "files = #{files}"
 
@@ -127,8 +125,6 @@ class CommentsController < ApplicationController
             files.each do |f|
 
               puts "attaching file #{f}"
-
-              puts "comment = #{@comment}"
 
               @comment.attached_files.attach(f)
 
