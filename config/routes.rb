@@ -59,6 +59,7 @@ Rails.application.routes.draw do
   get 'comments/:id/attached_file/:attached_file_id', :to => 'comments#show_attachment', as: 'comments_show_attachment'
 
   post 'comments/push_import/:rulemaking_id', :to => 'comments#do_push_import', as: 'comments_do_push_import'
+  post 'comments/push_import_add_attachment/:rulemaking_id', :to => 'comments#do_push_import_add_attachment', as: 'comments_do_push_import_add_attachment'
 
   #get 'public/submit_comment/:rulemaking_id', :to => 'comments#submit_comment', as: 'comments_submit_comment'
   #post 'public/submit_comment/:rulemaking_id', :to => 'comments#do_submit_comment', as: 'comments_do_submit_comment'

@@ -98,6 +98,58 @@ class CommentsController < ApplicationController
     end
   end
 
+  def do_push_import_add_attachment
+    @attachment_saved = false
+    @rulemaking = Rulemaking.where(id: params[:rulemaking_id]).first
+    if @rulemaking.present? && @rulemaking.allow_push_import?
+      #the rulemaking id was recognized, and the rulemaking allows push importing of comments from a macro.
+      user = get_user_from_header(@comment)
+      if user.present? && allow_submit_comment(user, @rulemaking)
+        #this user has permissions to push import to this rulemaking
+        @comment = Comment.where(id: params[:comment_id], rulemaking: @rulemaking)
+        if @comment.present?
+          #the comment id that they want to add an attachment to was recognized
+
+          # add the attachment to the comment
+          @comment.attached_files.attach(params[:attached_files])
+
+          if @comment.save
+            @attachment_saved = true
+          else
+            error_code = 400 #Bad Request
+          end
+        end
+      else
+        error_code = 403 #Forbidden the client does not have access rights to the content;
+      end
+    else
+      error_code = 403 #Forbidden the client does not have access rights to the content;
+    end
+
+    if @attachment_saved
+      message = "import of additional comment attachment succeeded"
+      save_change_log(user,{object_type: 'comment', action_type: 'push import additional attachment', description: "push imported additional attachment to comment from #{@comment.first_name} #{@comment.last_name}#{' (' + @comment.organization + ')' if @comment.organization.present?}.", rulemaking: @rulemaking})
+      respond_to do |format|
+        format.html { render plain: message, status: :ok }
+        format.json { render plain: message.to_json, status: :ok }
+      end
+    else
+      # if we got here, there was something wrong
+      message = 'Import of additional attachment to this comment failed. The rulemaking may not exist, '\
+        'or may not be open for push import. '\
+        'The username and password may not be recognized, '\
+        'or may not be for a user that has admin permissions for that rulemaking. '\
+        'Or, the comment data itself may not be correct.'
+      if @comment.present? && @comment.errors.count > 0
+        message += " Errors: #{@comment.errors.to_str}"
+      end
+      respond_to do |format|
+        format.html { render plain: message, status: error_code }
+        format.json { render plain: message.to_json, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def import
     #import comments from an outside data source
     @comment_data_sources = current_rulemaking.comment_data_sources.where(active:true).order(:data_source_name).all
