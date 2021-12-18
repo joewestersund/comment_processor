@@ -96,7 +96,7 @@ gem "aws-sdk-s3", require: false
 
 gem "recaptcha"
 
-gem "mini_racer"  # to avoid "Cannot read property 'version' of undefined" bug with exec-js
+gem "mini_racer", '0.4.0'  # to avoid "Cannot read property 'version' of undefined" bug with exec-js
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
