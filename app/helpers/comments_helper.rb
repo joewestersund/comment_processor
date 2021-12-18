@@ -11,15 +11,6 @@ module CommentsHelper
     end
   end
 
-  def import_comments_data_odata(comment_data_url)
-    #note, this doesn't work. Gives 400 bad request error.
-    require 'ruby_odata'
-
-    svc = OData::Service.new(comment_data_url)
-    svc.Entries
-    entries = svc.execute
-  end
-
   def import_comments_data(comment_data_source)
     require 'net/http'
 
