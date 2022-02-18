@@ -51,10 +51,16 @@ class CommentsController < ApplicationController
       rulemakings = Rulemaking.where(allow_push_import: true).joins(:user_permissions).where(user_permissions: {user: user, admin: true})
         .select(:rulemaking_id, :rulemaking_name)
 
-      prev_value = ActiveRecord::Base.include_root_in_json
-      ActiveRecord::Base.include_root_in_json = true
-      render plain: rulemakings.to_json(only: [:rulemaking_id, :rulemaking_name]), status: :ok
-      ActiveRecord::Base.include_root_in_json = prev_value
+      rulemakings_json = Jbuilder.new do |json|
+        json.rulemakings rulemakings do |r|
+          json.rulemaking_id r.rulemaking_id
+          json.rulemaking_name r.rulemaking_name
+        end
+      end
+
+      rulemakings_json.target!.html_safe
+
+      render plain: rulemakings_json.target!.html_safe, status: :ok
 
     else
       message = 'Command failed. the username and password may not be recognized.'
