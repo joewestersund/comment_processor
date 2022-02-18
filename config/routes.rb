@@ -58,6 +58,7 @@ Rails.application.routes.draw do
   delete 'comments/:id/attached_file/:attached_file_id', :to => 'comments#delete_attachment', as: 'comments_delete_attachment'
   get 'comments/:id/attached_file/:attached_file_id', :to => 'comments#show_attachment', as: 'comments_show_attachment'
 
+  get 'comments/push_import/get_rulemakings', :to => 'comments#get_push_import_rulemakings', as: 'comments_get_push_import_rulemakings'
   post 'comments/push_import/:rulemaking_id', :to => 'comments#do_push_import', as: 'comments_do_push_import'
   post 'comments/push_import_add_attachment/:rulemaking_id', :to => 'comments#do_push_import_add_attachment', as: 'comments_do_push_import_add_attachment'
 

@@ -6,8 +6,8 @@ class CommentsController < ApplicationController
 
   skip_forgery_protection only: [:do_push_import, :do_push_import_add_attachment]
 
-  before_action :signed_in_user, except: [:do_push_import, :do_push_import_add_attachment, :show_attachment]
-  before_action :user_with_permissions_to_a_rulemaking, except: [:do_push_import, :do_push_import_add_attachment, :show_attachment]
+  before_action :signed_in_user, except: [:get_push_import_rulemakings, :do_push_import, :do_push_import_add_attachment, :show_attachment]
+  before_action :user_with_permissions_to_a_rulemaking, except: [:get_push_import_rulemakings, :do_push_import, :do_push_import_add_attachment, :show_attachment]
   before_action :admin_user, only: [:new, :create, :import, :destroy, :delete_attachment, :do_import, :cleanup, :do_cleanup]
   before_action :not_read_only_user, only: [:edit, :update]
   before_action :set_comment, only: [:show, :edit, :update, :destroy, :delete_attachment]
@@ -41,6 +41,23 @@ class CommentsController < ApplicationController
       format.csv {
         stream_csv(c)
       }
+    end
+  end
+
+  def get_push_import_rulemakings
+    user = get_user_from_header
+
+    if user.present?
+      rulemakings = Rulemaking.where(allow_push_import: true).joins(:user_permissions).where(user_permissions: {user: user, admin: true})
+        .select(:rulemaking_id, :rulemaking_name)
+      render plain: rulemakings.to_json(only: [:rulemaking_id, :rulemaking_name]), status: :ok
+    else
+      message = 'Command failed. the username and password may not be recognized.'
+      error_code = 403 #Forbidden the client does not have access rights to the content;
+      respond_to do |format|
+        format.html { render plain: message, status: error_code }
+        format.json { render plain: message.to_json, status: :unprocessable_entity }
+      end
     end
   end
 
