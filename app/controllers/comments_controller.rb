@@ -50,7 +50,12 @@ class CommentsController < ApplicationController
     if user.present?
       rulemakings = Rulemaking.where(allow_push_import: true).joins(:user_permissions).where(user_permissions: {user: user, admin: true})
         .select(:rulemaking_id, :rulemaking_name)
+
+      prev_value = ActiveRecord::Base.include_root_in_json
+      ActiveRecord::Base.include_root_in_json = true
       render plain: rulemakings.to_json(only: [:rulemaking_id, :rulemaking_name]), status: :ok
+      ActiveRecord::Base.include_root_in_json = prev_value
+
     else
       message = 'Command failed. the username and password may not be recognized.'
       error_code = 403 #Forbidden the client does not have access rights to the content;
