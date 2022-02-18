@@ -47,7 +47,7 @@ class CommentsController < ApplicationController
   def get_push_import_rulemakings
     user = get_user_from_header
 
-    if user.present?
+    if (user.present? && user.active?)
       rulemakings = Rulemaking.where(allow_push_import: true).joins(:user_permissions).where(user_permissions: {user: user, admin: true})
         .select(:rulemaking_id, :rulemaking_name)
 
@@ -333,7 +333,7 @@ class CommentsController < ApplicationController
 
     def allow_submit_comment(user, rulemaking)
       #allow to submit comment (with http or json format) user is an admin for this rulemaking.
-      return (user.present? && user.admin_for?(rulemaking))
+      return (user.present? && user.active? && user.admin_for?(rulemaking))
     end
 
 
