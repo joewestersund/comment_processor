@@ -30,7 +30,7 @@ gem 'pg' #PostgreSQL
 #gem 'puma', '~> 3.12.6'
 #gem 'puma', '~> 4.3.8'
 #gem 'puma', '~> 4.3.9'
-gem 'puma', '~> 4.3.11'
+gem 'puma', '~> 4.3.12'
 
 gem 'bootstrap', '~> 4.3.1'
 
