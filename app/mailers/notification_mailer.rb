@@ -1,7 +1,7 @@
 class NotificationMailer < ActionMailer::Base
+  before_action :set_contact_msg
 
   default from: "#{APPLICATION_NAME} <#{APPLICATION_EMAIL_ADDRESS}>"
-  #layout 'mailer'
 
   def suggested_change_assigned_email(suggested_change, assigned_by, cc_assigner)
 
@@ -45,4 +45,11 @@ class NotificationMailer < ActionMailer::Base
 
   end
 
+  private
+
+  def set_contact_msg()
+    @contact_if_questions_msg = "#{APPLICATION_NAME} is a website for collaborating on responding to public comments. " +
+      "If you have questions about the application or this email, please contact #{APPLICATION_ADMIN_NAME} " +
+      "at #{APPLICATION_ADMIN_EMAIL} or #{APPLICATION_ADMIN_PHONE}. Thank you!"
+  end
 end

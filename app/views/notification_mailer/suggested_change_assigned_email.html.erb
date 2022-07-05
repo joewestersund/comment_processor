@@ -16,5 +16,10 @@ Dear <%= @assigned_to.name %>,
 <div><strong>Action Needed:</strong> <%= @suggested_change.action_needed %></div>
 <div><strong>Suggested Change Status:</strong> <%= @suggested_change.suggested_change_status_type.status_text if @suggested_change.suggested_change_status_type.present? %></div>
 <div><strong>Assigned by:</strong> <%= mail_to @assigned_by.email, "#{@assigned_by.name}" %></div>
+
+<p>
+  <%=@contact_if_questions_msg %>
+</p>
+
 </body>
 </html>

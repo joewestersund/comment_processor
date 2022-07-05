@@ -11,3 +11,5 @@ Response Text: <%= @suggested_change.response_text %>
 Action Needed: <%= @suggested_change.action_needed %>
 Suggested Change Status: <%= @suggested_change.suggested_change_status_type.status_text if @suggested_change.suggested_change_status_type.present? %>
 Assigned by: <%= "#{@assigned_by.name} <#{@assigned_by.email}>" %>
+
+<%=@contact_if_questions_msg %>
