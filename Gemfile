@@ -11,7 +11,8 @@ ruby '2.7.6'
 #ruby '2.7.5'
 
 #gem 'rails', '~> 6.1.4.7'
-gem 'rails', '~> 6.1.5.1'
+#gem 'rails', '~> 6.1.5.1'
+gem 'rails', '~> 6.1.6.1'
 
 
 #gem 'rake', '~> 12.3.3'
