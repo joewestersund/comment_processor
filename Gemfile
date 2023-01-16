@@ -8,8 +8,9 @@ end
 gem 'dotenv-rails', groups: [:development, :test] #used to load environment variables from the .env file
 
 #ruby '2.7.6'
-ruby '2.7.7'
+#ruby '2.7.7'
 #ruby '3.0.4'
+ruby '3.1.2'
 
 #gem 'rails', '~> 6.1.6.1'
 gem 'rails', '~> 7.0.4'
@@ -60,7 +61,7 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
-gem 'ruby_dep'
+#gem 'ruby_dep'
 
 #gem 'ruby_odata' was only needed when importing comments from old DAS system that is now defunct
 
@@ -93,8 +94,6 @@ gem "aws-sdk-s3", require: false
 
 gem "recaptcha"
 
-gem "mini_racer", '0.4.0'  # to avoid "Cannot read property 'version' of undefined" bug with exec-js
-
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -109,7 +108,7 @@ group :development do
   gem 'annotate'
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console', '>= 3.3.0'
-  gem 'listen', '>= 3.0.5', '< 3.2'
+  #gem 'listen' #, '>= 3.0.5', '< 3.2'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   #gem 'spring-watcher-listen' #, '~> 2.0.0'
