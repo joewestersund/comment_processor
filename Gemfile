@@ -18,7 +18,7 @@ gem 'rails', '~> 6.1.6.1'
 #gem 'rake', '~> 12.3.3'
 gem 'rake'
 
-gem 'rails-html-sanitizer', '~> 1.4.3'
+gem 'rails-html-sanitizer', '~> 1.4.4'
 #gem 'rails-html-sanitizer', '~> 1.4.2'
 
 gem 'sprockets-rails' #-> this will add the latest version
