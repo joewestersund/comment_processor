@@ -202,8 +202,8 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.4.3)
-      loofah (~> 2.3)
+    rails-html-sanitizer (1.4.4)
+      loofah (~> 2.19, >= 2.19.1)
     railties (6.1.6.1)
       actionpack (= 6.1.6.1)
       activesupport (= 6.1.6.1)
@@ -303,7 +303,7 @@ DEPENDENCIES
   puma (~> 4.3.12)
   rack (>= 2.2.3.1)
   rails (~> 6.1.6.1)
-  rails-html-sanitizer (~> 1.4.3)
+  rails-html-sanitizer (~> 1.4.4)
   rake
   recaptcha
   ruby_dep

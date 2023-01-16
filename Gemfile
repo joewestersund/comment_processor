@@ -18,8 +18,8 @@ gem 'rails', '~> 6.1.6.1'
 #gem 'rake', '~> 12.3.3'
 gem 'rake'
 
-gem 'rails-html-sanitizer', '~> 1.4.3'
-#gem 'rails-html-sanitizer', '~> 1.4.2'
+#gem 'rails-html-sanitizer', '~> 1.4.3'
+gem 'rails-html-sanitizer', '~> 1.4.4'
 
 gem 'sprockets-rails' #-> this will add the latest version
 
@@ -75,9 +75,6 @@ gem 'rack', '>= 2.2.3.1'
 gem 'loofah', '>= 2.19.1' #specified due to security vulnerability mentioned by github
 gem 'ffi', '>= 1.9.24' #specified due to security vulnerability mentioned by github
 
-#gem "nokogiri", ">= 1.13.2"
-#gem "nokogiri", ">= 1.13.4"
-#gem "nokogiri", ">= 1.13.5"
 #gem "nokogiri", ">= 1.13.9"
 gem "nokogiri", ">= 1.13.10"
 
