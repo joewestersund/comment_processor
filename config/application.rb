@@ -12,6 +12,9 @@ module CommentProcessor
     #config.load_defaults 5.1
     config.load_defaults 6.1
 
+    #when updating a comment to add an attachment, don't delete previous attachments
+    config.active_storage.replace_on_assign_to_many = false
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
