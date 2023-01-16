@@ -7,8 +7,8 @@ end
 
 gem 'dotenv-rails', groups: [:development, :test] #used to load environment variables from the .env file
 
-ruby '2.7.6'
-#ruby '2.7.5'
+#ruby '2.7.6'
+ruby '2.7.7'
 
 #gem 'rails', '~> 6.1.4.7'
 #gem 'rails', '~> 6.1.5.1'
