@@ -106,7 +106,7 @@
         <td><%= comment.comment_data_source.data_source_name if comment.comment_data_source.present? %></td>
         <td><%= comment.name_and_email%></td>
         <td><%= concat_with_delimiter(comment.organization, comment.state,", ") %></td>
-        <td><%= comment.comment_text.truncate(1000) if comment.comment_text.present?%></td>
+        <td class="break-long-words"><%= comment.comment_text.truncate(500) if comment.comment_text.present?%></td>
         <td>
           <%= (link_to comment.attachment_name.truncate(10), comment.attachment_url) if comment.attachment_name.present? %>
           <% comment.attached_files.each do |af| %>

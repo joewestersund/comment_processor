@@ -8,6 +8,10 @@ table.read_only_parameters, table.show {
   }
 }
 
+td.break-long-words {
+  word-break: break-all;  // to fix problem with very long links affecting formatting of comments table
+}
+
 th, td {
   border-left: 1px black solid;
   border-bottom: 1px black solid;
