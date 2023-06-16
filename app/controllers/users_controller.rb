@@ -119,9 +119,10 @@ class UsersController < ApplicationController
       if user.present? && user.password_token_valid? then
         sign_in user
 
-        #erase the password reset token, so they can't reset it again with that same link
-        user.reset_password_token = nil
-        user.save
+        # don't erase the password reset token here. Some safelinks programs visit the URL before the user does,
+        # so we'll wait until update_password to delete the token.
+        #user.reset_password_token = nil
+        #user.save
 
         format.html {redirect_to profile_edit_password_path, notice: "Please enter a new password"}
       else
@@ -133,6 +134,12 @@ class UsersController < ApplicationController
   def update_password
     respond_to do |format|
       if params[:user][:password].present? and @user.update(user_params_change_password)
+        
+        # erase the password reset token, so (if the user has gotten here through a new user or reset password link)
+        # they can't reset it again with that same link
+        @user.reset_password_token = nil
+        @user.save
+
         format.html { redirect_to comments_path, notice: 'Your password was successfully updated.' }
         format.json { head :no_content }
       else

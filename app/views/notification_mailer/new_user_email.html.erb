@@ -14,8 +14,8 @@ Dear <%= @new_user.name %>,
 <div><strong>Username:</strong> <%= @new_user.email %></div>
 
 <p>
-  You can log in and set up your password by copying and pasting this URL into your browser:
-  <%= @password_reset_url %>
+  You can log in and set up your password using this link:
+  <%= link_to @password_reset_url, @password_reset_url %>
 </p>
 <p>
   This link will be valid for the next <%= pluralize(@hours_to_log_in,"hour") %>.
