@@ -140,9 +140,11 @@ class UsersController < ApplicationController
         @user.reset_password_token = nil
         @user.save
 
+        puts "successfully updated password"
         format.html { redirect_to comments_path, notice: 'Your password was successfully updated.' }
         format.json { head :no_content }
       else
+        puts "error updating password. #{@user.errors.each {|e| e.to_s}}"
         format.html { render action: 'edit_password' }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
