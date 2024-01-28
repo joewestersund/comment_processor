@@ -1,5 +1,9 @@
 {
   "name": "comment_processor",
   "private": true,
-  "dependencies": {}
+  "dependencies": {},
+  "engines": {
+    "node": "20.9.0",
+    "yarn": "1.22.19"
+  }
 }
