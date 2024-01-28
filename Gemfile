@@ -30,7 +30,8 @@ gem 'pg' #PostgreSQL
 # Use puma as the app server
 #gem 'puma', '~> 4.3.11'
 #gem 'puma', '~> 4.3.12'
-gem 'puma', '~> 5.6.7'
+#gem 'puma', '~> 5.6.7'
+gem 'puma', '~> 5.6.8'
 
 gem 'bootstrap', '~> 4.3.1'
 
@@ -38,6 +39,7 @@ gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
 
 gem 'jquery-ui-rails'
+#gem "jquery-ui-rails", ">= 7.0.0"
 
 gem 'bootstrap-multiselect-rails', '~> 0.9.9'
 #gem 'bootstrap-multiselect-rails4', '~> 0.0.1'
