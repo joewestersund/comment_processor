@@ -82,8 +82,9 @@ gem 'rack', '>= 2.2.6.4'
 gem 'loofah', '>= 2.19.1' #specified due to security vulnerability mentioned by github
 gem 'ffi', '>= 1.9.24' #specified due to security vulnerability mentioned by github
 
-gem "nokogiri", ">= 1.14.3"
 #gem "nokogiri", ">= 1.13.10"
+#gem "nokogiri", ">= 1.14.3"
+gem "nokogiri", "~> 1.16.2"
 
 gem "websocket-extensions", ">= 0.1.5"  #specified due to security vulnerability mentioned by github
 gem "json", '>=2.3.1' #specified due to security vulnerability mentioned by github
