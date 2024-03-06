@@ -15,7 +15,8 @@ ruby '3.1.4'
 #gem 'rails', '~> 7.0.4.2'
 #gem 'rails', '~> 7.0.4.3'
 #gem 'rails', '~> 7.0.5.1'
-gem 'rails', '~> 7.0.7.1'
+#gem 'rails', '~> 7.0.7.1'
+gem 'rails', '~> 7.0.8.1'
 
 #gem 'rake', '~> 12.3.3'
 gem 'rake'
@@ -76,7 +77,8 @@ gem 'will_paginate'
 gem 'trix-rails', require: 'trix'
 
 #gem 'rack', '>= 2.2.3.1'
-gem 'rack', '>= 2.2.6.4'
+#gem 'rack', '>= 2.2.6.4'
+gem 'rack', '~> 2.2.8.1'
 
 #gem 'loofah', '>= 2.2.3' #specified due to security vulnerability mentioned by github
 gem 'loofah', '>= 2.19.1' #specified due to security vulnerability mentioned by github
