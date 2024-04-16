@@ -133,7 +133,14 @@ class UsersController < ApplicationController
 
   def update_password
     respond_to do |format|
-      if params[:user][:password].present? and @user.update(user_params_change_password)
+      if !params[:user][:password].present?
+        
+        puts "error updating password. Password cannot be blank."
+        @user.errors.add(:base, "Password cannot be blank.")
+        format.html { render action: 'edit_password', notice: "Password cannot be blank." }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+
+      elsif @user.update(user_params_change_password)
         
         # erase the password reset token, so (if the user has gotten here through a new user or reset password link)
         # they can't reset it again with that same link

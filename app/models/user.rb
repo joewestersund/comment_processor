@@ -16,7 +16,7 @@
 #  password_reset_sent_at    :datetime
 #
 
-class User < ApplicationRecord
+class User < ActiveRecord::Base
   has_secure_password #adds authenticate method, etc.
 
   has_many :user_permissions, dependent: :destroy
@@ -31,8 +31,7 @@ class User < ApplicationRecord
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, length: { maximum: 100}, format: { with: VALID_EMAIL_REGEX }, uniqueness: {case_sensitive: false}
 
-  validates :password, :presence =>true, :confirmation => true, :length => { :within => 6..40 }, :on => :create
-  validates :password, :confirmation => true, :length => { :within => 6..40 }, :on => :update_password
+  validates :password, length: { minimum: 6 }, if: :password_digest_changed?
 
   def User.new_remember_token
     SecureRandom.urlsafe_base64
