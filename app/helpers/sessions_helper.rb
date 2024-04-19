@@ -43,7 +43,6 @@ module SessionsHelper
     remember_token = User.encrypt(cookies[:remember_token])
     #don't let inactive users log in.
     @current_user ||= User.find_by(active: true, remember_token: remember_token)
-
   end
 
   def set_current_rulemaking(rulemaking)
@@ -55,7 +54,6 @@ module SessionsHelper
     else
       nil #return this value
     end
-
   end
 
   def current_rulemaking

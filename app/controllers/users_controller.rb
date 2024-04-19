@@ -3,12 +3,12 @@ class UsersController < ApplicationController
 
   include ActionView::Helpers::TextHelper #for the pluralize method
 
-  before_action :signed_in_user, except: [:forgot_password, :send_password_reset_email, :reset_password]
+  before_action :signed_in_user, except: [:forgot_password, :send_password_reset_email, :reset_password, :update_password]
   #note: does not require user to have a current rulemaking. That way, app admin user can create the first one.
   before_action :application_admin_user, only: [:edit, :update, :destroy] #only application admin can edit or delete another user
   before_action :admin_user, only: [:new, :create]  #regular admin can create a new user
   before_action :set_user, only: [:edit, :update, :destroy]
-  before_action :set_self_as_user, only: [:edit_profile, :update_profile, :edit_password, :update_password]
+  before_action :set_self_as_user, only: [:edit_profile, :update_profile, :edit_password]
 
 
   # GET /users
@@ -31,7 +31,6 @@ class UsersController < ApplicationController
   end
 
   def update_profile
-    #
     @user.update(update_profile_params)
     if @user.save
       flash[:notice] = 'Your profile was successfully updated.'
@@ -121,10 +120,9 @@ class UsersController < ApplicationController
 
         # don't erase the password reset token here. Some safelinks programs visit the URL before the user does,
         # so we'll wait until update_password to delete the token.
-        #user.reset_password_token = nil
-        #user.save
 
-        format.html {redirect_to profile_edit_password_path, notice: "Please enter a new password"}
+        #include token parameter in redirect because we need to pass it to a hidden field in the form
+        format.html {redirect_to profile_edit_password_path(token: params[:token]), notice: "Please enter a new password"}
       else
         format.html {redirect_to password_forgot_path, alert: "That email address was not recognized, or its password reset link has expired."}
       end
@@ -132,6 +130,22 @@ class UsersController < ApplicationController
   end
 
   def update_password
+    # user could be signed in and updating their password
+    # or they could have clicked a password reset link.
+    # Sometimes safelinks programs appear to also click those links, which can log out the user while they're entering a new password.
+    # So, we check for the reset password token to be used both here and in :reset_password
+    if !signed_in? then
+      user = User.find_by(reset_password_token: params[:token]) if !params[:token].blank?
+      if user.present? && user.password_token_valid? then
+        sign_in user
+      else
+        redirect_to signin_path, notice: "Please sign in."
+        return
+      end
+    end
+
+    set_self_as_user
+    
     respond_to do |format|
       if !params[:user][:password].present?
         
