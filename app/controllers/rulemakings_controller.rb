@@ -7,7 +7,7 @@ class RulemakingsController < ApplicationController
   # GET /rulemakings
   # GET /rulemakings.json
   def index
-    @rulemakings = Rulemaking.order(:rulemaking_name)
+    @rulemakings = Rulemaking.order("LOWER(rulemaking_name)")
   end
 
   # GET /rulemakings/new

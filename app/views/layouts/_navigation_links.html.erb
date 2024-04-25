@@ -16,7 +16,7 @@
           <%= current_rulemaking.rulemaking_name %> <b class="caret"></b>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownRulemakings">
-          <% current_user.rulemakings.each do |r|  %>
+          <% current_user.rulemakings.order("LOWER(rulemaking_name)").each do |r|  %>
             <%= link_to r.rulemaking_name, rulemakings_switch_path(r), method: :post, class: "dropdown-item" %>
           <% end %>
         </div>
