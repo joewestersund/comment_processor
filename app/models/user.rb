@@ -29,6 +29,8 @@ class User < ActiveRecord::Base
 
   validates :name, presence: true, length: { maximum: 50}
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+
+  # note: email address should always be lowercase in the database. This is enforced in users_controller.create
   validates :email, presence: true, length: { maximum: 100}, format: { with: VALID_EMAIL_REGEX }, uniqueness: {case_sensitive: false}
 
   validates :password, length: { minimum: 6 }, if: :password_digest_changed?

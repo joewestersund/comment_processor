@@ -32,6 +32,7 @@ class UsersController < ApplicationController
 
   def update_profile
     @user.update(update_profile_params)
+    @user.email = @user.email.downcase
     if @user.save
       flash[:notice] = 'Your profile was successfully updated.'
       redirect_to profile_edit_path
@@ -53,6 +54,10 @@ class UsersController < ApplicationController
       random_pw = SecureRandom.hex(8)
       @user.password = random_pw
       @user.password_confirmation = random_pw
+      
+      # make all email addresses lowercase in the db
+      @user.email = @user.email.downcase
+
       if @user.save
         @user.generate_password_token!
 
@@ -100,9 +105,9 @@ class UsersController < ApplicationController
   end
 
   def send_password_reset_email
-    @user = User.find_by(email: params[:email])
+    @user = User.find_by(email: params[:email].downcase)
     respond_to do |format|
-      if @user.present? && @user.active? && (verify_recaptcha(model: @user) || Rails.env == "development")
+      if @user.present? && @user.active? && (verify_recaptcha(model: @user) || Rails.env == "development" || Rails.env == "test")
         @user.generate_password_token!
         NotificationMailer.password_reset_email(@user).deliver
         format.html { redirect_to signin_path, notice: "A password reset email has been sent to #{@user.name} at #{@user.email}. Please use the link in that email to reset your password in the next #{pluralize(User.hours_to_reset_password,"hour")}." }

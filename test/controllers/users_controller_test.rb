@@ -24,6 +24,17 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to users_url
   end
 
+  test "should make email lowercase when creating user" do
+    new_email = "some_new_address@example.com"
+    assert_difference('User.count') do
+      post users_url, params: { user: { email: new_email.upcase, name: @user.name, password: 'test_password', password_confirmation: 'test_password'} }
+    end
+    assert_equal(User.where(email: new_email.upcase).count,0)
+    assert_equal(User.where(email: new_email).count,1)
+
+    assert_redirected_to users_url
+  end
+
   test "non- app admin shouldn't get edit" do
     get edit_user_url(@user)
     assert_redirected_to welcome_url
@@ -34,6 +45,26 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     sign_in_as users(:application_admin_user_1)
 
     get edit_user_url(@user)
+    assert_response :success
+  end
+
+  test "user email in caps OK" do
+    sign_user_out
+    user = users(:application_admin_user_1)
+    user.email = user.email.upcase
+    sign_in_as user
+
+    get edit_user_url(user)
+    assert_response :success
+  end
+
+  test "user email in lowercase OK" do
+    sign_user_out
+    user = users(:application_admin_user_1)
+    user.email = user.email.downcase
+    sign_in_as user
+
+    get edit_user_url(user)
     assert_response :success
   end
 
@@ -82,6 +113,25 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to profile_edit_url
 
     assert_equal(User.find_by(email: @user.email).name, new_name)
+  end
+
+  test "should be able to update email" do
+    new_name = "some other name"
+    new_email = "sdfoijoi34@test.com"
+    patch profile_update_url(@user), params: { user: { name: new_name, email: new_email } }
+    assert_redirected_to profile_edit_url
+
+    assert_equal(User.find_by(email: new_email).name, new_name)
+  end
+
+  test "when updating email, email gets downcased" do
+    new_name = "some other name2"
+    new_email = "sdfoijoi3wfef4@test.com"
+    patch profile_update_url(@user), params: { user: { name: new_name, email: new_email.upcase } }
+    assert_redirected_to profile_edit_url
+
+    assert_equal(User.where(email: new_email.upcase).count, 0)
+    assert_equal(User.where(email: new_email).count, 1)
   end
 
   test "should not destroy user with change log entries" do
@@ -213,9 +263,30 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test "should send password reset email" do
     sign_user_out
-    post password_send_reset_email_url, params: { user: { email: @user.email } }
+    post password_send_reset_email_url, params: { email: @user.email }
+
+    assert_redirected_to signin_url
+  end
+
+  test "shouldn't send password reset email if email is bogus" do
+    sign_user_out
+    post password_send_reset_email_url, params: { email: 'asdoijasdoj@sdoijsdfsdf.com' }
 
     assert_redirected_to password_forgot_url
+  end
+
+  test "should send password reset email, lower case OK" do
+    sign_user_out
+    post password_send_reset_email_url, params: { email: @user.email.downcase }
+
+    assert_redirected_to signin_url
+  end
+
+  test "should send password reset email, upper case OK" do
+    sign_user_out
+    post password_send_reset_email_url, params: { email: @user.email.upcase }
+
+    assert_redirected_to signin_url
   end
 
   test "should not remove last application admin" do
