@@ -42,7 +42,8 @@ gem 'jquery-rails'
 
 #gem 'jquery-ui-rails'
 #gem "jquery-ui-rails", "~> 7.0.0"
-gem "jquery-ui-rails", :git => 'https://github.com/jquery-ui-rails/jquery-ui-rails.git'   #using this since 7.0.0 not pushed to rubygems yet. https://github.com/jquery-ui-rails/jquery-ui-rails/issues/146
+#gem "jquery-ui-rails", :git => 'https://github.com/jquery-ui-rails/jquery-ui-rails.git'   #using this since 7.0.0 not pushed to rubygems yet. https://github.com/jquery-ui-rails/jquery-ui-rails/issues/146
+gem "jquery-ui-rails"
 
 gem 'bootstrap-multiselect-rails', '~> 0.9.9'
 #gem 'bootstrap-multiselect-rails4', '~> 0.0.1'

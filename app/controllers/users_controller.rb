@@ -14,7 +14,25 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.order(:name).page(params[:page]).per_page(20)
+    q = User
+    @filtered = false
+    if params[:name].present?
+      q = q.where("name ILIKE ?", "%#{params[:name]}%")
+      @filtered = true
+    end
+    if params[:email].present?
+      q = q.where("email ILIKE ?", "%#{params[:email]}%")
+      @filtered = true
+    end
+    if params[:active].present?
+      q = q.where(active: true)
+      @filtered = true
+    end
+    if params[:application_admin].present?
+      q = q.where(application_admin: true)
+      @filtered = true
+    end
+    @users = q.order(:name).page(params[:page]).per_page(20)
   end
 
   # GET /users/new
@@ -32,7 +50,6 @@ class UsersController < ApplicationController
 
   def update_profile
     @user.update(update_profile_params)
-    @user.email = @user.email.downcase
     if @user.save
       flash[:notice] = 'Your profile was successfully updated.'
       redirect_to profile_edit_path
