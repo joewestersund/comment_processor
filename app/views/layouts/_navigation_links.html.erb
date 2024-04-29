@@ -11,12 +11,26 @@
         <%= current_rulemaking.rulemaking_name %>
       </li>
     <% else %>
+      <%
+        rulemaking_is_old_if_before = Date.today() - APPLICATION_MONTHS_UNTIL_RULEMAKING_SHOWN_AS_INACTIVE.months
+        newer_rulemakings = current_user.rulemakings.where("data_changed_at > ?",rulemaking_is_old_if_before).order("LOWER(rulemaking_name)")
+        older_rulemakings = current_user.rulemakings.where("data_changed_at <= ?",rulemaking_is_old_if_before).order("LOWER(rulemaking_name)")
+      %>
       <li class="nav-item dropdown rulemaking-name">
         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="navbarDropdownRulemakings">
           <%= current_rulemaking.rulemaking_name %> <b class="caret"></b>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownRulemakings">
-          <% current_user.rulemakings.order("LOWER(rulemaking_name)").each do |r|  %>
+          <% if newer_rulemakings.count > 0 && older_rulemakings.count > 0 %>
+            <div class="dropdown-item separator">--- recently updated ---</div>
+          <% end %>
+          <% newer_rulemakings.each do |r|  %>
+            <%= link_to r.rulemaking_name, rulemakings_switch_path(r), method: :post, class: "dropdown-item" %>
+          <% end %>
+          <% if newer_rulemakings.count > 0 && older_rulemakings.count > 0 %>
+            <div class="dropdown-item separator">--- older ---</div>
+          <% end %>
+          <% older_rulemakings.each do |r|  %>
             <%= link_to r.rulemaking_name, rulemakings_switch_path(r), method: :post, class: "dropdown-item" %>
           <% end %>
         </div>

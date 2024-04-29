@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_19_052301) do
-
+ActiveRecord::Schema[7.0].define(version: 2024_04_29_215057) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,7 +19,7 @@ ActiveRecord::Schema.define(version: 2021_10_19_052301) do
     t.string "record_type", null: false
     t.bigint "record_id", null: false
     t.bigint "blob_id", null: false
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
@@ -32,7 +31,7 @@ ActiveRecord::Schema.define(version: 2021_10_19_052301) do
     t.text "metadata"
     t.bigint "byte_size", null: false
     t.string "checksum", null: false
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
     t.string "service_name", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
@@ -48,8 +47,8 @@ ActiveRecord::Schema.define(version: 2021_10_19_052301) do
     t.integer "comment_id"
     t.integer "suggested_change_id"
     t.integer "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "action_type"
     t.string "object_type"
     t.integer "rulemaking_id"
@@ -64,16 +63,16 @@ ActiveRecord::Schema.define(version: 2021_10_19_052301) do
     t.string "description"
     t.string "comment_download_url"
     t.boolean "active"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "rulemaking_id"
   end
 
   create_table "comment_status_types", force: :cascade do |t|
     t.string "status_text"
     t.integer "order_in_list"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "rulemaking_id"
     t.string "color_name"
   end
@@ -90,8 +89,8 @@ ActiveRecord::Schema.define(version: 2021_10_19_052301) do
     t.text "summary"
     t.integer "comment_status_type_id"
     t.text "notes"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "attachment_name"
     t.boolean "manually_entered"
     t.integer "order_in_list"
@@ -110,16 +109,17 @@ ActiveRecord::Schema.define(version: 2021_10_19_052301) do
   create_table "rulemakings", force: :cascade do |t|
     t.string "rulemaking_name"
     t.string "agency"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "allow_push_import"
+    t.datetime "data_changed_at"
   end
 
   create_table "suggested_change_response_types", force: :cascade do |t|
     t.string "response_text"
     t.integer "order_in_list"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "rulemaking_id"
     t.string "color_name"
   end
@@ -127,8 +127,8 @@ ActiveRecord::Schema.define(version: 2021_10_19_052301) do
   create_table "suggested_change_status_types", force: :cascade do |t|
     t.string "status_text"
     t.integer "order_in_list"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "rulemaking_id"
     t.string "color_name"
   end
@@ -140,8 +140,8 @@ ActiveRecord::Schema.define(version: 2021_10_19_052301) do
     t.integer "assigned_to_id"
     t.integer "suggested_change_status_type_id"
     t.text "action_needed"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "order_in_list"
     t.boolean "rule_change_made"
     t.integer "suggested_change_response_type_id"
@@ -157,22 +157,22 @@ ActiveRecord::Schema.define(version: 2021_10_19_052301) do
     t.boolean "read_only"
     t.integer "user_id"
     t.integer "rulemaking_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.string "password_digest"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "remember_token"
     t.boolean "application_admin"
     t.boolean "active"
     t.integer "last_rulemaking_viewed_id"
     t.string "reset_password_token"
-    t.datetime "password_reset_sent_at"
+    t.datetime "password_reset_sent_at", precision: nil
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

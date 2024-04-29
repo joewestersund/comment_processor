@@ -2,21 +2,33 @@
 #
 # Table name: suggested_changes
 #
-#  id                                :integer          not null, primary key
-#  suggested_change_name             :text
-#  description                       :text
-#  response_text                     :text
-#  assigned_to_id                    :integer
-#  suggested_change_status_type_id   :integer
+#  id                                :bigint           not null, primary key
 #  action_needed                     :text
+#  description                       :text
+#  notes                             :text
+#  order_in_list                     :integer
+#  response_text                     :text
+#  rule_change_made                  :boolean
+#  suggested_change_name             :text
+#  text_from_comments                :text
 #  created_at                        :datetime         not null
 #  updated_at                        :datetime         not null
-#  order_in_list                     :integer
-#  rule_change_made                  :boolean
-#  suggested_change_response_type_id :integer
-#  text_from_comments                :text
-#  notes                             :text
+#  assigned_to_id                    :integer
 #  rulemaking_id                     :integer
+#  suggested_change_response_type_id :integer
+#  suggested_change_status_type_id   :integer
+#
+# Indexes
+#
+#  index_suggested_changes_on_rulemaking_and_suggested_change_name  (rulemaking_id, lower(suggested_change_name)) UNIQUE
+#  index_suggested_changes_on_rulemaking_id_and_order_in_list       (rulemaking_id,order_in_list)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (assigned_to_id => users.id) ON DELETE => nullify
+#  fk_rails_...  (rulemaking_id => rulemakings.id) ON DELETE => cascade
+#  fk_rails_...  (suggested_change_response_type_id => suggested_change_response_types.id) ON DELETE => nullify
+#  fk_rails_...  (suggested_change_status_type_id => suggested_change_status_types.id) ON DELETE => restrict
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

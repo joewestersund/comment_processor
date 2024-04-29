@@ -8,3 +8,5 @@ APPLICATION_NAME_FOR_LOGO = "CA RA"
 APPLICATION_ADMIN_NAME = "Joe Westersund"
 APPLICATION_ADMIN_EMAIL = "joe.westersund@deq.oregon.gov"
 APPLICATION_ADMIN_PHONE  = "503-229-6403"
+
+APPLICATION_MONTHS_UNTIL_RULEMAKING_SHOWN_AS_INACTIVE = 6  # used in layouts/_navigation_links.html.erb to show older rulemaking further down the list of linkss

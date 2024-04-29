@@ -2,18 +2,18 @@
 #
 # Table name: users
 #
-#  id                        :integer          not null, primary key
-#  name                      :string
+#  id                        :bigint           not null, primary key
+#  active                    :boolean
+#  application_admin         :boolean
 #  email                     :string
+#  name                      :string
 #  password_digest           :string
+#  password_reset_sent_at    :datetime
+#  remember_token            :string
+#  reset_password_token      :string
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null
-#  remember_token            :string
-#  application_admin         :boolean
-#  active                    :boolean
 #  last_rulemaking_viewed_id :integer
-#  reset_password_token      :string
-#  password_reset_sent_at    :datetime
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

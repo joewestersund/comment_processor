@@ -2,26 +2,37 @@
 #
 # Table name: comments
 #
-#  id                     :integer          not null, primary key
-#  source_id              :integer
+#  id                     :bigint           not null, primary key
+#  attachment_name        :string
+#  attachment_url         :string
+#  comment_text           :text
+#  email                  :string
 #  first_name             :string
 #  last_name              :string
-#  email                  :string
+#  manually_entered       :boolean
+#  notes                  :text
+#  num_commenters         :integer
+#  order_in_list          :integer
 #  organization           :string
 #  state                  :string
-#  comment_text           :text
-#  attachment_url         :string
 #  summary                :text
-#  comment_status_type_id :integer
-#  notes                  :text
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
-#  attachment_name        :string
-#  manually_entered       :boolean
-#  order_in_list          :integer
-#  num_commenters         :integer
 #  comment_data_source_id :integer
+#  comment_status_type_id :integer
 #  rulemaking_id          :integer
+#  source_id              :integer
+#
+# Indexes
+#
+#  index_comments_on_rulemaking_id_and_comment_data_source_id  (rulemaking_id,comment_data_source_id)
+#  index_comments_on_rulemaking_id_and_order_in_list           (rulemaking_id,order_in_list)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (comment_data_source_id => comment_data_sources.id) ON DELETE => nullify
+#  fk_rails_...  (comment_status_type_id => comment_status_types.id) ON DELETE => restrict
+#  fk_rails_...  (rulemaking_id => rulemakings.id) ON DELETE => cascade
 #
 
 require 'test_helper'

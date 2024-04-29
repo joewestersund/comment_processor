@@ -8,6 +8,7 @@
       <th>Rulemaking name</th>
       <th>Agency</th>
       <th>Allow comments to be push imported from Outlook</th>
+      <th>Data last updated at</th>
       <th colspan="2"></th>
     </tr>
   </thead>
@@ -18,6 +19,7 @@
         <td><%= rulemaking.rulemaking_name %></td>
         <td><%= rulemaking.agency %></td>
         <td class="<%="#{highlight_true(rulemaking.allow_push_import)}"%>"><%= show_boolean_value(rulemaking.allow_push_import) %></td>
+        <td><%= rulemaking.data_changed_at %></td>
         <td><%= link_to 'Edit', edit_rulemaking_path(rulemaking) %></td>
         <td><%= link_to 'Delete', rulemaking, method: :delete, data: { confirm: 'Are you sure you want to delete this rulemaking?' } %></td>
       </tr>

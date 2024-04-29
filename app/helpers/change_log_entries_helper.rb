@@ -7,6 +7,7 @@ module ChangeLogEntriesHelper
     else
       cle.rulemaking = current_rulemaking
     end
+
     if parameters[:comment].present?
       cle.comment_id = parameters[:comment].id
       cle.object_type = 'comment'
@@ -21,7 +22,14 @@ module ChangeLogEntriesHelper
       end
     end
     cle.action_type = parameters[:action_type]
-    cle.save unless cle.description.blank? #if description blank, no changes were made
+
+    unless cle.description.blank? #if description blank, no changes were made
+      # save the change log entry
+      cle.save
+      # update the rulemaking to note that data has changed
+      cle.rulemaking.data_changed_at = DateTime.now
+      cle.rulemaking.save
+    end
   end
 
   def get_comment_change_description(comment_change_hash, suggested_change_change_hash)
