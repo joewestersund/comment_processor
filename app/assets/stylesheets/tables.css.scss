@@ -84,6 +84,9 @@ td, th {
   &.has-content {
     background: yellow;
   }
+  &.hide {
+    display:none;  //used on the rulemakings index, to show/hide password reset links
+  }
 
   div.separate {
     border-top: 1px solid black;
@@ -150,6 +153,10 @@ td, th {
 div.links {
   margin-bottom: 5px;
   font-size: 14px;
+
+  label.inline {
+    display: inline;
+  }
 }
 
 .welcome p a, .about p a {

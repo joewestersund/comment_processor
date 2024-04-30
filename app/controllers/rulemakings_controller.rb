@@ -29,7 +29,7 @@ class RulemakingsController < ApplicationController
   # POST /rulemakings.json
   def create
     @rulemaking = Rulemaking.new(rulemaking_params)
-
+    @rulemaking.data_changed_at = DateTime.now
     respond_to do |format|
       if @rulemaking.save
         add_defaults(@rulemaking)  #add default status types, etc. Need to save before doing this, so there's a rulemaking id.

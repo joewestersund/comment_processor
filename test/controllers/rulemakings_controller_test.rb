@@ -37,6 +37,7 @@ class RulemakingsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(SuggestedChangeResponseType.default_list.count, @new_rulemaking.suggested_change_response_types.count)
     assert_equal(CommentDataSource.default_list.count, @new_rulemaking.comment_data_sources.count)
 
+    assert(@new_rulemaking.data_changed_at.present?)
   end
 
   test "should get edit" do

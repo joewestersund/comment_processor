@@ -6,6 +6,12 @@
     <%= link_to 'New User', new_user_path %>
   <% end %>
 </div>
+  <% if current_user.application_admin? %>
+    <div class="links">
+      <%= check_box_tag :show_pw_links %>
+      <%= label_tag :show_pw_links, "Show Password Reset Links", class:"inline" %>
+    </div>
+  <% end %>
 
 <div class="filter-box">
   <button id="show_filter" class="filter-button">Show/Hide Filter</button>
@@ -44,7 +50,7 @@
     <th>Active</th>
     <th>Application Admin</th>
     <% if current_user.application_admin? %>
-      <th>Reset Password Link</th>
+      <th class="reset_pw_link hide">Reset Password Link</th>
       <th></th>
       <th></th>
     <% end %>
@@ -59,7 +65,7 @@
       <td class="<%="#{highlight_true(user.active)}"%>"><%= show_boolean_value(user.active) %></td>
       <td class="<%="#{highlight_true(user.application_admin)}"%>"><%= show_boolean_value(user.application_admin) %></td>
       <% if current_user.application_admin? %>
-        <td><%= "#{request.protocol}#{request.host_with_port}/password/reset/#{user.reset_password_token}" unless user.reset_password_token.nil? %></td>
+        <td class="reset_pw_link hide"><%= "#{request.protocol}#{request.host_with_port}/password/reset/#{user.reset_password_token}" unless user.reset_password_token.nil? %></td>
         <td><%= link_to 'Edit', edit_user_path(user) %></td>
         <td><%= link_to 'Delete', user, method: :delete, data: { confirm: "Are you sure you want to delete #{user.name}?" } %></td>
       <% end %>
