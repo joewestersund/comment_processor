@@ -102,6 +102,8 @@ gem 'rubyzip', '~> 1.3.0' #was '>= 1.2.2'
 gem 'caxlsx'
 gem 'caxlsx_rails'
 
+gem 'rexml', '~> 3.2'
+
 #for storing files on Amazon S3
 gem "aws-sdk-s3", require: false
 
