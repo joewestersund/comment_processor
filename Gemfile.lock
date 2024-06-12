@@ -265,8 +265,6 @@ GEM
     turbolinks-source (5.2.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
-    tzinfo-data (1.2024.1)
-      tzinfo (>= 1.0.0)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
     web-console (4.2.1)
@@ -335,7 +333,7 @@ DEPENDENCIES
   will_paginate
 
 RUBY VERSION
-   ruby 3.1.5p252
+   ruby 3.1.6p260
 
 BUNDLED WITH
    2.4.3
