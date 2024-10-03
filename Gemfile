@@ -35,7 +35,8 @@ gem 'pg' #PostgreSQL
 #gem 'puma', '~> 4.3.11'
 #gem 'puma', '~> 4.3.12'
 #gem 'puma', '~> 5.6.7'
-gem 'puma', '~> 5.6.8'
+#gem 'puma', '~> 5.6.8'
+gem 'puma', '~> 5.6.9'
 
 gem 'bootstrap', '~> 4.3.1'
 
@@ -106,7 +107,8 @@ gem 'caxlsx_rails'
 
 #gem 'rexml', '~> 3.2'
 #gem 'rexml', '~> 3.3.2'
-gem 'rexml', '~> 3.3.3'
+#gem 'rexml', '~> 3.3.3'
+gem 'rexml', '~> 3.3.6'
 
 #for storing files on Amazon S3
 gem "aws-sdk-s3", require: false
