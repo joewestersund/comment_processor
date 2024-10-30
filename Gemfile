@@ -25,6 +25,10 @@ gem 'rails', '~> 7.0.8.5'
 #gem 'rake', '~> 12.3.3'
 gem 'rake'
 
+# prevent code from running after web page has timed out
+# defaults to 15 second timeout
+gem "rack-timeout"
+
 #gem 'rails-html-sanitizer', '~> 1.4.3'
 gem 'rails-html-sanitizer', '~> 1.4.4'
 
