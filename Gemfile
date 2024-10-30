@@ -111,7 +111,8 @@ gem 'caxlsx_rails'
 #gem 'rexml', '~> 3.2'
 #gem 'rexml', '~> 3.3.2'
 #gem 'rexml', '~> 3.3.3'
-gem 'rexml', '~> 3.3.6'
+#gem 'rexml', '~> 3.3.6'
+gem 'rexml', '~> 3.3.9'
 
 #for storing files on Amazon S3
 gem "aws-sdk-s3", require: false
