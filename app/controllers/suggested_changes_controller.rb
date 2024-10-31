@@ -336,7 +336,7 @@ class SuggestedChangesController < ApplicationController
         conditions_string << "action_needed ILIKE :action_needed" if search_terms.action_needed.present?
 
         conditions[:notes] = "%#{search_terms.notes}%" if search_terms.notes.present?
-        conditions_string << "notes ILIKE :notes" if search_terms.notes.present?
+        conditions_string << "suggested_changes.notes ILIKE :notes" if search_terms.notes.present?
 
         #no filter on order_in_list.
 
