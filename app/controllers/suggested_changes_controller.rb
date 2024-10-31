@@ -312,9 +312,10 @@ class SuggestedChangesController < ApplicationController
         conditions[:description] = "%#{search_terms.description}%" if search_terms.description.present?
         conditions_string << "description ILIKE :description" if search_terms.description.present?
 
-        #treating specially because of many to many relation
+        #treating specially because of many to many relation. See get_comment_conditions()
         conditions[:comment_id] = params[:comment_id] if params[:comment_id].present?
-        conditions_string << "comments_suggested_changes.comment_id = :comment_id" if params[:comment_id].present?
+        #conditions_string << "comments_suggested_changes.comment_id = :comment_id" if params[:comment_id].present?
+        conditions_string << "comments.id = :comment_id" if params[:comment_id].present?
 
         conditions[:response_text] = "%#{search_terms.response_text}%" if search_terms.response_text.present?
         conditions_string << "response_text ILIKE :response_text" if search_terms.response_text.present?
@@ -343,7 +344,7 @@ class SuggestedChangesController < ApplicationController
         return [conditions_string.join(" AND "), conditions]
       end
 
-    def move(up = true)
+      def move(up = true)
       c = current_rulemaking.suggested_changes.find(params[:id])
 
       if c.present?
