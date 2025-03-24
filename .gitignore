@@ -29,3 +29,5 @@
 *.dump
 
 .env
+
+**/.DS_Store

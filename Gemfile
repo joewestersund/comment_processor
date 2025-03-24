@@ -11,14 +11,9 @@ gem 'dotenv-rails', groups: [:development, :test] #used to load environment vari
 #ruby '3.1.4'
 #ruby '3.1.5'
 ruby '3.1.6'
+#ruby '3.2.7'
+#ruby '3.1.6'
 
-#gem 'rails', '~> 6.1.6.1'
-#gem 'rails', '~> 7.0.4'
-#gem 'rails', '~> 7.0.4.2'
-#gem 'rails', '~> 7.0.4.3'
-#gem 'rails', '~> 7.0.5.1'
-#gem 'rails', '~> 7.0.7.1'
-#gem 'rails', '~> 7.0.8.1'
 #gem 'rails', '~> 7.0.8.3'
 #gem 'rails', '~> 7.0.8.5'
 gem 'rails', '~> 7.0.8.7'
@@ -38,9 +33,6 @@ gem 'sprockets-rails' #-> this will add the latest version
 gem 'pg' #PostgreSQL
 
 # Use puma as the app server
-#gem 'puma', '~> 4.3.11'
-#gem 'puma', '~> 4.3.12'
-#gem 'puma', '~> 5.6.7'
 #gem 'puma', '~> 5.6.8'
 gem 'puma', '~> 5.6.9'
 
@@ -91,7 +83,8 @@ gem 'trix-rails', require: 'trix'
 
 #gem 'rack', '>= 2.2.3.1'
 #gem 'rack', '>= 2.2.6.4'
-gem 'rack', '~> 2.2.8.1'
+#gem 'rack', '~> 2.2.8.1'
+gem 'rack', '~> 2.2.11'
 
 #gem 'loofah', '>= 2.2.3' #specified due to security vulnerability mentioned by github
 gem 'loofah', '>= 2.19.1' #specified due to security vulnerability mentioned by github
@@ -101,6 +94,7 @@ gem 'ffi', '>= 1.9.24' #specified due to security vulnerability mentioned by git
 #gem "nokogiri", ">= 1.14.3"
 #gem "nokogiri", "~> 1.16.2"
 gem "nokogiri", "~> 1.16.5"
+#gem "nokogiri", "~> 1.18.5"
 
 gem "websocket-extensions", ">= 0.1.5"  #specified due to security vulnerability mentioned by github
 gem "json", '>=2.3.1' #specified due to security vulnerability mentioned by github
