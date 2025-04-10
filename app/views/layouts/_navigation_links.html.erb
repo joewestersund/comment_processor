@@ -17,7 +17,7 @@
         older_rulemakings = current_user.rulemakings.where("data_changed_at <= ?",rulemaking_is_old_if_before).order("LOWER(rulemaking_name)")
       %>
       <li class="nav-item dropdown rulemaking-name">
-        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="navbarDropdownRulemakings">
+        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="navbarDropdownRulemakings">
           <%= current_rulemaking.rulemaking_name %> <b class="caret"></b>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownRulemakings">
@@ -41,7 +41,7 @@
     <li class="nav-item"><%= link_to font_awesome_icon("tags","Suggested Changes").html_safe, suggested_changes_path, class: "nav-link" %></li>
 
     <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="navbarDropdownStats">
+      <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="navbarDropdownStats">
         <%= font_awesome_icon("signal","Stats").html_safe%> <b class="caret"></b>
       </a>
       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownStats">
@@ -53,7 +53,7 @@
   <% end %>
   <% if current_user.admin_for?(current_rulemaking) %>
     <li id="fat-menu" class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="navbarDropdownSetup">
+      <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="navbarDropdownSetup">
         <%= font_awesome_icon("cog","Setup").html_safe%> <b class="caret"></b>
       </a>
       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownSetup">
@@ -79,7 +79,7 @@
     </li>
   <% end %>
   <li id="fat-menu" class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="navbarDropdownAccount">
+    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="navbarDropdownAccount">
       <%= font_awesome_icon("user-circle","Account").html_safe%> <b class="caret"></b>
     </a>
     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownAccount">
@@ -91,7 +91,7 @@
 
   <% if false  #no helpfiles created yet%>
   <li id="fat-menu" class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="navbarDropdownHelp">
+    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="navbarDropdownHelp">
       <%= font_awesome_icon("question-circle","Help",{alt_text_only: true}).html_safe%> <b class="caret"></b>
     </a>
     <ul class="dropdown-menu" aria-labelledby="navbarDropdownHelp">
