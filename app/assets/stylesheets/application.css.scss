@@ -11,8 +11,12 @@
  */
 
 @import "bootstrap";
-@import "bootstrap-multiselect";
-@import "bootstrap-select";
+
+// @import "bootstrap-multiselect";
+// @import "bootstrap-select";
+@import "select2";
+@import "select2-bootstrap";
+
 @import "font-awesome";
 @import "trix";
 @import "/\*";

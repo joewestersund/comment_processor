@@ -15,8 +15,10 @@
 //= require popper
 //= require bootstrap-sprockets
 
-//= require bootstrap-multiselect
-//= require bootstrap-select
+// //= require bootstrap-multiselect
+// //= require bootstrap-select
+//= require select2
+
 //= require bootstrap/alert
 //= require bootstrap/dropdown
 

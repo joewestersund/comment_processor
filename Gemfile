@@ -12,7 +12,8 @@ gem 'dotenv-rails', groups: [:development, :test] #used to load environment vari
 ruby '3.3.7'
 
 #gem 'rails', '~> 7.0.8.5'
-gem 'rails', '~> 7.0.8.7'
+#gem 'rails', '~> 7.0.8.7'
+gem 'rails', '~> 7.1'
 
 #gem 'rake', '~> 12.3.3'
 gem 'rake'
@@ -22,7 +23,8 @@ gem 'rake'
 gem "rack-timeout"
 
 #gem 'rails-html-sanitizer', '~> 1.4.3'
-gem 'rails-html-sanitizer', '~> 1.4.4'
+#gem 'rails-html-sanitizer', '~> 1.4.4'
+gem 'rails-html-sanitizer'
 
 gem 'sprockets-rails' #-> this will add the latest version
 
@@ -43,10 +45,12 @@ gem 'jquery-rails'
 #gem "jquery-ui-rails", :git => 'https://github.com/jquery-ui-rails/jquery-ui-rails.git'   #using this since 7.0.0 not pushed to rubygems yet. https://github.com/jquery-ui-rails/jquery-ui-rails/issues/146
 gem "jquery-ui-rails"
 
-gem 'bootstrap-multiselect-rails', '~> 0.9.9'
+#gem 'bootstrap-multiselect-rails', '~> 0.9.9'
 #gem 'bootstrap-multiselect-rails4', '~> 0.0.1'
 
-gem 'bootstrap-select-rails'
+#gem 'bootstrap-select-rails'
+
+gem "select2-rails"
 
 gem "font-awesome-rails"
 
