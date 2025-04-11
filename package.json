@@ -1,7 +1,10 @@
 {
   "name": "comment_processor",
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+    "select2": "^4.1.0-rc.0",
+    "tom-select": "^2.4.3"
+  },
   "engines": {
     "node": "20.9.0",
     "yarn": "1.22.19"

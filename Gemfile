@@ -35,7 +35,8 @@ gem 'pg' #PostgreSQL
 gem 'puma', '~> 5.6.9'
 
 #gem 'bootstrap', '~> 4.3.1'
-gem 'bootstrap', '~> 5.0.0'
+#gem 'bootstrap', '~> 5.0.0'
+gem 'bootstrap', '~> 5.3.2'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -50,8 +51,9 @@ gem "jquery-ui-rails"
 
 #gem 'bootstrap-select-rails'
 
-gem "select2-rails"
-
+#gem "select2-rails"
+gem "tom-select-rails"
+gem "dartsass-rails"
 
 gem "font-awesome-rails"
 
