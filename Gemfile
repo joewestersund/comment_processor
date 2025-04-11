@@ -49,6 +49,7 @@ gem 'bootstrap-multiselect-rails', '~> 0.9.9'
 
 gem 'bootstrap-select-rails'
 
+
 gem "font-awesome-rails"
 
 # Use Uglifier as compressor for JavaScript assets
