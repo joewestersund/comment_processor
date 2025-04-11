@@ -52,6 +52,7 @@ gem "jquery-ui-rails"
 
 gem "select2-rails"
 
+
 gem "font-awesome-rails"
 
 # Use Uglifier as compressor for JavaScript assets
