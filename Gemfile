@@ -51,11 +51,10 @@ gem "jquery-ui-rails"
 
 #gem 'bootstrap-select-rails'
 
-#gem "select2-rails"
 gem "tom-select-rails"
 gem "dartsass-rails"
 
-gem "font-awesome-rails"
+#gem "font-awesome-rails"
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'

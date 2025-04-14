@@ -1,4 +1,4 @@
 ready = ->
-  $('.bootstrap-multiselect').select2
+  $('.bootstrap-multiselect').TomSelect
 
 $(document).on('turbolinks:load', ready)

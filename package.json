@@ -2,11 +2,12 @@
   "name": "comment_processor",
   "private": true,
   "dependencies": {
-    "select2": "^4.1.0-rc.0",
-    "tom-select": "^2.4.3"
+    "font-awesome": "^4.7.0",
+    "tom-select": "^2.4.3",
+    "trix": "^2.1.13"
   },
   "engines": {
-    "node": "20.9.0",
-    "yarn": "1.22.19"
+    "node": "22.14.0",
+    "yarn": "1.22.22"
   }
 }
