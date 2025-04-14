@@ -7,11 +7,9 @@ end
 
 gem 'dotenv-rails', groups: [:development, :test] #used to load environment variables from the .env file
 
-#ruby '3.1.6'
 #ruby '3.2.7'
 ruby '3.3.7'
 
-#gem 'rails', '~> 7.0.8.5'
 #gem 'rails', '~> 7.0.8.7'
 gem 'rails', '~> 7.1'
 
@@ -22,11 +20,9 @@ gem 'rake'
 # defaults to 15 second timeout
 gem "rack-timeout"
 
-#gem 'rails-html-sanitizer', '~> 1.4.3'
 #gem 'rails-html-sanitizer', '~> 1.4.4'
 gem 'rails-html-sanitizer'
 
-gem 'sprockets-rails' #-> this will add the latest version
 
 gem 'pg' #PostgreSQL
 
@@ -34,27 +30,28 @@ gem 'pg' #PostgreSQL
 #gem 'puma', '~> 5.6.8'
 gem 'puma', '~> 5.6.9'
 
-#gem 'bootstrap', '~> 4.3.1'
 #gem 'bootstrap', '~> 5.0.0'
-gem 'bootstrap', '~> 5.3.2'
+gem 'bootstrap', '~> 5.3.3'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 
-#gem 'jquery-ui-rails'
 #gem "jquery-ui-rails", "~> 7.0.0"
 #gem "jquery-ui-rails", :git => 'https://github.com/jquery-ui-rails/jquery-ui-rails.git'   #using this since 7.0.0 not pushed to rubygems yet. https://github.com/jquery-ui-rails/jquery-ui-rails/issues/146
 gem "jquery-ui-rails"
 
-#gem 'bootstrap-multiselect-rails', '~> 0.9.9'
-#gem 'bootstrap-multiselect-rails4', '~> 0.0.1'
-
-#gem 'bootstrap-select-rails'
-
 gem "tom-select-rails"
-gem "dartsass-rails"
+#gem "dartsass-rails"
 
-#gem "font-awesome-rails"
+gem "font-awesome-sass"
+
+gem "propshaft", "~> 1.1"
+
+gem "jsbundling-rails"
+gem "cssbundling-rails"
+
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -74,10 +71,6 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
-#gem 'ruby_dep'
-
-#gem 'ruby_odata' was only needed when importing comments from old DAS system that is now defunct
-
 gem 'will_paginate'
 
 gem 'trix-rails', require: 'trix'
@@ -89,7 +82,6 @@ gem 'rack', '~> 2.2.11'
 gem 'loofah', '>= 2.19.1' #specified due to security vulnerability mentioned by github
 gem 'ffi', '>= 1.9.24' #specified due to security vulnerability mentioned by github
 
-#gem "nokogiri", "~> 1.16.2"
 #gem "nokogiri", "~> 1.16.5"
 gem "nokogiri", "~> 1.18.5"
 
@@ -104,9 +96,6 @@ gem 'rubyzip', '~> 1.3.0' #was '>= 1.2.2'
 gem 'caxlsx'
 gem 'caxlsx_rails'
 
-#gem 'rexml', '~> 3.2'
-#gem 'rexml', '~> 3.3.2'
-#gem 'rexml', '~> 3.3.3'
 #gem 'rexml', '~> 3.3.6'
 gem 'rexml', '~> 3.3.9'
 
@@ -134,6 +123,3 @@ group :development do
   gem 'spring'
   #gem 'spring-watcher-listen' #, '~> 2.0.0'
 end
-
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

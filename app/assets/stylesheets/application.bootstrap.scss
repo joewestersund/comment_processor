@@ -1,0 +1,20 @@
+@import 'bootstrap/scss/bootstrap';
+@import 'bootstrap-icons/font/bootstrap-icons';
+
+// @import "tom-select-rails/scss/tom-select";
+@import "tom-select/dist/scss/tom-select";
+
+@import "font-awesome/scss/font-awesome";
+//@import "trix";
+
+@import "colors.css.scss";
+@import "forms.css.scss";
+@import "framework_and_overrides.css.scss";
+@import "multiselect.css.scss";
+@import "navbar.css.scss";
+@import "scaffolds.css.scss";
+@import "select.css.scss";
+@import "stats.css.scss";
+@import "tables.css.scss";
+@import "trix_customization.css.scss";
+@import "will_paginate.css.scss";

@@ -5,9 +5,11 @@
   <title><%= APPLICATION_SHORT_NAME %><%= "- #{yield(:title)}" if content_for?(:title) %></title>
   <%= favicon_link_tag "favicon.ico" %>
   <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Application for Reading and Categorizing Public Comments " %>">
-  <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= stylesheet_link_tag "application", media: "all", "data-turbo-track": "reload" %>
+  <%= javascript_include_tag "application", "data-turbo-track": "reload" %>
   <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag "application" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
 </head>
 <body>
 <header>
