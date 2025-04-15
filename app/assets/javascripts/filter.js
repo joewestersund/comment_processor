@@ -14,5 +14,5 @@ ready2 = function() {
     });
 };
 
-$(document).on('turbolinks:load', ready);
-$(document).on('turbolinks:load', ready2);
+$(document).on('turbo:load', ready);
+$(document).on('turbo:load', ready2);

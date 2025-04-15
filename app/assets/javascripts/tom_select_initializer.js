@@ -6,4 +6,4 @@ ready = document.querySelectorAll('.bootstrap-multiselect').forEach((el)=>{
     new TomSelect(el,settings);
 });
 
-$(document).on('turbolinks:load', ready);
+$(document).on('turbo:load', ready);

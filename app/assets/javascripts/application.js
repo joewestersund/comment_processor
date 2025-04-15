@@ -1,26 +1,28 @@
-// This is a manifest file that'll be compiled into application.js, which will include all the files
-// listed below.
-//
-// Any JavaScript/Coffee file within this directory, lib/assets/javascripts, or any plugin's
-// vendor/assets/javascripts directory can be referenced here using a relative path.
-//
-// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
-// compiled file. JavaScript code in this file should be added after the last require_* statement.
-//
-//
-
-//= require jquery3
-//= require popper
-//= require bootstrap-sprockets
-
-//= require tom-select
-
 //= require bootstrap/alert
 //= require bootstrap/dropdown
 
 //= require rails-ujs
 //= require trix
 //= require activestorage
-//= require turbolinks
 
-//= require_tree .
+import "jquery/src/jquery.js" //need to put code in separate file due to javascript "hoisting" of import lines to beginning of file
+import "jquery-ui"
+
+import "@hotwired/turbo-rails"
+
+import "bootstrap"
+
+import '@fortawesome/fontawesome-free/js/fontawesome'
+import '@fortawesome/fontawesome-free/js/solid'
+
+import 'tom-select/dist/js/tom-select.complete.js'
+
+import "./bootstrap_select_fix.js"
+import "./cable.js"
+import "./change_log_entries.js"
+import "./filter.js"
+import "./multiselect.js"
+import "./rulemakings.js"
+import "./text_from_comments.js"
+import "./tom_select_initializer.js"
+import "./trix_customization.js"

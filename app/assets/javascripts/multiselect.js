@@ -33,5 +33,5 @@ ready2 = function() {
     return $('*:not(.bootstrap-select) > .selectpicker').selectpicker('refresh');
 };
 
-$(document).on('turbolinks:load', ready);
-$(document).on('turbolinks:load', ready2);
+$(document).on('turbo:load', ready);
+$(document).on('turbo:load', ready2);

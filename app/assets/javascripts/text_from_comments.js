@@ -7,4 +7,4 @@ ready = function() {
     });
 };
 
-$(document).on('turbolinks:load', ready);
+$(document).on('turbo:load', ready);
