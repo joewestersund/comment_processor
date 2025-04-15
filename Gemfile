@@ -41,13 +41,12 @@ gem 'jquery-rails'
 gem "jquery-ui-rails"
 
 gem "tom-select-rails"
-#gem "dartsass-rails"
 
 gem "font-awesome-sass"
 
 gem "propshaft", "~> 1.1"
 
-gem "jsbundling-rails"
+#gem "jsbundling-rails"
 gem "cssbundling-rails"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -55,9 +54,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
-
-# Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.2'
 
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5.2.1'
