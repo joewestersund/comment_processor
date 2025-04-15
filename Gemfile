@@ -44,6 +44,7 @@ gem "tom-select-rails"
 
 gem "font-awesome-sass"
 
+
 gem "propshaft", "~> 1.1"
 
 gem "jsbundling-rails"

@@ -1,9 +1,9 @@
 var ready;
 
-ready = document.querySelectorAll('.bootstrap-multiselect').forEach((el)=>{
-    let settings = {};
-    settings.maxItems = null;
-    new TomSelect(el,settings);
-});
+ready = function () {
+    return $('.bootstrap-multiselect').TomSelect({
+        maxItems: null
+    });
+}
 
 $(document).on('turbo:load', ready);
