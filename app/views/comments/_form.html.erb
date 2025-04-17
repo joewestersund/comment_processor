@@ -60,7 +60,7 @@
           <% comment.attached_files.each do |af| %>
             <div>
               <%= link_to af.filename, url_for(af) %>
-              <%= link_to 'Delete', comments_delete_attachment_path(comment, af), method: :delete, data: { confirm: 'Are you sure you want to delete this attachment?' } %>
+              <%= link_to 'Delete', comments_delete_attachment_path(comment, af), data: { "turbo-method": "delete", confirm: 'Are you sure you want to delete this attachment?' } %>
             </div>
           <% end %>
         <% end %>
@@ -135,7 +135,7 @@
       <%= link_to 'Save and Refresh', "#", :onclick => "$(this).closest('form').submit()" %> |
       <%= link_to 'View', suggested_changes_path({comment_id: comment.id}) %>
     </div>
-    <%= select_tag "comment_suggested_changes", options_from_collection_for_select(@suggested_changes, 'id', 'suggested_change_name', @comment.suggested_changes.map{ |j| j.id }), multiple: true, class: "bootstrap-multiselect", "data-entityname" => "suggested change" %>
+    <%= select_tag "comment_suggested_changes", options_from_collection_for_select(@suggested_changes, 'id', 'suggested_change_name', @comment.suggested_changes.map{ |j| j.id }), multiple: true, class: "select2-multiselect", "data-entityname" => "suggested change" %>
   </div>
 
   <div class="field">

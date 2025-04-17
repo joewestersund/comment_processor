@@ -49,7 +49,7 @@
       <%= form.label :comments, class: 'inline' %>
       <%= link_to 'View', comments_path({suggested_change_id: @suggested_change.id}) %>
     </div>
-    <%= select_tag "comment_suggested_changes", options_from_collection_for_select(@comments, 'id', 'key_info', @suggested_change.comments.map{ |j| j.id }), multiple: true, class: "bootstrap-multiselect", "data-entityname" => "comment"  %>
+    <%= select_tag "comment_suggested_changes", options_from_collection_for_select(@comments, 'id', 'key_info', @suggested_change.comments.map{ |j| j.id }), multiple: true, class: "select2-multiselect", "data-entityname" => "comment"  %>
   </div>
 
   <div class="field">

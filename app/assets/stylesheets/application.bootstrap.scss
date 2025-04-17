@@ -1,12 +1,21 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
 
-// @import "tom-select-rails/scss/tom-select";
-@import "tom-select/dist/scss/tom-select";
-
-//@import "font-awesome/scss/font-awesome";
 @import "@fortawesome/fontawesome-free/scss/fontawesome";
-//@import "trix";
+
+
+@import "select2/src/scss/core";
+@import "select2-bootstrap-5-theme/dist/select2-bootstrap-5-theme";
+
+
+// if you have already imported Bootstrap:
+/*@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+@import "select2-bootstrap-5-theme/src/include-all";
+*/
+
+// @import "trix";
 
 @import "colors.css.scss";
 @import "forms.css.scss";
