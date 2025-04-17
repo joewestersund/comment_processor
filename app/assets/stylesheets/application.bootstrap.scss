@@ -3,7 +3,6 @@
 
 @import "@fortawesome/fontawesome-free/scss/fontawesome";
 
-
 @import "select2/src/scss/core";
 @import "select2-bootstrap-5-theme/dist/select2-bootstrap-5-theme";
 
@@ -15,7 +14,7 @@
 @import "select2-bootstrap-5-theme/src/include-all";
 */
 
-// @import "trix";
+@import "trix/dist/trix";
 
 @import "colors.css.scss";
 @import "forms.css.scss";

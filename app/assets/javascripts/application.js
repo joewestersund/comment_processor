@@ -1,10 +1,9 @@
 
 import "./src/jquery.js" //need to put code in separate file due to javascript "hoisting" of import lines to beginning of file
-import $ from "jquery"
 import "jquery-ui"
 
-import "select2"
-// import "select2/dist/js/select2"
+//import "select2"
+//import "select2/dist/js/select2"
 
 import "@hotwired/turbo-rails"
 import "bootstrap"

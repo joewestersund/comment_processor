@@ -33,14 +33,16 @@ gem 'puma', '~> 5.6.9'
 #gem 'bootstrap', '~> 5.0.0'
 gem 'bootstrap', '~> 5.3.3'
 
-# Use jquery as the JavaScript library
-#gem 'jquery-rails'
+# add jquery to node_modules via yarn instead
+#gem'jquery-rails'
 
+# add jquery-ui to node_modules via yarn instead
 #gem "jquery-ui-rails", "~> 7.0.0"
 #gem "jquery-ui-rails", :git => 'https://github.com/jquery-ui-rails/jquery-ui-rails.git'   #using this since 7.0.0 not pushed to rubygems yet. https://github.com/jquery-ui-rails/jquery-ui-rails/issues/146
-#gem "jquery-ui-rails"
+#gem 'jquery-ui-rails'
 
-# gem "select2-rails" import by yarn instead
+# use select2 by adding link to app/views/layouts/application.html.erb instead
+#gem "select2-rails"
 
 gem "font-awesome-sass"
 
