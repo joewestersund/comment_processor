@@ -37,13 +37,15 @@
       </li>
      <% end %>
 
-    <li class="nav-item"><%= link_to icon("fa-solid", "comment","Comments").html_safe, comments_path, data: {"turbo": false}, class: "nav-link" %></li>
-    <li class="nav-item"><%= link_to icon("fa-solid", "tags","Suggested Changes").html_safe, suggested_changes_path, data: {"turbo": false}, class: "nav-link" %></li>
+    <li class="nav-item">
+      <%= link_to icon("fa-solid fa-2xl", "comments","Comments").html_safe, comments_path, data: {"turbo": false}, class: "nav-link " %>
+    </li>
+    <li class="nav-item"><%= link_to icon("fa-solid fa-2xl", "tags","Suggested Changes").html_safe, suggested_changes_path, data: {"turbo": false}, class: "nav-link" %></li>
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="navbarDropdownStats">
-        <%= icon("fa-solid","signal","Stats").html_safe%> <b class="caret"></b>
+        <%= icon("fa-solid fa-2xl","signal","Stats").html_safe%> <b class="caret"></b>
       </a>
-      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownStats">
+      <div class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdownStats">
         <%= link_to "Comments", stats_comments_path, data: {"turbo": false}, class: "dropdown-item" %>
         <%= link_to "Suggested Changes", stats_suggested_changes_path, data: {"turbo": false}, class: "dropdown-item" %>
         <%= link_to "Recent activity", change_log_entries_path, data: {"turbo": false}, class: "dropdown-item" %>
@@ -53,9 +55,9 @@
   <% if current_user.admin_for?(current_rulemaking) %>
     <li id="fat-menu" class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="navbarDropdownSetup">
-        <%= icon("fa-solid", "cog","Setup").html_safe%> <b class="caret"></b>
+        <%= icon("fa-solid fa-2xl", "cog","Setup").html_safe%> <b class="caret"></b>
       </a>
-      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownSetup">
+      <div class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdownSetup">
         <%= link_to "Comment Status Types", comment_status_types_path, data: {"turbo": false}, class: "dropdown-item" %>
         <%= link_to "Suggested Change Status Types", suggested_change_status_types_path, data: {"turbo": false}, class: "dropdown-item" %>
         <%= link_to "Suggested Change Response Types", suggested_change_response_types_path, data: {"turbo": false}, class: "dropdown-item" %>
@@ -66,7 +68,7 @@
         <%= link_to "Merge Suggested Changes", suggested_changes_merge_path, data: {"turbo": false}, class: "dropdown-item" %>
         <div class="dropdown-divider"></div>
         <% if current_user.admin_for?(current_rulemaking) %>
-          <%= link_to icon("fa-solid", "users","Users", {never_hide: true}).html_safe, users_path, data: {"turbo": false}, class: "dropdown-item" %>
+          <%= link_to icon("fa-solid fa-xl", "users","Users", {never_hide: true}).html_safe, users_path, data: {"turbo": false}, class: "dropdown-item" %>
         <% end %>
         <%= link_to "User Permissions", user_permissions_path, data: {"turbo": false}, class: "dropdown-item" %>
         <div class="dropdown-divider"></div>
@@ -79,12 +81,12 @@
   <% end %>
   <li id="fat-menu" class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="navbarDropdownAccount">
-      <%= icon("fa-solid", "circle-user","Account").html_safe%> <b class="caret"></b>
+      <%= icon("fa-solid fa-2xl", "circle-user","Account").html_safe%> <b class="caret"></b>
     </a>
-    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownAccount">
+    <div class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdownAccount">
       <%= link_to "Edit Profile", profile_edit_path, data: {"turbo": false}, class: "dropdown-item" %>
       <%= link_to "Change Password", profile_edit_password_path, data: {"turbo": false}, class: "dropdown-item" %>
-      <%= link_to icon("fa-solid", "sign-out-alt","Log Out", {never_hide: true}).html_safe, signout_path, data: {"turbo-method": :delete}, class: "dropdown-item" %>
+      <%= link_to icon("fa-solid fa-xl", "sign-out-alt","Log Out", {never_hide: true}).html_safe, signout_path, data: {"turbo-method": :delete}, class: "dropdown-item" %>
     </div>
   </li>
 

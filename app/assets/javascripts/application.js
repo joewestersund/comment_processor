@@ -15,11 +15,8 @@ import "trix"
 
 import "activestorage"
 
-// import "./bootstrap_select_fix.js"
-// import "./cable.js"
 import "./change_log_entries.js"
 import "./filter.js"
-//import "./multiselect.js"
 import "./rulemakings.js"
 import "./text_from_comments.js"
 import "./select2_initializer.js"
