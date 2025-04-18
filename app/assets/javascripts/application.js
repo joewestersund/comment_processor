@@ -2,6 +2,7 @@
 import "./src/jquery.js" //need to put code in separate file due to javascript "hoisting" of import lines to beginning of file
 import "jquery-ui"
 
+// I couldn't get this working, so I'm including select2 via a script tag in app/views/layouts/application.html.erb instead
 //import "select2"
 //import "select2/dist/js/select2"
 

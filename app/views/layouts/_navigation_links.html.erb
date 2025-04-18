@@ -73,7 +73,7 @@
         <%= link_to "User Permissions", user_permissions_path, data: {"turbo": false}, class: "dropdown-item" %>
         <div class="dropdown-divider"></div>
         <% if current_user.application_admin? %>
-          <%= link_to "Rulemakings", rulemakings_path, data: {"turbo": false}, class: "dropdown-item" %>
+          <%= link_to icon("fa-solid fa-xl", "box-archive","Rulemakings").html_safe, rulemakings_path, data: {"turbo": false}, class: "dropdown-item" %>
         <% end %>
         <%= link_to "Comment Data Sources", comment_data_sources_path, data: {"turbo": false}, class: "dropdown-item" %>
       </div>
