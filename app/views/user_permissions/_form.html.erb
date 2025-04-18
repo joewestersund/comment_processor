@@ -31,7 +31,7 @@
 
   <div class="actions">
     <% if !current_user.application_admin? && current_user.admin_for?(current_rulemaking) && user_permission.user == current_user %>
-      <%= form.submit data: { confirm: 'Are you sure you want to remove your admin permissions?' } %>
+      <%= form.submit data: { "turbo-confirm": 'Are you sure you want to remove your admin permissions?' } %>
     <% else %>
       <%= form.submit %>
     <% end %>

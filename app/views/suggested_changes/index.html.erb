@@ -111,7 +111,7 @@
         <td class="trix-content"><%= raw(truncate_html(suggested_change.notes, length:500)) if suggested_change.notes.present? %></td>
         <% if current_user.can_edit?(current_rulemaking) %>
           <td><%= link_to 'Edit', edit_suggested_change_path(suggested_change,@filter_querystring) %></td>
-          <td><%= link_to 'Delete', suggested_change, method: :delete, data: { confirm: "Are you sure you want to delete '#{suggested_change.suggested_change_name}'?" } %></td>
+          <td><%= link_to 'Delete', suggested_change, data: { "turbo-confirm": "Are you sure you want to delete '#{suggested_change.suggested_change_name}'?", "turbo-method": :delete } %></td>
         <% else %>
           <td><%= link_to 'Show', suggested_change_path(suggested_change,@filter_querystring) %></td>
         <% end %>

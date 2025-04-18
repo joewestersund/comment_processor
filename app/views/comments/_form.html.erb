@@ -60,7 +60,7 @@
           <% comment.attached_files.each do |af| %>
             <div>
               <%= link_to af.filename, url_for(af) %>
-              <%= link_to 'Delete', comments_delete_attachment_path(comment, af), data: { "turbo-method": "delete", confirm: 'Are you sure you want to delete this attachment?' } %>
+              <%= link_to 'Delete', comments_delete_attachment_path(comment, af), data: { "turbo-method": "delete", "turbo-confirm": 'Are you sure you want to delete this attachment?' } %>
             </div>
           <% end %>
         <% end %>
@@ -130,12 +130,14 @@
 
   <div class="field">
     <div class="field">
-      <%= form.label :suggested_changes, class: 'inline' %>
-      <%= link_to 'Create New', new_suggested_change_path, target: :_blank %> |
-      <%= link_to 'Save and Refresh', "#", :onclick => "$(this).closest('form').submit()" %> |
-      <%= link_to 'View', suggested_changes_path({comment_id: comment.id}) %>
+      <%= form.label :suggested_changes, "Tag one or more suggested changes to this comment. Click into the whitespace and type to filter.", class: 'inline' %>
+      <%= select_tag "comment_suggested_changes", options_from_collection_for_select(@suggested_changes, 'id', 'suggested_change_name', @comment.suggested_changes.map{ |j| j.id }), multiple: true, class: "select2-multiselect", style: "width: 75%", "data-entityname" => "suggested change" %>
     </div>
-    <%= select_tag "comment_suggested_changes", options_from_collection_for_select(@suggested_changes, 'id', 'suggested_change_name', @comment.suggested_changes.map{ |j| j.id }), multiple: true, class: "select2-multiselect", style: "width: 75%", "data-entityname" => "suggested change" %>
+    <div>
+      <%= link_to 'Create new Suggested Change', new_suggested_change_path, target: :_blank %> |
+      <%= link_to 'Save and Refresh', "#", :onclick => "$(this).closest('form').submit()" %> |
+      <%= link_to 'View these Suggested Changes', suggested_changes_path({comment_id: comment.id}) %>
+    </div>
   </div>
 
   <div class="field">

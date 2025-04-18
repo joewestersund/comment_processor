@@ -18,9 +18,9 @@
         <td><%= comment_status_type.status_text %></td>
         <td class="<%= color_class(comment_status_type)%>"><%= comment_status_type.color_name %></td>
         <td><%= link_to 'Edit', edit_comment_status_type_path(comment_status_type) %></td>
-        <td><%= link_to 'Delete', comment_status_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <td><%= (link_to 'Move Up', "/comment_status_types/#{comment_status_type.id}/move_up", method: :post) unless index == 0 %></td>
-        <td><%= (link_to 'Move Down', "/comment_status_types/#{comment_status_type.id}/move_down", method: :post) unless index == @comment_status_types.count-1 %></td>
+        <td><%= link_to 'Delete', comment_status_type, data: { "turbo-confirm": 'Are you sure?', "turbo-method": :delete } %></td>
+        <td><%= (link_to 'Move Up', "/comment_status_types/#{comment_status_type.id}/move_up", data: {"turbo-method": :post}) unless index == 0 %></td>
+        <td><%= (link_to 'Move Down', "/comment_status_types/#{comment_status_type.id}/move_down", data: {"turbo-method": :post}) unless index == @comment_status_types.count-1 %></td>
       </tr>
     <% end %>
   </tbody>

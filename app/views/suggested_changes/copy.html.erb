@@ -17,5 +17,5 @@
     <%= label_tag :suggested_change_id, "Suggested Change to copy" %>
     <%= select_tag :suggested_change_id, options_from_collection_for_select(@suggested_changes,:id,:suggested_change_name,params[:suggested_change_id]), { :include_blank => true, class: "selectpicker", "data-live-search" => "true" } %>
   </div>
-  <%= submit_tag('Create a copy of this Suggested Change', data: { confirm: "Are you sure you want to create a copy of this Suggested Change?", class: 'btn btn-large btn-primary'})%>
+  <%= submit_tag('Create a copy of this Suggested Change', data: { "turbo-confirm": "Are you sure you want to create a copy of this Suggested Change?", class: 'btn btn-large btn-primary'})%>
 <% end %>
