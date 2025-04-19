@@ -262,7 +262,7 @@ class CommentsController < ApplicationController
         format.json { render :show, status: :created, location: @comment }
       else
         set_select_options
-        format.html { render :new }
+        format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
@@ -281,7 +281,7 @@ class CommentsController < ApplicationController
         format.json { render :show, status: :ok, location: @comment }
       else
         set_select_options
-        format.html { render :edit }
+        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end

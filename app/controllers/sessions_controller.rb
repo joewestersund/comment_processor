@@ -18,11 +18,11 @@ class SessionsController < ApplicationController
         end
       else
         flash.now[:notice] = "This username is currently marked as inactive. Please contact #{APPLICATION_HOST_NAME} at #{APPLICATION_HOST_EMAIL_ADDRESS} if you feel that is in error."
-        render 'new'
+        render 'new', status: :unprocessable_entity
       end
     else
       flash.now[:error] = "Invalid username / password"
-      render 'new'
+      render 'new', status: :unprocessable_entity
     end
   end
 

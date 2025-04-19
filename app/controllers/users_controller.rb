@@ -54,7 +54,7 @@ class UsersController < ApplicationController
       flash[:notice] = 'Your profile was successfully updated.'
       redirect_to profile_edit_path
     else
-      render :edit_profile
+      render :edit_profile, status: :unprocessable_entity
     end
   end
 
@@ -65,7 +65,7 @@ class UsersController < ApplicationController
 
     if @user.application_admin? && !current_user.application_admin?
       flash[:error] = "Error: since you are not logged in as an application admin user, you can't create a new application admin user."
-      render :edit
+      render :edit, status: :unprocessable_entity
     else
       #set a random password, but don't tell the user. They'll need to use the token to reset the password.
       random_pw = SecureRandom.hex(8)
@@ -86,7 +86,7 @@ class UsersController < ApplicationController
         flash[:notice] = "An account for #{@user.name} was successfully created. They have been given permissions to this rulemaking, and a link to log in and set up their password has been emailed to them."
         redirect_to users_path
       else
-        render :edit
+        render :edit, status: :unprocessable_entity
       end
     end
   end
@@ -101,7 +101,7 @@ class UsersController < ApplicationController
         format.json { render json: @user.errors, status: "Error: there must be at least one application admin user." }
       elsif !@user.application_admin? && user_params[:application_admin] == '1' && !current_user.application_admin?
         flash[:error] = "Error: since you are not logged in as an application admin user, you can't edit a user to make them an application admin."
-        format.html { render :edit }
+        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       elsif @user.update(user_params)
         if @user == current_user
@@ -112,7 +112,7 @@ class UsersController < ApplicationController
           format.json { render :show, status: :ok, location: @user }
         end
       else
-        format.html { render :edit }
+        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
@@ -173,7 +173,7 @@ class UsersController < ApplicationController
         
         puts "error updating password. Password cannot be blank."
         @user.errors.add(:base, "Password cannot be blank.")
-        format.html { render action: 'edit_password', notice: "Password cannot be blank." }
+        format.html { render action: 'edit_password', notice: "Password cannot be blank.", status: :unprocessable_entity }
         format.json { render json: @user.errors, status: :unprocessable_entity }
 
       elsif @user.update(user_params_change_password)
@@ -188,7 +188,7 @@ class UsersController < ApplicationController
         format.json { head :no_content }
       else
         puts "error updating password. #{@user.errors.each {|e| e.to_s}}"
-        format.html { render action: 'edit_password' }
+        format.html { render action: 'edit_password', status: :unprocessable_entity }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end

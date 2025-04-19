@@ -189,7 +189,7 @@ class SuggestedChangesController < ApplicationController
         format.html { redirect_to edit_suggested_change_path(@suggested_change), notice: "Suggested Change was successfully created.#{email_sent_text}" }
       else
         set_select_options
-        format.html { render :new }
+        format.html { render :new, status: :unprocessable_entity }
       end
     end
   end
@@ -211,7 +211,7 @@ class SuggestedChangesController < ApplicationController
         format.html { redirect_to edit_suggested_change_path(@suggested_change,@filter_querystring), notice: "Suggested Change was successfully updated.#{email_sent_text}" }
       else
         set_select_options
-        format.html { render :edit }
+        format.html { render :edit, status: :unprocessable_entity }
       end
     end
   end
