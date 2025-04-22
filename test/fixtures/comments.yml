@@ -54,6 +54,7 @@ one:
   order_in_list: 1
   num_commenters: 1
   suggested_changes: one,two,three
+  manually_entered: true
   rulemaking_id: 1
 
 two:
@@ -73,6 +74,7 @@ two:
   order_in_list: 2
   num_commenters: 1
   suggested_changes: one,two
+  manually_entered: true
   rulemaking_id: 1
 
 three:
@@ -92,6 +94,7 @@ three:
   order_in_list: 3
   num_commenters: 1
   suggested_changes: two
+  manually_entered: true
   rulemaking_id: 1
 
 needs_cleaning:
@@ -111,4 +114,5 @@ needs_cleaning:
   order_in_list: 4
   num_commenters: 1
   suggested_changes: two
+  manually_entered: true
   rulemaking_id: 1
