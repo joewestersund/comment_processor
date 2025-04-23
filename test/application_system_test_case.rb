@@ -29,8 +29,6 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   def log_user_out()
     click_on("Account")  # open up the dropdown menu
     click_on("Log Out")
-    visit comments_url
-    assert_selector "h1", text: "Sign in"
   end
 
   def save_manual_screenshot(filename)

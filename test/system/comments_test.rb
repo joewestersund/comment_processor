@@ -67,8 +67,8 @@ class CommentsTest < ApplicationSystemTestCase
 
     assert_text("Comment was successfully updated.")
     
-    c = Comment.find(c.id)
-    assert_equal(num_suggested_changes_before + 1, c.suggested_changes.count, "a new suggested change should have been added.") # a comment was saved
+    c = Comment.find(c_id)
+    assert_equal(num_suggested_changes_before + 1, c.suggested_changes.count, "a new suggested change should have been added.")
 
   end
 
@@ -79,7 +79,7 @@ class CommentsTest < ApplicationSystemTestCase
 
     r = rulemakings(rulemaking_fixture)
     first_comment_id = r.comments.order(:order_in_list).first.id
-    assert_not_equal(0, Comment.where(id:first_comment_id).count, "the comment should exist because it hasn't been deleted yet.")  # this comment exists
+    assert_not_equal(0, Comment.where(id:first_comment_id).count, "the comment should exist because it hasn't been deleted yet.")
 
     regex_str = /Are you sure you want to delete comment #\d+\?/  # used https://rubular.com/ to test
     accept_alert(regex_str) do
@@ -88,12 +88,14 @@ class CommentsTest < ApplicationSystemTestCase
     assert_selector "h1", text: "Comments" #back on the index page
 
     sleep 2
-    assert_equal(0, Comment.where(id:first_comment_id).count, "deleted comment id should not be in database")  # this comment has been deleted
+    assert_equal(0, Comment.where(id: first_comment_id).count, "deleted comment id should not be in database")
   end
 
   test "logged out user can't visit index" do
     log_user_in(:admin_user_1, :one)
     log_user_out
+    visit comments_url
+    assert_selector "h1", text: "Sign in"
   end
 
 end
