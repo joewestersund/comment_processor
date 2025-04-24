@@ -31,14 +31,7 @@ gem 'pg' #PostgreSQL
 #gem 'puma', '~> 5.6.8'
 gem 'puma', '~> 5.6.9'
 
-<<<<<<< HEAD
-gem 'bootstrap', '~> 4.3.1'
-#TODO: debug with bootstrap 5.
-# gem 'bootstrap', '~> 5.0.0'
-=======
-#gem 'bootstrap', '~> 5.0.0'
 gem 'bootstrap', '~> 5.3.3'
->>>>>>> bootstrap_5
 
 # add jquery to node_modules via yarn instead
 #gem'jquery-rails'
