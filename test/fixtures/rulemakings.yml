@@ -17,8 +17,11 @@ one:
   id: 1
   rulemaking_name: Rulemaking 1
   agency: DEQ
+  data_changed_at: <%= Time.now %>
+
 
 two:
   id: 2
   rulemaking_name: Rulemaking 2
   agency: OHA
+  data_changed_at: <%= Time.now %>
