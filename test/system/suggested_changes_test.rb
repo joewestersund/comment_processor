@@ -7,6 +7,22 @@ class SuggestedChangesTest < ApplicationSystemTestCase
     assert_selector "h1", text: "Suggested Changes"
   end
 
+  test "can filter on index page" do
+    log_user_in(:admin_user_1, :one)
+    visit suggested_changes_url
+    assert_link("Edit")  # there are some suggested changes displayed
+
+    click_on("Show/Hide Filter")
+    fill_in("Suggested change name", with:"ZZZZYX")  # no suggested changes should have this comment text
+    click_on("Search")
+
+    assert_no_link("Edit")  # no suggested changes displayed
+
+    click_on("Clear Filter")
+
+    assert_link("Edit")  # there are some suggested changes displayed
+  end
+
   test "visiting the edit page" do
     log_user_in(:admin_user_1, :one)
     visit suggested_changes_url
@@ -27,6 +43,7 @@ class SuggestedChangesTest < ApplicationSystemTestCase
 
     first(:button, "Save").click
 
+    sleep(1)
     max_id_after = SuggestedChange.order(:id).last.id
     assert_not_equal(max_id_before, max_id_after, "a new suggested change with a higher id should have been saved.") # a suggested change was saved
 
@@ -54,10 +71,11 @@ class SuggestedChangesTest < ApplicationSystemTestCase
     
     select_box_text = "Tag one or more comments to this suggested change. Click into the whitespace and type to filter."
 
-    select comments.first.key_info, from: select_box_text
-    first(:link, "Save").click  # save the change to this comment
+    #select comments.first.key_info, from: select_box_text
+    select comments.first.key_info, from: "comments"
+    first(:button, "Save").click  # save the change to this comment
 
-    assert_text("Suggested change was successfully updated.")
+    assert_text("Suggested Change was successfully updated.")
 
     sc = SuggestedChange.find(first_sc_id)
     assert_equal(num_comments_before + 1, sc.comments.count, "a new comment should have been added.")

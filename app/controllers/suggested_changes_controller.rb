@@ -229,7 +229,8 @@ class SuggestedChangesController < ApplicationController
   private
     def save_comments
       previous_comments = @suggested_change.comments.map { |c| c.key_info}
-      @comments = current_rulemaking.comments.where(:id => params[:comment_suggested_changes])
+      #@comments = current_rulemaking.comments.where(:id => params[:comment_suggested_changes])
+      @comments = current_rulemaking.comments.where(:id => params[:comments])
       @suggested_change.comments.destroy_all
       @suggested_change.comments << @comments
       #subtract out any suggested_change IDs that were there before and still are after

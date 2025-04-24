@@ -1,4 +1,5 @@
 require "application_system_test_case"
+require "./test/helpers/download_helpers"
 
 class CommentsTest < ApplicationSystemTestCase
 
@@ -7,6 +8,38 @@ class CommentsTest < ApplicationSystemTestCase
     visit comments_url
     assert_selector "h1", text: "Comments"
     end
+
+  test "can filter on index page" do
+    log_user_in(:admin_user_1, :one)
+    visit comments_url
+    assert_link("Edit")  # there are some comments displayed
+
+    click_on("Show/Hide Filter")
+    fill_in("Comment text", with:"ZZZZYX")  # no comments should have this comment text
+    click_on("Search")
+
+    assert_no_link("Edit")  # no comments displayed
+
+    click_on("Clear Filter")
+
+    assert_link("Edit")  # there are some comments displayed
+  end
+
+=begin
+  test "can download excel file" do
+    log_user_in(:admin_user_1, :one)
+    visit comments_url
+    assert_link("XLSX")  # there is a link to download as Excel
+
+    dh = DownloadHelpers.new
+    details = dh.download_link('XLSX')
+    puts "#### disposition: #{details[:disposition]}"  # => 'attachment' or 'inline'
+    assert("comments.xlsx", details[:filename], "downloaded excel file should be called comments.xlsx")     # => 'report.txt'
+    #details[:text]         # => file content as string
+    puts "#### content type: #{details[:content_type]}" # => 'text/plain'
+
+  end
+=end
 
   test "visiting the edit page" do
     log_user_in(:admin_user_1, :one)
@@ -94,6 +127,8 @@ class CommentsTest < ApplicationSystemTestCase
   test "logged out user can't visit index" do
     log_user_in(:admin_user_1, :one)
     log_user_out
+
+    sleep(1)
     visit comments_url
     assert_selector "h1", text: "Sign in"
   end
