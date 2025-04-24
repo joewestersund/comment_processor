@@ -45,9 +45,8 @@
   </div>
 
   <div class="field">
-    <div class="field">
-      <%= form.label :comments, "Tag one or more comments to this suggested change. Click into the whitespace and type to filter.", class: 'inline' %>
-    </div>
+    <%= form.label :comments, class:'emphasize' %>
+    <div>Tag one or more comments to this suggested change. Click into the whitespace and type to filter.</div>
     <%= select_tag "comments", options_from_collection_for_select(@comments, 'id', 'key_info', @suggested_change.comments.map{ |j| j.id }), multiple: true, class: "select2-multiselect", style: "width: 75%", "data-entityname" => "comment"  %>
     <%= link_to 'View these comments', comments_path({suggested_change_id: @suggested_change.id}) %>
   </div>

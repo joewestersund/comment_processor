@@ -35,14 +35,6 @@ class CommentsTest < ApplicationSystemTestCase
     click_on("download your Comments here")
 
     visit "/comments.xlsx?"
-
-    #dh = DownloadHelpers.new
-    #details = dh.download_link('XLSX')
-    #puts "#### disposition: #{details[:disposition]}"  # => 'attachment' or 'inline'
-    #assert("comments.xlsx", details[:filename], "downloaded excel file should be called comments.xlsx")     # => 'report.txt'
-    #details[:text]         # => file content as string
-    #puts "#### content type: #{details[:content_type]}" # => 'text/plain'
-
   end
 
   test "visiting the edit page" do
@@ -95,11 +87,8 @@ class CommentsTest < ApplicationSystemTestCase
     scs = SuggestedChange.where.not(id: c.suggested_changes.select(:id))
 
     assert scs.count > 0  # if there aren't any not already selected Suggested Changes, then we need to change the test.
-
-
-    select_box_text = "Tag one or more suggested changes to this comment. Click into the whitespace and type to filter."
-
-    select scs.first.suggested_change_name, from: select_box_text
+    
+    select scs.first.suggested_change_name, from: "Suggested changes"
     first(:link, "Save").click  # save the change to this comment
 
     assert_text("Comment was successfully updated.")

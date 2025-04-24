@@ -82,9 +82,6 @@ class SuggestedChangesTest < ApplicationSystemTestCase
 
     assert comments.count > 0  # if there aren't any not already selected comments, then we need to change the test.
     
-    select_box_text = "Tag one or more comments to this suggested change. Click into the whitespace and type to filter."
-
-    #select comments.first.key_info, from: select_box_text
     select comments.first.key_info, from: "comments"
     first(:button, "Save").click  # save the change to this comment
 

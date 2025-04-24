@@ -130,7 +130,8 @@
 
   <div class="field">
     <div class="field">
-      <%= form.label :suggested_changes, "Tag one or more suggested changes to this comment. Click into the whitespace and type to filter.", class: 'inline' %>
+      <%= form.label :suggested_changes, class: 'emphasize' %>
+      <div>Tag one or more suggested changes to this comment. Click into the whitespace and type to filter.</div>
       <%= select_tag "comment_suggested_changes", options_from_collection_for_select(@suggested_changes, 'id', 'suggested_change_name', @comment.suggested_changes.map{ |j| j.id }), multiple: true, class: "select2-multiselect", style: "width: 75%", "data-entityname" => "suggested change" %>
     </div>
     <div>
