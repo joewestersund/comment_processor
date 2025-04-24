@@ -23,6 +23,19 @@ class SuggestedChangesTest < ApplicationSystemTestCase
     assert_link("Edit")  # there are some suggested changes displayed
   end
 
+  test "can download excel file" do
+    log_user_in(:admin_user_1, :one)
+    visit suggested_changes_url
+    assert_link("XLSX")  # there is a link to download as Excel
+
+    click_on("XLSX")
+    assert_link("download your Suggested Changes here")
+    click_on("download your Suggested Changes here")
+
+    visit "/suggested_changes.xlsx?"
+    
+  end
+
   test "visiting the edit page" do
     log_user_in(:admin_user_1, :one)
     visit suggested_changes_url
@@ -105,6 +118,8 @@ class SuggestedChangesTest < ApplicationSystemTestCase
   test "logged out user can't visit index" do
     log_user_in(:admin_user_1, :one)
     log_user_out
+
+    sleep(1)
     visit suggested_changes_url
     assert_selector "h1", text: "Sign in"
   end

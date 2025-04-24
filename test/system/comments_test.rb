@@ -25,21 +25,25 @@ class CommentsTest < ApplicationSystemTestCase
     assert_link("Edit")  # there are some comments displayed
   end
 
-=begin
   test "can download excel file" do
     log_user_in(:admin_user_1, :one)
     visit comments_url
     assert_link("XLSX")  # there is a link to download as Excel
 
-    dh = DownloadHelpers.new
-    details = dh.download_link('XLSX')
-    puts "#### disposition: #{details[:disposition]}"  # => 'attachment' or 'inline'
-    assert("comments.xlsx", details[:filename], "downloaded excel file should be called comments.xlsx")     # => 'report.txt'
+    click_on("XLSX")
+    assert_link("download your Comments here")
+    click_on("download your Comments here")
+
+    visit "/comments.xlsx?"
+
+    #dh = DownloadHelpers.new
+    #details = dh.download_link('XLSX')
+    #puts "#### disposition: #{details[:disposition]}"  # => 'attachment' or 'inline'
+    #assert("comments.xlsx", details[:filename], "downloaded excel file should be called comments.xlsx")     # => 'report.txt'
     #details[:text]         # => file content as string
-    puts "#### content type: #{details[:content_type]}" # => 'text/plain'
+    #puts "#### content type: #{details[:content_type]}" # => 'text/plain'
 
   end
-=end
 
   test "visiting the edit page" do
     log_user_in(:admin_user_1, :one)
