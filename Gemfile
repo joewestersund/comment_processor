@@ -9,7 +9,8 @@ gem 'dotenv-rails', groups: [:development, :test] #used to load environment vari
 
 #ruby '3.2.7'
 #ruby '3.3.7'
-ruby '3.3.8'
+#ruby '3.3.8'
+ruby '3.4.3'
 
 #gem 'rails', '~> 7.0.8.7'
 #gem 'rails', '~> 7.1'
@@ -98,6 +99,7 @@ gem 'truncate_html' #from https://github.com/hgmnz/truncate_html
 gem 'rubyzip', '~> 1.3.0' #was '>= 1.2.2'
 gem 'caxlsx'
 gem 'caxlsx_rails'
+gem 'csv'  # Starting with Ruby 3.4.0, csv will no longer be part of stdlib
 
 #gem 'rexml', '~> 3.3.6'
 gem 'rexml', '~> 3.3.9'
