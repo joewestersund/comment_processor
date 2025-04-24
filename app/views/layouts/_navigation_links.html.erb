@@ -17,7 +17,7 @@
         older_rulemakings = current_user.rulemakings.where("data_changed_at <= ?",rulemaking_is_old_if_before).order("LOWER(rulemaking_name)")
       %>
       <li class="nav-item dropdown rulemaking-name">
-        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="navbarDropdownRulemakings">
+        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="navbarDropdownRulemakings">
           <%= current_rulemaking.rulemaking_name %> <b class="caret"></b>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownRulemakings">
