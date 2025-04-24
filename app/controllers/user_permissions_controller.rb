@@ -34,7 +34,7 @@ class UserPermissionsController < ApplicationController
         format.json { render :show, status: :created, location: @user_permission }
       else
         set_select_options
-        format.html { render :new }
+        format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @user_permission.errors, status: :unprocessable_entity }
       end
     end
@@ -50,7 +50,7 @@ class UserPermissionsController < ApplicationController
         format.json { render :show, status: :ok, location: @user_permission }
       else
         set_select_options
-        format.html { render :edit }
+        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @user_permission.errors, status: :unprocessable_entity }
       end
     end

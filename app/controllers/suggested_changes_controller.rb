@@ -189,7 +189,7 @@ class SuggestedChangesController < ApplicationController
         format.html { redirect_to edit_suggested_change_path(@suggested_change), notice: "Suggested Change was successfully created.#{email_sent_text}" }
       else
         set_select_options
-        format.html { render :new }
+        format.html { render :new, status: :unprocessable_entity }
       end
     end
   end
@@ -211,7 +211,7 @@ class SuggestedChangesController < ApplicationController
         format.html { redirect_to edit_suggested_change_path(@suggested_change,@filter_querystring), notice: "Suggested Change was successfully updated.#{email_sent_text}" }
       else
         set_select_options
-        format.html { render :edit }
+        format.html { render :edit, status: :unprocessable_entity }
       end
     end
   end
@@ -229,7 +229,8 @@ class SuggestedChangesController < ApplicationController
   private
     def save_comments
       previous_comments = @suggested_change.comments.map { |c| c.key_info}
-      @comments = current_rulemaking.comments.where(:id => params[:comment_suggested_changes])
+      #@comments = current_rulemaking.comments.where(:id => params[:comment_suggested_changes])
+      @comments = current_rulemaking.comments.where(:id => params[:comments])
       @suggested_change.comments.destroy_all
       @suggested_change.comments << @comments
       #subtract out any suggested_change IDs that were there before and still are after

@@ -1,6 +1,3 @@
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-
 form {
   div.field > label {
     max-width: 300px; //limit width of labels, but only ones directly under the filter div. The Bootstrap dropdowns use labels
@@ -14,6 +11,10 @@ form {
 
     label.inline {
       display: inline;
+    }
+
+    label.emphasize {
+      font-weight: bold;
     }
 
     textarea {

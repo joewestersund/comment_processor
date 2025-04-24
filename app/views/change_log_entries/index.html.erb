@@ -75,7 +75,7 @@
         <td><%= change_log_entry.created_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
         <% if current_user.admin_for?(@current_rulemaking) %>
           <td><%= link_to 'Edit', edit_change_log_entry_path(change_log_entry) %></td>
-          <td><%= link_to 'Delete', change_log_entry, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to 'Delete', change_log_entry, data: { "turbo-confirm": 'Are you sure?', "turbo-method": :delete } %></td>
         <% end %>
       </tr>
     <% end %>

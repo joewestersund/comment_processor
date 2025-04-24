@@ -40,16 +40,15 @@
   </div>
 
   <div class="field">
-    <%= form.label :suggested_change_description %>
+    <%= form.label :description, "Suggested change description" %>
     <%= form.text_area :description, id: :suggested_change_description, cols: 300, rows: 3, class: 'bigtextarea' %>
   </div>
 
   <div class="field">
-    <div class="field">
-      <%= form.label :comments, class: 'inline' %>
-      <%= link_to 'View', comments_path({suggested_change_id: @suggested_change.id}) %>
-    </div>
-    <%= select_tag "comment_suggested_changes", options_from_collection_for_select(@comments, 'id', 'key_info', @suggested_change.comments.map{ |j| j.id }), multiple: true, class: "bootstrap-multiselect", "data-entityname" => "comment"  %>
+    <%= form.label :comments, class:'emphasize' %>
+    <div>Tag one or more comments to this suggested change. Click into the whitespace and type to filter.</div>
+    <%= select_tag "comments", options_from_collection_for_select(@comments, 'id', 'key_info', @suggested_change.comments.map{ |j| j.id }), multiple: true, class: "select2-multiselect", style: "width: 75%", "data-entityname" => "comment"  %>
+    <%= link_to 'View these comments', comments_path({suggested_change_id: @suggested_change.id}) %>
   </div>
 
   <div class="field">

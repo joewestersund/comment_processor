@@ -1,27 +1,24 @@
-// This is a manifest file that'll be compiled into application.js, which will include all the files
-// listed below.
-//
-// Any JavaScript/Coffee file within this directory, lib/assets/javascripts, or any plugin's
-// vendor/assets/javascripts directory can be referenced here using a relative path.
-//
-// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
-// compiled file. JavaScript code in this file should be added after the last require_* statement.
-//
-// Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
-// about supported directives.
-//
 
-//= require jquery3
-//= require popper
-//= require bootstrap-sprockets
+import "./src/jquery.js" //need to put code in separate file due to javascript "hoisting" of import lines to beginning of file
+import "jquery-ui"
 
-//= require bootstrap-multiselect
-//= require bootstrap-select
-//= require bootstrap/alert
-//= require bootstrap/dropdown
+// I couldn't get this working, so I'm including select2 via a script tag in app/views/layouts/application.html.erb instead
+//import "select2"
+//import "select2/dist/js/select2"
 
-//= require rails-ujs
-//= require trix
-//= require activestorage
-//= require turbolinks
-//= require_tree .
+import "@hotwired/turbo-rails"
+import "bootstrap"
+
+import '@fortawesome/fontawesome-free/js/fontawesome'
+import '@fortawesome/fontawesome-free/js/solid'
+
+import "trix"
+
+import "activestorage"
+
+import "./change_log_entries.js"
+import "./filter.js"
+import "./rulemakings.js"
+import "./text_from_comments.js"
+import "./select2_initializer.js"
+import "./trix_customization.js"

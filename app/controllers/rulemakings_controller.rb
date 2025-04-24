@@ -39,7 +39,7 @@ class RulemakingsController < ApplicationController
         set_current_rulemaking(@rulemaking)
         format.html { redirect_to rulemakings_path, notice: 'Rulemaking was successfully created.' }
       else
-        format.html { render :new }
+        format.html { render :new, status: :unprocessable_entity }
       end
     end
   end
@@ -51,7 +51,7 @@ class RulemakingsController < ApplicationController
       if @rulemaking.update(rulemaking_params)
         format.html { redirect_to rulemakings_path, notice: 'Rulemaking was successfully updated.' }
       else
-        format.html { render :edit }
+        format.html { render :edit, status: :unprocessable_entity }
       end
     end
   end

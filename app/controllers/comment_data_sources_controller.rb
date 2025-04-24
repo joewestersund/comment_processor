@@ -39,7 +39,7 @@ class CommentDataSourcesController < ApplicationController
         format.html { redirect_to comment_data_sources_path, notice: 'Comment data source was successfully created.' }
         format.json { render :show, status: :created, location: @comment_data_source }
       else
-        format.html { render :new }
+        format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @comment_data_source.errors, status: :unprocessable_entity }
       end
     end
@@ -56,7 +56,7 @@ class CommentDataSourcesController < ApplicationController
         format.html { redirect_to comment_data_sources_path, notice: 'Comment data source was successfully updated.' }
         format.json { render :show, status: :ok, location: @comment_data_source }
       else
-        format.html { render :edit }
+        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @comment_data_source.errors, status: :unprocessable_entity }
       end
     end

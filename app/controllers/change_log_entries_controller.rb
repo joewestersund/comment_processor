@@ -44,7 +44,7 @@ class ChangeLogEntriesController < ApplicationController
         format.html { redirect_to change_log_entries_path, notice: 'Activity log entry was successfully created.' }
         format.json { render :show, status: :created, location: @change_log_entry }
       else
-        format.html { render :new }
+        format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @change_log_entry.errors, status: :unprocessable_entity }
       end
     end
@@ -58,7 +58,7 @@ class ChangeLogEntriesController < ApplicationController
         format.html { redirect_to change_log_entries_path, notice: 'Activity log entry was successfully updated.' }
         format.json { render :show, status: :ok, location: @change_log_entry }
       else
-        format.html { render :edit }
+        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @change_log_entry.errors, status: :unprocessable_entity }
       end
     end
