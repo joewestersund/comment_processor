@@ -194,12 +194,12 @@ GEM
     net-smtp (0.5.1)
       net-protocol
     nio4r (2.7.4)
-    nokogiri (1.18.7)
+    nokogiri (1.18.8)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
-    nokogiri (1.18.7-arm64-darwin)
+    nokogiri (1.18.8-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.18.7-x86_64-linux-gnu)
+    nokogiri (1.18.8-x86_64-linux-gnu)
       racc (~> 1.4)
     pg (1.5.9)
     popper_js (2.11.8)
@@ -336,7 +336,7 @@ DEPENDENCIES
   letter_opener
   listen
   loofah (>= 2.19.1)
-  nokogiri (~> 1.18.5)
+  nokogiri (~> 1.18.8)
   pg
   propshaft (~> 1.1)
   puma (~> 5.6.9)
