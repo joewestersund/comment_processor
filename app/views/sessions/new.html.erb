@@ -1,7 +1,8 @@
 <% provide(:title, 'Sign in') %>
 <div class="col-md-4">
   <h1>Sign in</h1>
-  <%= form_tag sessions_path do %>
+  <%= form_tag sessions_path, data: {turbo: false} do %>
+    <% # need to have , data: {turbo: false}, otherwise turbo interferes with recaptcha if user clicks over to password reset  %>
     <div class="field">
       <%= label_tag :email %>
       <%= text_field_tag :email, params[:email]%>
