@@ -79,7 +79,8 @@ gem 'will_paginate'
 gem 'trix-rails', require: 'trix'
 
 #gem 'rack', '~> 2.2.8.1'
-gem 'rack', '~> 2.2.11'
+#gem 'rack', '~> 2.2.11'
+gem 'rack', '~> 2.2.14'
 
 #gem 'loofah', '>= 2.2.3' #specified due to security vulnerability mentioned by github
 gem 'loofah', '>= 2.19.1' #specified due to security vulnerability mentioned by github
