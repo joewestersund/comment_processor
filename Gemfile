@@ -88,7 +88,10 @@ gem 'ffi', '>= 1.9.24' #specified due to security vulnerability mentioned by git
 
 #gem "nokogiri", "~> 1.16.5"
 #gem "nokogiri", "~> 1.18.5"
-gem "nokogiri", "~> 1.18.8"
+#gem "nokogiri", "~> 1.18.8"
+gem "nokogiri", "~> 1.18.9"
+
+gem "thor", "~> 1.4.0"
 
 gem "websocket-extensions", ">= 0.1.5"  #specified due to security vulnerability mentioned by github
 gem "json", '>=2.3.1' #specified due to security vulnerability mentioned by github
