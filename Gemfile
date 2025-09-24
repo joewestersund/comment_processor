@@ -107,7 +107,8 @@ gem 'caxlsx_rails'
 gem 'csv'  # Starting with Ruby 3.4.0, csv will no longer be part of stdlib
 
 #gem 'rexml', '~> 3.3.6'
-gem 'rexml', '~> 3.3.9'
+#gem 'rexml', '~> 3.3.9'
+gem 'rexml', '~> 3.4.2'
 
 #for storing files on Amazon S3
 gem "aws-sdk-s3", require: false

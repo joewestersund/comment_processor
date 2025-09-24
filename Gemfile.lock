@@ -277,7 +277,7 @@ GEM
     regexp_parser (2.10.0)
     reline (0.6.1)
       io-console (~> 0.5)
-    rexml (3.3.9)
+    rexml (3.4.4)
     rubyzip (1.3.0)
     sassc (2.4.0)
       ffi (~> 1.9)
@@ -362,7 +362,7 @@ DEPENDENCIES
   rails-html-sanitizer
   rake
   recaptcha
-  rexml (~> 3.3.9)
+  rexml (~> 3.4.2)
   rubyzip (~> 1.3.0)
   selenium-webdriver
   spring
