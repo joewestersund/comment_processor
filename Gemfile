@@ -10,7 +10,8 @@ gem 'dotenv-rails', groups: [:development, :test] #used to load environment vari
 #ruby '3.2.7'
 #ruby '3.3.7'
 #ruby '3.3.8'
-ruby '3.4.3'
+#ruby '3.4.3'
+ruby '3.4.7'
 
 #gem 'rails', '~> 7.0.8.7'
 #gem 'rails', '~> 7.1'
