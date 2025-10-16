@@ -226,10 +226,10 @@ GEM
       date
       stringio
     public_suffix (6.0.1)
-    puma (5.6.9)
+    puma (7.0.4)
       nio4r (~> 2.0)
     racc (1.8.1)
-    rack (2.2.19)
+    rack (2.2.20)
     rack-session (1.0.2)
       rack (< 3)
     rack-test (2.2.0)
@@ -355,8 +355,8 @@ DEPENDENCIES
   nokogiri (~> 1.18.9)
   pg
   propshaft (~> 1.1)
-  puma (~> 5.6.9)
-  rack (~> 2.2.18)
+  puma (~> 7.0.3)
+  rack (~> 2.2.20)
   rack-timeout
   rails (~> 7.2.2.2)
   rails-html-sanitizer
