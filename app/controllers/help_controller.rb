@@ -2,7 +2,13 @@ class HelpController < ApplicationController
 
   def excel_download_instructions
     @object_type = params[:object_type]
-    @download_content_type = (@object_type == "Comment" ? "Comments" : "Suggested Changes")
+    if @object_type == "Comment"
+      @download_content_type = "Comments"
+    elsif @object_type == "SuggestedChange"
+      @download_content_type = "Suggested Changes"
+    elsif @object_type == "User"
+      @download_content_type = "Users"
+    end
     @filter_querystring = excel_download_filter_params(@object_type)
   end
 
@@ -15,6 +21,9 @@ class HelpController < ApplicationController
     elsif class_name == "SuggestedChange"
       #from suggested_changes_controller.rb filter_params
       params.permit(:suggested_change_name, :description, :response_text, :assigned_to_id, :suggested_change_status_type_id, :suggested_change_response_type_id, :action_needed, :rule_change_made, :notes, :text_from_comments)
+    elsif class_name == "User"
+      #from users_controller.rb filter_params
+      params.permit(:name, :email, :active, :application_admin)
     else
       raise "incorrect class_name '#{class_name}' passed to excel_download_filter_params"
     end

@@ -13,6 +13,12 @@
     </div>
   <% end %>
 
+<div class="links">
+  Download as <%= link_to "CSV", users_path(@filter_querystring.merge({format: "csv"})) %>
+  or <%= link_to "XLSX", excel_download_instructions_link(User,@filter_querystring) %>
+</div>
+
+
 <div class="filter-box">
   <button id="show_filter" class="filter-button">Show/Hide Filter</button>
   <div class="filter <%="hidden" unless @filtered %>">
@@ -49,6 +55,7 @@
     <th>Email</th>
     <th>Active</th>
     <th>Application Admin</th>
+    <th>Last Login</th>
     <% if current_user.application_admin? %>
       <th class="reset_pw_link hide">Reset Password Link</th>
       <th></th>
@@ -64,6 +71,7 @@
       <td><%= mail_to user.email %></td>
       <td class="<%="#{highlight_true(user.active)}"%>"><%= show_boolean_value(user.active) %></td>
       <td class="<%="#{highlight_true(user.application_admin)}"%>"><%= show_boolean_value(user.application_admin) %></td>
+      <td><%= user.updated_at %></td>
       <% if current_user.application_admin? %>
         <td class="reset_pw_link hide"><%= "#{request.protocol}#{request.host_with_port}/password/reset/#{user.reset_password_token}" unless user.reset_password_token.nil? %></td>
         <td><%= link_to 'Edit', edit_user_path(user) %></td>

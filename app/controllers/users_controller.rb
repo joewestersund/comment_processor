@@ -32,7 +32,20 @@ class UsersController < ApplicationController
       q = q.where(application_admin: true)
       @filtered = true
     end
-    @users = q.order(:name).page(params[:page]).per_page(20)
+
+    respond_to do |format|
+      format.html {
+        @filter_querystring = remove_empty_elements(filter_params)
+        @users = q.order(:name).page(params[:page]).per_page(20)
+      }
+      format.xlsx {
+        @users = q.order(:name)
+        response.headers['Content-Disposition'] = 'attachment; filename="comments.xlsx"'
+      }
+      format.csv {
+        stream_csv(c)
+      }
+    end
   end
 
   # GET /users/new
@@ -229,6 +242,10 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:name, :email, :application_admin, :active)
     end
+
+  def filter_params
+    params.permit(:name, :email, :active, :application_admin)
+  end
 
     def update_profile_params
       params.require(:user).permit(:name, :email)

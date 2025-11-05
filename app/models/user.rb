@@ -115,6 +115,27 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.csv_header
+    ['ID', 'Name', 'Email', 'Active', 'Application Admin', 'Last Login']
+  end
+
+  def self.excel_column_widths
+    #create array of same length as csv_header, all containing the same initial value
+    column_widths = Array.new(User.csv_header.length,:auto)
+
+    #set width of some columns
+    #column_widths[Comment.csv_header.index('Comment Text')] = 100
+    #column_widths[Comment.csv_header.index('Summary')] = 100
+    #column_widths[Comment.csv_header.index('Notes')] = 100
+
+    #return the array
+    column_widths
+  end
+
+  def to_csv
+    [self.id, self.name, self.email, self.active, self.application_admin, self.updated_at.strftime("%F")]
+  end
+
   private
   def create_remember_token
     self.remember_token = User.encrypt(User.new_remember_token)

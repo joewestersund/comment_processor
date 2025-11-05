@@ -9,6 +9,8 @@ module ExcelDownloadHelper
       download_link = comments_path(format: "xlsx") + "?#{querystring.to_query}"
     elsif class_name == 'SuggestedChange'
       download_link = suggested_changes_path(format: "xlsx") + "?#{querystring.to_query}"
+    elsif class_name == 'User'
+      download_link = users_path(format: "xlsx") + "?#{querystring.to_query}"
     else
       raise "Error: unknown class '#{class_name}' passed to excel_download_path."
     end
