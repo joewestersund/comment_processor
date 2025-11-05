@@ -8,6 +8,10 @@ class HelpController < ApplicationController
       @download_content_type = "Suggested Changes"
     elsif @object_type == "User"
       @download_content_type = "Users"
+    elsif @object_type == "Rulemaking"
+      @download_content_type = "Rulemaking"
+    else
+      raise "incorrect object_type '#{object_type}' passed to excel_download_instructions"
     end
     @filter_querystring = excel_download_filter_params(@object_type)
   end
@@ -24,10 +28,12 @@ class HelpController < ApplicationController
     elsif class_name == "User"
       #from users_controller.rb filter_params
       params.permit(:name, :email, :active, :application_admin)
+    elsif class_name == "Rulemaking"
+      #there is no filter for rulemakings.
+      params.permit()
     else
       raise "incorrect class_name '#{class_name}' passed to excel_download_filter_params"
     end
-
   end
 
 end

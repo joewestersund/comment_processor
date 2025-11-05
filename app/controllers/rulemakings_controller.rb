@@ -7,7 +7,23 @@ class RulemakingsController < ApplicationController
   # GET /rulemakings
   # GET /rulemakings.json
   def index
-    @rulemakings = Rulemaking.order("LOWER(rulemaking_name)")
+    r = Rulemaking.order("LOWER(rulemaking_name)")
+    @filter_querystring = params.permit() # this view doesn't have filters
+
+    respond_to do |format|
+      format.html {
+        @rulemakings = r.page(params[:page]).per_page(10)
+      }
+      format.xlsx {
+        @rulemakings = r
+        response.headers['Content-Disposition'] = 'attachment; filename="rulemakings.xlsx"'
+      }
+      format.csv {
+        stream_csv(r)
+      }
+    end
+
+
   end
 
   # GET /rulemakings/new

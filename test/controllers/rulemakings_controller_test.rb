@@ -20,7 +20,6 @@ class RulemakingsControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Rulemaking.count', 0) do
       post rulemakings_url, params: { rulemaking: { agency: @rulemaking.agency, rulemaking_name: @rulemaking.rulemaking_name } }
     end
-
   end
 
   test "should create rulemaking" do

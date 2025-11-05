@@ -1,0 +1,22 @@
+wb = xlsx_package.workbook
+
+header_style = wb.styles.add_style alignment: {horizontal: :center, vertical: :center, wrap_text: true}, b: true, sz: 10, bg_color: "C0C0C0"
+data_style = wb.styles.add_style alignment: {horizontal: :center, vertical: :center, wrap_text: true}, sz: 10
+
+
+wb.add_worksheet(name: 'Rulemakings') do |sheet|
+
+  sheet.add_row Rulemaking.csv_header, style: header_style
+
+  num_rulemakings = @rulemakings.length
+
+  @rulemakings.each_with_index do |r, index|
+    if index == num_rulemakings - 1
+      #only add the styling on the last row
+      sheet.add_row r.to_csv, style: data_style, widths: Rulemaking.excel_column_widths
+    else
+      sheet.add_row r.to_csv, style: data_style
+    end
+  end
+
+end

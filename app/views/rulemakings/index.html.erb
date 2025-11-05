@@ -2,6 +2,12 @@
 
 <h1>Rulemakings</h1>
 
+<div class="links">
+  Download as <%= link_to "CSV", rulemakings_path(@filter_querystring.merge({format: "csv"})) %>
+  or <%= link_to "XLSX", excel_download_instructions_link(Rulemaking,@filter_querystring) %>
+</div>
+
+<%= will_paginate @comments %>
 <table>
   <thead>
     <tr>
@@ -9,6 +15,9 @@
       <th>Agency</th>
       <th>Allow comments to be push imported from Outlook</th>
       <th>Data last updated at</th>
+      <th>Attachments uploaded</th>
+      <th>Max attachment size (MB)</th>
+      <th>Total attachments (MB)</th>
       <th colspan="2"></th>
     </tr>
   </thead>
@@ -20,12 +29,27 @@
         <td><%= rulemaking.agency %></td>
         <td class="<%="#{highlight_true(rulemaking.allow_push_import)}"%>"><%= show_boolean_value(rulemaking.allow_push_import) %></td>
         <td><%= rulemaking.data_changed_at.strftime('%Y-%m-%d %I:%M:%S %p') %></td>
+        <td><%= rulemaking.num_attachments %></td>
+        <td><%= rulemaking.max_attachment_size %></td>
+        <td><%= rulemaking.total_attachment_size %></td>
         <td><%= link_to 'Edit', edit_rulemaking_path(rulemaking) %></td>
         <td><%= link_to 'Delete', rulemaking, data: { "turbo-confirm": 'Are you sure you want to delete this rulemaking?', "turbo-method": :delete } %></td>
       </tr>
     <% end %>
+    <tr>
+      <td>Total</td>
+      <td></td>
+      <td> </td>
+      <td></td>
+      <td><%= Rulemaking.num_attachments %></td>
+      <td><%= Rulemaking.max_attachment_size %></td>
+      <td><%= Rulemaking.total_attachment_size %></td>
+      <td></td>
+      <td></td>
+    </tr>
   </tbody>
 </table>
+<%= will_paginate @comments %>
 
 <br>
 
