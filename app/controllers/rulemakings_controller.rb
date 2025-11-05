@@ -12,7 +12,7 @@ class RulemakingsController < ApplicationController
 
     respond_to do |format|
       format.html {
-        @rulemakings = r.page(params[:page]).per_page(10)
+        @rulemakings = r.page(params[:page]).per_page(100)
       }
       format.xlsx {
         @rulemakings = r
