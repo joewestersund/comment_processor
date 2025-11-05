@@ -40,7 +40,7 @@ class UsersController < ApplicationController
       }
       format.xlsx {
         @users = q.order(:name)
-        response.headers['Content-Disposition'] = 'attachment; filename="comments.xlsx"'
+        response.headers['Content-Disposition'] = 'attachment; filename="users.xlsx"'
       }
       format.csv {
         stream_csv(c)
