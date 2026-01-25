@@ -67,8 +67,13 @@
       </div>
     </div>
 
+    <% # include already attached files, so they don't get replaced %>
+    <% comment.attached_files.each do |af| %>
+      <%= form.hidden_field :attached_files, multiple: true, value: af.signed_id %>
+    <% end %>
+
     <div class="field">
-      <%= form.file_field :attached_files, multiple: true %>
+      <%= form.file_field :attached_files, multiple: true, include_hidden: true %>
     </div>
 
     <% if false #this part is not needed, now that data.oregon.gov is down %>

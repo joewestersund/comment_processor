@@ -115,7 +115,8 @@ gem 'csv'  # Starting with Ruby 3.4.0, csv will no longer be part of stdlib
 gem 'rexml', '~> 3.4.2'
 
 #for storing files on Amazon S3
-gem "aws-sdk-s3", require: false
+#gem "aws-sdk-s3", require: false
+gem "aws-sdk-s3", "~> 1.208.0", require: false
 
 gem "recaptcha"
 
