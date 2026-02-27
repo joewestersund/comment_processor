@@ -7,10 +7,6 @@ end
 
 gem 'dotenv-rails', groups: [:development, :test] #used to load environment variables from the .env file
 
-#ruby '3.2.7'
-#ruby '3.3.7'
-#ruby '3.3.8'
-#ruby '3.4.3'
 #ruby '3.4.7'
 ruby '3.4.8'
 
@@ -81,20 +77,15 @@ gem 'will_paginate'
 
 gem 'trix-rails', require: 'trix'
 
-#gem 'rack', '~> 2.2.8.1'
-#gem 'rack', '~> 2.2.11'
-#gem 'rack', '~> 2.2.14'
-#gem 'rack', '~> 2.2.18'
-gem 'rack', '~> 2.2.20'
+#gem 'rack', '~> 2.2.20'
+gem 'rack', '~> 2.2.22'
 
 #gem 'loofah', '>= 2.2.3' #specified due to security vulnerability mentioned by github
 gem 'loofah', '>= 2.19.1' #specified due to security vulnerability mentioned by github
 gem 'ffi', '>= 1.9.24' #specified due to security vulnerability mentioned by github
 
-#gem "nokogiri", "~> 1.16.5"
-#gem "nokogiri", "~> 1.18.5"
-#gem "nokogiri", "~> 1.18.8"
-gem "nokogiri", "~> 1.18.9"
+#gem "nokogiri", "~> 1.18.9"
+gem "nokogiri", "~> 1.19.1"
 
 gem "thor", "~> 1.4.0"
 
