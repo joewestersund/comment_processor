@@ -13,7 +13,8 @@ ruby '3.4.8'
 #gem 'rails', '~> 7.0.8.7'
 #gem 'rails', '~> 7.1'
 #gem 'rails', '~> 7.2'
-gem 'rails', '~> 7.2.2.2'
+#gem 'rails', '~> 7.2.2.2'
+gem 'rails', '~> 7.2.3.1'
 
 #gem 'rake', '~> 12.3.3'
 gem 'rake'
@@ -71,7 +72,8 @@ gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 3.0'
 
 # Use ActiveModel has_secure_password
-gem 'bcrypt', '~> 3.1.7'
+#gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.22'
 
 gem 'will_paginate'
 
