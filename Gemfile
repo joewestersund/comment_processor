@@ -30,9 +30,8 @@ gem 'rails-html-sanitizer'
 gem 'pg' #PostgreSQL
 
 # Use puma as the app server
-#gem 'puma', '~> 5.6.8'
-#gem 'puma', '~> 5.6.9'
-gem 'puma', '~> 7.0.3'
+#gem 'puma', '~> 7.0.3'
+gem 'puma', '~> 7.2.1'
 
 gem 'bootstrap', '~> 5.3.3'
 
