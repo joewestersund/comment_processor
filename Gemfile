@@ -23,7 +23,6 @@ gem 'rake'
 # defaults to 15 second timeout
 gem "rack-timeout"
 
-#gem 'rails-html-sanitizer', '~> 1.4.4'
 gem 'rails-html-sanitizer'
 
 gem 'pg' #PostgreSQL
@@ -82,8 +81,6 @@ gem 'trix-rails', require: 'trix'
 #gem 'rack', '~> 2.2.22'
 gem 'rack', '~> 2.2.23'
 
-#gem 'loofah', '>= 2.2.3' #specified due to security vulnerability mentioned by github
-gem 'loofah', '>= 2.19.1' #specified due to security vulnerability mentioned by github
 gem 'ffi', '>= 1.9.24' #specified due to security vulnerability mentioned by github
 
 #gem "nokogiri", "~> 1.19.1"
