@@ -93,7 +93,7 @@ gem "addressable", ">= 2.9.0"
 gem 'truncate_html' #from https://github.com/hgmnz/truncate_html
 
 #for export to excel
-gem 'rubyzip', '~> 1.3.0' #was '>= 1.2.2'
+gem 'rubyzip', '~> 3.4.0' #was '>= 1.2.2'
 gem 'caxlsx'
 gem 'caxlsx_rails'
 gem 'csv'  # Starting with Ruby 3.4.0, csv will no longer be part of stdlib
