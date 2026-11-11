@@ -77,7 +77,7 @@ gem 'trix-rails', require: 'trix'
 
 #gem 'rack', '~> 2.2.20'
 #gem 'rack', '~> 2.2.22'
-gem 'rack', '~> 2.2.23'
+gem 'rack', '~> 2.2.25'
 
 gem 'ffi', '>= 1.9.24' #specified due to security vulnerability mentioned by github
 
