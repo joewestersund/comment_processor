@@ -82,7 +82,7 @@ gem 'rack', '~> 2.2.23'
 gem 'ffi', '>= 1.9.24' #specified due to security vulnerability mentioned by github
 
 #gem "nokogiri", "~> 1.19.1"
-gem "nokogiri", "~> 1.19.4"
+gem "nokogiri", "~> 1.19.5"
 
 gem "thor", "~> 1.4.0"
 
