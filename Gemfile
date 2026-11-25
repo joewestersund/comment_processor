@@ -13,7 +13,8 @@ gem 'dotenv-rails', groups: [:development, :test] #used to load environment vari
 ruby '3.4.13'
 
 #gem 'rails', '~> 7.2.3.1'
-gem 'rails', '~> 7.2.3.2'
+#gem 'rails', '~> 7.2.3.2'
+gem 'rails', '~> 8.1.4.1'
 
 #gem 'rake', '~> 12.3.3'
 gem 'rake'
