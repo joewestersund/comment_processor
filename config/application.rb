@@ -16,6 +16,8 @@ module CommentProcessor
     #when updating a comment to add an attachment, don't delete previous attachments
     config.active_storage.replace_on_assign_to_many = false
 
+    config.active_storage.variant_processor = :disabled # since this app doesn't resize images
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -28,5 +30,6 @@ module CommentProcessor
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
   end
 end
